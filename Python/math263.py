@@ -8,7 +8,7 @@ def feuler(f, a, b, y0, n):
 	'''
 	h = (b-a)/n;
 	x = np.linspace(a, b, num=n+1);
-	y = np.zeros(x.size);
+	y = np.empty(x.size);
 	y[0] = y0;
 	for i in range(n):
 		y[i+1] = y[i] + h * f(x[i], y[i]);
