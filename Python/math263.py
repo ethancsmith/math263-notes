@@ -4,7 +4,7 @@ def feuler(f, a, b, y0, n):
 	'''
 	numerically solves IVP
 		y' = f(x,y), y(a)=y0
-	over the interval [a, b] via n steps of the (foward) euler method 
+	over the interval [a, b] via n steps of the (foward) Euler method 
 	'''
 	h = (b-a)/n;
 	x = np.linspace(a, b, num=n+1);
