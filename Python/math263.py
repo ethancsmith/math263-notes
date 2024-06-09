@@ -17,7 +17,7 @@ def feuler(f, a, b, y0, n):
 
 def rk4(f, a, b, y0, n):
 	'''
-	numerical solve the IVP
+	numerically solves the IVP
 		y' = f(x,y), y(a)=y0
 	over the interval [a, b] via n steps of the 4th order (classical) Runge–Kutta method 
 	'''
