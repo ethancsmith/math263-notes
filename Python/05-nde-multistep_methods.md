@@ -22,7 +22,7 @@ These methods are also called **starting methods** because the initial-value con
 On the other hand, **multistep methods** use more than one of the previously computed $y_j$.
 An **$m$-step method** would use the previous $m$ values: $(x_i,y_i), (x_{i-1},y_{i-1}),\dots, (x_{i-m+1},y_{i-m+1})$.
 A **linear $m$-step method** takes the form
-\begin{equation}\label{linear multistep form}
+\begin{equation}\label{linear multistep form}\tag{5.1}
 y_{i+1} = \sum_{j=1}^m\alpha_jy_{i+1-j} + h\sum_{j=0}^m\beta_jf(x_{i+1-j}, y_{i+1-j}).
 \end{equation}
 Clearly such a method cannot be used until $m$ previous values are known.
@@ -40,7 +40,7 @@ Some of the most popular explicit linear multistep methods are the _Adams–Bash
 ## Adams–Bashforth 2-step (explicit) method.
 
 For an explicit, linear $2$-step method equation \eqref{linear multistep form} simplifies to
-\begin{equation}\label{2-step form}
+\begin{equation}\label{2-step form}\tag{5.2}
 y_{i+1} = \alpha_1y_i + h\big(\beta_1f(x_i,y_i) + \beta_2f(x_{i-1},y_{i-1}\big).
 \end{equation}
 The idea of the Adams–Bashforth method is to force this formula to be exact for the first 3 terms of the Taylor series for the true solution $y$.
@@ -48,15 +48,15 @@ This will ensure that the local truncation error for the method is $O(h^3)$ as $
 Note that with only $3$ parameters to determine (viz, $\alpha_1, \beta_1, \beta_2)$, this is the best that can be done.
 By linearity, it is enough to make it exact for the cases $y(x)=1$, $y(x)=x$, and $y(x)=x^2$.
 If $y(x)=1$, then $f(x,y(x)) = y'(x) = 0$, and so the equation \eqref{2-step form} becomes
-\begin{equation}\label{ab2 condition 1}
+\begin{equation}\label{ab2 condition 1}\tag{5.3}
 1=\alpha_1.
 \end{equation}
 Similarly, if $y(x)=x$, then $y'(x)=1$ and \eqref{2-step form} becomes
-\begin{equation}\label{ab2 condition 2}
+\begin{equation}\label{ab2 condition 2}\tag{5.4}
 x_{i+1}=\alpha_1 x_i + h(\beta_1+\beta_2).
 \end{equation}
 Finally, if $y(x)=x^2$, then $y'(x)=2x$ and \eqref{2-step form} becomes
-\begin{equation}\label{ab2 condition 3}
+\begin{equation}\label{ab2 condition 3}\tag{5.5}
 x_{i+1}^2 = \alpha_1x_i^2+ h(2\beta_1x_i + 2\beta_2x_{i-1}).
 \end{equation}
 Now, equations \eqref{ab2 condition 1}, \eqref{ab2 condition 2}, and \eqref{ab2 condition 3} must hold for all values of $x_i$ and $h$.
