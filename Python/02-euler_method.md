@@ -15,16 +15,20 @@ kernelspec:
 
 +++
 
-Suppose that we want to numerically solve a first order IVP of the form
-\begin{align}
+Suppose that we want to compute a numerical solution to the first-order IVP
+\begin{align*}
 y'&=f(x,y),\\
 y(a) &=y_0
-\end{align}
-over the interval $[a,b]$.  Choosing some positive integer $n$, our goal is compute a table of points $(x_i,y_i)$ so that if $y$ is the true solution, then
-\begin{equation}
+\end{align*}
+over the interval $[a,b]$.
+Choosing some positive integer $n$, our goal is compute a sequence of points $(x_i,y_i)$ so that if $y$ is the true solution, then
+\begin{equation*}
 y_i\approx y(x_i)
-\end{equation}
-for $n = 0,1,\dots, n$.  We say that there are $n$ **steps**, or equivalently $n+1$ **mesh points** or nodes.  The distance $h_i=x_{i+1}-x_i$ is called the $i$th **step-size**, which may be variable.  For much of the course, however, we will use equally-spaced meshes with step-size $h=(b-a)/n$.
+\end{equation*}
+for $i = 0,1,\dots, n$.
+We say that there are $n$ **steps**, or equivalently $n+1$ **mesh points** or nodes.
+The distance $h_i=x_{i+1}-x_i$ is called the $i$th **step-size**, which may be variable.
+For much of this course, however, we will use equally-spaced meshes with step-size $h=(b-a)/n$.
 
 Once the mesh points have been chosen, the most straightforward approach to computing the $y_i$'s is known as Euler's method.
 The basic idea of the method is simply an appeal to linearization from calculus.
@@ -32,14 +36,15 @@ Namely, if $y$ is the true solution and we assume that we have $y_i=y(x_i)$ exac
 \begin{equation}
 \begin{split}
 y(x_{i+1})&\approx y(x_i) + y'(x_i)(x_{i+1}-x_i)\\
-&= y_i + f(x_i,y_i)h.
+&= y_i + f(x_i,y_i)h
 \end{split}
 \end{equation}
+for small $h$.
 **Euler's method** (a.k.a., the **foward Euler method**) recursively defines the $y_i$ by the formula
-\begin{align*}
-y_{i+1} &= y_i + f(x_i, y_i)h \qquad(0\le i< n),\\
-y_0&=y(a).
-\end{align*}
+\begin{equation*}
+y_{i+1} = y_i + f(x_i, y_i)h
+\end{equation*}
+for $0\le i< n$.
 
 +++
 
@@ -47,7 +52,7 @@ y_0&=y(a).
 
 +++
 
-The `math263` module contains the following implementation of the (foward) Euler method.
+The `math263` module contains the following Python implementation of the (foward) Euler method.
 ```python
 def feuler(f, a, b, y0, n):
         '''
@@ -64,38 +69,29 @@ def feuler(f, a, b, y0, n):
 
         return (x, y)
 ```
-To load the module run `import math263`.
 
 +++
 
-## Examples.
+## Example.
 
 +++
 
-We may empirically study the performance of the forward Euler method by using it to solve IVP's which we know how to solve analytically.
+We now show how to use Euler's method to solve the IVP
+\begin{align*}
+y'&= x^2 - y,\\
+y(0)&=3
+\end{align*}
+over the interval $[0, 2]$.
 
 ```{code-cell} ipython3
+# load modules
 import math263
 import numpy as np
 import sympy as sp
 import matplotlib.pyplot as plt
 from tabulate import tabulate
 from IPython.display import display, Markdown
-```
 
-### Example 1.
-Consider the IVP
-\begin{align}
-y'&= x^2 - y,\\
-y(0)&=3
-\end{align}
-over the interval $[0, 2]$.
-
-+++
-
-We first solve the problem symbolically.
-
-```{code-cell} ipython3
 # define IVP parameters
 f = lambda x, y: x**2 - y;
 a, b = 0, 2;
