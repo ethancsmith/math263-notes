@@ -143,3 +143,21 @@ plt.plot(x,y,'ro:');
 plt.legend([f"${sp.latex(soln)}$","Euler's method"], loc='upper right');
 plt.show();
 ```
+
+## Exercises:
+
+1. Consider the IVP 
+\begin{align*}
+y'&=2x-3y+1,\\ y(0)&=1.
+\end{align*}
+    1. Solve the IVP symbolically and plot the solution over the interval $[0,1]$.
+    1. Use Euler's method to solve the IVP numerically over the interval $[0, 1]$ with $n$ steps for $n = 8, 16, 32, 64$. 
+    1. Plot the numerical approximations together with the true solution on a single set of axes. Be sure to use labels, legends, and colors so that the different results are distinguishable.
+    1. Compute the absolute and relative errors at $x = 1$ for each of your numerical solutions.  Display the results in a table with (of course) appropriate labels/headers. What seems to be happening to the errors each time that we double the number of steps?
+1. Consider the IVP 
+\begin{align*}
+y'&=x^2+y^2,\\
+y(0)&=1.
+\end{align*}
+    1. Solve the IVP symbolically.  
+    1. Use Euler's method with step sizes $h = 0.1$ and $h = 0.05$ to obtain a numerical approximation to $y(1/2)$.
