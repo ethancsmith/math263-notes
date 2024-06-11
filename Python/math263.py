@@ -1,6 +1,6 @@
 import numpy as np
 
-def feuler(f, a, b, y0, n):
+def euler(f, a, b, y0, n):
 	'''
 	numerically solves the IVP
 		y' = f(x,y), y(a)=y0

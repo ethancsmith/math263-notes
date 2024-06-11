@@ -103,7 +103,7 @@ plt.grid(True)
 
 # numerically solve the IVP with n=10 steps of forward Euler and n=10 steps of RK4
 n = 10;
-(x, y_euler) = math263.feuler(f, a, b, y0, n);
+(x, y_euler) = math263.euler(f, a, b, y0, n);
 (x, y_rk4)   = math263.rk4(f, a, b, y0, n);
 
 # tabulate the results

@@ -52,9 +52,11 @@ for $0\le i< n$.
 
 +++
 
-The `math263` module contains the following Python implementation of the (foward) Euler method.
+The `math263` module contains the following Python implementation of Euler's method.
 ```python
-def feuler(f, a, b, y0, n):
+import numpy as np
+
+def euler(f, a, b, y0, n):
         '''
         numerically solves IVP
                 y' = f(x,y), y(a)=y0
@@ -123,7 +125,7 @@ Next we solve the problem numerically with $n=20$ steps of our forward Euler imp
 ```{code-cell} ipython3
 # use the forward Euler implementation in the math263 module to numerically solve the IVP with n=20 steps
 n = 20;
-(x,y) = math263.feuler(f, a, b, y0, n);
+(x,y) = math263.euler(f, a, b, y0, n);
 
 # tabulate the results
 table = np.transpose(np.stack((x, y, sym_y(x))));
