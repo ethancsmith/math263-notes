@@ -105,14 +105,13 @@ Furthermore, since the error $|y(x_i)-y_i|$ tends to increase with $i$, it is re
 ## Example.
 
 We now conduct an empirical comparison of AB2 with Heun's modified Euler method (MEM) using the IVP
-We now use the IVP
 \begin{align*}
 y'&=y-x^2+1,\\
 y(0)&=1/2
 \end{align*}
 as a test case.
 First we use both methods to solve the problem over the interval $[0,2]$ in $n=10$ steps.
-We then present the global truncation errors at each step in a table.
+We then present the global truncation errors $e_i=|y(x_i) - y_i|$ for each method at each step in a table.
 
 ```{code-cell} ipython3
 import math263
