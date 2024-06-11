@@ -104,13 +104,15 @@ Furthermore, since the error $|y(x_i)-y_i|$ tends to increase with $i$, it is re
 
 ## Example.
 
+We now conduct an empirical comparison of AB2 with Heun's modified Euler method (MEM) using the IVP
 We now use the IVP
 \begin{align*}
 y'&=y-x^2+1,\\
 y(0)&=1/2
 \end{align*}
-as a test case for an empirical comparison of the multistep method AB2 with Heun's modified (single-step) Euler method.
-Note that both methods have the same order of accuracy, namely, order $2$.
+as a test case.
+First we use both methods to solve the problem over the interval $[0,2]$ in $n=10$ steps.
+We then present the global truncation errors at each step in a table.
 
 ```{code-cell} ipython3
 import math263
@@ -130,22 +132,26 @@ x = sp.Symbol('x');
 y = sp.Function('y');
 ode = sp.Eq(y(x).diff(x), f(x,y(x)));
 soln=sp.dsolve(ode, y(x), ics={y(a): y0}); 
-rhs=f(x,y(x));
-display(Markdown(f"The true solution to the ODE $y'={sp.latex(rhs)}$ with initial condition $y({a})={y0}$ is ${sp.latex(soln)}$."))
+#rhs=f(x,y(x));
+#display(Markdown(f"The true solution to the ODE $y'={sp.latex(rhs)}$ with initial condition $y({a})={y0}$ is ${sp.latex(soln)}$."))
 sym_y=sp.lambdify(x, soln.rhs, modules=['numpy']);
-"""
+
 # numerically solve the IVP with n=10 steps of forward Euler and n=10 steps of RK4
 n = 10;
-(x, y_euler) = math263.mem(f, a, b, y0, n);
-(x, y_rk4)   = math263.ab2(f, a, b, y0, n);
+(x, y_mem) = math263.mem(f, a, b, y0, n);
+(x, y_ab2)   = math263.ab2(f, a, b, y0, n); 
+
 
 # tabulate the results
 print("Comparison of global errors for MEM and AB2.")
-table = np.transpose(np.stack((x, abs(sym_y(x)-y_euler), abs(sym_y(x)-y_rk4))));
-hdrs = ["i", "x_i", "e_{i,mem} = |y(x_i)-y_i|", "e_{i,ab2} = |y(x_i)-y_i|"];
+table = np.transpose(np.stack((x, abs(sym_y(x)-y_mem), abs(sym_y(x)-y_ab2))));
+hdrs = ["i", "x_i", "MEM global error", "AB2 global error"];
 print(tabulate(table, hdrs, tablefmt='mixed_grid', floatfmt='0.5f', showindex=True))
-""";
 ```
+
+TODO: Give timing analysis example as in NB version.
+
++++
 
 ## Exercises.
 
