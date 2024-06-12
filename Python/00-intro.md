@@ -41,7 +41,7 @@ But _how_ do we force the error to be within requirements?  We do it by adjustin
 
 Notice that the only place we see an equals sign in that entire discussion is in the notation $\lim_{x\to a}f(x) = L$.  The definition of limit tells us that what that equals sign really means is that it is possible to "win at a game of inequalities."  This is why I say that calculus is not really about equality but rather about inequality.  Calculus employs a lot of ingenious notational tricks that allow us to focus our attention on the "targets of approximation" (e.g., the $L$ in the above definition) and mostly ignore the gritty details concerning error.  
 
-Why do we do this?  A first step in approximation is knowing what you're approximating and if it really is a thing.  Does the limit exist or am I approximating garbage?  If the limit does exist, what is it?  
+Why do we do this?  A first step in approximation is knowing what you're approximating and if it really is a thing.  Does the limit exist or am I approximating garbage?  If the limit does exist, what is it?
 
 +++
 
@@ -161,6 +161,15 @@ C1_ic = sympy.solve(equation.rhs.subs({t:0}),C1)[0]
 equation = equation.subs({C1:C1_ic});
 display(equation);
 sympy.plot(equation.rhs,(t,0,10),ylabel="$v(t)$ (m/s)", xlabel="$t$ (s)");
+```
+
+```{code-cell} ipython3
+import plotly.graph_objects as go
+
+fig = go.Figure(data=[go.Table(header=dict(values=['A Scores', 'B Scores']),
+                 cells=dict(values=[[100, 90, 80, 90], [95, 85, 75, 95]]))
+                     ])
+fig.show()
 ```
 
 ```{code-cell} ipython3

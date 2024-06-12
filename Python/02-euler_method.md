@@ -93,14 +93,15 @@ f = lambda x, y: x**2 - y;
 a, b = 0, 2;
 y0 = 3;
 
-# use the forward Euler implementation in the math263 module to numerically solve the IVP with n=10 steps
+# use the Euler's method in math263 module to compute numerical solution
 n = 10;
 (xi, yi) = math263.euler(f, a, b, y0, n);
 
 # tabulate the results
 data = np.transpose(np.stack((xi, yi)));
-hdrs = ["i", "x_i", "Euler y_i"];
-print(tabulate(data, hdrs, tablefmt='mixed_grid', floatfmt='0.5f', showindex=True))
+hdrs = ["i", "x_i", "y_i"];
+print("Euler's method");
+print(tabulate(data, hdrs, tablefmt='mixed_grid', floatfmt='0.5f', showindex=True));
 ```
 
 Since the IVP \eqref{example 2.1.a}–\eqref{example 2.1.b} can be solved analytically, we can plot the symbolic and numerical solutions together on the same set of axes.
@@ -114,12 +115,12 @@ from IPython.display import display, Markdown
 x = sympy.Symbol('x');
 y = sympy.Function('y');
 ode = sympy.Eq(y(x).diff(x), f(x,y(x)));
-soln=sympy.dsolve(ode, y(x), ics={y(a): y0}); 
+soln = sympy.dsolve(ode, y(x), ics={y(a): y0}); 
 display(Markdown(f"The true solution to the IVP is ${sympy.latex(soln)}$."))
 rhs=f(x,y(x));
 
 # convert the symbolic solution to a Python function and plot it with matplotlib.pyplot
-sym_y=sympy.lambdify(x, soln.rhs, modules=['numpy']); 
+sym_y = sympy.lambdify(x, soln.rhs, modules=['numpy']); 
 xvals = np.linspace(a, b, num=100);
 ex = plt.figure();
 plt.plot(xvals, sym_y(xvals), color='b');
