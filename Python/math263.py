@@ -3,8 +3,8 @@ import numpy as np
 def euler(f, a, b, y0, n):
 	'''
 	numerically solves the IVP
-		y' = f(x,y), y(a)=y0
-	over the interval [a, b] via n steps of the (foward) Euler method 
+		y' = f(x,y), y(a) = y0
+	over the interval [a, b] via n steps of Euler's method 
 	'''
 	h = (b-a)/n;
 	x = np.linspace(a, b, num=n+1);

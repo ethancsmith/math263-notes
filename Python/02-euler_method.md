@@ -11,17 +11,17 @@ kernelspec:
   name: python3
 ---
 
-   # Lecture 2: Euler's method.
+# Lecture 2: Euler's method.
 
-+++
+## Numerical solutions to ODE's.
 
 Suppose that we want to compute a numerical solution to the first-order IVP
-\begin{align*}
-y'&=f(x,y),\\
-y(a) &=y_0
-\end{align*}
+\begin{align}
+y'&=f(x,y),\label{ode}\tag{2.1}\\
+y(a) &=y_0\label{ic}\tag{2.2}
+\end{align}
 over the interval $[a,b]$.
-Choosing some positive integer $n$, our goal is compute a sequence of points $(x_i,y_i)$ so that if $y$ is the true solution, then
+Choosing some positive integer $n$, our goal is to compute a sequence of points $(x_i,y_i)$ so that if $y$ is the true solution, then
 \begin{equation*}
 y_i\approx y(x_i)
 \end{equation*}
@@ -30,37 +30,38 @@ We say that there are $n$ **steps**, or equivalently $n+1$ **mesh points** or no
 The distance $h_i=x_{i+1}-x_i$ is called the $i$th **step-size**, which may be variable.
 For much of this course, however, we will use equally-spaced meshes with step-size $h=(b-a)/n$.
 
+## Linearization and Euler's method.
+
 Once the mesh points have been chosen, the most straightforward approach to computing the $y_i$'s is known as Euler's method.
-The basic idea of the method is simply an appeal to linearization from calculus.
-Namely, if $y$ is the true solution and we assume that we have $y_i=y(x_i)$ exactly, then we have the approximation
-\begin{equation}
-\begin{split}
-y(x_{i+1})&\approx y(x_i) + y'(x_i)(x_{i+1}-x_i)\\
-&= y_i + f(x_i,y_i)h
-\end{split}
-\end{equation}
-for small $h$.
-**Euler's method** (a.k.a., the **foward Euler method**) recursively defines the $y_i$ by the formula
+The basis for Euler's method is tangent line approximation from calculus known as linearization.
+Recall that if $y$ is differentiable at $x=x_0$, then
+\begin{equation*}
+y(x)\approx y(x_0) + y'(x_0)(x-x_0)
+\end{equation*}
+when $x$ is sufficiently close to $x_0$.
+Therefore, if $y$ is the true solution to the IVP \eqref{ode}–\eqref{ic} and $h=x_1-x_0$ is small, then
+\begin{equation*}
+y(x_1)\approx y_0 + f(x_0, y_0)h.
+\end{equation*}
+Whence choosing $y_1 = y_0 + hf(x_0, y_0)$, we have $y_1\approx y(x_1)$ as desired.
+Continuing in this fashion, **Euler's method** is defined by the recurrence
 \begin{equation*}
 y_{i+1} = y_i + f(x_i, y_i)h
 \end{equation*}
-for $0\le i< n$.
-
-+++
+for $i\ge 0$.
 
 ## Python implementation.
 
-+++
-
 The `math263` module contains the following Python implementation of Euler's method.
+
 ```python
 import numpy as np
 
 def euler(f, a, b, y0, n):
         '''
         numerically solves IVP
-                y' = f(x,y), y(a)=y0
-        over the interval [a, b] via n steps of the (foward) Euler method 
+                y' = f(x,y), y(a) = y0
+        over the interval [a, b] via n steps of Euler's method 
         '''
         h = (b-a)/n;
         x = np.linspace(a, b, num=n+1);
@@ -72,73 +73,95 @@ def euler(f, a, b, y0, n):
         return (x, y)
 ```
 
-+++
-
 ## Example.
 
-+++
-
 We now show how to use Euler's method to solve the IVP
-\begin{align*}
-y'&= x^2 - y,\\
-y(0)&=3
-\end{align*}
+\begin{align}
+y'&= x^2 - y,\label{example 2.1.a}\tag{2.3}\\
+y(0)&=3\label{example 2.1.b}\tag{2.4}
+\end{align}
 over the interval $[0, 2]$.
 
 ```{code-cell} ipython3
 # load modules
 import math263
 import numpy as np
-import sympy as sp
-import matplotlib.pyplot as plt
 from tabulate import tabulate
-from IPython.display import display, Markdown
 
 # define IVP parameters
 f = lambda x, y: x**2 - y;
 a, b = 0, 2;
-y0=3;
+y0 = 3;
+
+# use the forward Euler implementation in the math263 module to numerically solve the IVP with n=10 steps
+n = 10;
+(xi, yi) = math263.euler(f, a, b, y0, n);
+
+# tabulate the results
+data = np.transpose(np.stack((xi, yi)));
+hdrs = ["i", "x_i", "Euler y_i"];
+print(tabulate(data, hdrs, tablefmt='mixed_grid', floatfmt='0.5f', showindex=True))
+```
+
+Since the IVP \eqref{example 2.1.a}–\eqref{example 2.1.b} can be solved analytically, we can plot the symbolic and numerical solutions together on the same set of axes.
+
+```{code-cell} ipython3
+import sympy
+import matplotlib.pyplot as plt
+from IPython.display import display, Markdown
 
 # solve the IVP symbolically with the sympy library
-x = sp.Symbol('x');
-y = sp.Function('y');
-ode = sp.Eq(y(x).diff(x), f(x,y(x)));
-soln=sp.dsolve(ode, y(x), ics={y(a): y0}); 
-display(Markdown(f"The true solution to the IVP is ${sp.latex(soln)}$."))
+x = sympy.Symbol('x');
+y = sympy.Function('y');
+ode = sympy.Eq(y(x).diff(x), f(x,y(x)));
+soln=sympy.dsolve(ode, y(x), ics={y(a): y0}); 
+display(Markdown(f"The true solution to the IVP is ${sympy.latex(soln)}$."))
 rhs=f(x,y(x));
 
 # convert the symbolic solution to a Python function and plot it with matplotlib.pyplot
-sym_y=sp.lambdify(x, soln.rhs, modules=['numpy']); 
-hx = 0.01;
+sym_y=sympy.lambdify(x, soln.rhs, modules=['numpy']); 
 xvals = np.linspace(a, b, num=100);
-ex1=plt.figure();
+ex = plt.figure();
 plt.plot(xvals, sym_y(xvals), color='b');
-plt.title(f"$y' = {sp.latex(rhs)}$, $y({a})={y0}$");
+plt.plot(xi, yi,'ro:');
+plt.legend([f"${sympy.latex(soln)}$","Euler's method"], loc='upper right');
+plt.title(f"$y' = {sympy.latex(rhs)}$, $y({a})={y0}$");
 plt.xlabel(r"$x$");
 plt.ylabel(r"$y$");
-plt.legend([f"${sp.latex(soln)}$"], loc='upper right');
 plt.grid(True)
 ```
 
-Next we solve the problem numerically with $n=20$ steps of our forward Euler implementation and display the results in a table.  The third column displays the value $y_i$ arising from Euler's method, while the fourth column of the table displays the value $y(x_i)$ of the true solution rounded to 5 decimal places.
+Note that although the sequence of errors $e_i = |y(x_i) - y_i|$ is not necessarily increasing, there is a tendency for the errors made at previous steps tend to build up at subsequent steps. 
+
+Below we overlay the plot with a direction field plot for the ODE \eqref{example 2.1.a}.
+This helps us to see that every pair of of points $(x_i, y_i)$, $(x_{i+1}, y_{i+1})$ approximates the true solution to the ODE that passes through the point $(x_i, y_i)$, but not necessarily the solution to the given IVP which passes through the initial condition point $(x_0, y_0)$.
 
 ```{code-cell} ipython3
-# use the forward Euler implementation in the math263 module to numerically solve the IVP with n=20 steps
-n = 20;
-(x,y) = math263.euler(f, a, b, y0, n);
+# set window boundaries
+xmin, xmax = a, b;
+ymin, ymax = 1, 3;
 
-# tabulate the results
-table = np.transpose(np.stack((x, y, sym_y(x))));
-hdrs = ["i", "x_i", "(FEM) y_i", "(true) y(x_i)"];
-print(tabulate(table, hdrs, tablefmt='mixed_grid', floatfmt='0.5f', showindex=True))
-```
+# set step sizes defining the horizontal/vertical distances between mesh points
+hx, hy = (b-a)/n, 0.1;
 
-Finally, we plot both the symbolic and the numerical solution together for comparison.
+# sample x- and y-intervals at appropriate step sizes; explicitly creating array of doubles
+xvals = np.arange(xmin, xmax+hx, hx, dtype=np.double);
+yvals = np.arange(ymin, ymax+hy, hy, dtype=np.double);
 
-```{code-cell} ipython3
-plt.figure(ex1);
-plt.plot(x,y,'ro:');
-plt.legend([f"${sp.latex(soln)}$","Euler's method"], loc='upper right');
+# create rectangle mesh in xy-plane; data for each variable is stored in a separate rectangle array
+X, Y = np.meshgrid(xvals, yvals);
+dx = np.ones(X.shape); # create a dx=1 at each point of the 2D mesh
+dy = f(X,Y);    # sample dy =(dy/dx)*dx, where dx=1 at each point of the 2D mesh
+# normalize each vector <dx, dy> so that it has "unit" length
+[dx, dy] = [dx, dy]/np.sqrt(dx**2 + dy**2);
+
+# plot "vector field" without arrowheads
+plt.figure(ex);
+# NOTE: pivot='mid' anchors the middle of the arrow to the mesh point
+# the _nolegend_ flag prevents a legend object from being generated in the later merged graphic
+plt.quiver(X, Y, dx, dy, color="k", headlength=0, headwidth=1, pivot="mid", label='_nolegend_'); 
+plt.xlabel("$x$");
+plt.ylabel("$y$");
 plt.show();
 ```
 

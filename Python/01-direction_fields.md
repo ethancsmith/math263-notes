@@ -46,7 +46,7 @@ Given an ODE of the form \eqref{first order ode form} a direction field can be g
 
 ## Creating direction fields with Python.
 
-Below we generate a direction field with window $[-3, 3]\times [-2 2]$ for the ODE \eqref{example 1.1.a}.
+Below we generate a direction field with window $[-3, 3]\times [-2, 2]$ for the ODE \eqref{example 1.1.a}.
 We use two popular Python packages for this task.
 The [NumPy](https://numpy.org/doc/stable/index.html) package provides efficient routines and data structures for scientific computing.
 [MatPlotLib](https://matplotlib.org/stable/) is a visualization library.
@@ -66,8 +66,8 @@ ymin, ymax = -2, 2;
 hx, hy = 0.25, 0.25;
 
 # sample x- and y-intervals at appropriate step sizes; explicitly creating array of doubles
-xvals = np.arange(xmin, xmax, hx, dtype=np.double);
-yvals = np.arange(ymin, ymax, hy, dtype=np.double);
+xvals = np.arange(xmin, xmax+hx, hx, dtype=np.double);
+yvals = np.arange(ymin, ymax+hy, hy, dtype=np.double);
 
 # create rectangle mesh in xy-plane; data for each variable is stored in a separate rectangle array
 X, Y = np.meshgrid(xvals, yvals);
@@ -146,7 +146,7 @@ y' = 1/y.
     1. Compute the general solution to the ODE exactly.
     1. Create a direction field for the DE over the window $[-3, 3]\times [-3,3]$.
     1. Compute exact solutions to the IVP consisting of the ODE together with the initial condition $y(0)=1$ and then with $y(-2)=-1$.
-    1. On a single set of axes, plot the solutions to each of the IVPs together with its initial condition point on top of your direction field.
+    1. On a single set of axes, plot the solutions to each of the IVP's together with its initial condition point on top of your direction field.
        Be sure to choose different colors so that the different objects are distinguishable, and (as always) include appropriate labels and legends.
 
 1. Consider the first order ODE 
