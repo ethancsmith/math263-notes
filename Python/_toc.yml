@@ -1,0 +1,11 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: 00-intro
+chapters:
+- file: 01-direction_fields
+- file: 02-euler_method
+- file: 03-error_analysis
+- file: 04-runge-kutta_methods
+- file: 05-multistep_methods
