@@ -166,7 +166,7 @@ plt.ylabel("$y$");
 plt.show();
 ```
 
-## Exercises:
+## Exercises.
 
 1. Consider the IVP 
 \begin{align*}

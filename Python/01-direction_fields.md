@@ -129,7 +129,7 @@ plt.legend([f"${sympy.latex(psoln)}$"], loc='upper right');
 plt.show()
 ```
 
-## Exercises:
+## Exercises.
 
 1. Consider the first-order ODE 
 \begin{equation*}
