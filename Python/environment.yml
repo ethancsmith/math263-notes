@@ -11,4 +11,6 @@ dependencies:
   - jupyter_contrib_nbextensions
   - jupytext
   - tabulate
+  - jupyter-book
+  - ipython
 prefix: /opt/anaconda3/envs/263
