@@ -1,0 +1,14 @@
+name: '263'
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - matplotlib
+  - numpy
+  - python
+  - sympy
+  - jupyter
+  - jupyter_contrib_nbextensions
+  - jupytext
+  - tabulate
+prefix: /opt/anaconda3/envs/263
