@@ -238,3 +238,4 @@ The above derivation demonstrates the following result, which we take as evidenc
 The local truncation error for the modified Euler's method is $O(h^3)$ as $h\to 0$.
 
 ---
+\ 
