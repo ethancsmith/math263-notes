@@ -13,4 +13,5 @@ dependencies:
   - tabulate
   - jupyter-book
   - ipython
+  - jupyterlab-myst
 prefix: /opt/anaconda3/envs/263
