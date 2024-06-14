@@ -1,4 +1,4 @@
-name: '263'
+name: 'math263'
 channels:
   - conda-forge
   - defaults
@@ -10,4 +10,5 @@ dependencies:
   - tabulate
   - notebook
   - jupyterlab-myst
+  - jupyter-book
 prefix: /opt/anaconda3/envs/263
