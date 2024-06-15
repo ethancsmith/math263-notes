@@ -16,10 +16,13 @@ kernelspec:
 ## Numerical solutions to ODE's.
 
 Suppose that we want to compute a numerical solution to the first-order IVP
+```{math}
+:label: ivp
 \begin{align}
-y'&=f(x,y),\label{ode}\tag{2.1}\\
-y(a) &=y_0\label{ic}\tag{2.2}
+y'&=f(x,y),\\
+y(a) &=y_0
 \end{align}
+```
 over the interval $[a,b]$.
 Choosing some positive integer $n$, our goal is to compute a sequence of points $(x_i,y_i)$ so that if $y$ is the true solution, then
 \begin{equation*}
@@ -39,7 +42,7 @@ Recall that if $y$ is differentiable at $x=x_0$, then
 y(x)\approx y(x_0) + y'(x_0)(x-x_0)
 \end{equation*}
 when $x$ is sufficiently close to $x_0$.
-Therefore, if $y$ is the true solution to the IVP \eqref{ode}–\eqref{ic} and $h=x_1-x_0$ is small, then
+Therefore, if $y$ is the true solution to the IVP {eq}`ivp` and $h=x_1-x_0$ is small, then
 \begin{equation*}
 y(x_1)\approx y_0 + f(x_0, y_0)h.
 \end{equation*}
@@ -76,10 +79,11 @@ def euler(f, a, b, y0, n):
 ## Example.
 
 We now show how to use Euler's method to solve the IVP
-\begin{align}
-y'&= x^2 - y,\label{example 2.1.a}\tag{2.3}\\
-y(0)&=3\label{example 2.1.b}\tag{2.4}
-\end{align}
+```{math}
+:label: example-02
+y'&= x^2 - y,\\
+y(0)&=3
+```
 over the interval $[0, 2]$.
 
 ```{code-cell} ipython3
@@ -104,7 +108,7 @@ print("Euler's method");
 print(tabulate(data, hdrs, tablefmt='mixed_grid', floatfmt='0.5f', showindex=True));
 ```
 
-Since the IVP \eqref{example 2.1.a}–\eqref{example 2.1.b} can be solved analytically, we can plot the symbolic and numerical solutions together on the same set of axes.
+Since the IVP {eq}`example-02` can be solved analytically, we can plot the symbolic and numerical solutions together on the same set of axes.
 
 ```{code-cell} ipython3
 import sympy
@@ -134,7 +138,7 @@ plt.grid(True)
 
 Note that although the sequence of errors $e_i = |y(x_i) - y_i|$ is not necessarily increasing, there is a tendency for the errors made at previous steps tend to build up at subsequent steps. 
 
-Below we overlay the plot with a direction field plot for the ODE \eqref{example 2.1.a}.
+Below we overlay the plot with a direction field plot for the ODE of {eq}`example-02`.
 This helps us to see that every pair of of points $(x_i, y_i)$, $(x_{i+1}, y_{i+1})$ approximates the true solution to the ODE that passes through the point $(x_i, y_i)$, but not necessarily the solution to the given IVP which passes through the initial condition point $(x_0, y_0)$.
 
 ```{code-cell} ipython3
@@ -168,18 +172,11 @@ plt.show();
 
 ## Exercises.
 
-1. Consider the IVP 
-\begin{align*}
-y'&=2x-3y+1,\\ y(0)&=1.
-\end{align*}
+1. Consider the IVP $y'=2x-3y+1, y(0)=1$.
     1. Solve the IVP symbolically and plot the solution over the interval $[0,1]$.
     1. Use Euler's method to solve the IVP numerically over the interval $[0, 1]$ with $n$ steps for $n = 8, 16, 32, 64$. 
     1. Plot the numerical approximations together with the true solution on a single set of axes. Be sure to use labels, legends, and colors so that the different results are distinguishable.
     1. Compute the absolute and relative errors at $x = 1$ for each of your numerical solutions.  Display the results in a table with (of course) appropriate labels/headers. What seems to be happening to the errors each time that we double the number of steps?
-1. Consider the IVP 
-\begin{align*}
-y'&=x^2+y^2,\\
-y(0)&=1.
-\end{align*}
+1. Consider the IVP $y'=x^2+y^2, y(0)=1$.
     1. Solve the IVP symbolically.  
     1. Use Euler's method with step sizes $h = 0.1$ and $h = 0.05$ to obtain a numerical approximation to $y(1/2)$.

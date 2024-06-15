@@ -19,6 +19,11 @@ parse:
     - substitution
     - tasklist
 
+# For prf:theorem and prf:proof directives; not yet a jupyter-book default
+sphinx:
+  extra_extensions:
+    - sphinx_proof
+
 # Force re-execution of notebooks on each build.
 # See https://jupyterbook.org/content/execute.html
 execute:
