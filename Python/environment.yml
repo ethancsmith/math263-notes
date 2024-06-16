@@ -1,4 +1,4 @@
-name: 'math263'
+name: 'test'
 channels:
   - conda-forge
   - defaults
@@ -11,4 +11,7 @@ dependencies:
   - notebook
   - jupyterlab-myst
   - jupyter-book
-prefix: /opt/anaconda3/envs/263
+  - pip
+  - pip:
+      - sphinx-proof
+#prefix: /opt/anaconda3/envs/math263
