@@ -160,13 +160,9 @@ dy = f(X,Y);    # sample dy =(dy/dx)*dx, where dx=1 at each point of the 2D mesh
 # normalize each vector <dx, dy> so that it has "unit" length
 [dx, dy] = [dx, dy]/np.sqrt(dx**2 + dy**2);
 
-# plot "vector field" without arrowheads
+# plot direction field on top of previous plot
 plt.figure(ex);
-# NOTE: pivot='mid' anchors the middle of the arrow to the mesh point
-# the _nolegend_ flag prevents a legend object from being generated in the later merged graphic
 plt.quiver(X, Y, dx, dy, color="k", headlength=0, headwidth=1, pivot="mid", label='_nolegend_'); 
-plt.xlabel("$x$");
-plt.ylabel("$y$");
 plt.show();
 ```
 
