@@ -11,9 +11,7 @@ kernelspec:
   name: python3
 ---
 
-   # Lecture 3: Error analysis.
-
-+++
+# Lecture 3: Error analysis.
 
 ## Types of error.
 
@@ -24,13 +22,13 @@ In general, numerical methods suffer from two distinct sources of error.
 Although it is important, we will largely ignore rounding error in this course.
 Instead we will focus on understanding truncation error, which would remain present even if all arithmetic was performed exactly.
 Truncation error can be discussed in two different forms.
-1. The **local truncation error** is the error made in just one step of a numerical method.
+The **local truncation error** is the error made in just one step of a numerical method.
 In particular, we assume that the previous computed value $y_{i}$ is exactly correct, and then we compute the error at the next step, i.e., the local truncation error in the $(i+1)$st step is the quantity
 \begin{equation*}
 \ell_{i+1} = y_*(x_{i+1})- y_{i+1},
 \end{equation*}
 where $y_*$ is the true solution to the ODE that passes through the point $(x_{i}, y_{i})$, but not necessarily to the given IVP.  Put another way, the local truncation error is the extent to which the true solution fails to satisfy the formula the method uses to produce the $(i+1)$st approximation.
-1. The **global truncation error** in the $(i+1)$st step is the difference between the the true solution value and the computed solution, i.e., it is the quantity 
+The **global truncation error** in the $(i+1)$st step is the difference between the the true solution value and the computed solution, i.e., it is the quantity 
 \begin{equation*}
 e_{i+1} = y(x_{i+1}) - y_{i+1},
 \end{equation*}
@@ -38,8 +36,6 @@ where $y$ is the true solution to the given IVP.
 
 When solving an IVP, the global truncation error and the local truncation error always agree at the first step.
 Although it is potentially misleading, the global truncation error may be viewed as the accumulation of local errors made at all previous steps.
-
-+++
 
 ## The order of a numerical method.
 
@@ -63,16 +59,16 @@ So, we are usually interested in bounding errors as functions of $h$ which is te
 
 ```{prf:definition}
 
-We say that a numerical method has **order $p$** if the global trunctation error
-\begin{equation*}
-e_{i+1} = O\big(h^p\big) \text{ as } h\to 0.
-\end{equation*}
+We say that a numerical method has **order $p$** if the global trunctation error is $O\big(h^p\big)$ as $h\to 0$.
 ```
 
 Note that since $h$ is tending toward zero, larger values of $p$ are preferred since higher degree monomials vanish faster near the origin than lower degree monomials do.
 For example, $h^3$ vanishes more quickly than $h^2$ which vanishes more quickly than $h$.  
 
+```{note}
 In many situations, if the local truncation error $\ell_{i+1} = O\big(h^{p+1}\big)$ as $h\to 0$, then the global truncation error $e_{i+1} = O\big(h^p\big)$ as $h\to 0$.
+```
+
 To see this, we argue _heuristically_ as follows.
 Suppose that we are numerically approximating the solution to an IVP on the interval $[a,b]$ with step-size $h=(b-a)/n$ and that the local truncation error $\ell_{i+1} = O\big(h^{p+1}\big)$ as $h\to 0$.
 Then the global error $e_{n} = y(b) - y_n$ arises from the accumation of $n = (b-a)/h$ local errors.
@@ -83,9 +79,7 @@ e_n = y(b) -y_n = \frac{b-a}{h}O\big(h^{p+1}\big) = O\big(h^p\big) \text{ as }h\
 Note well that this is only a heuristic argument and not a proof.  Why?
 
 In practice, the global truncation error is usually easier to measure empirically while the local truncation error is easier to determine analytically.
-Since the two types of error are typically related as in the previous paragraph, we will provide analytic arguments for the order of numerical methods based on the local truncation error.
-
-+++
+Since the two types of error are typically related as in the above note, we will provide analytic arguments for the order of numerical methods based on the local truncation error.
 
 ## Analysis of Euler's method.
 
@@ -184,7 +178,7 @@ print(tabulate(table, hdrs, tablefmt='mixed_grid', floatfmt='0.5f', showindex=Tr
 
 Since the absolute error $|y(1) - y_n|$ is roughly cut in half each time that the step-size $h$ is cut in half, we view the table above as evidence that the global truncation error for Euler's method is $O(h)$ as $h\to 0$, i.e., Euler's method is an order $1$ numerical method.
 
-## A modified Euler method.
+## Numerical integration and Euler's method.
 
 Euler's method for numerically solving the IVP
 \begin{align*}
@@ -198,20 +192,32 @@ y(x_0+h)&\approx y(x_0) + hf\big(x_0, y(x_0)\big)\\
 &= y_0 + hf(x_0, y_0).
 \end{split}
 \end{equation*}
-We now develop a "modified Euler method" that is based on integration.
-
-By the fundamental theorem of calculus,
-\begin{equation*}
+Many numerical methods for ODE's can also be derived from the perspective of numerical integration.
+For this reason, we often speak of "integrating the ODE."
+Indeed, if $y$ is the true solution to the IVP above, then the fundamental theorem of calculus tells us that
+```{math}
+:label: FTC
 y(x_0+h)-y_0=y(x_1)-y(x_0)=\int_{x_0}^{x_0+h}y'(x)\mathrm{d}x=\int_{x_0}^{x_0+h}f\big(x,y(x)\big)\mathrm{d} x.
-\end{equation*}
-Therefore, if we assume that the expression $f(x,y)$ has a continuous second derivative (as a function of $x$) on the interval $[x_0, x_0+h]$, then the trapezoidal rule gives
+```
+The difficulty then is in evaluating the integral whose integrand depends on the unknown function $y(x)$.
+Euler's method follows by approximating the integral with the left-hand rule, namely
+```{math}
+y(x_0+h)=y_0+\int_{x_0}^{x_0+h}f\big(x,y(x)\big)\mathrm{d} x \approx y_0+hf\big(x_0, y(x_0)\big).
+```
+
+## Heun's modified Euler method.
+
+We now derive a method of Heun by replacing the left-hand rule with the trapezoidal rule.
+Returning to equation {eq}`FTC` and assuming that the expression $f(x,y)$ has a continuous second derivative (as a function of $x$) on the interval $[x_0, x_0+h]$, the trapezoidal rule gives
 ```{math}
 :label: trapezoidal-approx
-y(x_0+h)-y_0 &=\frac{h}{2}\Big(f\big(x_0, y(x_0)\big)+f\big(x_{0}+h, y(x_0+h)\big)\Big) +O\big(h^3\big)\\
+y(x_0+h)-y_0 
+&=\int_{x_0}^{x_0+h}f\big(x,y(x)\big)\mathrm{d} x\\
+&=\frac{h}{2}\Big(f\big(x_0, y(x_0)\big)+f\big(x_{0}+h, y(x_0+h)\big)\Big) +O\big(h^3\big)\\
 &=\frac{h}{2}\Big(f(x_0, y_0)+f\big(x_{0}+h, y(x_0+h)\big)\Big) +O\big(h^3\big)
 ```
 as $h\to 0$.
-Unfortunately, we do not know how to evaluate $f\big(x_0+h,y(x_0+h)\big)$ since we do not yet know the value of $y(x_0+h)$.
+Unfortunately, we do not know how to evaluate $f\big(x_0+h,y(x_0+h)\big)$ since it depends on $y(x_0+h)$ and our goal is to approximate $y(x_0+h)$.
 Our solution is to approximate the $y(x_0+h)$ appearing on the right-hand side of {eq}`trapezoidal-approx` by the original Euler method.
 In particular,
 \begin{equation*}
