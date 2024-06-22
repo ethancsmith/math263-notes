@@ -22,9 +22,10 @@ These methods are also called **starting methods** because the initial-value con
 On the other hand, **multistep methods** use more than one of the previously computed $y_j$.
 An **$m$-step method** would use the previous $m$ values: $(x_i,y_i), (x_{i-1},y_{i-1}),\dots, (x_{i-m+1},y_{i-m+1})$.
 A **linear $m$-step method** takes the form
-\begin{equation}\label{linear multistep form}\tag{5.1}
+```{math}
+:label: linear-multistep-form
 y_{i+1} = \sum_{j=1}^m\alpha_jy_{i+1-j} + h\sum_{j=0}^m\beta_jf(x_{i+1-j}, y_{i+1-j}).
-\end{equation}
+```
 Clearly such a method cannot be used until $m$ previous values are known.
 For this reason, these methods must be paired with a starting method and are themselves called **continuing methods**.
 However, there is additional wrinkle if $\beta_0\ne 0$ since in that case $y_{i+1}$ appears on both sides of the defining equation.
@@ -37,29 +38,33 @@ Some of the most popular explicit linear multistep methods are the _Adams–Bash
 
 +++
 
-## Adams–Bashforth 2-step (explicit) method.
+## Adams–Bashforth 2-step method.
 
-For an explicit, linear $2$-step method equation \eqref{linear multistep form} simplifies to
-\begin{equation}\label{2-step form}\tag{5.2}
+For an explicit, linear $2$-step method equation {eq}`linear-multistep-form` simplifies to
+```{math}
+:label: 2-step-form
 y_{i+1} = \alpha_1y_i + h\big(\beta_1f(x_i,y_i) + \beta_2f(x_{i-1},y_{i-1}\big).
-\end{equation}
+```
 The idea of the Adams–Bashforth method is to force this formula to be exact for the first 3 terms of the Taylor series for the true solution $y$.
 This will ensure that the local truncation error for the method is $O(h^3)$ as $h\to 0$.
 Note that with only $3$ parameters to determine (viz, $\alpha_1, \beta_1, \beta_2)$, this is the best that can be done.
 By linearity, it is enough to make it exact for the cases $y(x)=1$, $y(x)=x$, and $y(x)=x^2$.
-If $y(x)=1$, then $f(x,y(x)) = y'(x) = 0$, and so the equation \eqref{2-step form} becomes
-\begin{equation}\label{ab2 condition 1}\tag{5.3}
+If $y(x)=1$, then $f(x,y(x)) = y'(x) = 0$, and so the equation {eq}`2-step-form` becomes
+```{math}
+:label: ab2-condition-1
 1=\alpha_1.
-\end{equation}
-Similarly, if $y(x)=x$, then $y'(x)=1$ and \eqref{2-step form} becomes
-\begin{equation}\label{ab2 condition 2}\tag{5.4}
+```
+Similarly, if $y(x)=x$, then $y'(x)=1$ and {eq}`2-step-form` becomes
+```{math}
+:label: ab2-condition-2
 x_{i+1}=\alpha_1 x_i + h(\beta_1+\beta_2).
-\end{equation}
-Finally, if $y(x)=x^2$, then $y'(x)=2x$ and \eqref{2-step form} becomes
-\begin{equation}\label{ab2 condition 3}\tag{5.5}
+```
+Finally, if $y(x)=x^2$, then $y'(x)=2x$ and {eq}`2-step-form` becomes
+```{math}
+:label: ab2-condition-3
 x_{i+1}^2 = \alpha_1x_i^2+ h(2\beta_1x_i + 2\beta_2x_{i-1}).
-\end{equation}
-Now, equations \eqref{ab2 condition 1}, \eqref{ab2 condition 2}, and \eqref{ab2 condition 3} must hold for all values of $x_i$ and $h$.
+```
+Now, equations {eq}`ab2-condition-1`, {eq}`ab2-condition-2`, and {eq}`ab2-condition-3` must hold for all values of $x_i$ and $h$.
 Choosing $x_{i}=1$ and $h=1$ so that $x_{i-1}=0$ and $x_{i+1}=2$, we arrive at the system of equations
 \begin{align*}
 1&=\alpha_1,\\
@@ -67,7 +72,7 @@ Choosing $x_{i}=1$ and $h=1$ so that $x_{i-1}=0$ and $x_{i+1}=2$, we arrive at t
 4&=\alpha_1+2\beta_1.
 \end{align*}
 Solving the system yields $\alpha_1=1$, $\beta_1=3/2$, and $\beta_2=-1/2$.
-The **(explicit) Adams–Bashforth two-step method (AB2)** is therefore defined by the recurrence
+The **Adams–Bashforth two-step method (AB2)** is therefore defined by the recurrence
 \begin{equation*}
 y_{i+1} = y_i + \frac{h}{2}\big(3y_i' - y_{i-1}'\big),
 \end{equation*}
@@ -79,9 +84,9 @@ Thus, it should be paired with a starter method whose order of accuracy is at le
 
 +++
 
-## Adams–Bashforth 4-step (explicit) method.
+## Adams–Bashforth 4-step method.
 
-In a similar manner, one may derive the **(explicit) Adams–Bashforth four-step method (AB4)**, which is defined by the recurrence
+In a similar manner, one may derive the **Adams–Bashforth four-step method (AB4)**, which is defined by the recurrence
 \begin{equation*}
 y_{i+1}=y_i+\frac{h}{24}\big(55y_i'-59y_{i-1}'+37y_{i-2}'-9y_{i-3}'\big)
 \end{equation*}
@@ -162,10 +167,7 @@ Comment on which method appears to perform better for each problem.
      1. $y'=1+(x-y)^2$, $y(2)=1$, $[a,b]=[2,3]$, $h=0.1$.
      1. $y'=1+y/x$, $y(1)=2$, $[a,b]=[1,2]$, $h=0.1$.
      1. $y'=\cos 2x - \sin 3x$, $y(0)=1$, $[a,b]=[0,1]$, $h=0.1$.
-1. Consider the IVP
-\begin{equation*}
-y'=1+y/x+(y/x)^2,\quad y(1)=0.
-\end{equation*}
+1. Consider the IVP $y'=1+y/x+(y/x)^2, y(1)=0$.
      1. Use both AB4 and (single-step) RK4 to approximate $y(3)$ for $n=2^k$ with $k=3,\dots, 10$.
      Display the absolute errors for both in a single table.
      Do the data appear consistent with the "advertised" local truncation error for AB4?  Explain.
