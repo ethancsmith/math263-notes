@@ -11,7 +11,8 @@ dependencies:
   - notebook
   - jupyterlab-myst
   - jupyter-book
+  - ghp-import
   - pip
   - pip:
       - sphinx-proof
-#prefix: /opt/anaconda3/envs/math263
+prefix: /opt/anaconda3/envs/math263
