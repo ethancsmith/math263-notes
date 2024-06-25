@@ -145,7 +145,3 @@ plt.show()
        What shape does the direction field suggest the solutions will take?
     1. Compute an exact solution to the IVP consisting of the ODE together with the initial condition $y(1)=1$.
     1. Plot the solution together with the initial condition point $(1,1)$ and your direction field from above on a single set of axes.
-
-```{code-cell} ipython3
-
-```

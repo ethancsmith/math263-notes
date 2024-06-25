@@ -1,14 +1,16 @@
 ---
-jupytext:
-  text_representation:
-    extension: .md
-    format_name: myst
-    format_version: 0.13
-    jupytext_version: 1.16.2
-kernelspec:
-  display_name: Python 3 (ipykernel)
-  language: python
-  name: python3
+jupyter:
+  jupytext:
+    custom_cell_magics: kql
+    text_representation:
+      extension: .md
+      format_name: markdown
+      format_version: '1.3'
+      jupytext_version: 1.11.2
+  kernelspec:
+    display_name: Python 3 (ipykernel)
+    language: python
+    name: python3
 ---
 
 # Lecture 4: Runge–Kutta methods.
@@ -18,7 +20,6 @@ The **Runge–Kutta methods** are a family of numerical methods which generalize
 As with Heun's method, the essence of the idea is to use additional terms of the Taylor series without actually computing the higher order derivatives and instead replacing each with some finite difference approximation.
 The Runge-Kutta method of order $1$ is Euler's method. Heun's modified Euler method is an example of an order $2$ Runge–Kutta method.
 
-+++
 
 ## Order two methods.
 
@@ -42,7 +43,6 @@ Setting $w_1=w_2=1/2$ and $\alpha=\beta=1$ yields Heun's (modified Euler) method
 **Ralston's order 2 method**, which also occasionally goes by the name "Heun's method," arises by setting $w_1=1/4$, $w_2=3/4$, and $\alpha=\beta=2/3$.
 Finally, the **midpoint method** (or **corrected Euler method**) is defined by the choices $w_1=0$, $w_2=1$, and  $\alpha=\beta=1/2$.
 
-+++
 
 ## The classical fourth order method.
 
@@ -59,7 +59,6 @@ k_4 &= f(x_i + h, y_i + hk_3).
 \end{align}
 As the name would seem to imply, RK4 is an order $4$ numerical method.
 
-+++
 
 ## Example.
 
@@ -69,7 +68,7 @@ y'&=(y/x)-(y/x)^2,\\
 y(1)&=1.
 \end{align}
 
-```{code-cell} ipython3
+```python
 import math263
 import numpy as np
 import sympy as sp
@@ -119,3 +118,29 @@ plt.plot(x,y_rk4,'go:');
 plt.legend([f"${sp.latex(soln)}$","Euler", "RK4"], loc='upper left');
 plt.show();
 ```
+
+## Exercises.
+
+1. Implement Ralston's order 2 method and the midpoint method in Mathematica.
+Call the methods \texttt{ralston2} and \texttt{midpoint}, respectively.
+You may copy and paste my code from lecture for any other needed methods.
+
+1. Solve each of the following IVP's with the indicated parameter choices using midpoint method, Heun's method, and Ralston's order 2 method.
+For each IVP, create a table for each method displaying the step $i$, the exact value $y(x_i)$, the approximate value $y_i$, and the absolute error $|y(x_i)-y_i|$.
+Make sure that it is clear which table is which.
+For each problem, indicate whether one of the 3 methods appears to perform better than the others.  
+If not, explain.
+    1. $y'=x\mathrm{e}^{3x}-2y$, $y(0)=0$, $[a,b]=[0,1]$, $h=0.5$.
+    1. $y'=1+(x-y)^2$, $y(2)=1$, $[a,b]=[2,3]$, $h=0.5$.
+    1. $y'=1+y/x$, $y(1)=2$, $[a,b]=[1,2]$, $h=0.25$.
+    1. $y'=\cos 2x - \sin 3x$, $y(0)=1$, $[a,b]=[0,1]$, $h=0.25$.
+
+1. Consider the IVP $y'=1+y/x+(y/x)^2$, $y(1)=0$.
+    1. Use the midpoint method to approximate $y(3)$ for $n=8, 16, 32, 64$ and display the absolute errors in a table.  Based on observation, what would you guess the local and global truncation errors for the method to be?
+    1. Use Heun's method to approximate $y(3)$ for $n=8, 16, 32, 64$ and display the absolute errors in a table.  Based on observation, what would you guess the local and global truncation errors for the method to be?
+    1. Use Ralston's order 2 method to approximate $y(3)$ for $n=8, 16, 32, 64$ and display the absolute errors in a table.  Based on observation, what would you guess the local and global truncation errors for the method to be?
+    1. Use the classical RK4 method to approximate $y(3)$ for $n=8, 16, 32, 64$ and display the absolute errors in a table.  Based on observation, what would you guess the local and global truncation errors for the method to be?
+    1. On a per step basis, typically the ``expensive" part of these algorithms is the evaluation of $f(x,y)$.  How many evaluations do each of the 4 methods require per step?  How many evaluations are required to complete $n$ steps?  Is RK4 worth the extra evaluations?  Hint: You must find a way to ``equalize" the work before comparing.
+
+
+
