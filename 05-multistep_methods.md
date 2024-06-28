@@ -101,7 +101,7 @@ The disadvantage of a multistep method is that it is typically slightly more dif
 It even requires a single-step method to get started.
 However, there tends to be a major gain in order of accuracy per work.
 We usually measure the work per step of a numerical method based on the number of times that we need to evaluate the "right-hand side" function $f(x,y)$.
-The typical single-step Runge-Kutta method of order 2 (e.g., Heun's method) requires 2 functional evaluations per step.
+The typical single-step Runge-Kutta method of order 2 (e.g., Heun's modified Euler method) requires 2 functional evaluations per step.
 We compare this to the Adams–Bashforth 2-step method which has the same order of accuracy and only requires one additional functional evaluation per step since it saves the evaluations from previous steps until it is finished with them.
 Furthermore, since the error $|y(x_i)-y_i|$ tends to increase with $i$, it is reasonable to hope that a multistep may have better accuracy (not just order of accuracy) by mere fact that it explicitly incorporates more accurate previous data when approximating $y_{i+1}$.
 
@@ -135,27 +135,57 @@ y0=1/2;
 x = sp.Symbol('x');
 y = sp.Function('y');
 ode = sp.Eq(y(x).diff(x), f(x,y(x)));
-soln=sp.dsolve(ode, y(x), ics={y(a): y0}); 
+soln = sp.dsolve(ode, y(x), ics={y(a): y0}); 
 #rhs=f(x,y(x));
 #display(Markdown(f"The true solution to the ODE $y'={sp.latex(rhs)}$ with initial condition $y({a})={y0}$ is ${sp.latex(soln)}$."))
-sym_y=sp.lambdify(x, soln.rhs, modules=['numpy']);
+sym_y = sp.lambdify(x, soln.rhs, modules=['numpy']);
 
 # numerically solve the IVP with n=10 steps of forward Euler and n=10 steps of RK4
 n = 10;
 (x, y_mem) = math263.mem(f, a, b, y0, n);
-(x, y_ab2)   = math263.ab2(f, a, b, y0, n); 
+(x, y_ab2) = math263.ab2(f, a, b, y0, n); 
 
 
 # tabulate the results
-print("Comparison of global errors for MEM and AB2.")
+print(f"Comparison of global errors for MEM and AB2 across interval for step-size h = {(b-a)/n}.")
 table = np.transpose(np.stack((x, abs(sym_y(x)-y_mem), abs(sym_y(x)-y_ab2))));
 hdrs = ["i", "x_i", "MEM global error", "AB2 global error"];
 print(tabulate(table, hdrs, tablefmt='mixed_grid', floatfmt='0.5f', showindex=True))
 ```
 
-TODO: Give timing analysis example as in NB version.
+TODO: Clean and add commentary for experiment below.
 
-+++
+```{code-cell} ipython3
+# compute abs errors at right endpoint for various step-sizes
+base = 10;
+max_exp = 8;
+num_steps = [base**j for j in range(1, max_exp)];
+h = [(b-a)/n for n in num_steps];
+mem_errors = [abs(math263.mem(f, a, b, y0, n)[1][-1]-sym_y(b)) for n in num_steps];
+ab2_errors = [abs(math263.ab2(f, a, b, y0, n)[1][-1]-sym_y(b)) for n in num_steps];
+
+# tabulate the results
+print(f"Comparison of global errors |y_n - y({b})| for various step-sizes.")
+table = np.transpose(np.stack((h, mem_errors, ab2_errors)));
+hdrs = ["step-size", "MEM global error", "AB2 global error"];
+print(tabulate(table, hdrs, tablefmt='mixed_grid', floatfmt=['0.7f','g','g']))
+```
+
+```{code-cell} ipython3
+import timeit
+num_trials = 10;
+mem_times = [timeit.timeit(lambda: math263.mem(f, a, b, y0, base**j), number=num_trials)/num_trials 
+             for j in range(1, max_exp)];
+ab2_times = [timeit.timeit(lambda: math263.ab2(f, a, b, y0, base**j), number=num_trials)/num_trials 
+             for j in range(1, max_exp)];
+
+# tabulate the results
+print(f"Comparison of global errors |y_n - y({b})| for various step-sizes.")
+table = np.transpose(np.stack((num_steps, mem_times, ab2_times)));
+hdrs = ["num steps", "MEM time (secs)", "AB2 time (secs)"];
+print(tabulate(table, hdrs, tablefmt='mixed_grid'))
+[mem_times[j]/ab2_times[j] for j in range(len(mem_times))]
+```
 
 ## Exercises.
 
