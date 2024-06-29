@@ -70,7 +70,7 @@ y'&=(y/x)-(y/x)^2,\\
 y(1)&=1.
 \end{align}
 
-```{code-cell} ipython3
+```{code-cell}
 import math263
 import numpy as np
 import sympy as sp
@@ -144,8 +144,6 @@ If not, explain.
     1. Use the classical RK4 method to approximate $y(3)$ for $n=8, 16, 32, 64$ and display the absolute errors in a table.  Based on observation, what would you guess the local and global truncation errors for the method to be?
     1. On a per step basis, typically the "expensive" part of these algorithms is the evaluation of $f(x,y)$.  How many evaluations do each of the 4 methods require per step?  How many evaluations are required to complete $n$ steps?  Is RK4 worth the extra evaluations?  Hint: You must find a way to "equalize" the work before comparing.
 
-
-
-```{code-cell} ipython3
+```{code-cell}
 
 ```

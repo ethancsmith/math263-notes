@@ -143,7 +143,7 @@ y(0)&= 1.
 \end{align*}
 The code block below computes the absolute errors obtained when approximating the value $y(1)$ by Euler's method for various step-sizes.
 
-```{code-cell} ipython3
+```{code-cell}
 import numpy as np
 import sympy as sp
 import math263

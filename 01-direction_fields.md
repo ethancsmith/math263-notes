@@ -47,7 +47,7 @@ We use two popular Python packages for this task.
 The [NumPy](https://numpy.org/doc/stable/index.html) package provides efficient routines and data structures for scientific computing.
 [MatPlotLib](https://matplotlib.org/stable/) is a visualization library.
 
-```{code-cell} ipython3
+```{code-cell}
 # import numpy and matplotlib.pyplot with conventional shorthands
 import numpy as np 
 from matplotlib import pyplot as plt
@@ -88,7 +88,7 @@ plt.ylabel("$y$");
 If the ODE in question can be solved analytically, we can try using the SymPy module to compute solutions.
 The code snippet below demonstrates how to compute the general solution to the ODE of {eq}`example-01`.
 
-```{code-cell} ipython3
+```{code-cell}
 import sympy
 from IPython.display import display, Markdown
 
@@ -110,7 +110,7 @@ display(Markdown(f"The general solution to the ODE $y'(x)={sympy.latex(ode.rhs)}
 
 To solve an IVP with SymPy, we simply pass the initial conditions of the problem stored as a Python dictionary.  The code snippet below computes the particular solution to the IVP {eq}`example-01`
 
-```{code-cell} ipython3
+```{code-cell}
 x0, y0 = 0, -1/2;
 psoln=sympy.dsolve(ode, ics={y(x0): y0}); psoln
 display(Markdown(f"The particular solution to the IVP \
@@ -119,7 +119,7 @@ display(Markdown(f"The particular solution to the IVP \
 
 We can plot the particular solution on top of the direction field that we created by first converting the solution expression to a lambda function that can be evaluated numerically.
 
-```{code-cell} ipython3
+```{code-cell}
 yfunc=sympy.lambdify(x, psoln.rhs, modules=['numpy']); 
 xvals = np.linspace(xmin, xmax, num=100);
 plt.figure(dfield) # set the current figure to direction field created above
