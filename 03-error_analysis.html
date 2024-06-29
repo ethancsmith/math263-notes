@@ -1,0 +1,789 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Lecture 3: Error analysis. &#8212; MATH 263: Numerical differential equations</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=3ee479438cf8b5e0d341"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '03-error_analysis';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Lecture 4: Runge–Kutta methods." href="04-runge-kutta_methods.html" />
+    <link rel="prev" title="Lecture 2: Euler’s method." href="02-euler_method.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="00-intro.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">MATH 263: Numerical differential equations</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="00-intro.html">
+                    MATH 263: Numerical differential equations.
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01-direction_fields.html">Lecture 1: Direction fields.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02-euler_method.html">Lecture 2: Euler’s method.</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Lecture 3: Error analysis.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04-runge-kutta_methods.html">Lecture 4: Runge–Kutta methods.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05-multistep_methods.html">Lecture 5: Multistep methods.</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/ethancsmith/math263-notes" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/ethancsmith/math263-notes/issues/new?title=Issue%20on%20page%20%2F03-error_analysis.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/03-error_analysis.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Lecture 3: Error analysis.</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-error">Types of error.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-order-of-a-numerical-method">The order of a numerical method.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis-of-eulers-method">Analysis of Euler’s method.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#numerical-integration-and-eulers-method">Numerical integration and Euler’s method.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#heuns-modified-euler-method">Heun’s modified Euler method.</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="lecture-3-error-analysis">
+<h1>Lecture 3: Error analysis.<a class="headerlink" href="#lecture-3-error-analysis" title="Link to this heading">#</a></h1>
+<section id="types-of-error">
+<h2>Types of error.<a class="headerlink" href="#types-of-error" title="Link to this heading">#</a></h2>
+<p>In general, numerical methods suffer from two distinct sources of error.</p>
+<ol class="arabic simple">
+<li><p><strong>Rounding error</strong> is error introduced due to the use of finite precision arithmetic.</p></li>
+<li><p><strong>Truncation error</strong> (or <strong>discretization error</strong>) is the error introduced by explicit approximations made in the method.</p></li>
+</ol>
+<p>Although it is important, we will largely ignore rounding error in this course.
+Instead we will focus on understanding truncation error, which would remain present even if all arithmetic was performed exactly.
+Truncation error can be discussed in two different forms.
+The <strong>local truncation error</strong> is the error made in just one step of a numerical method.
+In particular, we assume that the previous computed value <span class="math notranslate nohighlight">\(y_{i}\)</span> is exactly correct, and then we compute the error at the next step, i.e., the local truncation error in the <span class="math notranslate nohighlight">\((i+1)\)</span>st step is the quantity</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\ell_{i+1} = y_*(x_{i+1})- y_{i+1},
+\end{equation*}\]</div>
+<p>where <span class="math notranslate nohighlight">\(y_*\)</span> is the true solution to the ODE that passes through the point <span class="math notranslate nohighlight">\((x_{i}, y_{i})\)</span>, but not necessarily to the given IVP.  Put another way, the local truncation error is the extent to which the true solution fails to satisfy the formula the method uses to produce the <span class="math notranslate nohighlight">\((i+1)\)</span>st approximation.
+The <strong>global truncation error</strong> in the <span class="math notranslate nohighlight">\((i+1)\)</span>st step is the difference between the the true solution value and the computed solution, i.e., it is the quantity</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+e_{i+1} = y(x_{i+1}) - y_{i+1},
+\end{equation*}\]</div>
+<p>where <span class="math notranslate nohighlight">\(y\)</span> is the true solution to the given IVP.</p>
+<p>When solving an IVP, the global truncation error and the local truncation error always agree at the first step.
+Although it is potentially misleading, the global truncation error may be viewed as the accumulation of local errors made at all previous steps.</p>
+</section>
+<section id="the-order-of-a-numerical-method">
+<h2>The order of a numerical method.<a class="headerlink" href="#the-order-of-a-numerical-method" title="Link to this heading">#</a></h2>
+<p>Suppose <span class="math notranslate nohighlight">\(f\)</span> and <span class="math notranslate nohighlight">\(g\)</span> are functions of a real variable <span class="math notranslate nohighlight">\(x\)</span> and that both are defined on an open interval containing <span class="math notranslate nohighlight">\(x=a\)</span> except possibly at <span class="math notranslate nohighlight">\(x=a\)</span> itself.</p>
+<div class="proof definition admonition" id="definition-0">
+<p class="admonition-title"><span class="caption-number">Definition 1 </span></p>
+<section class="definition-content" id="proof-content">
+<p>We say that <span class="math notranslate nohighlight">\(f\)</span> <strong>is of order <span class="math notranslate nohighlight">\(g\)</span> as <span class="math notranslate nohighlight">\(x\)</span> tends toward <span class="math notranslate nohighlight">\(a\)</span></strong>, and we write</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+f(x) = O\big(g(x)\big)\text{ as } x\to a
+\end{equation*}\]</div>
+<p>if there are constants <span class="math notranslate nohighlight">\(M, \delta&gt;0\)</span> so that</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+|f(x)|\le M|g(x)|
+\end{equation*}\]</div>
+<p>for all <span class="math notranslate nohighlight">\(x\)</span> so that <span class="math notranslate nohighlight">\(0&lt;|x-a|&lt;\delta\)</span>.</p>
+</section>
+</div><p>For any reasonable numerical method, both the local and the global truncation errors should tend to zero as the step size <span class="math notranslate nohighlight">\(h = x_{i+1}-x_i\)</span> tends to zero.
+So, we are usually interested in bounding errors as functions of <span class="math notranslate nohighlight">\(h\)</span> which is tending toward zero.</p>
+<div class="proof definition admonition" id="definition-1">
+<p class="admonition-title"><span class="caption-number">Definition 2 </span></p>
+<section class="definition-content" id="proof-content">
+<p>We say that a numerical method has <strong>order <span class="math notranslate nohighlight">\(p\)</span></strong> if the global trunctation error is <span class="math notranslate nohighlight">\(O\big(h^p\big)\)</span> as <span class="math notranslate nohighlight">\(h\to 0\)</span>.</p>
+</section>
+</div><p>Note that since <span class="math notranslate nohighlight">\(h\)</span> is tending toward zero, larger values of <span class="math notranslate nohighlight">\(p\)</span> are preferred since higher degree monomials vanish faster near the origin than lower degree monomials do.
+For example, <span class="math notranslate nohighlight">\(h^3\)</span> vanishes more quickly than <span class="math notranslate nohighlight">\(h^2\)</span> which vanishes more quickly than <span class="math notranslate nohighlight">\(h\)</span>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In many situations, if the local truncation error <span class="math notranslate nohighlight">\(\ell_{i+1} = O\big(h^{p+1}\big)\)</span> as <span class="math notranslate nohighlight">\(h\to 0\)</span>, then the global truncation error <span class="math notranslate nohighlight">\(e_{i+1} = O\big(h^p\big)\)</span> as <span class="math notranslate nohighlight">\(h\to 0\)</span>.</p>
+</div>
+<p>To see this, we argue <em>heuristically</em> as follows.
+Suppose that we are numerically approximating the solution to an IVP on the interval <span class="math notranslate nohighlight">\([a,b]\)</span> with step-size <span class="math notranslate nohighlight">\(h=(b-a)/n\)</span> and that the local truncation error <span class="math notranslate nohighlight">\(\ell_{i+1} = O\big(h^{p+1}\big)\)</span> as <span class="math notranslate nohighlight">\(h\to 0\)</span>.
+Then the global error <span class="math notranslate nohighlight">\(e_{n} = y(b) - y_n\)</span> arises from the accumation of <span class="math notranslate nohighlight">\(n = (b-a)/h\)</span> local errors.
+Whence</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+e_n = y(b) -y_n = \frac{b-a}{h}O\big(h^{p+1}\big) = O\big(h^p\big) \text{ as }h\to 0.
+\end{equation*}\]</div>
+<p>Note well that this is only a heuristic argument and not a proof.  Why?</p>
+<p>In practice, the global truncation error is usually easier to measure empirically while the local truncation error is easier to determine analytically.
+Since the two types of error are typically related as in the above note, we will provide analytic arguments for the order of numerical methods based on the local truncation error.</p>
+</section>
+<section id="analysis-of-eulers-method">
+<h2>Analysis of Euler’s method.<a class="headerlink" href="#analysis-of-eulers-method" title="Link to this heading">#</a></h2>
+<p>Recall that if <span class="math notranslate nohighlight">\(y\)</span> has <span class="math notranslate nohighlight">\(p\)</span> derivatives at <span class="math notranslate nohighlight">\(x_0\)</span>, then the <strong>Taylor polynomial of order <span class="math notranslate nohighlight">\(p\)</span> about <span class="math notranslate nohighlight">\(x=x_0\)</span> for <span class="math notranslate nohighlight">\(y\)</span></strong> is</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\sum_{j=0}^p \frac{y^{(j)}(x_0)}{j!}(x-x_0)^j = y(x_0) + y'(x_0)(x-x_0) + \frac{y''(x_0)}{2}(x-x_0)^2 + \dots + \frac{y^{(p)}}{p!}(x-x_0)^p.
+\end{equation*}\]</div>
+<p>For <span class="math notranslate nohighlight">\(x\)</span> near <span class="math notranslate nohighlight">\(x_0\)</span>, the Taylor polynomial of order <span class="math notranslate nohighlight">\(p\)</span> is the best polynomial approximator of <span class="math notranslate nohighlight">\(y\)</span> with degree less than or equal to <span class="math notranslate nohighlight">\(p\)</span>.
+The error in the approximation is usually quantified using Lagrange’s remainder theorem.
+The following fact is a simplified version of Lagrange’s theorem that is convenient for our purposes.</p>
+<div class="proof theorem admonition" id="theorem-2">
+<p class="admonition-title"><span class="caption-number">Theorem 1 </span> (Lagrange’s remainder theorem)</p>
+<section class="theorem-content" id="proof-content">
+<p>If <span class="math notranslate nohighlight">\(y\)</span> is <span class="math notranslate nohighlight">\((p+1)\)</span>-times continuously differentiable on the interval <span class="math notranslate nohighlight">\([a,b]\)</span>, then for any <span class="math notranslate nohighlight">\(x_i, x_{i+1}\in [a,b]\)</span>,</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+y(x_{i+1}) = \sum_{j=0}^p \frac{y^{(j)}(x_i)}{j!}h^j + O\big(h^{p+1}\big)\text{ as }h\to 0,
+\end{equation*}\]</div>
+<p>where <span class="math notranslate nohighlight">\(h=x_{i+1}-x_i\)</span>.</p>
+</section>
+</div><p>We now use this result to analyze Euler’s method for solving the IVP</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+y' &amp;= f(x,y),\\
+y(a)&amp;=y_0.
+\end{align*}\]</div>
+<div class="proof theorem admonition" id="theorem-3">
+<p class="admonition-title"><span class="caption-number">Theorem 2 </span></p>
+<section class="theorem-content" id="proof-content">
+<p>The local truncation error for Euler’s method is <span class="math notranslate nohighlight">\(O(h^2)\)</span> as <span class="math notranslate nohighlight">\(h\to 0\)</span>.</p>
+</section>
+</div><div class="proof admonition" id="proof">
+<p>Proof. Recall that Euler’s method defines a sequence of approximates values by the recursion</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+y_{i+1} = y_i + hf(x_i, y_i).
+\end{equation*}\]</div>
+<p>By definition, the local truncation error at the <span class="math notranslate nohighlight">\((i+1)\)</span>st step is</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\ell_{i+1} = y_*(x_{i+1})- y_{i+1},
+\end{equation*}\]</div>
+<p>where <span class="math notranslate nohighlight">\(y_*\)</span> is the solution to the ODE that passes through the point <span class="math notranslate nohighlight">\((x_{i}, y_{i})\)</span>.
+By Lagrange’s remainder theorem,</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+y_*(x_{i+1}) = y_*(x_i) + y_*'(x_i)h + O\big(h^2\big)\text{ as } h\to 0.
+\end{equation*}\]</div>
+<p>Since <span class="math notranslate nohighlight">\(y_*\)</span> is the solution to the ODE that passes through the point <span class="math notranslate nohighlight">\((x_{i}, y_{i})\)</span>, it follows that</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+y_*(x_{i+1}) = y_i + f(x_i, y_i) h + O\big(h^2\big)\text{ as } h\to 0.
+\end{equation*}\]</div>
+<p>Finally, substituting the first and fourth displayed equations into the second, we see that</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\ell_{i+1} = y_i + f(x_i, y_i) h + O\big(h^2\big) - y_i - hf(x_i, y_i) = O\big(h^2\big) \text{ as }h\to 0.
+\end{equation*}\]</div>
+</div>
+<p>Since the local truncation error for Euler’s method is <span class="math notranslate nohighlight">\(O(h^2)\)</span> as <span class="math notranslate nohighlight">\(h\to 0\)</span>, we expect that the global trunction error for the method is <span class="math notranslate nohighlight">\(O(h)\)</span> as <span class="math notranslate nohighlight">\(h\to 0\)</span>.
+As it turns out Euler’s method is an order <span class="math notranslate nohighlight">\(1\)</span> method, but we will not prove this.
+Instead we demonstrate this fact empirically for the IVP</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+y'  &amp;= x+y,\\
+y(0)&amp;= 1.
+\end{align*}\]</div>
+<p>The code block below computes the absolute errors obtained when approximating the value <span class="math notranslate nohighlight">\(y(1)\)</span> by Euler’s method for various step-sizes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">sympy</span> <span class="k">as</span> <span class="nn">sp</span>
+<span class="kn">import</span> <span class="nn">math263</span>
+<span class="kn">from</span> <span class="nn">tabulate</span> <span class="kn">import</span> <span class="n">tabulate</span> 
+
+<span class="c1"># define IVP parameters</span>
+<span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">;</span>
+<span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">;</span>
+<span class="n">y0</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+
+<span class="c1"># solve the IVP symbolically</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">);</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">Function</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">);</span>
+<span class="n">ode</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">Eq</span><span class="p">(</span><span class="n">y</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">(</span><span class="n">x</span><span class="p">)));</span>
+<span class="n">soln</span><span class="o">=</span><span class="n">sp</span><span class="o">.</span><span class="n">dsolve</span><span class="p">(</span><span class="n">ode</span><span class="p">,</span> <span class="n">y</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">ics</span><span class="o">=</span><span class="p">{</span><span class="n">y</span><span class="p">(</span><span class="n">a</span><span class="p">):</span> <span class="n">y0</span><span class="p">});</span> 
+<span class="n">rhs</span><span class="o">=</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">(</span><span class="n">x</span><span class="p">));</span>
+<span class="n">sym_y</span><span class="o">=</span><span class="n">sp</span><span class="o">.</span><span class="n">lambdify</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">soln</span><span class="o">.</span><span class="n">rhs</span><span class="p">,</span> <span class="n">modules</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;numpy&#39;</span><span class="p">]);</span>
+
+<span class="c1"># solve the IVP numerically via Euler&#39;s method</span>
+<span class="n">num</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+<span class="n">base</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="n">h_vals</span> <span class="o">=</span> <span class="p">[(</span><span class="n">b</span><span class="o">-</span><span class="n">a</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">base</span><span class="o">**</span><span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num</span><span class="p">)]</span>
+<span class="n">errors</span> <span class="o">=</span> <span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">math263</span><span class="o">.</span><span class="n">euler</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">base</span><span class="o">**</span><span class="n">e</span><span class="p">)[</span><span class="mi">1</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">sym_y</span><span class="p">(</span><span class="n">b</span><span class="p">))</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num</span><span class="p">)];</span>
+<span class="n">cutdown</span> <span class="o">=</span> <span class="p">[</span><span class="n">errors</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">errors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num</span><span class="o">-</span><span class="mi">1</span><span class="p">)]</span> <span class="c1"># compare size of error to size at previous step-size</span>
+<span class="n">cutdown</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+<span class="c1"># tabulate/display errors</span>
+<span class="n">table</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">((</span><span class="n">h_vals</span><span class="p">,</span> <span class="n">errors</span><span class="p">,</span> <span class="n">cutdown</span><span class="p">)));</span>
+<span class="n">hdrs</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;h&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;|y(</span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s2">)-y_n|&quot;</span><span class="p">,</span> <span class="s2">&quot;cutdown&quot;</span><span class="p">];</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tabulate</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">hdrs</span><span class="p">,</span> <span class="n">tablefmt</span><span class="o">=</span><span class="s1">&#39;mixed_grid&#39;</span><span class="p">,</span> <span class="n">floatfmt</span><span class="o">=</span><span class="s1">&#39;0.5f&#39;</span><span class="p">,</span> <span class="n">showindex</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>┍━━━━┯━━━━━━━━━┯━━━━━━━━━━━━━━┯━━━━━━━━━━━┑
+│    │       h │   |y(1)-y_n| │   cutdown │
+┝━━━━┿━━━━━━━━━┿━━━━━━━━━━━━━━┿━━━━━━━━━━━┥
+│  0 │ 1.00000 │      1.43656 │           │
+├────┼─────────┼──────────────┼───────────┤
+│  1 │ 0.50000 │      0.93656 │   0.65195 │
+├────┼─────────┼──────────────┼───────────┤
+│  2 │ 0.25000 │      0.55375 │   0.59126 │
+├────┼─────────┼──────────────┼───────────┤
+│  3 │ 0.12500 │      0.30499 │   0.55078 │
+├────┼─────────┼──────────────┼───────────┤
+│  4 │ 0.06250 │      0.16071 │   0.52692 │
+├────┼─────────┼──────────────┼───────────┤
+│  5 │ 0.03125 │      0.08258 │   0.51388 │
+├────┼─────────┼──────────────┼───────────┤
+│  6 │ 0.01562 │      0.04187 │   0.50705 │
+├────┼─────────┼──────────────┼───────────┤
+│  7 │ 0.00781 │      0.02109 │   0.50355 │
+├────┼─────────┼──────────────┼───────────┤
+│  8 │ 0.00391 │      0.01058 │   0.50178 │
+├────┼─────────┼──────────────┼───────────┤
+│  9 │ 0.00195 │      0.00530 │   0.50089 │
+┕━━━━┷━━━━━━━━━┷━━━━━━━━━━━━━━┷━━━━━━━━━━━┙
+</pre></div>
+</div>
+</div>
+</div>
+<p>Since the absolute error <span class="math notranslate nohighlight">\(|y(1) - y_n|\)</span> is roughly cut in half each time that the step-size <span class="math notranslate nohighlight">\(h\)</span> is cut in half, we view the table above as evidence that the global truncation error for Euler’s method is <span class="math notranslate nohighlight">\(O(h)\)</span> as <span class="math notranslate nohighlight">\(h\to 0\)</span>, i.e., Euler’s method is an order <span class="math notranslate nohighlight">\(1\)</span> numerical method.</p>
+</section>
+<section id="numerical-integration-and-eulers-method">
+<h2>Numerical integration and Euler’s method.<a class="headerlink" href="#numerical-integration-and-eulers-method" title="Link to this heading">#</a></h2>
+<p>Euler’s method for numerically solving the IVP</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+y' &amp;= f(x, y),\\
+y(x_0) &amp;= y_0
+\end{align*}\]</div>
+<p>is based on the idea that <span class="math notranslate nohighlight">\(f\big(x_0, y(x_0)\big)\)</span> is the slope of the tangent line to the graph of <span class="math notranslate nohighlight">\(y\)</span> at <span class="math notranslate nohighlight">\(x=x_0\)</span>, and therefore</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\begin{split}
+y(x_0+h)&amp;\approx y(x_0) + hf\big(x_0, y(x_0)\big)\\
+&amp;= y_0 + hf(x_0, y_0).
+\end{split}
+\end{equation*}\]</div>
+<p>Many numerical methods for ODE’s can also be derived from the perspective of numerical integration.
+For this reason, we often speak of “integrating the ODE.”
+Indeed, if <span class="math notranslate nohighlight">\(y\)</span> is the true solution to the IVP above, then the fundamental theorem of calculus tells us that</p>
+<div class="math notranslate nohighlight" id="equation-ftc">
+<span class="eqno">(5)<a class="headerlink" href="#equation-ftc" title="Link to this equation">#</a></span>\[y(x_0+h)-y_0=y(x_1)-y(x_0)=\int_{x_0}^{x_0+h}y'(x)\mathrm{d}x=\int_{x_0}^{x_0+h}f\big(x,y(x)\big)\mathrm{d} x.\]</div>
+<p>The difficulty then is in evaluating the integral whose integrand depends on the unknown function <span class="math notranslate nohighlight">\(y(x)\)</span>.
+Euler’s method follows by approximating the integral with the left-hand rule, namely</p>
+<div class="math notranslate nohighlight">
+\[y(x_0+h)=y_0+\int_{x_0}^{x_0+h}f\big(x,y(x)\big)\mathrm{d} x \approx y_0+hf\big(x_0, y(x_0)\big).\]</div>
+</section>
+<section id="heuns-modified-euler-method">
+<h2>Heun’s modified Euler method.<a class="headerlink" href="#heuns-modified-euler-method" title="Link to this heading">#</a></h2>
+<p>We now derive a method of Heun by replacing the left-hand rule with the trapezoidal rule.
+Returning to equation <a class="reference internal" href="#equation-ftc">(5)</a> and assuming that the expression <span class="math notranslate nohighlight">\(f(x,y)\)</span> has a continuous second derivative (as a function of <span class="math notranslate nohighlight">\(x\)</span>) on the interval <span class="math notranslate nohighlight">\([x_0, x_0+h]\)</span>, the trapezoidal rule gives</p>
+<div class="math notranslate nohighlight" id="equation-trapezoidal-approx">
+<span class="eqno">(6)<a class="headerlink" href="#equation-trapezoidal-approx" title="Link to this equation">#</a></span>\[\begin{split}y(x_0+h)-y_0 
+&amp;=\int_{x_0}^{x_0+h}f\big(x,y(x)\big)\mathrm{d} x\\
+&amp;=\frac{h}{2}\Big(f\big(x_0, y(x_0)\big)+f\big(x_{0}+h, y(x_0+h)\big)\Big) +O\big(h^3\big)\\
+&amp;=\frac{h}{2}\Big(f(x_0, y_0)+f\big(x_{0}+h, y(x_0+h)\big)\Big) +O\big(h^3\big)\end{split}\]</div>
+<p>as <span class="math notranslate nohighlight">\(h\to 0\)</span>.
+Unfortunately, we do not know how to evaluate <span class="math notranslate nohighlight">\(f\big(x_0+h,y(x_0+h)\big)\)</span> since it depends on <span class="math notranslate nohighlight">\(y(x_0+h)\)</span> and our goal is to approximate <span class="math notranslate nohighlight">\(y(x_0+h)\)</span>.
+Our solution is to approximate the <span class="math notranslate nohighlight">\(y(x_0+h)\)</span> appearing on the right-hand side of <a class="reference internal" href="#equation-trapezoidal-approx">(6)</a> by the original Euler method.
+In particular,</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+y(x_0+h) = y_0 + hf(x_0, y_0) + O\big(h^2\big)\text{ as } h\to 0.
+\end{equation*}\]</div>
+<p>Substituting this estimate into <a class="reference internal" href="#equation-trapezoidal-approx">(6)</a>, we can use Taylor series to argue that</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+y(x_0+h)-y_0=\frac{h}{2}\Big(f(x_0, y_0)+f\big(x_0+h,y_0+hf(x_0,y_0)\big)\Big)+O\big(h^3\big)\text{ as }h\to 0.
+\end{equation*}\]</div>
+<p>The <strong>modified Euler method</strong> (also known as <strong>Heun’s method</strong>) is then defined by the recurrence</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+y_{i+1} = y_i + \frac{h}{2}\left(k_1 + k_2\right),
+\end{equation*}\]</div>
+<p>where</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+k_1 &amp;= f(x_i, y_i),\\
+k_2 &amp;= f(x_i+h, y_i+hk_1).
+\end{align*}\]</div>
+<p>The above derivation demonstrates the following result, which we take as evidence for the fact that the modifed Euler method is an order <span class="math notranslate nohighlight">\(2\)</span> numerical method.</p>
+<div class="proof theorem admonition" id="theorem-4">
+<p class="admonition-title"><span class="caption-number">Theorem 3 </span></p>
+<section class="theorem-content" id="proof-content">
+<p>The local truncation error for the modified Euler’s method is <span class="math notranslate nohighlight">\(O(h^3)\)</span> as <span class="math notranslate nohighlight">\(h\to 0\)</span>.</p>
+</section>
+</div></section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="02-euler_method.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Lecture 2: Euler’s method.</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="04-runge-kutta_methods.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Lecture 4: Runge–Kutta methods.</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-error">Types of error.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-order-of-a-numerical-method">The order of a numerical method.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis-of-eulers-method">Analysis of Euler’s method.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#numerical-integration-and-eulers-method">Numerical integration and Euler’s method.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#heuns-modified-euler-method">Heun’s modified Euler method.</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Ethan Smith
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

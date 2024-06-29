@@ -1,0 +1,687 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Lecture 4: Runge–Kutta methods. &#8212; MATH 263: Numerical differential equations</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=3ee479438cf8b5e0d341"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '04-runge-kutta_methods';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Lecture 5: Multistep methods." href="05-multistep_methods.html" />
+    <link rel="prev" title="Lecture 3: Error analysis." href="03-error_analysis.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="00-intro.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">MATH 263: Numerical differential equations</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="00-intro.html">
+                    MATH 263: Numerical differential equations.
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01-direction_fields.html">Lecture 1: Direction fields.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02-euler_method.html">Lecture 2: Euler’s method.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03-error_analysis.html">Lecture 3: Error analysis.</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Lecture 4: Runge–Kutta methods.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05-multistep_methods.html">Lecture 5: Multistep methods.</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/ethancsmith/math263-notes" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/ethancsmith/math263-notes/issues/new?title=Issue%20on%20page%20%2F04-runge-kutta_methods.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/04-runge-kutta_methods.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Lecture 4: Runge–Kutta methods.</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#order-two-methods">Order two methods.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-classical-fourth-order-method">The classical fourth order method.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises.</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="lecture-4-rungekutta-methods">
+<h1>Lecture 4: Runge–Kutta methods.<a class="headerlink" href="#lecture-4-rungekutta-methods" title="Link to this heading">#</a></h1>
+<p>Recalling our analysis of Euler’s method, it is clear that we could obtain a higher order method if our recurrence for generating the <span class="math notranslate nohighlight">\(y_i\)</span>’s agreed with more terms of the Taylor series for <span class="math notranslate nohighlight">\(y_*\)</span>, the true solution to the ODE that passes through the point <span class="math notranslate nohighlight">\((x_i, y_i)\)</span>.
+The <strong>Runge–Kutta methods</strong> are a family of numerical methods which generalize both the methods of Euler and Heun.
+As with Heun’s method, the essence of the idea is to use additional terms of the Taylor series without actually computing the higher order derivatives and instead replacing each with some finite difference approximation.
+The Runge-Kutta method of order <span class="math notranslate nohighlight">\(1\)</span> is Euler’s method. Heun’s modified Euler method is an example of an order <span class="math notranslate nohighlight">\(2\)</span> Runge–Kutta method.</p>
+<section id="order-two-methods">
+<h2>Order two methods.<a class="headerlink" href="#order-two-methods" title="Link to this heading">#</a></h2>
+<p>The generic Runge-Kutta method of order 2 takes the form</p>
+<div class="amsmath math notranslate nohighlight" id="equation-08a65d3c-d2ad-44f1-b2f0-f5deb3faa973">
+<span class="eqno">(7)<a class="headerlink" href="#equation-08a65d3c-d2ad-44f1-b2f0-f5deb3faa973" title="Permalink to this equation">#</a></span>\[\begin{equation}
+y_{i+1} = y_i + h\big(w_1k_1 + w_2k_2\big),
+\end{equation}\]</div>
+<p>where</p>
+<div class="amsmath math notranslate nohighlight" id="equation-29bd2986-3f54-4ef3-a7ba-edf4253e563f">
+<span class="eqno">(8)<a class="headerlink" href="#equation-29bd2986-3f54-4ef3-a7ba-edf4253e563f" title="Permalink to this equation">#</a></span>\[\begin{align}
+k_1 &amp;= f(x_i, y_i),\\
+k_2 &amp;= f(x_i+\alpha h, y_i + \beta hk_1),\\
+w_1 &amp;=\frac{1}{2\alpha},\\
+w_2 &amp;=\frac{1}{2\beta},\\
+w_1+w_2 &amp;=1,\\
+\end{align}\]</div>
+<p><em><strong>TODO: Insert proof that this family has order 2.</strong></em></p>
+<p>Any choice of parameters <span class="math notranslate nohighlight">\(\alpha, \beta, w_1, w_2\)</span> satisfying the above constraints yields a valid order <span class="math notranslate nohighlight">\(2\)</span> method.
+We mention the three most common choices here.
+Setting <span class="math notranslate nohighlight">\(w_1=w_2=1/2\)</span> and <span class="math notranslate nohighlight">\(\alpha=\beta=1\)</span> yields Heun’s (modified Euler) method which we have already met.
+<strong>Ralston’s order 2 method</strong>, which also occasionally goes by the name “Heun’s method,” arises by setting <span class="math notranslate nohighlight">\(w_1=1/4\)</span>, <span class="math notranslate nohighlight">\(w_2=3/4\)</span>, and <span class="math notranslate nohighlight">\(\alpha=\beta=2/3\)</span>.
+Finally, the <strong>midpoint method</strong> (or <strong>corrected Euler method</strong>) is defined by the choices <span class="math notranslate nohighlight">\(w_1=0\)</span>, <span class="math notranslate nohighlight">\(w_2=1\)</span>, and  <span class="math notranslate nohighlight">\(\alpha=\beta=1/2\)</span>.</p>
+</section>
+<section id="the-classical-fourth-order-method">
+<h2>The classical fourth order method.<a class="headerlink" href="#the-classical-fourth-order-method" title="Link to this heading">#</a></h2>
+<p>Probably the most popular Runge–Kutta method is the <strong>classical fourth order Runge–Kutta method</strong> (<strong>RK4</strong>), which is defined by the equations</p>
+<div class="amsmath math notranslate nohighlight" id="equation-721202b0-d170-4699-8f15-011fb4f17491">
+<span class="eqno">(9)<a class="headerlink" href="#equation-721202b0-d170-4699-8f15-011fb4f17491" title="Permalink to this equation">#</a></span>\[\begin{equation}
+y_{i+1} = \frac{h}{6}\big(k_1 + 2k_2 + 2k_3 + k_4\big),
+\end{equation}\]</div>
+<p>where</p>
+<div class="amsmath math notranslate nohighlight" id="equation-1c269030-1aaa-4d1f-9ca2-055e5f53a0de">
+<span class="eqno">(10)<a class="headerlink" href="#equation-1c269030-1aaa-4d1f-9ca2-055e5f53a0de" title="Permalink to this equation">#</a></span>\[\begin{align}
+k_1 &amp;= f(x_i, y_i),\\
+k_2 &amp;= f\big(x_i + h/2, y_i + hk_1/2\big),\\
+k_3 &amp;= f\big(x_i + h/2, y_i + hk_2/2\big),\\
+k_4 &amp;= f(x_i + h, y_i + hk_3).
+\end{align}\]</div>
+<p>As the name would seem to imply, RK4 is an order <span class="math notranslate nohighlight">\(4\)</span> numerical method.</p>
+</section>
+<section id="example">
+<h2>Example.<a class="headerlink" href="#example" title="Link to this heading">#</a></h2>
+<p>Below we compare Euler’s method with the classical Runge–Kutta method of order 4 (RK4) for the IVP</p>
+<div class="amsmath math notranslate nohighlight" id="equation-48f6d977-a7eb-4017-88e1-f4a344dc2b09">
+<span class="eqno">(11)<a class="headerlink" href="#equation-48f6d977-a7eb-4017-88e1-f4a344dc2b09" title="Permalink to this equation">#</a></span>\[\begin{align}
+y'&amp;=(y/x)-(y/x)^2,\\
+y(1)&amp;=1.
+\end{align}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math263</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">sympy</span> <span class="k">as</span> <span class="nn">sp</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">tabulate</span> <span class="kn">import</span> <span class="n">tabulate</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">Markdown</span>
+
+<span class="c1"># define IVP parameters</span>
+<span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="p">(</span><span class="n">y</span><span class="o">/</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">y</span><span class="o">/</span><span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">;</span>
+<span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">;</span>
+<span class="n">y0</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+
+<span class="c1"># solve the IVP symbolically with the sympy library</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">);</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">Function</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">);</span>
+<span class="n">ode</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">Eq</span><span class="p">(</span><span class="n">y</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">(</span><span class="n">x</span><span class="p">)));</span>
+<span class="n">soln</span><span class="o">=</span><span class="n">sp</span><span class="o">.</span><span class="n">dsolve</span><span class="p">(</span><span class="n">ode</span><span class="p">,</span> <span class="n">y</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">ics</span><span class="o">=</span><span class="p">{</span><span class="n">y</span><span class="p">(</span><span class="n">a</span><span class="p">):</span> <span class="n">y0</span><span class="p">});</span> 
+<span class="n">rhs</span><span class="o">=</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">(</span><span class="n">x</span><span class="p">));</span>
+<span class="n">display</span><span class="p">(</span><span class="n">Markdown</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The true solution to the ODE $y&#39;=</span><span class="si">{</span><span class="n">sp</span><span class="o">.</span><span class="n">latex</span><span class="p">(</span><span class="n">rhs</span><span class="p">)</span><span class="si">}</span><span class="s2">$ with initial condition $y(</span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2">)=</span><span class="si">{</span><span class="n">y0</span><span class="si">}</span><span class="s2">$ is $</span><span class="si">{</span><span class="n">sp</span><span class="o">.</span><span class="n">latex</span><span class="p">(</span><span class="n">soln</span><span class="p">)</span><span class="si">}</span><span class="s2">$.&quot;</span><span class="p">))</span>
+
+<span class="c1"># convert the symbolic solution to a Python function and plot it with matplotlib.pyplot</span>
+<span class="n">sym_y</span><span class="o">=</span><span class="n">sp</span><span class="o">.</span><span class="n">lambdify</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">soln</span><span class="o">.</span><span class="n">rhs</span><span class="p">,</span> <span class="n">modules</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;numpy&#39;</span><span class="p">]);</span> 
+<span class="n">xvals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">100</span><span class="p">);</span>
+<span class="n">ex1</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">();</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xvals</span><span class="p">,</span> <span class="n">sym_y</span><span class="p">(</span><span class="n">xvals</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;$y&#39; = </span><span class="si">{</span><span class="n">sp</span><span class="o">.</span><span class="n">latex</span><span class="p">(</span><span class="n">rhs</span><span class="p">)</span><span class="si">}</span><span class="s2">$, $y(</span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2">)=</span><span class="si">{</span><span class="n">y0</span><span class="si">}</span><span class="s2">$&quot;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$x$&quot;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$y$&quot;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;$</span><span class="si">{</span><span class="n">sp</span><span class="o">.</span><span class="n">latex</span><span class="p">(</span><span class="n">soln</span><span class="p">)</span><span class="si">}</span><span class="s2">$&quot;</span><span class="p">],</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper right&#39;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># numerically solve the IVP with n=10 steps of forward Euler and n=10 steps of RK4</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+<span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_euler</span><span class="p">)</span> <span class="o">=</span> <span class="n">math263</span><span class="o">.</span><span class="n">euler</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
+<span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_rk4</span><span class="p">)</span>   <span class="o">=</span> <span class="n">math263</span><span class="o">.</span><span class="n">rk4</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
+
+<span class="c1"># tabulate the results</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Global errors for Euler&#39;s method and RK4.&quot;</span><span class="p">)</span>
+<span class="n">table</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="n">sym_y</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">-</span><span class="n">y_euler</span><span class="p">),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">sym_y</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">-</span><span class="n">y_rk4</span><span class="p">))));</span>
+<span class="n">hdrs</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;i&quot;</span><span class="p">,</span> <span class="s2">&quot;x_i&quot;</span><span class="p">,</span> <span class="s2">&quot;e_{i,Euler} = |y(x_i)-y_i|&quot;</span><span class="p">,</span> <span class="s2">&quot;e_{i,RK4} = |y(x_i)-y_i|&quot;</span><span class="p">];</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tabulate</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">hdrs</span><span class="p">,</span> <span class="n">tablefmt</span><span class="o">=</span><span class="s1">&#39;mixed_grid&#39;</span><span class="p">,</span> <span class="n">floatfmt</span><span class="o">=</span><span class="s1">&#39;0.5f&#39;</span><span class="p">,</span> <span class="n">showindex</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+
+<span class="c1"># plot numerical solutions on top of true solution</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">ex1</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y_euler</span><span class="p">,</span><span class="s1">&#39;ro:&#39;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y_rk4</span><span class="p">,</span><span class="s1">&#39;go:&#39;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;$</span><span class="si">{</span><span class="n">sp</span><span class="o">.</span><span class="n">latex</span><span class="p">(</span><span class="n">soln</span><span class="p">)</span><span class="si">}</span><span class="s2">$&quot;</span><span class="p">,</span><span class="s2">&quot;Euler&quot;</span><span class="p">,</span> <span class="s2">&quot;RK4&quot;</span><span class="p">],</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<p>The true solution to the ODE $y’=\frac{y{\left(x \right)}}{x} + \frac{y^{2}{\left(x \right)}}{x^{2}}$ with initial condition $y(1)=1$ is $y{\left(x \right)} = \frac{x}{1 - \log{\left(x \right)}}$.</p>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Global errors for Euler&#39;s method and RK4.
+┍━━━━━┯━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━━━━━━━━┑
+│   i │     x_i │   e_{i,Euler} = |y(x_i)-y_i| │   e_{i,RK4} = |y(x_i)-y_i| │
+┝━━━━━┿━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━━━━━━━┥
+│   0 │ 1.00000 │                      0.00000 │                    0.00000 │
+├─────┼─────────┼──────────────────────────────┼────────────────────────────┤
+│   1 │ 1.10000 │                      0.01589 │                    0.00001 │
+├─────┼─────────┼──────────────────────────────┼────────────────────────────┤
+│   2 │ 1.20000 │                      0.03947 │                    0.00002 │
+├─────┼─────────┼──────────────────────────────┼────────────────────────────┤
+│   3 │ 1.30000 │                      0.07365 │                    0.00003 │
+├─────┼─────────┼──────────────────────────────┼────────────────────────────┤
+│   4 │ 1.40000 │                      0.12255 │                    0.00005 │
+├─────┼─────────┼──────────────────────────────┼────────────────────────────┤
+│   5 │ 1.50000 │                      0.19212 │                    0.00008 │
+├─────┼─────────┼──────────────────────────────┼────────────────────────────┤
+│   6 │ 1.60000 │                      0.29118 │                    0.00012 │
+├─────┼─────────┼──────────────────────────────┼────────────────────────────┤
+│   7 │ 1.70000 │                      0.43303 │                    0.00018 │
+├─────┼─────────┼──────────────────────────────┼────────────────────────────┤
+│   8 │ 1.80000 │                      0.63840 │                    0.00027 │
+├─────┼─────────┼──────────────────────────────┼────────────────────────────┤
+│   9 │ 1.90000 │                      0.94069 │                    0.00042 │
+├─────┼─────────┼──────────────────────────────┼────────────────────────────┤
+│  10 │ 2.00000 │                      1.39602 │                    0.00068 │
+┕━━━━━┷━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━━━━━━━━━┙
+</pre></div>
+</div>
+<img alt="_images/bf2c996a08ffe7b29982e9cfb5f7b313e4d09e755dd93a028f1f19311ed283f0.png" src="_images/bf2c996a08ffe7b29982e9cfb5f7b313e4d09e755dd93a028f1f19311ed283f0.png" />
+</div>
+</div>
+</section>
+<section id="exercises">
+<h2>Exercises.<a class="headerlink" href="#exercises" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Implement Ralston’s order 2 method and the midpoint method in Mathematica.
+Call the methods <em>ralston2</em> and <em>midpoint</em>, respectively.
+You may copy and paste my code from lecture for any other needed methods.</p></li>
+<li><p>Solve each of the following IVP’s with the indicated parameter choices using midpoint method, Heun’s method, and Ralston’s order 2 method.
+For each IVP, create a table for each method displaying the step <span class="math notranslate nohighlight">\(i\)</span>, the exact value <span class="math notranslate nohighlight">\(y(x_i)\)</span>, the approximate value <span class="math notranslate nohighlight">\(y_i\)</span>, and the absolute error <span class="math notranslate nohighlight">\(|y(x_i)-y_i|\)</span>.
+Make sure that it is clear which table is which.
+For each problem, indicate whether one of the 3 methods appears to perform better than the others.<br />
+If not, explain.</p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(y'=x\mathrm{e}^{3x}-2y\)</span>, <span class="math notranslate nohighlight">\(y(0)=0\)</span>, <span class="math notranslate nohighlight">\([a,b]=[0,1]\)</span>, <span class="math notranslate nohighlight">\(h=0.5\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(y'=1+(x-y)^2\)</span>, <span class="math notranslate nohighlight">\(y(2)=1\)</span>, <span class="math notranslate nohighlight">\([a,b]=[2,3]\)</span>, <span class="math notranslate nohighlight">\(h=0.5\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(y'=1+y/x\)</span>, <span class="math notranslate nohighlight">\(y(1)=2\)</span>, <span class="math notranslate nohighlight">\([a,b]=[1,2]\)</span>, <span class="math notranslate nohighlight">\(h=0.25\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(y'=\cos 2x - \sin 3x\)</span>, <span class="math notranslate nohighlight">\(y(0)=1\)</span>, <span class="math notranslate nohighlight">\([a,b]=[0,1]\)</span>, <span class="math notranslate nohighlight">\(h=0.25\)</span>.</p></li>
+</ol>
+</li>
+<li><p>Consider the IVP <span class="math notranslate nohighlight">\(y'=1+y/x+(y/x)^2\)</span>, <span class="math notranslate nohighlight">\(y(1)=0\)</span>.</p>
+<ol class="arabic simple">
+<li><p>Use the midpoint method to approximate <span class="math notranslate nohighlight">\(y(3)\)</span> for <span class="math notranslate nohighlight">\(n=8, 16, 32, 64\)</span> and display the absolute errors in a table.  Based on observation, what would you guess the local and global truncation errors for the method to be?</p></li>
+<li><p>Use Heun’s method to approximate <span class="math notranslate nohighlight">\(y(3)\)</span> for <span class="math notranslate nohighlight">\(n=8, 16, 32, 64\)</span> and display the absolute errors in a table.  Based on observation, what would you guess the local and global truncation errors for the method to be?</p></li>
+<li><p>Use Ralston’s order 2 method to approximate <span class="math notranslate nohighlight">\(y(3)\)</span> for <span class="math notranslate nohighlight">\(n=8, 16, 32, 64\)</span> and display the absolute errors in a table.  Based on observation, what would you guess the local and global truncation errors for the method to be?</p></li>
+<li><p>Use the classical RK4 method to approximate <span class="math notranslate nohighlight">\(y(3)\)</span> for <span class="math notranslate nohighlight">\(n=8, 16, 32, 64\)</span> and display the absolute errors in a table.  Based on observation, what would you guess the local and global truncation errors for the method to be?</p></li>
+<li><p>On a per step basis, typically the “expensive” part of these algorithms is the evaluation of <span class="math notranslate nohighlight">\(f(x,y)\)</span>.  How many evaluations do each of the 4 methods require per step?  How many evaluations are required to complete <span class="math notranslate nohighlight">\(n\)</span> steps?  Is RK4 worth the extra evaluations?  Hint: You must find a way to “equalize” the work before comparing.</p></li>
+</ol>
+</li>
+</ol>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="03-error_analysis.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Lecture 3: Error analysis.</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="05-multistep_methods.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Lecture 5: Multistep methods.</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#order-two-methods">Order two methods.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-classical-fourth-order-method">The classical fourth order method.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises.</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Ethan Smith
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
