@@ -1,3 +1,7 @@
+# Jupyter Book build
+_build/
+*.ipynb
+
 .DS_Store
 *.swp
 # Byte-compiled / optimized / DLL files
