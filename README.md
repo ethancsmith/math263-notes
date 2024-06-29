@@ -1,6 +1,6 @@
 # MATH 263 Notes
 
-[![Jupyter Book Badge](https://jupyterbook.org/badge.svg)](<YOUR URL HERE>)
+[![Jupyter Book Badge](https://jupyterbook.org/badge.svg)](https://ethancsmith.github.io/math263-notes/)
 
 Lecture notes and code for MATH 263 (Numerical differential equations) at GCC
 
