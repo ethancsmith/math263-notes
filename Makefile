@@ -13,10 +13,13 @@ book: $(NOTEBOOKS) _config.yml _toc.yml 00-intro.md
 
 notebooks: $(NOTEBOOKS)
 
+deploy: # deploy web version to gh-pages branches
+	ghp-import -n -p -f _build/html
+
 clean:
 	git clean -xf
 
 cleanall:
 	git clean -xfd
 
-.PHONY: all book clean cleanall notebooks
+.PHONY: all book clean cleanall deploy notebooks
