@@ -1,4 +1,4 @@
-name: 'test'
+name: 'math263'
 channels:
   - conda-forge
   - defaults
