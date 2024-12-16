@@ -483,28 +483,41 @@ The code snippet below demonstrates how to compute the general solution to the O
 <span class="n">ode</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Eq</span><span class="p">(</span><span class="n">y</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">(</span><span class="n">x</span><span class="p">)));</span>
 
 <span class="c1"># solve the ODE for y(x) using sympy&#39;s dsolve</span>
-<span class="n">soln</span><span class="o">=</span><span class="n">sympy</span><span class="o">.</span><span class="n">dsolve</span><span class="p">(</span><span class="n">ode</span><span class="p">,</span> <span class="n">y</span><span class="p">(</span><span class="n">x</span><span class="p">));</span> <span class="n">soln</span>
+<span class="n">soln</span><span class="o">=</span><span class="n">sympy</span><span class="o">.</span><span class="n">dsolve</span><span class="p">(</span><span class="n">ode</span><span class="p">,</span> <span class="n">y</span><span class="p">(</span><span class="n">x</span><span class="p">));</span> 
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The general solution to the ODE is&quot;</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">soln</span><span class="p">)</span>
 
-<span class="n">display</span><span class="p">(</span><span class="n">Markdown</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The general solution to the ODE $y&#39;(x)=</span><span class="si">{</span><span class="n">sympy</span><span class="o">.</span><span class="n">latex</span><span class="p">(</span><span class="n">ode</span><span class="o">.</span><span class="n">rhs</span><span class="p">)</span><span class="si">}</span><span class="s2">$ is $</span><span class="si">{</span><span class="n">sympy</span><span class="o">.</span><span class="n">latex</span><span class="p">(</span><span class="n">soln</span><span class="p">)</span><span class="si">}</span><span class="s2">$.&quot;</span><span class="p">))</span>
+<span class="c1">#display(Markdown(f&quot;The general solution to the ODE $y&#39;(x)={sympy.latex(ode.rhs)}$ is ${sympy.latex(soln)}$.&quot;))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<p>The general solution to the ODE $y’(x)=y{\left(x \right)} + \sin{\left(x \right)}$ is $y{\left(x \right)} = C_{1} e^{x} - \frac{\sin{\left(x \right)}}{2} - \frac{\cos{\left(x \right)}}{2}$.</p>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The general solution to the ODE is
+</pre></div>
+</div>
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle y{\left(x \right)} = C_{1} e^{x} - \frac{\sin{\left(x \right)}}{2} - \frac{\cos{\left(x \right)}}{2}\]</div>
 </div>
 </div>
 <p>To solve an IVP with SymPy, we simply pass the initial conditions of the problem stored as a Python dictionary.  The code snippet below computes the particular solution to the IVP <a class="reference internal" href="#equation-example-01">(2)</a></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x0</span><span class="p">,</span> <span class="n">y0</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>
-<span class="n">psoln</span><span class="o">=</span><span class="n">sympy</span><span class="o">.</span><span class="n">dsolve</span><span class="p">(</span><span class="n">ode</span><span class="p">,</span> <span class="n">ics</span><span class="o">=</span><span class="p">{</span><span class="n">y</span><span class="p">(</span><span class="n">x0</span><span class="p">):</span> <span class="n">y0</span><span class="p">});</span> <span class="n">psoln</span>
-<span class="n">display</span><span class="p">(</span><span class="n">Markdown</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The particular solution to the IVP </span><span class="se">\</span>
-<span class="s2">    $y&#39;(x)=</span><span class="si">{</span><span class="n">sympy</span><span class="o">.</span><span class="n">latex</span><span class="p">(</span><span class="n">ode</span><span class="o">.</span><span class="n">rhs</span><span class="p">)</span><span class="si">}</span><span class="s2">$, $y(</span><span class="si">{</span><span class="n">x0</span><span class="si">}</span><span class="s2">)=</span><span class="si">{</span><span class="n">y0</span><span class="si">}</span><span class="s2">$ is $</span><span class="si">{</span><span class="n">sympy</span><span class="o">.</span><span class="n">latex</span><span class="p">(</span><span class="n">psoln</span><span class="p">)</span><span class="si">}</span><span class="s2">$.&quot;</span><span class="p">))</span>
+<span class="n">psoln</span><span class="o">=</span><span class="n">sympy</span><span class="o">.</span><span class="n">dsolve</span><span class="p">(</span><span class="n">ode</span><span class="p">,</span> <span class="n">ics</span><span class="o">=</span><span class="p">{</span><span class="n">y</span><span class="p">(</span><span class="n">x0</span><span class="p">):</span> <span class="n">y0</span><span class="p">});</span> 
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The particular solution with y(</span><span class="si">{</span><span class="n">x0</span><span class="si">}</span><span class="s2">) = </span><span class="si">{</span><span class="n">y0</span><span class="si">}</span><span class="s2"> is&quot;</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">psoln</span><span class="p">)</span>
+
+<span class="c1">#display(Markdown(f&quot;The particular solution to the IVP \</span>
+<span class="c1">#    $y&#39;(x)={sympy.latex(ode.rhs)}$, $y({x0})={y0}$ is ${sympy.latex(psoln)}$.&quot;))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<p>The particular solution to the IVP     $y’(x)=y{\left(x \right)} + \sin{\left(x \right)}$, $y(0)=-0.5$ is $y{\left(x \right)} = - \frac{\sin{\left(x \right)}}{2} - \frac{\cos{\left(x \right)}}{2}$.</p>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The particular solution with y(0) = -0.5 is
+</pre></div>
+</div>
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle y{\left(x \right)} = - \frac{\sin{\left(x \right)}}{2} - \frac{\cos{\left(x \right)}}{2}\]</div>
 </div>
 </div>
 <p>We can plot the particular solution on top of the direction field that we created by first converting the solution expression to a lambda function that can be evaluated numerically.</p>
