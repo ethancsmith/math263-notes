@@ -4,7 +4,7 @@ jupytext:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.16.2
+    jupytext_version: 1.16.3
 kernelspec:
   display_name: Python 3 (ipykernel)
   language: python
@@ -48,9 +48,8 @@ If higher accuracy is needed, it is probably more efficient to reduce the step s
 
 ## Advantages and disadvantages.
 
-The main advantage of a predictor-corrector method is that the implicit (corrector) method tends to give the method better stability properties.  A numerical method is said to be stable if small perturbations in the initial data do not cause the resulting numerical solution to diverge away from the original as x-> \[Infinity].  The obvious disadvantage of a predictor-corrector method is that each iteration the implicit method costs additional functional evaluations which translates to more work.  To mitigate this effect, the number of corrector iterations per step is generally kept low.
+The main advantage of a predictor-corrector method is that the implicit (corrector) method tends to give the method better stability properties.  A numerical method is said to be **stable** if small perturbations in the initial data do not cause the resulting numerical solution to diverge away from the original as $x\to\infty$.  The obvious disadvantage of a predictor-corrector method is that each iteration the implicit method costs additional functional evaluations which translates to more work.  To mitigate this effect, the number of corrector iterations per step is generally kept low.
 
-
-```{code-cell} ipython3
+```{code-cell}
 
 ```
