@@ -50,6 +50,109 @@ If higher accuracy is needed, it is probably more efficient to reduce the step s
 
 The main advantage of a predictor-corrector method is that the implicit (corrector) method tends to give the method better stability properties.  A numerical method is said to be **stable** if small perturbations in the initial data do not cause the resulting numerical solution to diverge away from the original as $x\to\infty$.  The obvious disadvantage of a predictor-corrector method is that each iteration the implicit method costs additional functional evaluations which translates to more work.  To mitigate this effect, the number of corrector iterations per step is generally kept low.
 
-```{code-cell}
++++
+
+## Adams–Moulton 1-step (implicit) method.
+
+As usual, consider the first order IVP
+\begin{align*}
+y' &= f(x, y)\\
+y(x_0) &= y_0.
+\end{align*}
+Choosing a model of the form
+\begin{equation*}
+y_{i+1} = \alpha_1y_i + h \left(\beta_0y_{i+1}'+ \beta_1y_i'\right),
+\end{equation*}
+where $y_i'=f(x_i,y_i)$ for each $i\ge 0$, we proceed by the method of underdetermined coefficients.  In particular, we force the model to be exact for the first three monomials  $y(x)=1$, $y(x)=x$, and $y(x)=x^2$.  Thus, by a calculation that is precisely similar to the derivation that we gave for the Adams–Bashforth two-step (explicit) method, we ultimately arrive at the formula for the **Adams–Moulton one-step (implicit) method**, namely, 
+```{math}
+y_{i+1} = y_i + \frac{h}{2}(y_{i+1}' + y_i').
+```
+This method is often paired with the order 2 Adams–Bashforth two-step (explicit) method to create the **order 2 Adams–Bashforth–Moulton (predictor-corrector) method (ABM2)**
+```{math}
+\hat{y_{i+1}}&=y_i+\frac{h}{2}\left(3y_i'-y_{i-1}'\right),\\
+y_{i+1}&=y_i + \frac{h}{2}\left(\hat{y_{i+1}}'+ y_i'\right),
+```
+where $y_i'=f(x_i,y_i)$ and $\hat{y_{i+1}}' = f(x_{i+1}, \hat{y_{i+1}}')$ for each $i\ge 0$.  Here $\hat{y_{i+1}}'$ is referred to as the **predicted value** and $y_{i+1}$ the **corrected value**.
+
++++
+
+## Adams–Moulton 3-step (implicit) method.
+
+In a similar manner, one may derive the **Adams–Moulton three-step (implicit) method**, which is defined by the formula
+```{math}
+y_{i+1}=y_i+\frac{h}{24}(9y_{i+1}'+19y_i'-5y_{i-1}'+y_{i-2}')
+```
+and has local truncation error that is $O(h^5)$.  It is, therefore, considered an order 4 method.
+This method is commonly paired with the order 4 Adams--Bashforth four-step (explicit) method to create the **order 4 Adams–Bashforth–Moulton (predictor-corrector) method (ABM4)**
+```{math}
+\hat{y_{i+1}}&=y_i+\frac{h}{24}(55y_i'-59y_{i-1}'+37y_{i-2}'-9y_{i-3}'),\\
+y_{i+1}&=y_i+\frac{h}{24}(9\hat{y_{i+1}}'+19y_i'-5y_{i-1}'+y_{i-2}')
+```
+where $y_i'=f(x_i,y_i)$ and $\hat{y_{i+1}}' =f(x_{i+1},\hat{y_{i+1}})$ for each $i\ge 0$.
+
++++
+
+## Example.
+
+We now compare the Adams–Bashforth 2-step method (AB2) and the Adams–Bashforth–Moulton 2-step method (ABM2) for our test IVP 
+```{math}
+y'&=y-x^2+1,\\ 
+y(0)&=1/2
+```
+over the interval $[a,b]=[0,2]$ with $n=10$ steps.
+
+```{code-cell} ipython3
+import math263
+import numpy as np
+import sympy as sp
+import matplotlib.pyplot as plt
+from tabulate import tabulate
+
+# define IVP parameters
+f = lambda x, y: y - x**2 + 1;
+a, b = 0, 2;
+y0=1/2;
+
+# solve the IVP symbolically with the sympy library
+x = sp.Symbol('x');
+y = sp.Function('y');
+ode = sp.Eq(y(x).diff(x), f(x,y(x)));
+soln = sp.dsolve(ode, y(x), ics={y(a): y0}); 
+#rhs=f(x,y(x));
+#display(Markdown(f"The true solution to the ODE $y'={sp.latex(rhs)}$ with initial condition $y({a})={y0}$ is ${sp.latex(soln)}$."))
+sym_y = sp.lambdify(x, soln.rhs, modules=['numpy']);
+
+# numerically solve the IVP with n=10 steps of AB2 and n=10 steps of ABM2
+n = 10;
+(x, y_ab2) = math263.ab2(f, a, b, y0, n); 
+(x, y_abm2) = math263.abm2(f, a, b, y0, n);
+
+
+# tabulate the results
+print(f"Comparison of global errors for AB2 and ABM2 across interval for step-size h = {(b-a)/n}.")
+table = np.transpose(np.stack((x, abs(sym_y(x)-y_ab2), abs(sym_y(x)-y_abm2))));
+hdrs = ["i", "x_i", "AB2 global error", "ABM2 global error"];
+print(tabulate(table, hdrs, tablefmt='mixed_grid', floatfmt='0.5f', showindex=True))
+```
+
+Below we include a comparison of the global errors at the right-most endpoint of the interval.  It is evident that each method is order 2.  However, the ABM2 predictor-corrector method is more accurate for this example.
+
+```{code-cell} ipython3
+# compute abs errors at right endpoint for various step-sizes
+base = 10;
+max_exp = 7;
+num_steps = [base**j for j in range(1, max_exp)];
+h = [(b-a)/n for n in num_steps];
+ab2_errors = [abs(math263.ab2(f, a, b, y0, n)[1][-1]-sym_y(b)) for n in num_steps];
+abm2_errors = [abs(math263.abm2(f, a, b, y0, n)[1][-1]-sym_y(b)) for n in num_steps];
+
+# tabulate the results
+print(f"Comparison of global errors |y_n - y({b})| for various step-sizes.")
+table = np.transpose(np.stack((h, ab2_errors, abm2_errors)));
+hdrs = ["step-size", "AB2 global error", "ABM2 global error"];
+print(tabulate(table, hdrs, tablefmt='mixed_grid', floatfmt=['0.7f','g','g']))
+```
+
+```{code-cell} ipython3
 
 ```
