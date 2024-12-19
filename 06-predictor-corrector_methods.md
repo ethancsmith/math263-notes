@@ -35,20 +35,20 @@ y_{i+1} = y_{i} + h f(x_{i+1}, y_{i+1}).
 
 Since the precise form of the "right-hand side" $f(x,y)$ is not known in advance, we cannot explicitly solve this equation for $y_{i+1}$ in the general case – that is without knowing $f(x,y)$. 
 If the function $f(x,y)$ turns out to be linear in $y$, then equation {eq}`backward-euler` can easily be solved for $y$. 
-However, there are many important application where $f(x,y)$ is nonlinear in $y$. 
+However, there are many important applications where $f(x,y)$ is nonlinear in $y$. 
 Thus, in order to use an implicit formula such as {eq}`backward-euler`, it is necessary to incorporate some nonlinear equation solver such as Newton's method or fixed-point iteration to solve for $y_{i+1}$.
 
 Since fixed-point iteration techniques require an _initial guess_, it is common to use an explicit method to "predict" the value of $y_{i+1}$ before employing the implicit method to "correct" the guess. 
 Thus, the pairing of an explicit predictor method with an implicit corrector method is often referred to as a **predictor-corrector method**. 
 The question of how many times to apply the fixed-point iteration of the corrector method can be a delicate matter. 
-Each iteration brings us closer to the true solution but at the cost of more evaluations of the function $f(x,y)$. 
+Each iteration brings us closer to convergence but at the cost of more evaluations of the function $f(x,y)$. 
 In theory, one might choose to iterate the corrector until the value $y_{i+1}$ converges to within some tolerance. 
 Since iteration of corrector method such as {eq}`backward-euler` only brings us closer to the solution of {eq}`backward-euler` and not necessarily the true solution $y(x_{i+1})$, it is often not worth the additional cost to apply more than 1 iteration. 
 If higher accuracy is needed, it is probably more efficient to reduce the step size $h$.
 
 ## Advantages and disadvantages.
 
-The main advantage of a predictor-corrector method is that the implicit (corrector) method tends to give the method better stability properties.  A numerical method is said to be **stable** if small perturbations in the initial data do not cause the resulting numerical solution to diverge away from the original as $x\to\infty$.  The obvious disadvantage of a predictor-corrector method is that each iteration the implicit method costs additional functional evaluations which translates to more work.  To mitigate this effect, the number of corrector iterations per step is generally kept low.
+The main advantage of a predictor-corrector method is that the implicit (corrector) method tends to give the method better stability properties.  A numerical method is said to be **stable** if small perturbations in the initial data do not cause the resulting numerical solution to diverge away from the original as $x\to\infty$.  The obvious disadvantage of a predictor-corrector method is that each iteration of the implicit method costs additional functional evaluations which translates to more work.  To mitigate this effect, the number of corrector iterations per step is generally kept low.
 
 +++
 
@@ -101,7 +101,7 @@ y(0)&=1/2
 ```
 over the interval $[a,b]=[0,2]$ with $n=10$ steps.
 
-```{code-cell} ipython3
+```{code-cell}
 import math263
 import numpy as np
 import sympy as sp
@@ -137,7 +137,7 @@ print(tabulate(table, hdrs, tablefmt='mixed_grid', floatfmt='0.5f', showindex=Tr
 
 Below we include a comparison of the global errors at the right-most endpoint of the interval.  It is evident that each method is order 2.  However, the ABM2 predictor-corrector method is more accurate for this example.
 
-```{code-cell} ipython3
+```{code-cell}
 # compute abs errors at right endpoint for various step-sizes
 base = 10;
 max_exp = 7;
@@ -153,6 +153,6 @@ hdrs = ["step-size", "AB2 global error", "ABM2 global error"];
 print(tabulate(table, hdrs, tablefmt='mixed_grid', floatfmt=['0.7f','g','g']))
 ```
 
-```{code-cell} ipython3
+```{code-cell}
 
 ```

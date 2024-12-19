@@ -118,7 +118,7 @@ as a test case.
 First we use both methods to solve the problem over the interval $[0,2]$ in $n=10$ steps.
 We then present the global truncation errors $e_i=|y(x_i) - y_i|$ for each method at each step in a table.
 
-```{code-cell} ipython3
+```{code-cell}
 import math263
 import numpy as np
 import sympy as sp
@@ -155,7 +155,7 @@ print(tabulate(table, hdrs, tablefmt='mixed_grid', floatfmt='0.5f', showindex=Tr
 
 We now compare the global error for AB2 at the right endpoint of the interval with that of MEM as we shrink the step-size.
 
-```{code-cell} ipython3
+```{code-cell}
 # compute abs errors at right endpoint for various step-sizes
 base = 10;
 max_exp = 8;
@@ -171,7 +171,7 @@ hdrs = ["step-size", "MEM global error", "AB2 global error"];
 print(tabulate(table, hdrs, tablefmt='mixed_grid', floatfmt=['0.7f','g','g']))
 ```
 
-```{code-cell} ipython3
+```{code-cell}
 import timeit
 num_trials = 10;
 mem_times = [timeit.timeit(lambda: math263.mem(f, a, b, y0, base**j), number=num_trials)/num_trials 

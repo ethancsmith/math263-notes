@@ -9,3 +9,4 @@ chapters:
 - file: 03-error_analysis
 - file: 04-runge-kutta_methods
 - file: 05-multistep_methods
+- file: 06-predictor-corrector_methods
