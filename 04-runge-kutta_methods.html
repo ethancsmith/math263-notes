@@ -180,6 +180,7 @@
 <li class="toctree-l1"><a class="reference internal" href="03-error_analysis.html">Lecture 3: Error analysis.</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Lecture 4: Runge–Kutta methods.</a></li>
 <li class="toctree-l1"><a class="reference internal" href="05-multistep_methods.html">Lecture 5: Multistep methods.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-predictor-corrector_methods.html">Lecture 6: Predictor–corrector methods.</a></li>
 </ul>
 
     </div>
@@ -399,13 +400,13 @@ The Runge-Kutta method of order <span class="math notranslate nohighlight">\(1\)
 <section id="order-two-methods">
 <h2>Order two methods.<a class="headerlink" href="#order-two-methods" title="Link to this heading">#</a></h2>
 <p>The generic Runge-Kutta method of order 2 takes the form</p>
-<div class="amsmath math notranslate nohighlight" id="equation-baa8efcb-49b6-4747-9967-4eb97437accf">
-<span class="eqno">(7)<a class="headerlink" href="#equation-baa8efcb-49b6-4747-9967-4eb97437accf" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-592f302f-3665-4471-a892-9c7e0c778f1e">
+<span class="eqno">(7)<a class="headerlink" href="#equation-592f302f-3665-4471-a892-9c7e0c778f1e" title="Permalink to this equation">#</a></span>\[\begin{equation}
 y_{i+1} = y_i + h\big(w_1k_1 + w_2k_2\big),
 \end{equation}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-56847923-8965-419d-949b-bf2c8a271cb1">
-<span class="eqno">(8)<a class="headerlink" href="#equation-56847923-8965-419d-949b-bf2c8a271cb1" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-6b9f67e2-39d1-4d44-b4b5-2b821e33ea01">
+<span class="eqno">(8)<a class="headerlink" href="#equation-6b9f67e2-39d1-4d44-b4b5-2b821e33ea01" title="Permalink to this equation">#</a></span>\[\begin{align}
 k_1 &amp;= f(x_i, y_i),\\
 k_2 &amp;= f(x_i+\alpha h, y_i + \beta hk_1),\\
 w_1 &amp;=\frac{1}{2\alpha},\\
@@ -422,13 +423,13 @@ Finally, the <strong>midpoint method</strong> (or <strong>corrected Euler method
 <section id="the-classical-fourth-order-method">
 <h2>The classical fourth order method.<a class="headerlink" href="#the-classical-fourth-order-method" title="Link to this heading">#</a></h2>
 <p>Probably the most popular Runge–Kutta method is the <strong>classical fourth order Runge–Kutta method</strong> (<strong>RK4</strong>), which is defined by the equations</p>
-<div class="amsmath math notranslate nohighlight" id="equation-29b45251-d762-4807-aa78-a57eb556b34c">
-<span class="eqno">(9)<a class="headerlink" href="#equation-29b45251-d762-4807-aa78-a57eb556b34c" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-5b31090f-0cf0-4a31-8505-845b0abdbc56">
+<span class="eqno">(9)<a class="headerlink" href="#equation-5b31090f-0cf0-4a31-8505-845b0abdbc56" title="Permalink to this equation">#</a></span>\[\begin{equation}
 y_{i+1} = \frac{h}{6}\big(k_1 + 2k_2 + 2k_3 + k_4\big),
 \end{equation}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3049bbfa-cd9a-487e-b5e1-97eb2ccc8709">
-<span class="eqno">(10)<a class="headerlink" href="#equation-3049bbfa-cd9a-487e-b5e1-97eb2ccc8709" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-9e232142-f0c5-4205-a065-4743a0cc9202">
+<span class="eqno">(10)<a class="headerlink" href="#equation-9e232142-f0c5-4205-a065-4743a0cc9202" title="Permalink to this equation">#</a></span>\[\begin{align}
 k_1 &amp;= f(x_i, y_i),\\
 k_2 &amp;= f\big(x_i + h/2, y_i + hk_1/2\big),\\
 k_3 &amp;= f\big(x_i + h/2, y_i + hk_2/2\big),\\
@@ -439,8 +440,8 @@ k_4 &amp;= f(x_i + h, y_i + hk_3).
 <section id="example">
 <h2>Example.<a class="headerlink" href="#example" title="Link to this heading">#</a></h2>
 <p>Below we compare Euler’s method with the classical Runge–Kutta method of order 4 (RK4) for the IVP</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d9523909-1f0f-4a4f-88d2-d03bb8aa5608">
-<span class="eqno">(11)<a class="headerlink" href="#equation-d9523909-1f0f-4a4f-88d2-d03bb8aa5608" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a5dbd3d2-f797-455f-b89e-602b90044842">
+<span class="eqno">(11)<a class="headerlink" href="#equation-a5dbd3d2-f797-455f-b89e-602b90044842" title="Permalink to this equation">#</a></span>\[\begin{align}
 y'&amp;=(y/x)-(y/x)^2,\\
 y(1)&amp;=1.
 \end{align}\]</div>

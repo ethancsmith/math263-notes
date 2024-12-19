@@ -63,6 +63,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = '05-multistep_methods';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Lecture 6: Predictor–corrector methods." href="06-predictor-corrector_methods.html" />
     <link rel="prev" title="Lecture 4: Runge–Kutta methods." href="04-runge-kutta_methods.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -179,6 +180,7 @@
 <li class="toctree-l1"><a class="reference internal" href="03-error_analysis.html">Lecture 3: Error analysis.</a></li>
 <li class="toctree-l1"><a class="reference internal" href="04-runge-kutta_methods.html">Lecture 4: Runge–Kutta methods.</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Lecture 5: Multistep methods.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-predictor-corrector_methods.html">Lecture 6: Predictor–corrector methods.</a></li>
 </ul>
 
     </div>
@@ -549,7 +551,7 @@ We then present the global truncation errors <span class="math notranslate nohig
 </div>
 </div>
 </div>
-<p>TODO: Clean and add commentary for experiment below.</p>
+<p>We now compare the global error for AB2 at the right endpoint of the interval with that of MEM as we shrink the step-size.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># compute abs errors at right endpoint for various step-sizes</span>
@@ -605,7 +607,6 @@ We then present the global truncation errors <span class="math notranslate nohig
 <span class="n">table</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">((</span><span class="n">num_steps</span><span class="p">,</span> <span class="n">mem_times</span><span class="p">,</span> <span class="n">ab2_times</span><span class="p">)));</span>
 <span class="n">hdrs</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;num steps&quot;</span><span class="p">,</span> <span class="s2">&quot;MEM time (secs)&quot;</span><span class="p">,</span> <span class="s2">&quot;AB2 time (secs)&quot;</span><span class="p">];</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">tabulate</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">hdrs</span><span class="p">,</span> <span class="n">tablefmt</span><span class="o">=</span><span class="s1">&#39;mixed_grid&#39;</span><span class="p">))</span>
-<span class="p">[</span><span class="n">mem_times</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">/</span><span class="n">ab2_times</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">mem_times</span><span class="p">))]</span>
 </pre></div>
 </div>
 </div>
@@ -614,33 +615,25 @@ We then present the global truncation errors <span class="math notranslate nohig
 ┍━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━┑
 │   num steps │   MEM time (secs) │   AB2 time (secs) │
 ┝━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━┥
-│      10     │       1.60167e-05 │       1.45584e-05 │
+│      10     │       1.49667e-05 │       1.33333e-05 │
 ├─────────────┼───────────────────┼───────────────────┤
-│     100     │       6.38333e-05 │       4.62292e-05 │
+│     100     │       6.3825e-05  │       4.52708e-05 │
 ├─────────────┼───────────────────┼───────────────────┤
-│    1000     │       0.000615313 │       0.00040935  │
+│    1000     │       0.000628179 │       0.000406538 │
 ├─────────────┼───────────────────┼───────────────────┤
-│   10000     │       0.00607613  │       0.00414518  │
+│   10000     │       0.00622086  │       0.0040523   │
 ├─────────────┼───────────────────┼───────────────────┤
-│  100000     │       0.0620589   │       0.0410631   │
+│  100000     │       0.0622226   │       0.0407758   │
 ├─────────────┼───────────────────┼───────────────────┤
-│       1e+06 │       0.622073    │       0.410959    │
+│       1e+06 │       0.621362    │       0.409835    │
 ├─────────────┼───────────────────┼───────────────────┤
-│       1e+07 │       6.18124     │       4.02656     │
+│       1e+07 │       6.24827     │       4.09539     │
 ┕━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━┙
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1.1001688547414417,
- 1.3808003943533314,
- 1.5031452275198072,
- 1.465827819774558,
- 1.511307608979807,
- 1.5137084660776068,
- 1.5351152810350055]
-</pre></div>
 </div>
 </div>
-</div>
+<p>We also compare the empirical average running time for our implementations as the number of steps increases.</p>
 </section>
 <section id="exercises">
 <h2>Exercises.<a class="headerlink" href="#exercises" title="Link to this heading">#</a></h2>
@@ -707,6 +700,15 @@ Comment on what you observe.</p></li>
         <p class="prev-next-subtitle">previous</p>
         <p class="prev-next-title">Lecture 4: Runge–Kutta methods.</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="06-predictor-corrector_methods.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Lecture 6: Predictor–corrector methods.</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
