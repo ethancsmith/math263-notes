@@ -13,7 +13,7 @@ kernelspec:
 
 # Lecture 6: Predictor–corrector methods.
 
-## Predictor–corrector methods.
+## The trouble with implicit methods.
 
 The numerical methods for solving ODE's that we have considered so far have all been explicit, 
 which is to say that the formula defining the $(i+1)$st approximation can be explicitly solved for $y_{i+1}$.
@@ -37,6 +37,8 @@ Since the precise form of the "right-hand side" $f(x,y)$ is not known in advance
 If the function $f(x,y)$ turns out to be linear in $y$, then equation {eq}`backward-euler` can easily be solved for $y$. 
 However, there are many important applications where $f(x,y)$ is nonlinear in $y$. 
 Thus, in order to use an implicit formula such as {eq}`backward-euler`, it is necessary to incorporate some nonlinear equation solver such as Newton's method or fixed-point iteration to solve for $y_{i+1}$.
+
+## Predictor–corrector methods.
 
 Since fixed-point iteration techniques require an _initial guess_, it is common to use an explicit method to "predict" the value of $y_{i+1}$ before employing the implicit method to "correct" the guess. 
 Thus, the pairing of an explicit predictor method with an implicit corrector method is often referred to as a **predictor-corrector method**. 
@@ -111,12 +113,12 @@ from tabulate import tabulate
 # define IVP parameters
 f = lambda x, y: y - x**2 + 1;
 a, b = 0, 2;
-y0=1/2;
+y0 = 1/2;
 
 # solve the IVP symbolically with the sympy library
 x = sp.Symbol('x');
 y = sp.Function('y');
-ode = sp.Eq(y(x).diff(x), f(x,y(x)));
+ode = sp.Eq(y(x).diff(x), f(x, y(x)));
 soln = sp.dsolve(ode, y(x), ics={y(a): y0}); 
 #rhs=f(x,y(x));
 #display(Markdown(f"The true solution to the ODE $y'={sp.latex(rhs)}$ with initial condition $y({a})={y0}$ is ${sp.latex(soln)}$."))
@@ -127,15 +129,14 @@ n = 10;
 (x, y_ab2) = math263.ab2(f, a, b, y0, n); 
 (x, y_abm2) = math263.abm2(f, a, b, y0, n);
 
-
 # tabulate the results
-print(f"Comparison of global errors for AB2 and ABM2 across interval for step-size h = {(b-a)/n}.")
-table = np.transpose(np.stack((x, abs(sym_y(x)-y_ab2), abs(sym_y(x)-y_abm2))));
+print(f"Comparison of global errors for AB2 and ABM2 across interval for step-size h = {(b - a)/n}.")
+table = np.transpose(np.stack((x, abs(sym_y(x)-y_ab2[:, 0]), abs(sym_y(x)-y_abm2[:, 0]))));
 hdrs = ["i", "x_i", "AB2 global error", "ABM2 global error"];
 print(tabulate(table, hdrs, tablefmt='mixed_grid', floatfmt='0.5f', showindex=True))
 ```
 
-Below we include a comparison of the global errors at the right-most endpoint of the interval.  It is evident that each method is order 2.  However, the ABM2 predictor-corrector method is more accurate for this example.
+Below we include a comparison of the global errors at the right-most endpoint of the interval.  It is evident that each is an order 2 method.  However, the ABM2 predictor-corrector method is more accurate for this example.
 
 ```{code-cell}
 # compute abs errors at right endpoint for various step-sizes
@@ -143,16 +144,12 @@ base = 10;
 max_exp = 7;
 num_steps = [base**j for j in range(1, max_exp)];
 h = [(b-a)/n for n in num_steps];
-ab2_errors = [abs(math263.ab2(f, a, b, y0, n)[1][-1]-sym_y(b)) for n in num_steps];
-abm2_errors = [abs(math263.abm2(f, a, b, y0, n)[1][-1]-sym_y(b)) for n in num_steps];
+ab2_errors = [abs(math263.ab2(f, a, b, y0, n)[1][:, 0][-1]-sym_y(b)) for n in num_steps];
+abm2_errors = [abs(math263.abm2(f, a, b, y0, n)[1][:, 0][-1]-sym_y(b)) for n in num_steps];
 
 # tabulate the results
 print(f"Comparison of global errors |y_n - y({b})| for various step-sizes.")
 table = np.transpose(np.stack((h, ab2_errors, abm2_errors)));
 hdrs = ["step-size", "AB2 global error", "ABM2 global error"];
-print(tabulate(table, hdrs, tablefmt='mixed_grid', floatfmt=['0.7f','g','g']))
-```
-
-```{code-cell}
-
+print(tabulate(table, hdrs, tablefmt='mixed_grid', floatfmt=['0.6f','0.6g','0.6g']))
 ```

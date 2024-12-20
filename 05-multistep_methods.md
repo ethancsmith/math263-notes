@@ -129,7 +129,7 @@ from IPython.display import display, Markdown
 # define IVP parameters
 f = lambda x, y: y - x**2 + 1;
 a, b = 0, 2;
-y0=1/2;
+y0 = 1/2;
 
 # solve the IVP symbolically with the sympy library
 x = sp.Symbol('x');
@@ -145,10 +145,10 @@ n = 10;
 (x, y_mem) = math263.mem(f, a, b, y0, n);
 (x, y_ab2) = math263.ab2(f, a, b, y0, n); 
 
-
 # tabulate the results
-print(f"Comparison of global errors for MEM and AB2 across interval for step-size h = {(b-a)/n}.")
-table = np.transpose(np.stack((x, abs(sym_y(x)-y_mem), abs(sym_y(x)-y_ab2))));
+print(f"Comparison of global errors for MEM and AB2\
+ across interval for step-size h = {(b - a)/n}.")
+table = np.transpose(np.stack((x, abs(sym_y(x)-y_mem[:, 0]), abs(sym_y(x)-y_ab2[:, 0]))));
 hdrs = ["i", "x_i", "MEM global error", "AB2 global error"];
 print(tabulate(table, hdrs, tablefmt='mixed_grid', floatfmt='0.5f', showindex=True))
 ```
@@ -158,11 +158,11 @@ We now compare the global error for AB2 at the right endpoint of the interval wi
 ```{code-cell}
 # compute abs errors at right endpoint for various step-sizes
 base = 10;
-max_exp = 8;
+max_exp = 7;
 num_steps = [base**j for j in range(1, max_exp)];
 h = [(b-a)/n for n in num_steps];
-mem_errors = [abs(math263.mem(f, a, b, y0, n)[1][-1]-sym_y(b)) for n in num_steps];
-ab2_errors = [abs(math263.ab2(f, a, b, y0, n)[1][-1]-sym_y(b)) for n in num_steps];
+mem_errors = [abs(math263.mem(f, a, b, y0, n)[1][:, 0][-1]-sym_y(b)) for n in num_steps];
+ab2_errors = [abs(math263.ab2(f, a, b, y0, n)[1][:, 0][-1]-sym_y(b)) for n in num_steps];
 
 # tabulate the results
 print(f"Comparison of global errors |y_n - y({b})| for various step-sizes.")
@@ -170,6 +170,8 @@ table = np.transpose(np.stack((h, mem_errors, ab2_errors)));
 hdrs = ["step-size", "MEM global error", "AB2 global error"];
 print(tabulate(table, hdrs, tablefmt='mixed_grid', floatfmt=['0.7f','g','g']))
 ```
+
+We also compare the empirical average running time for our implementations as the number of steps increases.
 
 ```{code-cell}
 import timeit
@@ -183,12 +185,8 @@ ab2_times = [timeit.timeit(lambda: math263.ab2(f, a, b, y0, base**j), number=num
 print(f"Comparison of global errors |y_n - y({b})| for various step-sizes.")
 table = np.transpose(np.stack((num_steps, mem_times, ab2_times)));
 hdrs = ["num steps", "MEM time (secs)", "AB2 time (secs)"];
-print(tabulate(table, hdrs, tablefmt='mixed_grid'))
+print(tabulate(table, hdrs, tablefmt='mixed_grid', floatfmt=['0.0f', '0.5f', '0.5f']))
 ```
-
-We also compare the empirical average running time for our implementations as the number of steps increases.
-
-+++
 
 ## Exercises.
 

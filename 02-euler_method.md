@@ -61,19 +61,18 @@ The `math263` module contains the following Python implementation of Euler's met
 import numpy as np
 
 def euler(f, a, b, y0, n):
-        '''
-        numerically solves IVP
-                y' = f(x,y), y(a) = y0
-        over the interval [a, b] via n steps of Euler's method 
-        '''
-        h = (b-a)/n;
-        x = np.linspace(a, b, num=n+1);
-        y = np.empty(x.size);
-        y[0] = y0;
-        for i in range(n):
-                y[i+1] = y[i] + h * f(x[i], y[i]);
-
-        return (x, y)
+	'''
+	numerically solves the IVP
+		y' = f(x,y), y(a) = y0
+	over the interval [a, b] via n steps of Euler's method 
+	'''
+	h = (b - a)/n;
+	x = np.linspace(a, b, num=n + 1);
+	y = np.empty((np.size(y0), x.size));
+	y[:, 0] = y0;
+	for i in range(n):
+		y[:, i + 1] = y[:, i] + h*f(x[i], y[:, i]);
+	return (x, y)
 ```
 
 ## Example.
@@ -97,12 +96,12 @@ f = lambda x, y: x**2 - y;
 a, b = 0, 2;
 y0 = 3;
 
-# use the Euler's method in math263 module to compute numerical solution
+# use the Euler's method from the math263 module to compute numerical solution
 n = 10;
 (xi, yi) = math263.euler(f, a, b, y0, n);
 
 # tabulate the results
-data = np.transpose(np.stack((xi, yi)));
+data = np.transpose(np.stack((xi, yi[:, 0])));
 hdrs = ["i", "x_i", "y_i"];
 print("Euler's method");
 print(tabulate(data, hdrs, tablefmt='mixed_grid', floatfmt='0.5f', showindex=True));
@@ -128,7 +127,7 @@ sym_y = sympy.lambdify(x, soln.rhs, modules=['numpy']);
 xvals = np.linspace(a, b, num=100);
 ex = plt.figure();
 plt.plot(xvals, sym_y(xvals), color='b');
-plt.plot(xi, yi,'ro:');
+plt.plot(xi, yi[:, 0],'ro:');
 plt.legend([f"${sympy.latex(soln)}$","Euler's method"], loc='upper right');
 plt.title(f"$y' = {sympy.latex(rhs)}$, $y({a})={y0}$");
 plt.xlabel(r"$x$");
