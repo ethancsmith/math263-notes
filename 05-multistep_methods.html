@@ -495,7 +495,7 @@ We then present the global truncation errors <span class="math notranslate nohig
 <span class="c1"># define IVP parameters</span>
 <span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">y</span> <span class="o">-</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
 <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">;</span>
-<span class="n">y0</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>
+<span class="n">y0</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>
 
 <span class="c1"># solve the IVP symbolically with the sympy library</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">);</span>
@@ -511,10 +511,10 @@ We then present the global truncation errors <span class="math notranslate nohig
 <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_mem</span><span class="p">)</span> <span class="o">=</span> <span class="n">math263</span><span class="o">.</span><span class="n">mem</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
 <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_ab2</span><span class="p">)</span> <span class="o">=</span> <span class="n">math263</span><span class="o">.</span><span class="n">ab2</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span> 
 
-
 <span class="c1"># tabulate the results</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Comparison of global errors for MEM and AB2 across interval for step-size h = </span><span class="si">{</span><span class="p">(</span><span class="n">b</span><span class="o">-</span><span class="n">a</span><span class="p">)</span><span class="o">/</span><span class="n">n</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
-<span class="n">table</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="n">sym_y</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">-</span><span class="n">y_mem</span><span class="p">),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">sym_y</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">-</span><span class="n">y_ab2</span><span class="p">))));</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Comparison of global errors for MEM and AB2</span><span class="se">\</span>
+<span class="s2"> across interval for step-size h = </span><span class="si">{</span><span class="p">(</span><span class="n">b</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">a</span><span class="p">)</span><span class="o">/</span><span class="n">n</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+<span class="n">table</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="n">sym_y</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">-</span><span class="n">y_mem</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">sym_y</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">-</span><span class="n">y_ab2</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]))));</span>
 <span class="n">hdrs</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;i&quot;</span><span class="p">,</span> <span class="s2">&quot;x_i&quot;</span><span class="p">,</span> <span class="s2">&quot;MEM global error&quot;</span><span class="p">,</span> <span class="s2">&quot;AB2 global error&quot;</span><span class="p">];</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">tabulate</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">hdrs</span><span class="p">,</span> <span class="n">tablefmt</span><span class="o">=</span><span class="s1">&#39;mixed_grid&#39;</span><span class="p">,</span> <span class="n">floatfmt</span><span class="o">=</span><span class="s1">&#39;0.5f&#39;</span><span class="p">,</span> <span class="n">showindex</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
 </pre></div>
@@ -556,11 +556,11 @@ We then present the global truncation errors <span class="math notranslate nohig
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># compute abs errors at right endpoint for various step-sizes</span>
 <span class="n">base</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
-<span class="n">max_exp</span> <span class="o">=</span> <span class="mi">8</span><span class="p">;</span>
+<span class="n">max_exp</span> <span class="o">=</span> <span class="mi">7</span><span class="p">;</span>
 <span class="n">num_steps</span> <span class="o">=</span> <span class="p">[</span><span class="n">base</span><span class="o">**</span><span class="n">j</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_exp</span><span class="p">)];</span>
 <span class="n">h</span> <span class="o">=</span> <span class="p">[(</span><span class="n">b</span><span class="o">-</span><span class="n">a</span><span class="p">)</span><span class="o">/</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">num_steps</span><span class="p">];</span>
-<span class="n">mem_errors</span> <span class="o">=</span> <span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">math263</span><span class="o">.</span><span class="n">mem</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">n</span><span class="p">)[</span><span class="mi">1</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">sym_y</span><span class="p">(</span><span class="n">b</span><span class="p">))</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">num_steps</span><span class="p">];</span>
-<span class="n">ab2_errors</span> <span class="o">=</span> <span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">math263</span><span class="o">.</span><span class="n">ab2</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">n</span><span class="p">)[</span><span class="mi">1</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">sym_y</span><span class="p">(</span><span class="n">b</span><span class="p">))</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">num_steps</span><span class="p">];</span>
+<span class="n">mem_errors</span> <span class="o">=</span> <span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">math263</span><span class="o">.</span><span class="n">mem</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">n</span><span class="p">)[</span><span class="mi">1</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">sym_y</span><span class="p">(</span><span class="n">b</span><span class="p">))</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">num_steps</span><span class="p">];</span>
+<span class="n">ab2_errors</span> <span class="o">=</span> <span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">math263</span><span class="o">.</span><span class="n">ab2</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">n</span><span class="p">)[</span><span class="mi">1</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">sym_y</span><span class="p">(</span><span class="n">b</span><span class="p">))</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">num_steps</span><span class="p">];</span>
 
 <span class="c1"># tabulate the results</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Comparison of global errors |y_n - y(</span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s2">)| for various step-sizes.&quot;</span><span class="p">)</span>
@@ -586,13 +586,12 @@ We then present the global truncation errors <span class="math notranslate nohig
 │   0.0000200 │        7.85132e-10 │        1.23135e-09 │
 ├─────────────┼────────────────────┼────────────────────┤
 │   0.0000020 │        7.70672e-12 │        1.18954e-11 │
-├─────────────┼────────────────────┼────────────────────┤
-│   0.0000002 │        3.33955e-13 │        1.65201e-13 │
 ┕━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━┙
 </pre></div>
 </div>
 </div>
 </div>
+<p>We also compare the empirical average running time for our implementations as the number of steps increases.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">timeit</span>
@@ -606,7 +605,7 @@ We then present the global truncation errors <span class="math notranslate nohig
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Comparison of global errors |y_n - y(</span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s2">)| for various step-sizes.&quot;</span><span class="p">)</span>
 <span class="n">table</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">((</span><span class="n">num_steps</span><span class="p">,</span> <span class="n">mem_times</span><span class="p">,</span> <span class="n">ab2_times</span><span class="p">)));</span>
 <span class="n">hdrs</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;num steps&quot;</span><span class="p">,</span> <span class="s2">&quot;MEM time (secs)&quot;</span><span class="p">,</span> <span class="s2">&quot;AB2 time (secs)&quot;</span><span class="p">];</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">tabulate</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">hdrs</span><span class="p">,</span> <span class="n">tablefmt</span><span class="o">=</span><span class="s1">&#39;mixed_grid&#39;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tabulate</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">hdrs</span><span class="p">,</span> <span class="n">tablefmt</span><span class="o">=</span><span class="s1">&#39;mixed_grid&#39;</span><span class="p">,</span> <span class="n">floatfmt</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;0.0f&#39;</span><span class="p">,</span> <span class="s1">&#39;0.5f&#39;</span><span class="p">,</span> <span class="s1">&#39;0.5f&#39;</span><span class="p">]))</span>
 </pre></div>
 </div>
 </div>
@@ -615,25 +614,22 @@ We then present the global truncation errors <span class="math notranslate nohig
 ┍━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━┑
 │   num steps │   MEM time (secs) │   AB2 time (secs) │
 ┝━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━┥
-│      10     │       1.49667e-05 │       1.33333e-05 │
+│          10 │           0.00008 │           0.00008 │
 ├─────────────┼───────────────────┼───────────────────┤
-│     100     │       6.3825e-05  │       4.52708e-05 │
+│         100 │           0.00067 │           0.00039 │
 ├─────────────┼───────────────────┼───────────────────┤
-│    1000     │       0.000628179 │       0.000406538 │
+│        1000 │           0.00640 │           0.00375 │
 ├─────────────┼───────────────────┼───────────────────┤
-│   10000     │       0.00622086  │       0.0040523   │
+│       10000 │           0.05233 │           0.03734 │
 ├─────────────┼───────────────────┼───────────────────┤
-│  100000     │       0.0622226   │       0.0407758   │
+│      100000 │           0.52883 │           0.37195 │
 ├─────────────┼───────────────────┼───────────────────┤
-│       1e+06 │       0.621362    │       0.409835    │
-├─────────────┼───────────────────┼───────────────────┤
-│       1e+07 │       6.24827     │       4.09539     │
+│     1000000 │           5.32694 │           3.70751 │
 ┕━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━┙
 </pre></div>
 </div>
 </div>
 </div>
-<p>We also compare the empirical average running time for our implementations as the number of steps increases.</p>
 </section>
 <section id="exercises">
 <h2>Exercises.<a class="headerlink" href="#exercises" title="Link to this heading">#</a></h2>

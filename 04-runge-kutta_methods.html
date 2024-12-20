@@ -400,13 +400,13 @@ The Runge-Kutta method of order <span class="math notranslate nohighlight">\(1\)
 <section id="order-two-methods">
 <h2>Order two methods.<a class="headerlink" href="#order-two-methods" title="Link to this heading">#</a></h2>
 <p>The generic Runge-Kutta method of order 2 takes the form</p>
-<div class="amsmath math notranslate nohighlight" id="equation-592f302f-3665-4471-a892-9c7e0c778f1e">
-<span class="eqno">(7)<a class="headerlink" href="#equation-592f302f-3665-4471-a892-9c7e0c778f1e" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-2c8769f6-f3ef-4a36-850a-9acd1ea2996f">
+<span class="eqno">(7)<a class="headerlink" href="#equation-2c8769f6-f3ef-4a36-850a-9acd1ea2996f" title="Permalink to this equation">#</a></span>\[\begin{equation}
 y_{i+1} = y_i + h\big(w_1k_1 + w_2k_2\big),
 \end{equation}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6b9f67e2-39d1-4d44-b4b5-2b821e33ea01">
-<span class="eqno">(8)<a class="headerlink" href="#equation-6b9f67e2-39d1-4d44-b4b5-2b821e33ea01" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a93f33a0-8c15-4910-b40e-0f6cdd38cf8e">
+<span class="eqno">(8)<a class="headerlink" href="#equation-a93f33a0-8c15-4910-b40e-0f6cdd38cf8e" title="Permalink to this equation">#</a></span>\[\begin{align}
 k_1 &amp;= f(x_i, y_i),\\
 k_2 &amp;= f(x_i+\alpha h, y_i + \beta hk_1),\\
 w_1 &amp;=\frac{1}{2\alpha},\\
@@ -423,13 +423,13 @@ Finally, the <strong>midpoint method</strong> (or <strong>corrected Euler method
 <section id="the-classical-fourth-order-method">
 <h2>The classical fourth order method.<a class="headerlink" href="#the-classical-fourth-order-method" title="Link to this heading">#</a></h2>
 <p>Probably the most popular Runge–Kutta method is the <strong>classical fourth order Runge–Kutta method</strong> (<strong>RK4</strong>), which is defined by the equations</p>
-<div class="amsmath math notranslate nohighlight" id="equation-5b31090f-0cf0-4a31-8505-845b0abdbc56">
-<span class="eqno">(9)<a class="headerlink" href="#equation-5b31090f-0cf0-4a31-8505-845b0abdbc56" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-6cfb7f91-022e-4036-936f-8199fb7858c2">
+<span class="eqno">(9)<a class="headerlink" href="#equation-6cfb7f91-022e-4036-936f-8199fb7858c2" title="Permalink to this equation">#</a></span>\[\begin{equation}
 y_{i+1} = \frac{h}{6}\big(k_1 + 2k_2 + 2k_3 + k_4\big),
 \end{equation}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9e232142-f0c5-4205-a065-4743a0cc9202">
-<span class="eqno">(10)<a class="headerlink" href="#equation-9e232142-f0c5-4205-a065-4743a0cc9202" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-73f1dd9c-eca3-474a-93ec-93a00f5014f1">
+<span class="eqno">(10)<a class="headerlink" href="#equation-73f1dd9c-eca3-474a-93ec-93a00f5014f1" title="Permalink to this equation">#</a></span>\[\begin{align}
 k_1 &amp;= f(x_i, y_i),\\
 k_2 &amp;= f\big(x_i + h/2, y_i + hk_1/2\big),\\
 k_3 &amp;= f\big(x_i + h/2, y_i + hk_2/2\big),\\
@@ -440,8 +440,8 @@ k_4 &amp;= f(x_i + h, y_i + hk_3).
 <section id="example">
 <h2>Example.<a class="headerlink" href="#example" title="Link to this heading">#</a></h2>
 <p>Below we compare Euler’s method with the classical Runge–Kutta method of order 4 (RK4) for the IVP</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a5dbd3d2-f797-455f-b89e-602b90044842">
-<span class="eqno">(11)<a class="headerlink" href="#equation-a5dbd3d2-f797-455f-b89e-602b90044842" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-8015303f-7f52-46f3-98bd-157166416d80">
+<span class="eqno">(11)<a class="headerlink" href="#equation-8015303f-7f52-46f3-98bd-157166416d80" title="Permalink to this equation">#</a></span>\[\begin{align}
 y'&amp;=(y/x)-(y/x)^2,\\
 y(1)&amp;=1.
 \end{align}\]</div>
@@ -455,7 +455,7 @@ y(1)&amp;=1.
 <span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">Markdown</span>
 
 <span class="c1"># define IVP parameters</span>
-<span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="p">(</span><span class="n">y</span><span class="o">/</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">y</span><span class="o">/</span><span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">;</span>
+<span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="p">(</span><span class="n">y</span><span class="o">/</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">y</span><span class="o">/</span><span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">;</span>
 <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">;</span>
 <span class="n">y0</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
 
@@ -485,50 +485,50 @@ y(1)&amp;=1.
 
 <span class="c1"># tabulate the results</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Global errors for Euler&#39;s method and RK4.&quot;</span><span class="p">)</span>
-<span class="n">table</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="n">sym_y</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">-</span><span class="n">y_euler</span><span class="p">),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">sym_y</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">-</span><span class="n">y_rk4</span><span class="p">))));</span>
+<span class="n">table</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="n">sym_y</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="n">y_euler</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">sym_y</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="n">y_rk4</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]))));</span>
 <span class="n">hdrs</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;i&quot;</span><span class="p">,</span> <span class="s2">&quot;x_i&quot;</span><span class="p">,</span> <span class="s2">&quot;e_{i,Euler} = |y(x_i)-y_i|&quot;</span><span class="p">,</span> <span class="s2">&quot;e_{i,RK4} = |y(x_i)-y_i|&quot;</span><span class="p">];</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">tabulate</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">hdrs</span><span class="p">,</span> <span class="n">tablefmt</span><span class="o">=</span><span class="s1">&#39;mixed_grid&#39;</span><span class="p">,</span> <span class="n">floatfmt</span><span class="o">=</span><span class="s1">&#39;0.5f&#39;</span><span class="p">,</span> <span class="n">showindex</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tabulate</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">hdrs</span><span class="p">,</span> <span class="n">tablefmt</span><span class="o">=</span><span class="s1">&#39;mixed_grid&#39;</span><span class="p">,</span> <span class="n">floatfmt</span><span class="o">=</span><span class="s1">&#39;0.5g&#39;</span><span class="p">,</span> <span class="n">showindex</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
 
 <span class="c1"># plot numerical solutions on top of true solution</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">ex1</span><span class="p">);</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y_euler</span><span class="p">,</span><span class="s1">&#39;ro:&#39;</span><span class="p">);</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y_rk4</span><span class="p">,</span><span class="s1">&#39;go:&#39;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y_euler</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span><span class="s1">&#39;ro:&#39;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y_rk4</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span><span class="s1">&#39;go:&#39;</span><span class="p">);</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;$</span><span class="si">{</span><span class="n">sp</span><span class="o">.</span><span class="n">latex</span><span class="p">(</span><span class="n">soln</span><span class="p">)</span><span class="si">}</span><span class="s2">$&quot;</span><span class="p">,</span><span class="s2">&quot;Euler&quot;</span><span class="p">,</span> <span class="s2">&quot;RK4&quot;</span><span class="p">],</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">);</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">();</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<p>The true solution to the ODE $y’=\frac{y{\left(x \right)}}{x} + \frac{y^{2}{\left(x \right)}}{x^{2}}$ with initial condition $y(1)=1$ is $y{\left(x \right)} = \frac{x}{1 - \log{\left(x \right)}}$.</p>
+<p>The true solution to the ODE $y’=\frac{y{\left(x \right)}}{x} - \frac{y^{2}{\left(x \right)}}{x^{2}}$ with initial condition $y(1)=1$ is $y{\left(x \right)} = \frac{x}{\log{\left(x \right)} + 1}$.</p>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Global errors for Euler&#39;s method and RK4.
-┍━━━━━┯━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━━━━━━━━┑
-│   i │     x_i │   e_{i,Euler} = |y(x_i)-y_i| │   e_{i,RK4} = |y(x_i)-y_i| │
-┝━━━━━┿━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━━━━━━━┥
-│   0 │ 1.00000 │                      0.00000 │                    0.00000 │
-├─────┼─────────┼──────────────────────────────┼────────────────────────────┤
-│   1 │ 1.10000 │                      0.01589 │                    0.00001 │
-├─────┼─────────┼──────────────────────────────┼────────────────────────────┤
-│   2 │ 1.20000 │                      0.03947 │                    0.00002 │
-├─────┼─────────┼──────────────────────────────┼────────────────────────────┤
-│   3 │ 1.30000 │                      0.07365 │                    0.00003 │
-├─────┼─────────┼──────────────────────────────┼────────────────────────────┤
-│   4 │ 1.40000 │                      0.12255 │                    0.00005 │
-├─────┼─────────┼──────────────────────────────┼────────────────────────────┤
-│   5 │ 1.50000 │                      0.19212 │                    0.00008 │
-├─────┼─────────┼──────────────────────────────┼────────────────────────────┤
-│   6 │ 1.60000 │                      0.29118 │                    0.00012 │
-├─────┼─────────┼──────────────────────────────┼────────────────────────────┤
-│   7 │ 1.70000 │                      0.43303 │                    0.00018 │
-├─────┼─────────┼──────────────────────────────┼────────────────────────────┤
-│   8 │ 1.80000 │                      0.63840 │                    0.00027 │
-├─────┼─────────┼──────────────────────────────┼────────────────────────────┤
-│   9 │ 1.90000 │                      0.94069 │                    0.00042 │
-├─────┼─────────┼──────────────────────────────┼────────────────────────────┤
-│  10 │ 2.00000 │                      1.39602 │                    0.00068 │
-┕━━━━━┷━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━━━━━━━━━┙
+┍━━━━━┯━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━━━━━━━━┑
+│   i │   x_i │   e_{i,Euler} = |y(x_i)-y_i| │   e_{i,RK4} = |y(x_i)-y_i| │
+┝━━━━━┿━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━━━━━━━┥
+│   0 │   1   │                    0         │                 0          │
+├─────┼───────┼──────────────────────────────┼────────────────────────────┤
+│   1 │   1.1 │                    0.0042817 │                 2.2415e-07 │
+├─────┼───────┼──────────────────────────────┼────────────────────────────┤
+│   2 │   1.2 │                    0.0066879 │                 3.1076e-07 │
+├─────┼───────┼──────────────────────────────┼────────────────────────────┤
+│   3 │   1.3 │                    0.0081242 │                 3.4637e-07 │
+├─────┼───────┼──────────────────────────────┼────────────────────────────┤
+│   4 │   1.4 │                    0.0090192 │                 3.6099e-07 │
+├─────┼───────┼──────────────────────────────┼────────────────────────────┤
+│   5 │   1.5 │                    0.0095942 │                 3.6638e-07 │
+├─────┼───────┼──────────────────────────────┼────────────────────────────┤
+│   6 │   1.6 │                    0.0099716 │                 3.6761e-07 │
+├─────┼───────┼──────────────────────────────┼────────────────────────────┤
+│   7 │   1.7 │                    0.010223  │                 3.6699e-07 │
+├─────┼───────┼──────────────────────────────┼────────────────────────────┤
+│   8 │   1.8 │                    0.010392  │                 3.6563e-07 │
+├─────┼───────┼──────────────────────────────┼────────────────────────────┤
+│   9 │   1.9 │                    0.010505  │                 3.6407e-07 │
+├─────┼───────┼──────────────────────────────┼────────────────────────────┤
+│  10 │   2   │                    0.010581  │                 3.6258e-07 │
+┕━━━━━┷━━━━━━━┷━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━━━━━━━━━┙
 </pre></div>
 </div>
-<img alt="_images/bf2c996a08ffe7b29982e9cfb5f7b313e4d09e755dd93a028f1f19311ed283f0.png" src="_images/bf2c996a08ffe7b29982e9cfb5f7b313e4d09e755dd93a028f1f19311ed283f0.png" />
+<img alt="_images/0c42fc11d266b8ae9fb98e68dc92cb2193798c98ba10297d9180772038304607.png" src="_images/0c42fc11d266b8ae9fb98e68dc92cb2193798c98ba10297d9180772038304607.png" />
 </div>
 </div>
 </section>
