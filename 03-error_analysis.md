@@ -145,7 +145,7 @@ The code block below computes the absolute errors obtained when approximating th
 
 ```{code-cell}
 import numpy as np
-import sympy as sp
+import sympy
 import math263
 from tabulate import tabulate 
 
@@ -155,12 +155,12 @@ a, b = 0, 1;
 y0=1;
 
 # solve the IVP symbolically
-x = sp.Symbol('x');
-y = sp.Function('y');
-ode = sp.Eq(y(x).diff(x), f(x,y(x)));
-soln=sp.dsolve(ode, y(x), ics={y(a): y0}); 
-rhs=f(x,y(x));
-sym_y=sp.lambdify(x, soln.rhs, modules=['numpy']);
+x = sympy.Symbol('x');
+y = sympy.Function('y');
+ode = sympy.Eq(y(x).diff(x), f(x,y(x)));
+soln = sympy.dsolve(ode, y(x), ics={y(a): y0}); 
+rhs = f(x,y(x));
+sym_y=sympy.lambdify(x, soln.rhs, modules=['numpy']);
 
 # solve the IVP numerically via Euler's method
 num = 10;

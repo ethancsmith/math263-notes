@@ -73,13 +73,13 @@ dy = f(X,Y);    # sample dy =(dy/dx)*dx, where dx=1 at each point of the 2D mesh
 [dx, dy] = [dx, dy]/np.sqrt(dx**2 + dy**2);
 
 # plot "vector field" without arrowheads
-dfield = plt.figure();
+fig, ax = plt.subplots(layout='constrained');
 # NOTE: pivot='mid' anchors the middle of the arrow to the mesh point
 # the _nolegend_ flag prevents a legend object from being generated in the later merged graphic
-dplot = plt.quiver(X, Y, dx, dy, color="b", headlength=0, headwidth=1, pivot="mid", label='_nolegend_'); 
-plt.title(r"Direction field for $y' = y+\sin(x)$");
-plt.xlabel("$x$");
-plt.ylabel("$y$");
+dplot = ax.quiver(X, Y, dx, dy, color="b", headlength=0, headwidth=1, pivot="mid", label='_nolegend_'); 
+ax.set_title(r"Direction field for $y' = y+\sin(x)$");
+ax.set_xlabel("$x$");
+ax.set_ylabel("$y$");
 ```
 
 ## Computing symbolic solutions with SymPy.
@@ -121,12 +121,13 @@ We can plot the particular solution on top of the direction field that we create
 ```{code-cell}
 yfunc=sympy.lambdify(x, psoln.rhs, modules=['numpy']); 
 xvals = np.linspace(xmin, xmax, num=100);
-plt.figure(dfield) # set the current figure to direction field created above
-plt.plot(xvals, yfunc(xvals), color='k');
-plt.title(f"Direction field for $y'(x)={sympy.latex(ode.rhs)}$" 
+
+plt.figure(fig) # set the current figure to direction field created above
+ax.plot(xvals, yfunc(xvals), color='k', label=f"${sympy.latex(psoln)}$");
+ax.set_title(f"Direction field for $y'(x)={sympy.latex(ode.rhs)}$" 
              "\n" f"with particular solution when y({x0})={y0}.");
-plt.plot(0,-1/2,'ro') # plot initial condition point (0,-1/2) in red
-plt.legend([f"${sympy.latex(psoln)}$"], loc='upper right');
+ax.plot(0,-1/2,'ro') # plot initial condition point (0,-1/2) in red
+ax.legend(loc='upper right');
 plt.show()
 ```
 

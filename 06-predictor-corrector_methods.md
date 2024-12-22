@@ -106,8 +106,7 @@ over the interval $[a,b]=[0,2]$ with $n=10$ steps.
 ```{code-cell}
 import math263
 import numpy as np
-import sympy as sp
-import matplotlib.pyplot as plt
+import sympy
 from tabulate import tabulate
 
 # define IVP parameters
@@ -116,11 +115,11 @@ a, b = 0, 2;
 y0 = 1/2;
 
 # solve the IVP symbolically with the sympy library
-x = sp.Symbol('x');
-y = sp.Function('y');
-ode = sp.Eq(y(x).diff(x), f(x, y(x)));
-soln = sp.dsolve(ode, y(x), ics={y(a): y0}); 
-sym_y = sp.lambdify(x, soln.rhs, modules=['numpy']);
+x = sympy.Symbol('x');
+y = sympy.Function('y');
+ode = sympy.Eq(y(x).diff(x), f(x, y(x)));
+soln = sympy.dsolve(ode, y(x), ics={y(a): y0}); 
+sym_y = sympy.lambdify(x, soln.rhs, modules=['numpy']);
 
 # numerically solve the IVP with n=10 steps of AB2 and n=10 steps of ABM2
 n = 10;

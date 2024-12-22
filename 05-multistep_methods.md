@@ -121,10 +121,8 @@ We then present the global truncation errors $e_i=|y(x_i) - y_i|$ for each metho
 ```{code-cell}
 import math263
 import numpy as np
-import sympy as sp
-import matplotlib.pyplot as plt
+import sympy
 from tabulate import tabulate
-from IPython.display import display, Markdown
 
 # define IVP parameters
 f = lambda x, y: y - x**2 + 1;
@@ -132,11 +130,11 @@ a, b = 0, 2;
 y0 = 1/2;
 
 # solve the IVP symbolically with the sympy library
-x = sp.Symbol('x');
-y = sp.Function('y');
-ode = sp.Eq(y(x).diff(x), f(x,y(x)));
-soln = sp.dsolve(ode, y(x), ics={y(a): y0}); 
-sym_y = sp.lambdify(x, soln.rhs, modules=['numpy']);
+x = sympy.Symbol('x');
+y = sympy.Function('y');
+ode = sympy.Eq(y(x).diff(x), f(x,y(x)));
+soln = sympy.dsolve(ode, y(x), ics={y(a): y0}); 
+sym_y = sympy.lambdify(x, soln.rhs, modules=['numpy']);
 
 # numerically solve the IVP with n=10 steps of forward Euler and n=10 steps of RK4
 n = 10;
@@ -174,13 +172,15 @@ We also compare the empirical average running time for our implementations as th
 ```{code-cell}
 import timeit
 num_trials = 10;
-mem_times = [timeit.timeit(lambda: math263.mem(f, a, b, y0, base**j), number=num_trials)/num_trials 
-             for j in range(1, max_exp)];
-ab2_times = [timeit.timeit(lambda: math263.ab2(f, a, b, y0, base**j), number=num_trials)/num_trials 
-             for j in range(1, max_exp)];
+mem_times = [timeit.timeit(lambda: math263.mem(f, a, b, y0, base**j), 
+            number=num_trials)/num_trials 
+            for j in range(1, max_exp)];
+ab2_times = [timeit.timeit(lambda: math263.ab2(f, a, b, y0, base**j), 
+            number=num_trials)/num_trials 
+            for j in range(1, max_exp)];
 
 # tabulate the results
-print(f"Comparison of global errors |y_n - y({b})| for various step-sizes.")
+print(f"Comparison of average compute time for various step-sizes.")
 table = np.c_[num_steps, mem_times, ab2_times];
 hdrs = ["num steps", "MEM time (secs)", "AB2 time (secs)"];
 print(tabulate(table, hdrs, tablefmt='mixed_grid', floatfmt=['0.0f', '0.5f', '0.5f']))

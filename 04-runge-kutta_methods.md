@@ -73,7 +73,7 @@ y(1)&=1.
 ```{code-cell}
 import math263
 import numpy as np
-import sympy as sp
+import sympy
 import matplotlib.pyplot as plt
 from tabulate import tabulate
 from IPython.display import display, Markdown
@@ -84,41 +84,42 @@ a, b = 1, 2;
 y0=1;
 
 # solve the IVP symbolically with the sympy library
-x = sp.Symbol('x');
-y = sp.Function('y');
-ode = sp.Eq(y(x).diff(x), f(x,y(x)));
-soln=sp.dsolve(ode, y(x), ics={y(a): y0}); 
-rhs=f(x,y(x));
-display(Markdown(f"The true solution to the ODE $y'={sp.latex(rhs)}$ with initial condition $y({a})={y0}$ is ${sp.latex(soln)}$."))
+x = sympy.Symbol('x');
+y = sympy.Function('y');
+ode = sympy.Eq(y(x).diff(x), f(x,y(x)));
+soln = sympy.dsolve(ode, y(x), ics={y(a): y0}); 
+rhs = f(x,y(x));
+display(Markdown(f"The true solution to the ODE \
+$y'={sympy.latex(rhs)}$ with initial condition \
+$y({a})={y0}$ is ${sympy.latex(soln)}$."))
 
 # convert the symbolic solution to a Python function and plot it with matplotlib.pyplot
-sym_y=sp.lambdify(x, soln.rhs, modules=['numpy']); 
+sym_y=sympy.lambdify(x, soln.rhs, modules=['numpy']); 
 xvals = np.linspace(a, b, num=100);
-ex1=plt.figure();
-plt.plot(xvals, sym_y(xvals), color='b');
-plt.title(f"$y' = {sp.latex(rhs)}$, $y({a})={y0}$");
-plt.xlabel(r"$x$");
-plt.ylabel(r"$y$");
-plt.legend([f"${sp.latex(soln)}$"], loc='upper right');
+fig, ax = plt.subplots(layout='constrained');
+ax.plot(xvals, sym_y(xvals), color='b', label=f"${sympy.latex(soln)}$");
+ax.set_title(f"$y' = {sympy.latex(rhs)}$, $y({a})={y0}$");
+ax.set_xlabel(r"$x$");
+ax.set_ylabel(r"$y$");
+ax.legend([f"${sympy.latex(soln)}$"], loc='upper right');
 plt.grid(True)
 
 # numerically solve the IVP with n=10 steps of forward Euler and n=10 steps of RK4
 n = 10;
-(x, y_euler) = math263.euler(f, a, b, y0, n);
-(x, y_rk4)   = math263.rk4(f, a, b, y0, n);
+(xi, y_euler) = math263.euler(f, a, b, y0, n);
+(xi, y_rk4)   = math263.rk4(f, a, b, y0, n);
+
+# plot numerical solutions on top of true solution
+ax.plot(xi, y_euler[:, 0], 'ro:', label="Euler");
+ax.plot(xi, y_rk4[:, 0], 'go:', label="RK4");
+ax.legend(loc='upper left');
+plt.show();
 
 # tabulate the results
 print("Global errors for Euler's method and RK4.")
-table = np.c_[x, abs(sym_y(x) - y_euler[:, 0]), abs(sym_y(x) - y_rk4[:, 0])];
+table = np.c_[xi, abs(sym_y(xi) - y_euler[:, 0]), abs(sym_y(xi) - y_rk4[:, 0])];
 hdrs = ["i", "x_i", "e_{i,Euler} = |y(x_i)-y_i|", "e_{i,RK4} = |y(x_i)-y_i|"];
 print(tabulate(table, hdrs, tablefmt='mixed_grid', floatfmt='0.5g', showindex=True))
-
-# plot numerical solutions on top of true solution
-plt.figure(ex1);
-plt.plot(x,y_euler[:, 0],'ro:');
-plt.plot(x,y_rk4[:, 0],'go:');
-plt.legend([f"${sp.latex(soln)}$","Euler", "RK4"], loc='upper left');
-plt.show();
 ```
 
 ## Exercises.

@@ -125,14 +125,14 @@ rhs=f(x,y(x));
 # convert the symbolic solution to a Python function and plot it with matplotlib.pyplot
 sym_y = sympy.lambdify(x, soln.rhs, modules=['numpy']); 
 xvals = np.linspace(a, b, num=100);
-ex = plt.figure();
-plt.plot(xvals, sym_y(xvals), color='b');
-plt.plot(xi, yi[:, 0],'ro:');
-plt.legend([f"${sympy.latex(soln)}$","Euler's method"], loc='upper right');
-plt.title(f"$y' = {sympy.latex(rhs)}$, $y({a})={y0}$");
-plt.xlabel(r"$x$");
-plt.ylabel(r"$y$");
-plt.grid(True)
+fig, ax = plt.subplots(layout="constrained");
+ax.plot(xvals, sym_y(xvals), color='b', label=f"${sympy.latex(soln)}$");
+ax.plot(xi, yi[:, 0],'ro:', label="Euler's method");
+ax.legend(loc='upper right');
+ax.set_title(f"$y' = {sympy.latex(rhs)}$, $y({a})={y0}$");
+ax.set_xlabel(r"$x$");
+ax.set_ylabel(r"$y$");
+ax.grid(True)
 ```
 
 Note that although the sequence of errors $e_i = |y(x_i) - y_i|$ is not necessarily increasing, there is a tendency for the errors made at previous steps tend to build up at subsequent steps. 
@@ -152,7 +152,7 @@ hx, hy = (b-a)/n, 0.1;
 xvals = np.arange(xmin, xmax+hx, hx, dtype=np.double);
 yvals = np.arange(ymin, ymax+hy, hy, dtype=np.double);
 
-# create rectangle mesh in xy-plane; data for each variable is stored in a separate rectangle array
+# create rectangle mesh in xy-plane; 
 X, Y = np.meshgrid(xvals, yvals);
 dx = np.ones(X.shape); # create a dx=1 at each point of the 2D mesh
 dy = f(X,Y);    # sample dy =(dy/dx)*dx, where dx=1 at each point of the 2D mesh
@@ -160,8 +160,9 @@ dy = f(X,Y);    # sample dy =(dy/dx)*dx, where dx=1 at each point of the 2D mesh
 [dx, dy] = [dx, dy]/np.sqrt(dx**2 + dy**2);
 
 # plot direction field on top of previous plot
-plt.figure(ex);
-plt.quiver(X, Y, dx, dy, color="k", headlength=0, headwidth=1, pivot="mid", label='_nolegend_'); 
+plt.figure(fig);
+plt.quiver(X, Y, dx, dy, color="k", headlength=0, headwidth=1, 
+           pivot="mid", label='_nolegend_'); 
 plt.show();
 ```
 
