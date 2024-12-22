@@ -109,7 +109,7 @@ n = 10;
 
 # tabulate the results
 print("Global errors for Euler's method and RK4.")
-table = np.transpose(np.stack((x, abs(sym_y(x) - y_euler[:, 0]), abs(sym_y(x) - y_rk4[:, 0]))));
+table = np.c_[x, abs(sym_y(x) - y_euler[:, 0]), abs(sym_y(x) - y_rk4[:, 0])];
 hdrs = ["i", "x_i", "e_{i,Euler} = |y(x_i)-y_i|", "e_{i,RK4} = |y(x_i)-y_i|"];
 print(tabulate(table, hdrs, tablefmt='mixed_grid', floatfmt='0.5g', showindex=True))
 

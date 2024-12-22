@@ -101,7 +101,7 @@ n = 10;
 (xi, yi) = math263.euler(f, a, b, y0, n);
 
 # tabulate the results
-data = np.transpose(np.stack((xi, yi[:, 0])));
+data = np.c_[xi, yi[:, 0]];
 hdrs = ["i", "x_i", "y_i"];
 print("Euler's method");
 print(tabulate(data, hdrs, tablefmt='mixed_grid', floatfmt='0.5f', showindex=True));

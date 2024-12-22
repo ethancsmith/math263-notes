@@ -25,7 +25,7 @@ Consider the system of first order ordinary differential equations
 \frac{\mathrm{d}z}{\mathrm{d}t} &= -2x - z.
 ```
 
-```{code-cell} ipython3
+```{code-cell}
 import sympy as sp
 
 # solve the IVP symbolically with the sympy library
@@ -46,16 +46,15 @@ r.diff(t)
 
 #rhs=f(x,y(x));
 #display(Markdown(f"The true solution to the ODE $y'={sp.latex(rhs)}$ with initial condition $y({a})={y0}$ is ${sp.latex(soln)}$."))
-
 ```
 
-```{code-cell} ipython3
+```{code-cell}
 
 ```
 
 ## Euler's method for vector-valued functions
 
-```{code-cell} ipython3
+```{code-cell}
 import numpy as np
 import math263
 
@@ -71,6 +70,6 @@ n = 10;
 y_euler
 ```
 
-```{code-cell} ipython3
+```{code-cell}
 
 ```

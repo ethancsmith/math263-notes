@@ -120,8 +120,6 @@ x = sp.Symbol('x');
 y = sp.Function('y');
 ode = sp.Eq(y(x).diff(x), f(x, y(x)));
 soln = sp.dsolve(ode, y(x), ics={y(a): y0}); 
-#rhs=f(x,y(x));
-#display(Markdown(f"The true solution to the ODE $y'={sp.latex(rhs)}$ with initial condition $y({a})={y0}$ is ${sp.latex(soln)}$."))
 sym_y = sp.lambdify(x, soln.rhs, modules=['numpy']);
 
 # numerically solve the IVP with n=10 steps of AB2 and n=10 steps of ABM2
@@ -131,7 +129,7 @@ n = 10;
 
 # tabulate the results
 print(f"Comparison of global errors for AB2 and ABM2 across interval for step-size h = {(b - a)/n}.")
-table = np.transpose(np.stack((x, abs(sym_y(x)-y_ab2[:, 0]), abs(sym_y(x)-y_abm2[:, 0]))));
+table = np.c_[x, abs(sym_y(x)-y_ab2[:, 0]), abs(sym_y(x)-y_abm2[:, 0])];
 hdrs = ["i", "x_i", "AB2 global error", "ABM2 global error"];
 print(tabulate(table, hdrs, tablefmt='mixed_grid', floatfmt='0.5f', showindex=True))
 ```
@@ -149,7 +147,7 @@ abm2_errors = [abs(math263.abm2(f, a, b, y0, n)[1][:, 0][-1]-sym_y(b)) for n in 
 
 # tabulate the results
 print(f"Comparison of global errors |y_n - y({b})| for various step-sizes.")
-table = np.transpose(np.stack((h, ab2_errors, abm2_errors)));
+table = np.c_[h, ab2_errors, abm2_errors];
 hdrs = ["step-size", "AB2 global error", "ABM2 global error"];
 print(tabulate(table, hdrs, tablefmt='mixed_grid', floatfmt=['0.6f','0.6g','0.6g']))
 ```

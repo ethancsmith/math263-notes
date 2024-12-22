@@ -136,8 +136,6 @@ x = sp.Symbol('x');
 y = sp.Function('y');
 ode = sp.Eq(y(x).diff(x), f(x,y(x)));
 soln = sp.dsolve(ode, y(x), ics={y(a): y0}); 
-#rhs=f(x,y(x));
-#display(Markdown(f"The true solution to the ODE $y'={sp.latex(rhs)}$ with initial condition $y({a})={y0}$ is ${sp.latex(soln)}$."))
 sym_y = sp.lambdify(x, soln.rhs, modules=['numpy']);
 
 # numerically solve the IVP with n=10 steps of forward Euler and n=10 steps of RK4
@@ -148,7 +146,7 @@ n = 10;
 # tabulate the results
 print(f"Comparison of global errors for MEM and AB2\
  across interval for step-size h = {(b - a)/n}.")
-table = np.transpose(np.stack((x, abs(sym_y(x)-y_mem[:, 0]), abs(sym_y(x)-y_ab2[:, 0]))));
+table = np.c_[x, abs(sym_y(x)-y_mem[:, 0]), abs(sym_y(x)-y_ab2[:, 0])];
 hdrs = ["i", "x_i", "MEM global error", "AB2 global error"];
 print(tabulate(table, hdrs, tablefmt='mixed_grid', floatfmt='0.5f', showindex=True))
 ```
@@ -166,7 +164,7 @@ ab2_errors = [abs(math263.ab2(f, a, b, y0, n)[1][:, 0][-1]-sym_y(b)) for n in nu
 
 # tabulate the results
 print(f"Comparison of global errors |y_n - y({b})| for various step-sizes.")
-table = np.transpose(np.stack((h, mem_errors, ab2_errors)));
+table = np.c_[h, mem_errors, ab2_errors];
 hdrs = ["step-size", "MEM global error", "AB2 global error"];
 print(tabulate(table, hdrs, tablefmt='mixed_grid', floatfmt=['0.7f','g','g']))
 ```
@@ -183,7 +181,7 @@ ab2_times = [timeit.timeit(lambda: math263.ab2(f, a, b, y0, base**j), number=num
 
 # tabulate the results
 print(f"Comparison of global errors |y_n - y({b})| for various step-sizes.")
-table = np.transpose(np.stack((num_steps, mem_times, ab2_times)));
+table = np.c_[num_steps, mem_times, ab2_times];
 hdrs = ["num steps", "MEM time (secs)", "AB2 time (secs)"];
 print(tabulate(table, hdrs, tablefmt='mixed_grid', floatfmt=['0.0f', '0.5f', '0.5f']))
 ```

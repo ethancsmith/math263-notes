@@ -1,4 +1,4 @@
-SRCNAMES = 01-direction_fields 02-euler_method 03-error_analysis 04-runge-kutta_methods 05-multistep_methods 06-predictor-corrector_methods
+SRCNAMES = 01-direction_fields 02-euler_method 03-error_analysis 04-runge-kutta_methods 05-multistep_methods 06-predictor-corrector_methods 07-systems_of_odes
 SCRIPT_EXTN = md # jupyter notebooks are generated from MyST Markdown scripts
 SCRIPTS = $(addsuffix .$(SCRIPT_EXTN), $(SRCNAMES))
 NOTEBOOKS = $(addsuffix .ipynb, $(SRCNAMES))

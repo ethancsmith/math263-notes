@@ -171,7 +171,7 @@ cutdown = [errors[i+1]/errors[i] for i in range(num-1)] # compare size of error 
 cutdown.insert(0, None)
 
 # tabulate/display errors
-table = np.transpose(np.stack((h_vals, errors, cutdown)));
+table = np.c_[h_vals, errors, cutdown];
 hdrs = ["h", f"|y({b})-y_n|", "cutdown"];
 print(tabulate(table, hdrs, tablefmt='mixed_grid', floatfmt='0.5f', showindex=True))
 ```

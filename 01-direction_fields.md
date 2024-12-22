@@ -90,7 +90,7 @@ The code snippet below demonstrates how to compute the general solution to the O
 
 ```{code-cell}
 import sympy
-#from IPython.display import display, Markdown
+from IPython.display import display, Markdown
 
 # redefine RHS of ODE using sympy's symbolic version of sin(x)
 f = lambda x, y: y + sympy.sin(x)
@@ -104,10 +104,7 @@ ode = sympy.Eq(y(x).diff(x), f(x,y(x)));
 
 # solve the ODE for y(x) using sympy's dsolve
 soln=sympy.dsolve(ode, y(x)); 
-print("The general solution to the ODE is")
-display(soln)
-
-#display(Markdown(f"The general solution to the ODE $y'(x)={sympy.latex(ode.rhs)}$ is ${sympy.latex(soln)}$."))
+display(Markdown(f"The general solution to the ODE $y'(x)={sympy.latex(ode.rhs)}$ is ${sympy.latex(soln)}$."))
 ```
 
 To solve an IVP with SymPy, we simply pass the initial conditions of the problem stored as a Python dictionary.  The code snippet below computes the particular solution to the IVP {eq}`example-01`
@@ -115,11 +112,8 @@ To solve an IVP with SymPy, we simply pass the initial conditions of the problem
 ```{code-cell}
 x0, y0 = 0, -1/2;
 psoln=sympy.dsolve(ode, ics={y(x0): y0}); 
-print(f"The particular solution with y({x0}) = {y0} is")
-display(psoln)
-
-#display(Markdown(f"The particular solution to the IVP \
-#    $y'(x)={sympy.latex(ode.rhs)}$, $y({x0})={y0}$ is ${sympy.latex(psoln)}$."))
+display(Markdown(f"The particular solution to the IVP \
+    $y'(x)={sympy.latex(ode.rhs)}$, $y({x0})={y0}$ is ${sympy.latex(psoln)}$."))
 ```
 
 We can plot the particular solution on top of the direction field that we created by first converting the solution expression to a lambda function that can be evaluated numerically.
