@@ -53,12 +53,25 @@ alpha = [sympy.Rational(-2,5), sympy.Rational(-3,5)];
 soln = sympy.dsolve(ode, y(x), ics={y(a): alpha[0], y(x).diff(x).subs(x, a): alpha[1]});
 soln = sympy.simplify(soln);
 display(Markdown(f"The exact symbolic solution to the IVP is ${sympy.latex(soln)}$."))
-
+Dsoln_rhs = sympy.simplify(soln.rhs.diff(x));
 
 # lambdify the symbolic solution
 sym_y = sympy.lambdify(x, soln.rhs, modules=['numpy']);
-sym_Dy = sympy.lambdify(x, sympy.simplify(soln.rhs.diff(x)), modules=['numpy']);
+sym_Dy = sympy.lambdify(x, Dsoln_rhs, modules=['numpy']);
 xvals = np.linspace(a, b, num=40);
+
+# plot symbolic solution with matplotlib.pyplot
+fig, axs = plt.subplots(ncols=2, figsize=(8, 5), layout="constrained");
+axs[0].plot(xvals, sym_y(xvals), label=f"${sympy.latex(soln)}$");
+axs[1].plot(xvals, sym_Dy(xvals), label=f"$y'(x) = {sympy.latex(Dsoln_rhs)}$");
+axs[0].set_xlabel(r"$x$");
+axs[1].set_xlabel(r"$x$");
+axs[0].set_ylabel(r"$y$");
+axs[1].set_ylabel(r"$y'$");
+fig.suptitle(f"${sympy.latex(ode)}$, $y({a}) = {alpha[0]}$, $y'({a}) = {alpha[1]}$")
+axs[0].legend(loc="upper left");
+axs[1].legend(loc="upper left");
+ax.grid(True)
 ```
 
 To solve {eq}`higher-order-example` numerically, we introduce the variables $u_0=y$ $u_1=y'$, and we rewrite the IVP as
@@ -81,18 +94,20 @@ alpha = [-2/5, -3/5];
 n = 5;
 (xi, u_rk4) = math263.rk4(f, a, b, alpha, n); 
 
-fig, axs = plt.subplots(ncols=2, layout="constrained");
-axs[0].plot(xi, u_rk4[:, 0], 'ro:', label='RK4');
-axs[1].plot(xi, u_rk4[:, 1], 'ro:', label='RK4');
-axs[0].set_xlabel(r"$x$");
-axs[1].set_xlabel(r"$x$");
-axs[0].set_ylabel(r"$y$");
-axs[1].set_ylabel(r"$y'$");
+plt.figure(fig);
+axs[0].plot(xi, u_rk4[:, 0], 'ro:', label='RK4 solution');
+axs[1].plot(xi, u_rk4[:, 1], 'ro:', label='RK4 solution');
 axs[0].legend(loc="upper left");
 axs[1].legend(loc="upper left");
 plt.show();
 ```
 
 ```{code-cell} ipython3
+from tabulate import tabulate
 
+uvals = np.c_[sym_y(xi), sym_Dy(xi)];
+errors = np.abs(uvals - u_rk4)
+table = np.c_[xi, u_rk4[:, 0], errors[:, 0], u_rk4[:, 1], errors[:, 1]];
+hdrs = ["i", "x_i", "y_i", "|y(x_i) - y_i|", "y_i'", "|y'(x_i) - y_i'|"];
+print(tabulate(table, hdrs, tablefmt='mixed_grid', floatfmt='0.5g', showindex=True))
 ```

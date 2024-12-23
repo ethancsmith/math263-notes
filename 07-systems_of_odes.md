@@ -4,7 +4,7 @@ jupytext:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.16.2
+    jupytext_version: 1.16.3
 kernelspec:
   display_name: Python 3 (ipykernel)
   language: python
@@ -161,13 +161,13 @@ Now we compute a numerical solution via Euler's method and plot it along with th
 import math263
 
 # define IVP parameters
-f = lambda x, y: np.array([y[0] + y[2], y[0] + y[1], -2*y[0] - y[2]]);
+f = lambda t, r: np.array([r[0] + r[2], r[0] + r[1], -2*r[0] - r[2]]);
 a, b = 0, 2*np.pi;
-y0=np.array([1, -1/2, -1]);
+r0=np.array([1, -1/2, -1]);
 
 h=0.1;
 n = round((b - a)/h + 0.5);
-(ti, r_euler) = math263.euler(f, a, b, y0, n); 
+(ti, r_euler) = math263.euler(f, a, b, r0, n); 
 
 plt.figure(fig);
 ax.plot(r_euler[:, 0], r_euler[:, 1], r_euler[:, 2], 'ro:', label="Euler's method");
