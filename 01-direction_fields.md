@@ -130,18 +130,3 @@ ax.plot(0,-1/2,'ro') # plot initial condition point (0,-1/2) in red
 ax.legend(loc='upper right');
 plt.show()
 ```
-
-## Exercises.
-
-1. Consider the first-order ODE $y' = 1/y$.
-    1. Compute the general solution to the ODE exactly.
-    1. Create a direction field for the DE over the window $[-3, 3]\times [-3,3]$.
-    1. Compute exact solutions to the IVP consisting of the ODE together with the initial condition $y(0)=1$ and then with $y(-2)=-1$.
-    1. On a single set of axes, plot the solutions to each of the IVP's together with its initial condition point on top of your direction field.
-       Be sure to choose different colors so that the different objects are distinguishable, and (as always) include appropriate labels and legends.
-
-1. Consider the first order ODE $y' = -\frac{x}{y}$.
-    1. Create a direction field for the DE over the window $[-2, 2]\times [-2,2]$.
-       What shape does the direction field suggest the solutions will take?
-    1. Compute an exact solution to the IVP consisting of the ODE together with the initial condition $y(1)=1$.
-    1. Plot the solution together with the initial condition point $(1,1)$ and your direction field from above on a single set of axes.

@@ -121,26 +121,3 @@ table = np.c_[xi, abs(sym_y(xi) - y_euler[:, 0]), abs(sym_y(xi) - y_rk4[:, 0])];
 hdrs = ["i", "x_i", "e_{i,Euler} = |y(x_i)-y_i|", "e_{i,RK4} = |y(x_i)-y_i|"];
 print(tabulate(table, hdrs, tablefmt='mixed_grid', floatfmt='0.5g', showindex=True))
 ```
-
-## Exercises.
-
-1. Implement Ralston's order 2 method and the midpoint method in Mathematica.
-Call the methods _ralston2_ and _midpoint_, respectively.
-You may copy and paste my code from lecture for any other needed methods.
-
-1. Solve each of the following IVP's with the indicated parameter choices using midpoint method, Heun's method, and Ralston's order 2 method.
-For each IVP, create a table for each method displaying the step $i$, the exact value $y(x_i)$, the approximate value $y_i$, and the absolute error $|y(x_i)-y_i|$.
-Make sure that it is clear which table is which.
-For each problem, indicate whether one of the 3 methods appears to perform better than the others.  
-If not, explain.
-    1. $y'=x\mathrm{e}^{3x}-2y$, $y(0)=0$, $[a,b]=[0,1]$, $h=0.5$.
-    1. $y'=1+(x-y)^2$, $y(2)=1$, $[a,b]=[2,3]$, $h=0.5$.
-    1. $y'=1+y/x$, $y(1)=2$, $[a,b]=[1,2]$, $h=0.25$.
-    1. $y'=\cos 2x - \sin 3x$, $y(0)=1$, $[a,b]=[0,1]$, $h=0.25$.
-
-1. Consider the IVP $y'=1+y/x+(y/x)^2$, $y(1)=0$.
-    1. Use the midpoint method to approximate $y(3)$ for $n=8, 16, 32, 64$ and display the absolute errors in a table.  Based on observation, what would you guess the local and global truncation errors for the method to be?
-    1. Use Heun's method to approximate $y(3)$ for $n=8, 16, 32, 64$ and display the absolute errors in a table.  Based on observation, what would you guess the local and global truncation errors for the method to be?
-    1. Use Ralston's order 2 method to approximate $y(3)$ for $n=8, 16, 32, 64$ and display the absolute errors in a table.  Based on observation, what would you guess the local and global truncation errors for the method to be?
-    1. Use the classical RK4 method to approximate $y(3)$ for $n=8, 16, 32, 64$ and display the absolute errors in a table.  Based on observation, what would you guess the local and global truncation errors for the method to be?
-    1. On a per step basis, typically the "expensive" part of these algorithms is the evaluation of $f(x,y)$.  How many evaluations do each of the 4 methods require per step?  How many evaluations are required to complete $n$ steps?  Is RK4 worth the extra evaluations?  Hint: You must find a way to "equalize" the work before comparing.

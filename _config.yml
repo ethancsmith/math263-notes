@@ -3,7 +3,7 @@
 
 title: "MATH 263: Numerical differential equations"
 author: Ethan Smith
-#logo: gcc_seal.png
+logo: gcc_seal.png
 only_build_toc_files: true
 
 parse:

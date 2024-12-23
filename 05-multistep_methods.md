@@ -185,20 +185,3 @@ table = np.c_[num_steps, mem_times, ab2_times];
 hdrs = ["num steps", "MEM time (secs)", "AB2 time (secs)"];
 print(tabulate(table, hdrs, tablefmt='mixed_grid', floatfmt=['0.0f', '0.5f', '0.5f']))
 ```
-
-## Exercises.
-
-1. Implement the Adams–Bashforth four-step method (AB4) with the classical Runge-Kutta method (RK4) as starter.
-1. Solve each of the following IVP's with the indicated parameter choices using both AB4 and (single-step) RK4.
-For each IVP, create a single table displaying the exact value $y(x_i)$, the approximate value $y_i$ for each method, and the absolute error $|y_i-y(x_i)|$ for each method.
-Comment on which method appears to perform better for each problem.
-     1. $y'=x\mathrm{e}^{3x}-2y$, $y(0)=0$, $[a,b]=[0,1]$, $h=0.1$.
-     1. $y'=1+(x-y)^2$, $y(2)=1$, $[a,b]=[2,3]$, $h=0.1$.
-     1. $y'=1+y/x$, $y(1)=2$, $[a,b]=[1,2]$, $h=0.1$.
-     1. $y'=\cos 2x - \sin 3x$, $y(0)=1$, $[a,b]=[0,1]$, $h=0.1$.
-1. Consider the IVP $y'=1+y/x+(y/x)^2, y(1)=0$.
-     1. Use both AB4 and (single-step) RK4 to approximate $y(3)$ for $n=2^k$ with $k=3,\dots, 10$.
-     Display the absolute errors for both in a single table.
-     Do the data appear consistent with the "advertised" local truncation error for AB4?  Explain.
-     1. Record the time that each method requires to perform each of the above calculations and present the results together in a table for easy comparison.
-     Comment on what you observe.
