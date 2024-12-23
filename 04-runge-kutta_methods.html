@@ -144,8 +144,14 @@
   
   
   
+    
+    
+      
+    
+    
+    <img src="_static/gcc_seal.png" class="logo__image only-light" alt="MATH 263: Numerical differential equations - Home"/>
+    <img src="_static/gcc_seal.png" class="logo__image only-dark pst-js-only" alt="MATH 263: Numerical differential equations - Home"/>
   
-    <p class="title logo__title">MATH 263: Numerical differential equations</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -369,7 +375,6 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#order-two-methods">Order two methods.</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-classical-fourth-order-method">The classical fourth order method.</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example.</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises.</a></li>
 </ul>
             </nav>
         </div>
@@ -390,13 +395,13 @@ The Runge-Kutta method of order <span class="math notranslate nohighlight">\(1\)
 <section id="order-two-methods">
 <h2>Order two methods.<a class="headerlink" href="#order-two-methods" title="Link to this heading">#</a></h2>
 <p>The generic Runge-Kutta method of order 2 takes the form</p>
-<div class="amsmath math notranslate nohighlight" id="equation-54c854f2-99df-47fc-bd40-ed1757eb715f">
-<span class="eqno">(7)<a class="headerlink" href="#equation-54c854f2-99df-47fc-bd40-ed1757eb715f" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-e01f0979-925c-4e7a-8caa-eb8812a522eb">
+<span class="eqno">(7)<a class="headerlink" href="#equation-e01f0979-925c-4e7a-8caa-eb8812a522eb" title="Permalink to this equation">#</a></span>\[\begin{equation}
 y_{i+1} = y_i + h\big(w_1k_1 + w_2k_2\big),
 \end{equation}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-834ac675-1502-4a4a-b467-67f16bf9a2f8">
-<span class="eqno">(8)<a class="headerlink" href="#equation-834ac675-1502-4a4a-b467-67f16bf9a2f8" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-79357638-8c5d-4f46-9583-8fa900cd54a4">
+<span class="eqno">(8)<a class="headerlink" href="#equation-79357638-8c5d-4f46-9583-8fa900cd54a4" title="Permalink to this equation">#</a></span>\[\begin{align}
 k_1 &amp;= f(x_i, y_i),\\
 k_2 &amp;= f(x_i+\alpha h, y_i + \beta hk_1),\\
 w_1 &amp;=\frac{1}{2\alpha},\\
@@ -413,13 +418,13 @@ Finally, the <strong>midpoint method</strong> (or <strong>corrected Euler method
 <section id="the-classical-fourth-order-method">
 <h2>The classical fourth order method.<a class="headerlink" href="#the-classical-fourth-order-method" title="Link to this heading">#</a></h2>
 <p>Probably the most popular Runge–Kutta method is the <strong>classical fourth order Runge–Kutta method</strong> (<strong>RK4</strong>), which is defined by the equations</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2d79ee17-e778-49c4-a327-96aad166db42">
-<span class="eqno">(9)<a class="headerlink" href="#equation-2d79ee17-e778-49c4-a327-96aad166db42" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-4071e2a8-51db-4dba-b217-bd5ab756c25c">
+<span class="eqno">(9)<a class="headerlink" href="#equation-4071e2a8-51db-4dba-b217-bd5ab756c25c" title="Permalink to this equation">#</a></span>\[\begin{equation}
 y_{i+1} = \frac{h}{6}\big(k_1 + 2k_2 + 2k_3 + k_4\big),
 \end{equation}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-eba24670-d8d0-4491-8998-9e999389d93a">
-<span class="eqno">(10)<a class="headerlink" href="#equation-eba24670-d8d0-4491-8998-9e999389d93a" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-54f926d3-15d9-48b8-99ee-ae124d730e0f">
+<span class="eqno">(10)<a class="headerlink" href="#equation-54f926d3-15d9-48b8-99ee-ae124d730e0f" title="Permalink to this equation">#</a></span>\[\begin{align}
 k_1 &amp;= f(x_i, y_i),\\
 k_2 &amp;= f\big(x_i + h/2, y_i + hk_1/2\big),\\
 k_3 &amp;= f\big(x_i + h/2, y_i + hk_2/2\big),\\
@@ -430,8 +435,8 @@ k_4 &amp;= f(x_i + h, y_i + hk_3).
 <section id="example">
 <h2>Example.<a class="headerlink" href="#example" title="Link to this heading">#</a></h2>
 <p>Below we compare Euler’s method with the classical Runge–Kutta method of order 4 (RK4) for the IVP</p>
-<div class="amsmath math notranslate nohighlight" id="equation-50cb18b4-9f8f-47c1-9898-80609048654a">
-<span class="eqno">(11)<a class="headerlink" href="#equation-50cb18b4-9f8f-47c1-9898-80609048654a" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-2a62074b-2346-4499-9d4b-90bf7808f857">
+<span class="eqno">(11)<a class="headerlink" href="#equation-2a62074b-2346-4499-9d4b-90bf7808f857" title="Permalink to this equation">#</a></span>\[\begin{align}
 y'&amp;=(y/x)-(y/x)^2,\\
 y(1)&amp;=1.
 \end{align}\]</div>
@@ -523,35 +528,6 @@ y(1)&amp;=1.
 </div>
 </div>
 </section>
-<section id="exercises">
-<h2>Exercises.<a class="headerlink" href="#exercises" title="Link to this heading">#</a></h2>
-<ol class="arabic simple">
-<li><p>Implement Ralston’s order 2 method and the midpoint method in Mathematica.
-Call the methods <em>ralston2</em> and <em>midpoint</em>, respectively.
-You may copy and paste my code from lecture for any other needed methods.</p></li>
-<li><p>Solve each of the following IVP’s with the indicated parameter choices using midpoint method, Heun’s method, and Ralston’s order 2 method.
-For each IVP, create a table for each method displaying the step <span class="math notranslate nohighlight">\(i\)</span>, the exact value <span class="math notranslate nohighlight">\(y(x_i)\)</span>, the approximate value <span class="math notranslate nohighlight">\(y_i\)</span>, and the absolute error <span class="math notranslate nohighlight">\(|y(x_i)-y_i|\)</span>.
-Make sure that it is clear which table is which.
-For each problem, indicate whether one of the 3 methods appears to perform better than the others.<br />
-If not, explain.</p>
-<ol class="arabic simple">
-<li><p><span class="math notranslate nohighlight">\(y'=x\mathrm{e}^{3x}-2y\)</span>, <span class="math notranslate nohighlight">\(y(0)=0\)</span>, <span class="math notranslate nohighlight">\([a,b]=[0,1]\)</span>, <span class="math notranslate nohighlight">\(h=0.5\)</span>.</p></li>
-<li><p><span class="math notranslate nohighlight">\(y'=1+(x-y)^2\)</span>, <span class="math notranslate nohighlight">\(y(2)=1\)</span>, <span class="math notranslate nohighlight">\([a,b]=[2,3]\)</span>, <span class="math notranslate nohighlight">\(h=0.5\)</span>.</p></li>
-<li><p><span class="math notranslate nohighlight">\(y'=1+y/x\)</span>, <span class="math notranslate nohighlight">\(y(1)=2\)</span>, <span class="math notranslate nohighlight">\([a,b]=[1,2]\)</span>, <span class="math notranslate nohighlight">\(h=0.25\)</span>.</p></li>
-<li><p><span class="math notranslate nohighlight">\(y'=\cos 2x - \sin 3x\)</span>, <span class="math notranslate nohighlight">\(y(0)=1\)</span>, <span class="math notranslate nohighlight">\([a,b]=[0,1]\)</span>, <span class="math notranslate nohighlight">\(h=0.25\)</span>.</p></li>
-</ol>
-</li>
-<li><p>Consider the IVP <span class="math notranslate nohighlight">\(y'=1+y/x+(y/x)^2\)</span>, <span class="math notranslate nohighlight">\(y(1)=0\)</span>.</p>
-<ol class="arabic simple">
-<li><p>Use the midpoint method to approximate <span class="math notranslate nohighlight">\(y(3)\)</span> for <span class="math notranslate nohighlight">\(n=8, 16, 32, 64\)</span> and display the absolute errors in a table.  Based on observation, what would you guess the local and global truncation errors for the method to be?</p></li>
-<li><p>Use Heun’s method to approximate <span class="math notranslate nohighlight">\(y(3)\)</span> for <span class="math notranslate nohighlight">\(n=8, 16, 32, 64\)</span> and display the absolute errors in a table.  Based on observation, what would you guess the local and global truncation errors for the method to be?</p></li>
-<li><p>Use Ralston’s order 2 method to approximate <span class="math notranslate nohighlight">\(y(3)\)</span> for <span class="math notranslate nohighlight">\(n=8, 16, 32, 64\)</span> and display the absolute errors in a table.  Based on observation, what would you guess the local and global truncation errors for the method to be?</p></li>
-<li><p>Use the classical RK4 method to approximate <span class="math notranslate nohighlight">\(y(3)\)</span> for <span class="math notranslate nohighlight">\(n=8, 16, 32, 64\)</span> and display the absolute errors in a table.  Based on observation, what would you guess the local and global truncation errors for the method to be?</p></li>
-<li><p>On a per step basis, typically the “expensive” part of these algorithms is the evaluation of <span class="math notranslate nohighlight">\(f(x,y)\)</span>.  How many evaluations do each of the 4 methods require per step?  How many evaluations are required to complete <span class="math notranslate nohighlight">\(n\)</span> steps?  Is RK4 worth the extra evaluations?  Hint: You must find a way to “equalize” the work before comparing.</p></li>
-</ol>
-</li>
-</ol>
-</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -622,7 +598,6 @@ If not, explain.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#order-two-methods">Order two methods.</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-classical-fourth-order-method">The classical fourth order method.</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example.</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises.</a></li>
 </ul>
   </nav></div>
 

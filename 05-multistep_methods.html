@@ -144,8 +144,14 @@
   
   
   
+    
+    
+      
+    
+    
+    <img src="_static/gcc_seal.png" class="logo__image only-light" alt="MATH 263: Numerical differential equations - Home"/>
+    <img src="_static/gcc_seal.png" class="logo__image only-dark pst-js-only" alt="MATH 263: Numerical differential equations - Home"/>
   
-    <p class="title logo__title">MATH 263: Numerical differential equations</p>
   
 </a></div>
         <div class="sidebar-primary-item">
@@ -370,7 +376,6 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adamsbashforth-4-step-method">Adams–Bashforth 4-step method.</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advantages-and-disadvantages">Advantages and disadvantages.</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example.</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises.</a></li>
 </ul>
             </nav>
         </div>
@@ -604,45 +609,20 @@ We then present the global truncation errors <span class="math notranslate nohig
 ┝━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━┥
 │          10 │           0.00005 │           0.00004 │
 ├─────────────┼───────────────────┼───────────────────┤
-│         100 │           0.00041 │           0.00032 │
+│         100 │           0.00041 │           0.00031 │
 ├─────────────┼───────────────────┼───────────────────┤
-│        1000 │           0.00436 │           0.00309 │
+│        1000 │           0.00407 │           0.00313 │
 ├─────────────┼───────────────────┼───────────────────┤
-│       10000 │           0.04279 │           0.03082 │
+│       10000 │           0.04089 │           0.03093 │
 ├─────────────┼───────────────────┼───────────────────┤
-│      100000 │           0.43373 │           0.30691 │
+│      100000 │           0.43998 │           0.30838 │
 ├─────────────┼───────────────────┼───────────────────┤
-│     1000000 │           4.33249 │           3.09399 │
+│     1000000 │           4.31918 │           3.10521 │
 ┕━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━┙
 </pre></div>
 </div>
 </div>
 </div>
-</section>
-<section id="exercises">
-<h2>Exercises.<a class="headerlink" href="#exercises" title="Link to this heading">#</a></h2>
-<ol class="arabic simple">
-<li><p>Implement the Adams–Bashforth four-step method (AB4) with the classical Runge-Kutta method (RK4) as starter.</p></li>
-<li><p>Solve each of the following IVP’s with the indicated parameter choices using both AB4 and (single-step) RK4.
-For each IVP, create a single table displaying the exact value <span class="math notranslate nohighlight">\(y(x_i)\)</span>, the approximate value <span class="math notranslate nohighlight">\(y_i\)</span> for each method, and the absolute error <span class="math notranslate nohighlight">\(|y_i-y(x_i)|\)</span> for each method.
-Comment on which method appears to perform better for each problem.</p>
-<ol class="arabic simple">
-<li><p><span class="math notranslate nohighlight">\(y'=x\mathrm{e}^{3x}-2y\)</span>, <span class="math notranslate nohighlight">\(y(0)=0\)</span>, <span class="math notranslate nohighlight">\([a,b]=[0,1]\)</span>, <span class="math notranslate nohighlight">\(h=0.1\)</span>.</p></li>
-<li><p><span class="math notranslate nohighlight">\(y'=1+(x-y)^2\)</span>, <span class="math notranslate nohighlight">\(y(2)=1\)</span>, <span class="math notranslate nohighlight">\([a,b]=[2,3]\)</span>, <span class="math notranslate nohighlight">\(h=0.1\)</span>.</p></li>
-<li><p><span class="math notranslate nohighlight">\(y'=1+y/x\)</span>, <span class="math notranslate nohighlight">\(y(1)=2\)</span>, <span class="math notranslate nohighlight">\([a,b]=[1,2]\)</span>, <span class="math notranslate nohighlight">\(h=0.1\)</span>.</p></li>
-<li><p><span class="math notranslate nohighlight">\(y'=\cos 2x - \sin 3x\)</span>, <span class="math notranslate nohighlight">\(y(0)=1\)</span>, <span class="math notranslate nohighlight">\([a,b]=[0,1]\)</span>, <span class="math notranslate nohighlight">\(h=0.1\)</span>.</p></li>
-</ol>
-</li>
-<li><p>Consider the IVP <span class="math notranslate nohighlight">\(y'=1+y/x+(y/x)^2, y(1)=0\)</span>.</p>
-<ol class="arabic simple">
-<li><p>Use both AB4 and (single-step) RK4 to approximate <span class="math notranslate nohighlight">\(y(3)\)</span> for <span class="math notranslate nohighlight">\(n=2^k\)</span> with <span class="math notranslate nohighlight">\(k=3,\dots, 10\)</span>.
-Display the absolute errors for both in a single table.
-Do the data appear consistent with the “advertised” local truncation error for AB4?  Explain.</p></li>
-<li><p>Record the time that each method requires to perform each of the above calculations and present the results together in a table for easy comparison.
-Comment on what you observe.</p></li>
-</ol>
-</li>
-</ol>
 </section>
 </section>
 
@@ -715,7 +695,6 @@ Comment on what you observe.</p></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adamsbashforth-4-step-method">Adams–Bashforth 4-step method.</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advantages-and-disadvantages">Advantages and disadvantages.</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example.</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises.</a></li>
 </ul>
   </nav></div>
 
