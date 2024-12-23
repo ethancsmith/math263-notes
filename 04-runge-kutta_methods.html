@@ -16,17 +16,19 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
-
-  
-  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
@@ -35,12 +37,13 @@
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/proof.css" />
-    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341" />
-  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=3ee479438cf8b5e0d341"></script>
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
     <script src="_static/documentation_options.js?v=9eb32ce0"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
@@ -53,7 +56,7 @@
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
@@ -67,6 +70,7 @@
     <link rel="prev" title="Lecture 3: Error analysis." href="03-error_analysis.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -82,19 +86,8 @@
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
-  
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
-  
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
+  <dialog id="pst-search-dialog">
+    
 <form class="bd-search d-flex align-items-center"
       action="search.html"
       method="get">
@@ -102,7 +95,6 @@
   <input type="search"
          class="form-control"
          name="q"
-         id="search-input"
          placeholder="Search this book..."
          aria-label="Search this book..."
          autocomplete="off"
@@ -110,8 +102,8 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-  </div>
+</form>
+  </dialog>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
@@ -127,7 +119,8 @@
       
       
       
-      <div class="bd-sidebar-primary bd-sidebar">
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -142,6 +135,8 @@
         <div class="sidebar-primary-item">
 
   
+    
+  
 
 <a class="navbar-brand logo" href="00-intro.html">
   
@@ -155,15 +150,11 @@
 </a></div>
         <div class="sidebar-primary-item">
 
- <script>
- document.write(`
-   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script></div>
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
@@ -181,6 +172,8 @@
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Lecture 4: Runge–Kutta methods.</a></li>
 <li class="toctree-l1"><a class="reference internal" href="05-multistep_methods.html">Lecture 5: Multistep methods.</a></li>
 <li class="toctree-l1"><a class="reference internal" href="06-predictor-corrector_methods.html">Lecture 6: Predictor–corrector methods.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07-systems_of_odes.html">Lecture 7: Systems of first order ODE’s.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08-higher_order_odes.html">Lecture 8: Higher order initial value problems.</a></li>
 </ul>
 
     </div>
@@ -189,9 +182,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -335,24 +333,16 @@
 
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
-  </button>
-`);
-</script>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-  </button>
-`);
-</script>
+</button>
 <button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
@@ -400,13 +390,13 @@ The Runge-Kutta method of order <span class="math notranslate nohighlight">\(1\)
 <section id="order-two-methods">
 <h2>Order two methods.<a class="headerlink" href="#order-two-methods" title="Link to this heading">#</a></h2>
 <p>The generic Runge-Kutta method of order 2 takes the form</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2c8769f6-f3ef-4a36-850a-9acd1ea2996f">
-<span class="eqno">(7)<a class="headerlink" href="#equation-2c8769f6-f3ef-4a36-850a-9acd1ea2996f" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-54c854f2-99df-47fc-bd40-ed1757eb715f">
+<span class="eqno">(7)<a class="headerlink" href="#equation-54c854f2-99df-47fc-bd40-ed1757eb715f" title="Permalink to this equation">#</a></span>\[\begin{equation}
 y_{i+1} = y_i + h\big(w_1k_1 + w_2k_2\big),
 \end{equation}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a93f33a0-8c15-4910-b40e-0f6cdd38cf8e">
-<span class="eqno">(8)<a class="headerlink" href="#equation-a93f33a0-8c15-4910-b40e-0f6cdd38cf8e" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-834ac675-1502-4a4a-b467-67f16bf9a2f8">
+<span class="eqno">(8)<a class="headerlink" href="#equation-834ac675-1502-4a4a-b467-67f16bf9a2f8" title="Permalink to this equation">#</a></span>\[\begin{align}
 k_1 &amp;= f(x_i, y_i),\\
 k_2 &amp;= f(x_i+\alpha h, y_i + \beta hk_1),\\
 w_1 &amp;=\frac{1}{2\alpha},\\
@@ -423,13 +413,13 @@ Finally, the <strong>midpoint method</strong> (or <strong>corrected Euler method
 <section id="the-classical-fourth-order-method">
 <h2>The classical fourth order method.<a class="headerlink" href="#the-classical-fourth-order-method" title="Link to this heading">#</a></h2>
 <p>Probably the most popular Runge–Kutta method is the <strong>classical fourth order Runge–Kutta method</strong> (<strong>RK4</strong>), which is defined by the equations</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6cfb7f91-022e-4036-936f-8199fb7858c2">
-<span class="eqno">(9)<a class="headerlink" href="#equation-6cfb7f91-022e-4036-936f-8199fb7858c2" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-2d79ee17-e778-49c4-a327-96aad166db42">
+<span class="eqno">(9)<a class="headerlink" href="#equation-2d79ee17-e778-49c4-a327-96aad166db42" title="Permalink to this equation">#</a></span>\[\begin{equation}
 y_{i+1} = \frac{h}{6}\big(k_1 + 2k_2 + 2k_3 + k_4\big),
 \end{equation}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-73f1dd9c-eca3-474a-93ec-93a00f5014f1">
-<span class="eqno">(10)<a class="headerlink" href="#equation-73f1dd9c-eca3-474a-93ec-93a00f5014f1" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-eba24670-d8d0-4491-8998-9e999389d93a">
+<span class="eqno">(10)<a class="headerlink" href="#equation-eba24670-d8d0-4491-8998-9e999389d93a" title="Permalink to this equation">#</a></span>\[\begin{align}
 k_1 &amp;= f(x_i, y_i),\\
 k_2 &amp;= f\big(x_i + h/2, y_i + hk_1/2\big),\\
 k_3 &amp;= f\big(x_i + h/2, y_i + hk_2/2\big),\\
@@ -440,8 +430,8 @@ k_4 &amp;= f(x_i + h, y_i + hk_3).
 <section id="example">
 <h2>Example.<a class="headerlink" href="#example" title="Link to this heading">#</a></h2>
 <p>Below we compare Euler’s method with the classical Runge–Kutta method of order 4 (RK4) for the IVP</p>
-<div class="amsmath math notranslate nohighlight" id="equation-8015303f-7f52-46f3-98bd-157166416d80">
-<span class="eqno">(11)<a class="headerlink" href="#equation-8015303f-7f52-46f3-98bd-157166416d80" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-50cb18b4-9f8f-47c1-9898-80609048654a">
+<span class="eqno">(11)<a class="headerlink" href="#equation-50cb18b4-9f8f-47c1-9898-80609048654a" title="Permalink to this equation">#</a></span>\[\begin{align}
 y'&amp;=(y/x)-(y/x)^2,\\
 y(1)&amp;=1.
 \end{align}\]</div>
@@ -449,7 +439,7 @@ y(1)&amp;=1.
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math263</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">sympy</span> <span class="k">as</span> <span class="nn">sp</span>
+<span class="kn">import</span> <span class="nn">sympy</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">from</span> <span class="nn">tabulate</span> <span class="kn">import</span> <span class="n">tabulate</span>
 <span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">Markdown</span>
@@ -460,46 +450,48 @@ y(1)&amp;=1.
 <span class="n">y0</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
 
 <span class="c1"># solve the IVP symbolically with the sympy library</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">);</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">Function</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">);</span>
-<span class="n">ode</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">Eq</span><span class="p">(</span><span class="n">y</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">(</span><span class="n">x</span><span class="p">)));</span>
-<span class="n">soln</span><span class="o">=</span><span class="n">sp</span><span class="o">.</span><span class="n">dsolve</span><span class="p">(</span><span class="n">ode</span><span class="p">,</span> <span class="n">y</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">ics</span><span class="o">=</span><span class="p">{</span><span class="n">y</span><span class="p">(</span><span class="n">a</span><span class="p">):</span> <span class="n">y0</span><span class="p">});</span> 
-<span class="n">rhs</span><span class="o">=</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">(</span><span class="n">x</span><span class="p">));</span>
-<span class="n">display</span><span class="p">(</span><span class="n">Markdown</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The true solution to the ODE $y&#39;=</span><span class="si">{</span><span class="n">sp</span><span class="o">.</span><span class="n">latex</span><span class="p">(</span><span class="n">rhs</span><span class="p">)</span><span class="si">}</span><span class="s2">$ with initial condition $y(</span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2">)=</span><span class="si">{</span><span class="n">y0</span><span class="si">}</span><span class="s2">$ is $</span><span class="si">{</span><span class="n">sp</span><span class="o">.</span><span class="n">latex</span><span class="p">(</span><span class="n">soln</span><span class="p">)</span><span class="si">}</span><span class="s2">$.&quot;</span><span class="p">))</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">);</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Function</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">);</span>
+<span class="n">ode</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Eq</span><span class="p">(</span><span class="n">y</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">(</span><span class="n">x</span><span class="p">)));</span>
+<span class="n">soln</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">dsolve</span><span class="p">(</span><span class="n">ode</span><span class="p">,</span> <span class="n">y</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">ics</span><span class="o">=</span><span class="p">{</span><span class="n">y</span><span class="p">(</span><span class="n">a</span><span class="p">):</span> <span class="n">y0</span><span class="p">});</span> 
+<span class="n">rhs</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">(</span><span class="n">x</span><span class="p">));</span>
+<span class="n">display</span><span class="p">(</span><span class="n">Markdown</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The true solution to the ODE </span><span class="se">\</span>
+<span class="s2">$y&#39;=</span><span class="si">{</span><span class="n">sympy</span><span class="o">.</span><span class="n">latex</span><span class="p">(</span><span class="n">rhs</span><span class="p">)</span><span class="si">}</span><span class="s2">$ with initial condition </span><span class="se">\</span>
+<span class="s2">$y(</span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2">)=</span><span class="si">{</span><span class="n">y0</span><span class="si">}</span><span class="s2">$ is $</span><span class="si">{</span><span class="n">sympy</span><span class="o">.</span><span class="n">latex</span><span class="p">(</span><span class="n">soln</span><span class="p">)</span><span class="si">}</span><span class="s2">$.&quot;</span><span class="p">))</span>
 
 <span class="c1"># convert the symbolic solution to a Python function and plot it with matplotlib.pyplot</span>
-<span class="n">sym_y</span><span class="o">=</span><span class="n">sp</span><span class="o">.</span><span class="n">lambdify</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">soln</span><span class="o">.</span><span class="n">rhs</span><span class="p">,</span> <span class="n">modules</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;numpy&#39;</span><span class="p">]);</span> 
+<span class="n">sym_y</span><span class="o">=</span><span class="n">sympy</span><span class="o">.</span><span class="n">lambdify</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">soln</span><span class="o">.</span><span class="n">rhs</span><span class="p">,</span> <span class="n">modules</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;numpy&#39;</span><span class="p">]);</span> 
 <span class="n">xvals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">100</span><span class="p">);</span>
-<span class="n">ex1</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">();</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xvals</span><span class="p">,</span> <span class="n">sym_y</span><span class="p">(</span><span class="n">xvals</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">);</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;$y&#39; = </span><span class="si">{</span><span class="n">sp</span><span class="o">.</span><span class="n">latex</span><span class="p">(</span><span class="n">rhs</span><span class="p">)</span><span class="si">}</span><span class="s2">$, $y(</span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2">)=</span><span class="si">{</span><span class="n">y0</span><span class="si">}</span><span class="s2">$&quot;</span><span class="p">);</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$x$&quot;</span><span class="p">);</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$y$&quot;</span><span class="p">);</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;$</span><span class="si">{</span><span class="n">sp</span><span class="o">.</span><span class="n">latex</span><span class="p">(</span><span class="n">soln</span><span class="p">)</span><span class="si">}</span><span class="s2">$&quot;</span><span class="p">],</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper right&#39;</span><span class="p">);</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">layout</span><span class="o">=</span><span class="s1">&#39;constrained&#39;</span><span class="p">);</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xvals</span><span class="p">,</span> <span class="n">sym_y</span><span class="p">(</span><span class="n">xvals</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;$</span><span class="si">{</span><span class="n">sympy</span><span class="o">.</span><span class="n">latex</span><span class="p">(</span><span class="n">soln</span><span class="p">)</span><span class="si">}</span><span class="s2">$&quot;</span><span class="p">);</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;$y&#39; = </span><span class="si">{</span><span class="n">sympy</span><span class="o">.</span><span class="n">latex</span><span class="p">(</span><span class="n">rhs</span><span class="p">)</span><span class="si">}</span><span class="s2">$, $y(</span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2">)=</span><span class="si">{</span><span class="n">y0</span><span class="si">}</span><span class="s2">$&quot;</span><span class="p">);</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$x$&quot;</span><span class="p">);</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$y$&quot;</span><span class="p">);</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;$</span><span class="si">{</span><span class="n">sympy</span><span class="o">.</span><span class="n">latex</span><span class="p">(</span><span class="n">soln</span><span class="p">)</span><span class="si">}</span><span class="s2">$&quot;</span><span class="p">],</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper right&#39;</span><span class="p">);</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="c1"># numerically solve the IVP with n=10 steps of forward Euler and n=10 steps of RK4</span>
 <span class="n">n</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
-<span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_euler</span><span class="p">)</span> <span class="o">=</span> <span class="n">math263</span><span class="o">.</span><span class="n">euler</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
-<span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_rk4</span><span class="p">)</span>   <span class="o">=</span> <span class="n">math263</span><span class="o">.</span><span class="n">rk4</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
+<span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="n">y_euler</span><span class="p">)</span> <span class="o">=</span> <span class="n">math263</span><span class="o">.</span><span class="n">euler</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
+<span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="n">y_rk4</span><span class="p">)</span>   <span class="o">=</span> <span class="n">math263</span><span class="o">.</span><span class="n">rk4</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
+
+<span class="c1"># plot numerical solutions on top of true solution</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="n">y_euler</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;ro:&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Euler&quot;</span><span class="p">);</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="n">y_rk4</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;go:&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;RK4&quot;</span><span class="p">);</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">();</span>
 
 <span class="c1"># tabulate the results</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Global errors for Euler&#39;s method and RK4.&quot;</span><span class="p">)</span>
-<span class="n">table</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="n">sym_y</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="n">y_euler</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">sym_y</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="n">y_rk4</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]))));</span>
+<span class="n">table</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">xi</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="n">sym_y</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span> <span class="o">-</span> <span class="n">y_euler</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">sym_y</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span> <span class="o">-</span> <span class="n">y_rk4</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])];</span>
 <span class="n">hdrs</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;i&quot;</span><span class="p">,</span> <span class="s2">&quot;x_i&quot;</span><span class="p">,</span> <span class="s2">&quot;e_{i,Euler} = |y(x_i)-y_i|&quot;</span><span class="p">,</span> <span class="s2">&quot;e_{i,RK4} = |y(x_i)-y_i|&quot;</span><span class="p">];</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">tabulate</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">hdrs</span><span class="p">,</span> <span class="n">tablefmt</span><span class="o">=</span><span class="s1">&#39;mixed_grid&#39;</span><span class="p">,</span> <span class="n">floatfmt</span><span class="o">=</span><span class="s1">&#39;0.5g&#39;</span><span class="p">,</span> <span class="n">showindex</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
-
-<span class="c1"># plot numerical solutions on top of true solution</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">ex1</span><span class="p">);</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y_euler</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span><span class="s1">&#39;ro:&#39;</span><span class="p">);</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y_rk4</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span><span class="s1">&#39;go:&#39;</span><span class="p">);</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;$</span><span class="si">{</span><span class="n">sp</span><span class="o">.</span><span class="n">latex</span><span class="p">(</span><span class="n">soln</span><span class="p">)</span><span class="si">}</span><span class="s2">$&quot;</span><span class="p">,</span><span class="s2">&quot;Euler&quot;</span><span class="p">,</span> <span class="s2">&quot;RK4&quot;</span><span class="p">],</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">);</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">();</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <p>The true solution to the ODE $y’=\frac{y{\left(x \right)}}{x} - \frac{y^{2}{\left(x \right)}}{x^{2}}$ with initial condition $y(1)=1$ is $y{\left(x \right)} = \frac{x}{\log{\left(x \right)} + 1}$.</p>
+<img alt="_images/3576944564073c282c4deae0e6ca1fb86d8cdab21d71f1ee6623a32ec4e8c8b3.png" src="_images/3576944564073c282c4deae0e6ca1fb86d8cdab21d71f1ee6623a32ec4e8c8b3.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Global errors for Euler&#39;s method and RK4.
 ┍━━━━━┯━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━━━━━━━━┑
 │   i │   x_i │   e_{i,Euler} = |y(x_i)-y_i| │   e_{i,RK4} = |y(x_i)-y_i| │
@@ -528,7 +520,6 @@ y(1)&amp;=1.
 ┕━━━━━┷━━━━━━━┷━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━━━━━━━━━┙
 </pre></div>
 </div>
-<img alt="_images/0c42fc11d266b8ae9fb98e68dc92cb2193798c98ba10297d9180772038304607.png" src="_images/0c42fc11d266b8ae9fb98e68dc92cb2193798c98ba10297d9180772038304607.png" />
 </div>
 </div>
 </section>
@@ -618,7 +609,8 @@ If not, explain.</p>
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
   <div class="sidebar-secondary-item">
@@ -679,8 +671,8 @@ By Ethan Smith
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341"></script>
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
   </footer>

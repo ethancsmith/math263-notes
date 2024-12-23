@@ -1,0 +1,827 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Lecture 7: Systems of first order ODE’s. &#8212; MATH 263: Numerical differential equations</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '07-systems_of_odes';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Lecture 8: Higher order initial value problems." href="08-higher_order_odes.html" />
+    <link rel="prev" title="Lecture 6: Predictor–corrector methods." href="06-predictor-corrector_methods.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="00-intro.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">MATH 263: Numerical differential equations</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="00-intro.html">
+                    MATH 263: Numerical differential equations.
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01-direction_fields.html">Lecture 1: Direction fields.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02-euler_method.html">Lecture 2: Euler’s method.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03-error_analysis.html">Lecture 3: Error analysis.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04-runge-kutta_methods.html">Lecture 4: Runge–Kutta methods.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05-multistep_methods.html">Lecture 5: Multistep methods.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-predictor-corrector_methods.html">Lecture 6: Predictor–corrector methods.</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Lecture 7: Systems of first order ODE’s.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08-higher_order_odes.html">Lecture 8: Higher order initial value problems.</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/ethancsmith/math263-notes" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/ethancsmith/math263-notes/issues/new?title=Issue%20on%20page%20%2F07-systems_of_odes.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/07-systems_of_odes.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Lecture 7: Systems of first order ODE’s.</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#systems-of-equations-in-vector-form">Systems of equations in vector form.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#numerical-solutions-to-systems-of-odes">Numerical solutions to systems of ODE’s.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example.</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="lecture-7-systems-of-first-order-odes">
+<h1>Lecture 7: Systems of first order ODE’s.<a class="headerlink" href="#lecture-7-systems-of-first-order-odes" title="Link to this heading">#</a></h1>
+<section id="systems-of-equations-in-vector-form">
+<h2>Systems of equations in vector form.<a class="headerlink" href="#systems-of-equations-in-vector-form" title="Link to this heading">#</a></h2>
+<p>By a <strong>system of <span class="math notranslate nohighlight">\(m\)</span> first order ordinary differential equations</strong> we mean a system of equations of the form</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}y_1' &amp;= f_1(x, y_1, y_2, \dots, y_m),\\
+y_2' &amp;= f_2(x, y_1, y_2, \dots, y_m),\\
+&amp;\quad \vdots\\
+y_m' &amp;= f_m(x, y_1, y_2, \dots, y_m).\end{split}\]</div>
+<p>Since humans are much better at holding onto to one object at time, it is convenient (and conceptually more illuminating) to place the <span class="math notranslate nohighlight">\(m\)</span> objects into a single vector equation, namely</p>
+<div class="math notranslate nohighlight" id="equation-first-order-vector-ode">
+<span class="eqno">(18)<a class="headerlink" href="#equation-first-order-vector-ode" title="Link to this equation">#</a></span>\[\mathbf{y}' = \mathbf{f}(x, \mathbf{y}),\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{y}(x) = \langle y_1(x), y_2(x), \dots, y_m(x)\rangle\)</span> is a vector-valued function of the scalar <span class="math notranslate nohighlight">\(x\)</span>,</p>
+<div class="math notranslate nohighlight" id="equation-vector-derivative">
+<span class="eqno">(19)<a class="headerlink" href="#equation-vector-derivative" title="Link to this equation">#</a></span>\[\begin{split}\mathbf{y}' %= \frac{\mathrm{d}\mathbf{y}}{\mathrm{d} x}
+=\lim_{h\to 0}\frac{\mathbf{y}(x+h) - \mathbf{y}(x)}{h}
+= \begin{pmatrix}
+\displaystyle\lim_{h\to 0}\frac{y_1(x+h) - y_1(x)}{h}\\
+\displaystyle\lim_{h\to 0}\frac{y_2(x+h) - y_2(x)}{h}\\
+\vdots\\
+\displaystyle\lim_{h\to 0}\frac{y_m(x+h) - y_m(x)}{h}
+\end{pmatrix},\end{split}\]</div>
+<p>and</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\mathbf{f}(x, \mathbf{y}) = 
+\begin{pmatrix}
+f_1(x, y_1, y_2, \dots, y_m)\\
+f_2(x, y_1, y_2, \dots, y_m)\\
+\vdots\\
+f_m(x, y_1, y_2, \dots, y_m)
+\end{pmatrix}.
+\end{equation*}\]</div>
+<p>Note that we write our vectors as columns when displayed, but use the angle-bracket row notation (common in multivariable calculus texts) as a spacing-saving device for in-line presentation.</p>
+<p>As with scalar ODE’s, the solution to a vector ODE is not typically unique.  To specify a unique solution it is sufficient to specify <span class="math notranslate nohighlight">\(m\)</span> <em>initial conditions</em> of the form <span class="math notranslate nohighlight">\(\mathbf{y}(x_)) = \mathbf{y}_0 = \langle y_{1,0}, y_{2,0}, \dots, y_{m,0}\rangle\)</span>.</p>
+</section>
+<section id="numerical-solutions-to-systems-of-odes">
+<h2>Numerical solutions to systems of ODE’s.<a class="headerlink" href="#numerical-solutions-to-systems-of-odes" title="Link to this heading">#</a></h2>
+<p>Evidently, the derivative <a class="reference internal" href="#equation-vector-derivative">(19)</a> of a vector-valued function is the vector of derivatives of the scalar-valued components.  This is true, and even important, but it is much more important that the derivative is defined as a limit in precisely the same way as for the scalar theory.  That means that much of what we already know about the scalar theory continues to work for vectors.  In particular, linearization looks exactly the same.  To see this, we just note that if <span class="math notranslate nohighlight">\(h\)</span> is small, then</p>
+<div class="math notranslate nohighlight" id="equation-approx-vector-derivative">
+<span class="eqno">(20)<a class="headerlink" href="#equation-approx-vector-derivative" title="Link to this equation">#</a></span>\[\mathbf{y}'(x) \approx \frac{\mathbf{y}(x+h) - \mathbf{y}(x)}{h}.\]</div>
+<p>In fact, there is even a theory of multiple-variable Taylor series to precisely quantify what is meant by this assertion though we will not pursue such a precise statement this time.
+Now, solving <a class="reference internal" href="#equation-approx-vector-derivative">(20)</a> for <span class="math notranslate nohighlight">\(\mathbf{y}(x+h)\)</span> yields the usual linear approximation</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+\mathbf{y}(x+h) \approx \mathbf{y}(x) + h\mathbf{y}'(x).
+\end{equation*}\]</div>
+<p>Since linearization works — and looks exactly the same, Euler’s method works — and looks exactly the same.  In particular, to numerically approximate a solution to the first order IVP</p>
+<div class="math notranslate nohighlight" id="equation-first-order-vector-ivp">
+<span class="eqno">(21)<a class="headerlink" href="#equation-first-order-vector-ivp" title="Link to this equation">#</a></span>\[\begin{split}\mathbf{y}' &amp;= \mathbf{f}(x, \mathbf{y})\\
+\mathbf{y}(x_0) &amp;= \mathbf{y}_0\end{split}\]</div>
+<p>we have the (vectorized) <strong>forward Euler method</strong></p>
+<div class="math notranslate nohighlight" id="equation-vector-forward-euler">
+<span class="eqno">(22)<a class="headerlink" href="#equation-vector-forward-euler" title="Link to this equation">#</a></span>\[\mathbf{y}_{i+1} = \mathbf{y}_i + h \mathbf{f}(x_i, \mathbf{y}_i).\]</div>
+<p>For those less familiar with vector arithmetic (or those interested in implementing the method is a low-level programming language) we note that the above vector formula is equivalent to the <span class="math notranslate nohighlight">\(m\)</span> scalar formulas</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+y_{1, i+1} &amp;= y_{1,i} + h f_1(x_i, y_{1, i}, y_{2, i}, \dots, y_{m, i}),\\
+y_{2, i+1} &amp;= y_{2,i} + h f_2(x_i, y_{1, i}, y_{2, i}, \dots, y_{m, i}),\\
+&amp;\quad \vdots\\
+y_{m, i+1} &amp;= y_{m,i} + h f_m(x_i, y_{1, i}, y_{2, i}, \dots, y_{m, i}).
+\end{align*}\]</div>
+<p>Fortunately, many higher-level software packages (e.g., NumPy) have built-in routines and overloaded operators for manipulating vectors as though they were scalars.  Since we were careful with our numerical method implementations, this means that our code already works for systems of ODE’s.  All we need to do is feed the routines appropriately shaped arrays.</p>
+</section>
+<section id="example">
+<h2>Example.<a class="headerlink" href="#example" title="Link to this heading">#</a></h2>
+<p>Consider the system of first order ordinary differential equations</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\frac{\mathrm{d}x}{\mathrm{d}t} &amp;= x + z,\\
+\frac{\mathrm{d}y}{\mathrm{d}t} &amp;= x + y,\\
+\frac{\mathrm{d}z}{\mathrm{d}t} &amp;= -2x - z\end{split}\]</div>
+<p>together with the initial conditions <span class="math notranslate nohighlight">\(x(0) = 1\)</span>, <span class="math notranslate nohighlight">\(y(0) = -1/2\)</span>, and <span class="math notranslate nohighlight">\(z(0) = -1\)</span>.
+Writing <span class="math notranslate nohighlight">\(\mathbf r = \langle x, y, z\rangle\)</span> for the solution, we may repackage the system in vector form, writing</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\frac{\mathrm{d}\mathbf{r}}{\mathrm{d} t} 
+&amp;= \begin{pmatrix} x + z\\ x + y\\ -2x - z \end{pmatrix},\\
+\mathbf{r}(0) &amp; = \begin{pmatrix} 1\\ -1/2\\ 1\end{pmatrix}.\end{split}\]</div>
+<p>First we solve the system symbolic with SymPy.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sympy</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">Markdown</span>
+
+<span class="c1"># solve the IVP symbolically with the sympy library</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;t&#39;</span><span class="p">);</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Function</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">);</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Function</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">);</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Function</span><span class="p">(</span><span class="s1">&#39;z&#39;</span><span class="p">);</span>
+<span class="n">ode_rhs</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">+</span> <span class="n">z</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="n">x</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">+</span> <span class="n">y</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">-</span> <span class="n">z</span><span class="p">(</span><span class="n">t</span><span class="p">)];</span>
+<span class="n">ode</span> <span class="o">=</span> <span class="p">[</span><span class="n">sympy</span><span class="o">.</span><span class="n">Eq</span><span class="p">(</span><span class="n">x</span><span class="p">(</span><span class="n">t</span><span class="p">)</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="n">ode_rhs</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> 
+       <span class="n">sympy</span><span class="o">.</span><span class="n">Eq</span><span class="p">(</span><span class="n">y</span><span class="p">(</span><span class="n">t</span><span class="p">)</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="n">ode_rhs</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> 
+       <span class="n">sympy</span><span class="o">.</span><span class="n">Eq</span><span class="p">(</span><span class="n">z</span><span class="p">(</span><span class="n">t</span><span class="p">)</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="n">ode_rhs</span><span class="p">[</span><span class="mi">2</span><span class="p">])];</span>
+<span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">;</span>
+<span class="n">soln</span><span class="o">=</span><span class="n">sympy</span><span class="o">.</span><span class="n">dsolve</span><span class="p">(</span><span class="n">ode</span><span class="p">,[</span><span class="n">x</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="n">y</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="n">z</span><span class="p">(</span><span class="n">t</span><span class="p">)],</span> 
+                  <span class="n">ics</span><span class="o">=</span><span class="p">{</span><span class="n">x</span><span class="p">(</span><span class="n">a</span><span class="p">):</span> <span class="mi">1</span><span class="p">,</span> <span class="n">y</span><span class="p">(</span><span class="n">a</span><span class="p">):</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Rational</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">z</span><span class="p">(</span><span class="n">a</span><span class="p">):</span> <span class="o">-</span><span class="mi">1</span><span class="p">});</span> 
+<span class="n">soln_rhs</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Matrix</span><span class="p">([</span><span class="n">eq</span><span class="o">.</span><span class="n">rhs</span> <span class="k">for</span> <span class="n">eq</span> <span class="ow">in</span> <span class="n">soln</span><span class="p">]);</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">Markdown</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;The unique solution to the IVP is $\mathbf</span><span class="si">{r}</span><span class="s2"> = $&quot;</span> 
+                 <span class="sa">f</span><span class="s2">&quot;$</span><span class="si">{</span><span class="n">sympy</span><span class="o">.</span><span class="n">latex</span><span class="p">(</span><span class="n">soln_rhs</span><span class="p">)</span><span class="si">}</span><span class="s2">$.&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<p>The unique solution to the IVP is $\mathbf{r} = $$\left[\begin{matrix}\cos{\left(t \right)}\frac{\sin{\left(t \right)}}{2} - \frac{\cos{\left(t \right)}}{2}- \sin{\left(t \right)} - \cos{\left(t \right)}\end{matrix}\right]$.</p>
+</div>
+</div>
+<p>Next we plot the solution in <span class="math notranslate nohighlight">\(xyz\)</span>-space.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># lambdify the symbolic solution</span>
+<span class="n">sym_x</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">lambdify</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">soln</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">rhs</span><span class="p">,</span> <span class="n">modules</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;numpy&#39;</span><span class="p">]);</span>
+<span class="n">sym_y</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">lambdify</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">soln</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">rhs</span><span class="p">,</span> <span class="n">modules</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;numpy&#39;</span><span class="p">]);</span>
+<span class="n">sym_z</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">lambdify</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">soln</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">rhs</span><span class="p">,</span> <span class="n">modules</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;numpy&#39;</span><span class="p">]);</span>
+<span class="n">tvals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">40</span><span class="p">);</span>
+
+<span class="c1"># plot symbolic solution with matplotlib.pyplot</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">subplot_kw</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">))</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sym_x</span><span class="p">(</span><span class="n">tvals</span><span class="p">),</span> <span class="n">sym_y</span><span class="p">(</span><span class="n">tvals</span><span class="p">),</span> <span class="n">sym_z</span><span class="p">(</span><span class="n">tvals</span><span class="p">),</span> 
+        <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;$\mathbf</span><span class="si">{r}</span><span class="s2">(t)=\langle x(t), y(t), z(t)\rangle$&quot;</span><span class="p">);</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$x$&quot;</span><span class="p">);</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$y$&quot;</span><span class="p">);</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$z$&quot;</span><span class="p">);</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\frac{\mathrm</span><span class="si">{d}</span><span class="s2">\mathbf</span><span class="si">{r}</span><span class="s2">}{\mathrm</span><span class="si">{d}</span><span class="s2">t} = \langle$&quot;</span> 
+             <span class="sa">f</span><span class="s2">&quot;$</span><span class="si">{</span><span class="n">sympy</span><span class="o">.</span><span class="n">latex</span><span class="p">(</span><span class="n">ode_rhs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="si">}</span><span class="s2">$, $</span><span class="si">{</span><span class="n">sympy</span><span class="o">.</span><span class="n">latex</span><span class="p">(</span><span class="n">ode_rhs</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="si">}</span><span class="s2">$, $</span><span class="si">{</span><span class="n">sympy</span><span class="o">.</span><span class="n">latex</span><span class="p">(</span><span class="n">ode_rhs</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span><span class="si">}</span><span class="s2">$&quot;</span>
+             <span class="sa">r</span><span class="s2">&quot;$\rangle$, $\mathbf</span><span class="si">{r}</span><span class="s2">(0) = \langle 1, -1/2, -1\rangle$&quot;</span><span class="p">);</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_box_aspect</span><span class="p">(</span><span class="n">aspect</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">zoom</span><span class="o">=</span><span class="mf">0.85</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper right&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/aba9db5261af94ce4d6eec84bd343b45217d2781d6f6088808cbb50293a113c5.png" src="_images/aba9db5261af94ce4d6eec84bd343b45217d2781d6f6088808cbb50293a113c5.png" />
+</div>
+</div>
+<p>Now we compute a numerical solution via Euler’s method and plot it along with the symbolic solution.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math263</span>
+
+<span class="c1"># define IVP parameters</span>
+<span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">t</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">r</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">r</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">r</span><span class="p">[</span><span class="mi">2</span><span class="p">]]);</span>
+<span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">;</span>
+<span class="n">r0</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]);</span>
+
+<span class="n">h</span><span class="o">=</span><span class="mf">0.1</span><span class="p">;</span>
+<span class="n">n</span> <span class="o">=</span> <span class="nb">round</span><span class="p">((</span><span class="n">b</span> <span class="o">-</span> <span class="n">a</span><span class="p">)</span><span class="o">/</span><span class="n">h</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">);</span>
+<span class="p">(</span><span class="n">ti</span><span class="p">,</span> <span class="n">r_euler</span><span class="p">)</span> <span class="o">=</span> <span class="n">math263</span><span class="o">.</span><span class="n">euler</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">r0</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span> 
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">fig</span><span class="p">);</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">r_euler</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">r_euler</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">r_euler</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">],</span> <span class="s1">&#39;ro:&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Euler&#39;s method&quot;</span><span class="p">);</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper right&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/a6b4b22c383af9fc58876c4549c05683255be0dc2ae7e27e5e7e3c4381572a28.png" src="_images/a6b4b22c383af9fc58876c4549c05683255be0dc2ae7e27e5e7e3c4381572a28.png" />
+</div>
+</div>
+<p>Finally, we compute the absolute and relative errors at each mesh point in <span class="math notranslate nohighlight">\(t\)</span>-space using the <span class="math notranslate nohighlight">\(2\)</span>-norm.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tabulate</span> <span class="kn">import</span> <span class="n">tabulate</span>
+
+<span class="n">rvals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">sym_x</span><span class="p">(</span><span class="n">ti</span><span class="p">),</span> <span class="n">sym_y</span><span class="p">(</span><span class="n">ti</span><span class="p">),</span> <span class="n">sym_z</span><span class="p">(</span><span class="n">ti</span><span class="p">)];</span>
+<span class="n">error_vecs</span> <span class="o">=</span> <span class="n">rvals</span> <span class="o">-</span> <span class="n">r_euler</span>
+<span class="n">p</span><span class="o">=</span><span class="mi">2</span><span class="p">;</span> <span class="c1"># set &#39;p = inf.inf&#39; to use infinity norm</span>
+<span class="n">errors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">error_vecs</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="n">p</span><span class="p">)</span> 
+<span class="n">rel_errors</span> <span class="o">=</span> <span class="n">errors</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">rvals</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="n">p</span><span class="p">);</span>
+<span class="n">table</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">ti</span><span class="p">,</span> <span class="n">errors</span><span class="p">,</span> <span class="n">rel_errors</span><span class="p">];</span>
+<span class="n">hdrs</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;i&quot;</span><span class="p">,</span> <span class="s2">&quot;t_i&quot;</span><span class="p">,</span> <span class="s2">&quot;abs. error&quot;</span><span class="p">,</span> <span class="s2">&quot;rel. error&quot;</span><span class="p">];</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Global </span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2">-norm errors for Euler&#39;s method.&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tabulate</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">hdrs</span><span class="p">,</span> <span class="n">tablefmt</span><span class="o">=</span><span class="s1">&#39;mixed_grid&#39;</span><span class="p">,</span> <span class="n">floatfmt</span><span class="o">=</span><span class="s1">&#39;0.5g&#39;</span><span class="p">,</span> <span class="n">showindex</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Global 2-norm errors for Euler&#39;s method.
+┍━━━━━┯━━━━━━━━━━┯━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━┑
+│   i │      t_i │   abs. error │   rel. error │
+┝━━━━━┿━━━━━━━━━━┿━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━┥
+│   0 │ 0        │    0         │    0         │
+├─────┼──────────┼──────────────┼──────────────┤
+│   1 │ 0.099733 │    0.0075383 │    0.0048774 │
+├─────┼──────────┼──────────────┼──────────────┤
+│   2 │ 0.19947  │    0.015537  │    0.0098227 │
+├─────┼──────────┼──────────────┼──────────────┤
+│   3 │ 0.2992   │    0.023858  │    0.014837  │
+├─────┼──────────┼──────────────┼──────────────┤
+│   4 │ 0.39893  │    0.032345  │    0.019922  │
+├─────┼──────────┼──────────────┼──────────────┤
+│   5 │ 0.49867  │    0.040833  │    0.025078  │
+├─────┼──────────┼──────────────┼──────────────┤
+│   6 │ 0.5984   │    0.049156  │    0.030306  │
+├─────┼──────────┼──────────────┼──────────────┤
+│   7 │ 0.69813  │    0.057144  │    0.035608  │
+├─────┼──────────┼──────────────┼──────────────┤
+│   8 │ 0.79786  │    0.064637  │    0.040984  │
+├─────┼──────────┼──────────────┼──────────────┤
+│   9 │ 0.8976   │    0.071487  │    0.046436  │
+├─────┼──────────┼──────────────┼──────────────┤
+│  10 │ 0.99733  │    0.077563  │    0.051964  │
+├─────┼──────────┼──────────────┼──────────────┤
+│  11 │ 1.0971   │    0.082761  │    0.057564  │
+├─────┼──────────┼──────────────┼──────────────┤
+│  12 │ 1.1968   │    0.08701   │    0.06323   │
+├─────┼──────────┼──────────────┼──────────────┤
+│  13 │ 1.2965   │    0.090278  │    0.068948  │
+├─────┼──────────┼──────────────┼──────────────┤
+│  14 │ 1.3963   │    0.092593  │    0.074694  │
+├─────┼──────────┼──────────────┼──────────────┤
+│  15 │ 1.496    │    0.094044  │    0.080424  │
+├─────┼──────────┼──────────────┼──────────────┤
+│  16 │ 1.5957   │    0.094804  │    0.086071  │
+├─────┼──────────┼──────────────┼──────────────┤
+│  17 │ 1.6955   │    0.095146  │    0.091537  │
+├─────┼──────────┼──────────────┼──────────────┤
+│  18 │ 1.7952   │    0.095447  │    0.096707  │
+├─────┼──────────┼──────────────┼──────────────┤
+│  19 │ 1.8949   │    0.096192  │    0.10148   │
+├─────┼──────────┼──────────────┼──────────────┤
+│  20 │ 1.9947   │    0.097942  │    0.10581   │
+├─────┼──────────┼──────────────┼──────────────┤
+│  21 │ 2.0944   │    0.10126   │    0.1098    │
+├─────┼──────────┼──────────────┼──────────────┤
+│  22 │ 2.1941   │    0.10662   │    0.11367   │
+├─────┼──────────┼──────────────┼──────────────┤
+│  23 │ 2.2939   │    0.11431   │    0.11768   │
+├─────┼──────────┼──────────────┼──────────────┤
+│  24 │ 2.3936   │    0.1244    │    0.12201   │
+├─────┼──────────┼──────────────┼──────────────┤
+│  25 │ 2.4933   │    0.13672   │    0.12676   │
+├─────┼──────────┼──────────────┼──────────────┤
+│  26 │ 2.5931   │    0.15101   │    0.1319    │
+├─────┼──────────┼──────────────┼──────────────┤
+│  27 │ 2.6928   │    0.16689   │    0.13739   │
+├─────┼──────────┼──────────────┼──────────────┤
+│  28 │ 2.7925   │    0.18395   │    0.14316   │
+├─────┼──────────┼──────────────┼──────────────┤
+│  29 │ 2.8923   │    0.20179   │    0.14915   │
+├─────┼──────────┼──────────────┼──────────────┤
+│  30 │ 2.992    │    0.22      │    0.1553    │
+├─────┼──────────┼──────────────┼──────────────┤
+│  31 │ 3.0917   │    0.23821   │    0.1616    │
+├─────┼──────────┼──────────────┼──────────────┤
+│  32 │ 3.1915   │    0.25604   │    0.16802   │
+├─────┼──────────┼──────────────┼──────────────┤
+│  33 │ 3.2912   │    0.27313   │    0.17454   │
+├─────┼──────────┼──────────────┼──────────────┤
+│  34 │ 3.3909   │    0.28916   │    0.18116   │
+├─────┼──────────┼──────────────┼──────────────┤
+│  35 │ 3.4907   │    0.30382   │    0.18787   │
+├─────┼──────────┼──────────────┼──────────────┤
+│  36 │ 3.5904   │    0.31681   │    0.19468   │
+├─────┼──────────┼──────────────┼──────────────┤
+│  37 │ 3.6901   │    0.32788   │    0.20159   │
+├─────┼──────────┼──────────────┼──────────────┤
+│  38 │ 3.7899   │    0.33682   │    0.20859   │
+├─────┼──────────┼──────────────┼──────────────┤
+│  39 │ 3.8896   │    0.34344   │    0.2157    │
+├─────┼──────────┼──────────────┼──────────────┤
+│  40 │ 3.9893   │    0.34761   │    0.2229    │
+├─────┼──────────┼──────────────┼──────────────┤
+│  41 │ 4.0891   │    0.34925   │    0.2302    │
+├─────┼──────────┼──────────────┼──────────────┤
+│  42 │ 4.1888   │    0.34834   │    0.23759   │
+├─────┼──────────┼──────────────┼──────────────┤
+│  43 │ 4.2885   │    0.34495   │    0.24506   │
+├─────┼──────────┼──────────────┼──────────────┤
+│  44 │ 4.3883   │    0.33924   │    0.25255   │
+├─────┼──────────┼──────────────┼──────────────┤
+│  45 │ 4.488    │    0.33145   │    0.26002   │
+├─────┼──────────┼──────────────┼──────────────┤
+│  46 │ 4.5877   │    0.32198   │    0.26734   │
+├─────┼──────────┼──────────────┼──────────────┤
+│  47 │ 4.6875   │    0.31139   │    0.27437   │
+├─────┼──────────┼──────────────┼──────────────┤
+│  48 │ 4.7872   │    0.30038   │    0.28087   │
+├─────┼──────────┼──────────────┼──────────────┤
+│  49 │ 4.8869   │    0.28991   │    0.28654   │
+├─────┼──────────┼──────────────┼──────────────┤
+│  50 │ 4.9867   │    0.28108   │    0.29111   │
+├─────┼──────────┼──────────────┼──────────────┤
+│  51 │ 5.0864   │    0.27516   │    0.29444   │
+├─────┼──────────┼──────────────┼──────────────┤
+│  52 │ 5.1861   │    0.27341   │    0.2967    │
+├─────┼──────────┼──────────────┼──────────────┤
+│  53 │ 5.2859   │    0.27688   │    0.29845   │
+├─────┼──────────┼──────────────┼──────────────┤
+│  54 │ 5.3856   │    0.28618   │    0.3004    │
+├─────┼──────────┼──────────────┼──────────────┤
+│  55 │ 5.4853   │    0.30134   │    0.3032    │
+├─────┼──────────┼──────────────┼──────────────┤
+│  56 │ 5.5851   │    0.32187   │    0.30714   │
+├─────┼──────────┼──────────────┼──────────────┤
+│  57 │ 5.6848   │    0.34692   │    0.31224   │
+├─────┼──────────┼──────────────┼──────────────┤
+│  58 │ 5.7845   │    0.37544   │    0.3183    │
+├─────┼──────────┼──────────────┼──────────────┤
+│  59 │ 5.8843   │    0.40637   │    0.32512   │
+├─────┼──────────┼──────────────┼──────────────┤
+│  60 │ 5.984    │    0.43868   │    0.3325    │
+├─────┼──────────┼──────────────┼──────────────┤
+│  61 │ 6.0837   │    0.47143   │    0.34027   │
+├─────┼──────────┼──────────────┼──────────────┤
+│  62 │ 6.1835   │    0.50377   │    0.34834   │
+├─────┼──────────┼──────────────┼──────────────┤
+│  63 │ 6.2832   │    0.53493   │    0.35662   │
+┕━━━━━┷━━━━━━━━━━┷━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━┙
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="06-predictor-corrector_methods.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Lecture 6: Predictor–corrector methods.</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="08-higher_order_odes.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Lecture 8: Higher order initial value problems.</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#systems-of-equations-in-vector-form">Systems of equations in vector form.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#numerical-solutions-to-systems-of-odes">Numerical solutions to systems of ODE’s.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example.</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Ethan Smith
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
