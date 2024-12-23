@@ -41,8 +41,10 @@ y'(0)&= -3/5.
 ```
 
 ```{code-cell} ipython3
+import numpy as np
 import sympy
 from IPython.display import display, Markdown
+import matplotlib.pyplot as plt
 
 # solve the IVP symbolically with the sympy library
 x = sympy.Symbol('x');
@@ -64,14 +66,13 @@ xvals = np.linspace(a, b, num=40);
 fig, axs = plt.subplots(ncols=2, figsize=(8, 5), layout="constrained");
 axs[0].plot(xvals, sym_y(xvals), label=f"${sympy.latex(soln)}$");
 axs[1].plot(xvals, sym_Dy(xvals), label=f"$y'(x) = {sympy.latex(Dsoln_rhs)}$");
-axs[0].set_xlabel(r"$x$");
-axs[1].set_xlabel(r"$x$");
+fig.suptitle(f"${sympy.latex(ode)}$, $y({a}) = {alpha[0]}$, $y'({a}) = {alpha[1]}$")
+for i in range(len(axs)):
+	axs[i].set_xlabel(r"$x$");
+	axs[i].legend(loc="upper left");
+	axs[i].grid(True)
 axs[0].set_ylabel(r"$y$");
 axs[1].set_ylabel(r"$y'$");
-fig.suptitle(f"${sympy.latex(ode)}$, $y({a}) = {alpha[0]}$, $y'({a}) = {alpha[1]}$")
-axs[0].legend(loc="upper left");
-axs[1].legend(loc="upper left");
-ax.grid(True)
 ```
 
 To solve {eq}`higher-order-example` numerically, we introduce the variables $u_0=y$ $u_1=y'$, and we rewrite the IVP as
@@ -83,9 +84,7 @@ u_1(0) &= -3/5
 ```
 
 ```{code-cell} ipython3
-import numpy as np
 import math263
-import matplotlib.pyplot as plt
 
 # define IVP parameters
 f = lambda x, u: np.array([u[1], 2*u[1] - 2*u[0] + np.exp(2*x)*np.sin(x)]);
@@ -95,10 +94,9 @@ n = 5;
 (xi, u_rk4) = math263.rk4(f, a, b, alpha, n); 
 
 plt.figure(fig);
-axs[0].plot(xi, u_rk4[:, 0], 'ro:', label='RK4 solution');
-axs[1].plot(xi, u_rk4[:, 1], 'ro:', label='RK4 solution');
-axs[0].legend(loc="upper left");
-axs[1].legend(loc="upper left");
+for i in range(len(axs)):
+	axs[i].plot(xi, u_rk4[:, i], 'ro:', label='RK4 solution');
+	axs[i].legend(loc="upper left");
 plt.show();
 ```
 

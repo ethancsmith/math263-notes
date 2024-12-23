@@ -10,3 +10,5 @@ chapters:
 - file: 04-runge-kutta_methods
 - file: 05-multistep_methods
 - file: 06-predictor-corrector_methods
+- file: 07-systems_of_odes
+- file: 08-higher_order_odes
