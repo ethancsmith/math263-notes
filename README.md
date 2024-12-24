@@ -13,7 +13,7 @@ conda env create -f environment.yml
 conda activate math263
 ```
 
-The MyST Markdown scripts can now be used with in Jupyter Lab as Jupyter notebooks.
+The MyST Markdown scripts can now be used within Jupyter Lab as Jupyter notebooks.
 Simply launch Jupyter Lab; then right-click on the MD file and select "Open With" to open the file as a "Notebook."
 Alternatively, you can build the IPYNB version of each MD script first using `make`.
 
