@@ -112,14 +112,17 @@ Since the IVP {eq}`example-02` can be solved analytically, we can plot the symbo
 ```{code-cell}
 import sympy
 import matplotlib.pyplot as plt
-from IPython.display import display, Markdown
+#from IPython.display import display, Markdown
 
 # solve the IVP symbolically with the sympy library
 x = sympy.Symbol('x');
 y = sympy.Function('y');
 ode = sympy.Eq(y(x).diff(x), f(x,y(x)));
 soln = sympy.dsolve(ode, y(x), ics={y(a): y0}); 
-display(Markdown(f"The true solution to the IVP is ${sympy.latex(soln)}$."))
+#display(Markdown(f"The true solution to the IVP is ${sympy.latex(soln)}$."))
+print("The function");
+display(soln);
+print("is the exact symbolic solution to the IVP.");
 rhs=f(x,y(x));
 
 # convert the symbolic solution to a Python function and plot it with matplotlib.pyplot
