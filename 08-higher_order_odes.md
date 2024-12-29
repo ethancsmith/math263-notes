@@ -40,7 +40,7 @@ y(0) &= -2/5,\\
 y'(0)&= -3/5.
 ```
 
-```{code-cell} ipython3
+```{code-cell}
 import numpy as np
 import sympy
 import matplotlib.pyplot as plt
@@ -84,7 +84,7 @@ u_0(0) &= -2/5,\\
 u_1(0) &= -3/5
 ```
 
-```{code-cell} ipython3
+```{code-cell}
 import math263
 
 # define IVP parameters
@@ -101,7 +101,7 @@ for i in range(len(axs)):
 plt.show();
 ```
 
-```{code-cell} ipython3
+```{code-cell}
 from tabulate import tabulate
 
 uvals = np.c_[sym_y(xi), sym_Dy(xi)];

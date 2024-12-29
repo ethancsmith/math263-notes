@@ -13,6 +13,8 @@ kernelspec:
 
 # Lecture 12: Stiffness.
 
-```{code-cell} ipython3
+TODO.
+
+```{code-cell}
 
 ```
