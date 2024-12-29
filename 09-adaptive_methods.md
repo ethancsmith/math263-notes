@@ -1,4 +1,15 @@
-
+---
+jupytext:
+  text_representation:
+    extension: .md
+    format_name: myst
+    format_version: 0.13
+    jupytext_version: 1.16.6
+kernelspec:
+  display_name: Python 3 (ipykernel)
+  language: python
+  name: python3
+---
 
 # Lecture 9: Adaptive methods.
 
@@ -65,5 +76,5 @@ An adaptive method offers the advantage of being able to estimate the local trun
 One of the most popular adaptive methods employing this scheme is the **Runge-Kutta-Fehlberg method (RKF45)**, which uses an order 4 Runge-Kutta method (but not the classical one) together with an order 5 Runge-Kutta method to estimate and control the error.  The two methods were chosen so as to share as many of the evaluations of the right-hand side $f(x,y)$ as possible.  In general, an order 4 method requires 4 functional evaluations and an order 5 method requires another 6 for a total of 10.  The RKF45 method, however, requires only 6 total.
 
 ```{code-cell} ipython3
-
+#
 ```
