@@ -65,7 +65,7 @@ Choosing a model of the form
 \begin{equation*}
 y_{i+1} = \alpha_1y_i + h \left(\beta_0y_{i+1}'+ \beta_1y_i'\right),
 \end{equation*}
-where $y_i'=f(x_i,y_i)$ for each $i\ge 0$, we proceed by the method of underdetermined coefficients.  In particular, we force the model to be exact for the first three monomials  $y(x)=1$, $y(x)=x$, and $y(x)=x^2$.  Thus, by a calculation that is precisely similar to the derivation that we gave for the Adams–Bashforth two-step (explicit) method, we ultimately arrive at the formula for the **Adams–Moulton one-step (implicit) method**, namely, 
+where $y_i'=f(x_i,y_i)$ for each $i\ge 0$, we proceed by the method of undetermined coefficients.  In particular, we force the model to be exact for the first three monomials  $y(x)=1$, $y(x)=x$, and $y(x)=x^2$.  Thus, by a calculation that is precisely similar to the derivation that we gave for the Adams–Bashforth two-step (explicit) method, we ultimately arrive at the formula for the **Adams–Moulton one-step (implicit) method**, namely, 
 ```{math}
 y_{i+1} = y_i + \frac{h}{2}(y_{i+1}' + y_i').
 ```

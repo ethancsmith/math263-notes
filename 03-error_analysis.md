@@ -71,7 +71,7 @@ In many situations, if the local truncation error $\ell_{i+1} = O\big(h^{p+1}\bi
 
 To see this, we argue _heuristically_ as follows.
 Suppose that we are numerically approximating the solution to an IVP on the interval $[a,b]$ with step-size $h=(b-a)/n$ and that the local truncation error $\ell_{i+1} = O\big(h^{p+1}\big)$ as $h\to 0$.
-Then the global error $e_{n} = y(b) - y_n$ arises from the accumation of $n = (b-a)/h$ local errors.
+Then the global error $e_{n} = y(b) - y_n$ arises from the accumulation of $n = (b-a)/h$ local errors.
 Whence
 \begin{equation*}
 e_n = y(b) -y_n = \frac{b-a}{h}O\big(h^{p+1}\big) = O\big(h^p\big) \text{ as }h\to 0.
@@ -134,7 +134,7 @@ Finally, substituting the first and fourth displayed equations into the second, 
 \end{equation*}
 ```
 
-Since the local truncation error for Euler's method is $O(h^2)$ as $h\to 0$, we expect that the global trunction error for the method is $O(h)$ as $h\to 0$.
+Since the local truncation error for Euler's method is $O(h^2)$ as $h\to 0$, we expect that the global truncation error for the method is $O(h)$ as $h\to 0$.
 As it turns out Euler's method is an order $1$ method, but we will not prove this.
 Instead we demonstrate this fact empirically for the IVP
 \begin{align*}
@@ -237,7 +237,7 @@ where
 k_1 &= f(x_i, y_i),\\
 k_2 &= f(x_i+h, y_i+hk_1).
 \end{align*}
-The above derivation demonstrates the following result, which we take as evidence for the fact that the modifed Euler method is an order $2$ numerical method.
+The above derivation demonstrates the following result, which we take as evidence for the fact that the modified Euler method is an order $2$ numerical method.
 
 ```{prf:theorem}
 
