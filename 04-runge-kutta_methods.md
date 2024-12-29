@@ -35,7 +35,6 @@ w_1 &=\frac{1}{2\alpha},\\
 w_2 &=\frac{1}{2\beta},\\
 w_1+w_2 &=1,\\
 \end{align}
-***TODO: Insert proof that this family has order 2.***
 
 Any choice of parameters $\alpha, \beta, w_1, w_2$ satisfying the above constraints yields a valid order $2$ method.
 We mention the three most common choices here.
