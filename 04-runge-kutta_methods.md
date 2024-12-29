@@ -70,13 +70,12 @@ y'&=(y/x)-(y/x)^2,\\
 y(1)&=1.
 \end{align}
 
-```{code-cell}
+```{code-cell} ipython3
 import math263
 import numpy as np
 import sympy
 import matplotlib.pyplot as plt
 from tabulate import tabulate
-from IPython.display import display, Markdown
 
 # define IVP parameters
 f = lambda x, y: (y/x) - (y/x)**2;
@@ -88,17 +87,17 @@ x = sympy.Symbol('x');
 y = sympy.Function('y');
 ode = sympy.Eq(y(x).diff(x), f(x,y(x)));
 soln = sympy.dsolve(ode, y(x), ics={y(a): y0}); 
-rhs = f(x,y(x));
-display(Markdown(f"The true solution to the ODE \
-$y'={sympy.latex(rhs)}$ with initial condition \
-$y({a})={y0}$ is ${sympy.latex(soln)}$."))
+print("The exact symbolic solution to the IVP");
+display(ode);
+print(f"with initial condition y({a}) = {y0} is");
+display(soln);
 
 # convert the symbolic solution to a Python function and plot it with matplotlib.pyplot
 sym_y=sympy.lambdify(x, soln.rhs, modules=['numpy']); 
 xvals = np.linspace(a, b, num=100);
 fig, ax = plt.subplots(layout='constrained');
 ax.plot(xvals, sym_y(xvals), color='b', label=f"${sympy.latex(soln)}$");
-ax.set_title(f"$y' = {sympy.latex(rhs)}$, $y({a})={y0}$");
+ax.set_title(f"$y' = {sympy.latex(f(x,y(x)))}$, $y({a})={y0}$");
 ax.set_xlabel(r"$x$");
 ax.set_ylabel(r"$y$");
 ax.legend([f"${sympy.latex(soln)}$"], loc='upper right');

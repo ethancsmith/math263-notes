@@ -40,10 +40,9 @@ y(0) &= -2/5,\\
 y'(0)&= -3/5.
 ```
 
-```{code-cell}
+```{code-cell} ipython3
 import numpy as np
 import sympy
-from IPython.display import display, Markdown
 import matplotlib.pyplot as plt
 
 # solve the IVP symbolically with the sympy library
@@ -54,7 +53,9 @@ a, b = 0, 1;
 alpha = [sympy.Rational(-2,5), sympy.Rational(-3,5)];
 soln = sympy.dsolve(ode, y(x), ics={y(a): alpha[0], y(x).diff(x).subs(x, a): alpha[1]});
 soln = sympy.simplify(soln);
-display(Markdown(f"The exact symbolic solution to the IVP is ${sympy.latex(soln)}$."))
+
+print("The exact symbolic solution to the IVP is");
+display(soln);
 Dsoln_rhs = sympy.simplify(soln.rhs.diff(x));
 
 # lambdify the symbolic solution
@@ -83,7 +84,7 @@ u_0(0) &= -2/5,\\
 u_1(0) &= -3/5
 ```
 
-```{code-cell}
+```{code-cell} ipython3
 import math263
 
 # define IVP parameters
@@ -100,7 +101,7 @@ for i in range(len(axs)):
 plt.show();
 ```
 
-```{code-cell}
+```{code-cell} ipython3
 from tabulate import tabulate
 
 uvals = np.c_[sym_y(xi), sym_Dy(xi)];

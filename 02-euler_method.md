@@ -85,7 +85,7 @@ y(0)&=3
 ```
 over the interval $[0, 2]$.
 
-```{code-cell}
+```{code-cell} ipython3
 # load modules
 import math263
 import numpy as np
@@ -109,17 +109,15 @@ print(tabulate(data, hdrs, tablefmt='mixed_grid', floatfmt='0.5f', showindex=Tru
 
 Since the IVP {eq}`example-02` can be solved analytically, we can plot the symbolic and numerical solutions together on the same set of axes.
 
-```{code-cell}
+```{code-cell} ipython3
 import sympy
 import matplotlib.pyplot as plt
-#from IPython.display import display, Markdown
 
 # solve the IVP symbolically with the sympy library
 x = sympy.Symbol('x');
 y = sympy.Function('y');
 ode = sympy.Eq(y(x).diff(x), f(x,y(x)));
 soln = sympy.dsolve(ode, y(x), ics={y(a): y0}); 
-#display(Markdown(f"The true solution to the IVP is ${sympy.latex(soln)}$."))
 print("The function");
 display(soln);
 print("is the exact symbolic solution to the IVP.");
@@ -143,7 +141,7 @@ Note that although the sequence of errors $e_i = |y(x_i) - y_i|$ is not necessar
 Below we overlay the plot with a direction field plot for the ODE of {eq}`example-02`.
 This helps us to see that every pair of of points $(x_i, y_i)$, $(x_{i+1}, y_{i+1})$ approximates the true solution to the ODE that passes through the point $(x_i, y_i)$, but not necessarily the solution to the given IVP which passes through the initial condition point $(x_0, y_0)$.
 
-```{code-cell}
+```{code-cell} ipython3
 # set window boundaries
 xmin, xmax = a, b;
 ymin, ymax = 1, 3;

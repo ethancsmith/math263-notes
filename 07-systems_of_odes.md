@@ -105,7 +105,7 @@ Writing $\mathbf r = \langle x, y, z\rangle$ for the solution, we may repackage 
 ```
 First we solve the system symbolic with SymPy.
 
-```{code-cell}
+```{code-cell} ipython3
 import sympy
 import numpy as np
 from IPython.display import display, Markdown
@@ -124,13 +124,15 @@ soln=sympy.dsolve(ode,[x(t), y(t), z(t)],
                   ics={x(a): 1, y(a): sympy.Rational(-1,2), z(a): -1}); 
 soln_rhs = sympy.Matrix([eq.rhs for eq in soln]);
 
-display(Markdown(r"The unique solution to the IVP is $\mathbf{r} = $" 
-                 f"${sympy.latex(soln_rhs)}$."))
+print("The exact symbolic solution to the IVP is");
+display(soln[0]);
+display(soln[1]);
+display(soln[2]);
 ```
 
 Next we plot the solution in $xyz$-space.
 
-```{code-cell}
+```{code-cell} ipython3
 import matplotlib.pyplot as plt
 
 # lambdify the symbolic solution
@@ -157,7 +159,7 @@ ax.grid(True)
 
 Now we compute a numerical solution via Euler's method and plot it along with the symbolic solution.
 
-```{code-cell}
+```{code-cell} ipython3
 import math263
 
 # define IVP parameters
@@ -177,7 +179,7 @@ plt.show()
 
 Finally, we compute the absolute and relative errors at each mesh point in $t$-space using the $2$-norm.
 
-```{code-cell}
+```{code-cell} ipython3
 from tabulate import tabulate
 
 rvals = np.c_[sym_x(ti), sym_y(ti), sym_z(ti)];
