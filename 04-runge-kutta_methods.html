@@ -34,9 +34,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="_static/proof.css?v=ca93fcec" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- So that users can add custom icons -->
@@ -180,6 +180,10 @@
 <li class="toctree-l1"><a class="reference internal" href="06-predictor-corrector_methods.html">Lecture 6: Predictor–corrector methods.</a></li>
 <li class="toctree-l1"><a class="reference internal" href="07-systems_of_odes.html">Lecture 7: Systems of first order ODE’s.</a></li>
 <li class="toctree-l1"><a class="reference internal" href="08-higher_order_odes.html">Lecture 8: Higher order initial value problems.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09-adaptive_methods.html">Lecture 9: Adaptive methods.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10-shooting_method.html">Lecture 10: Boundary value problems and the shooting method.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-finite_differences.html">Lecture 11: Finite difference methods for boundary value problems.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12-stiffness.html">Lecture 12: Stiffness.</a></li>
 </ul>
 
     </div>
@@ -395,20 +399,19 @@ The Runge-Kutta method of order <span class="math notranslate nohighlight">\(1\)
 <section id="order-two-methods">
 <h2>Order two methods.<a class="headerlink" href="#order-two-methods" title="Link to this heading">#</a></h2>
 <p>The generic Runge-Kutta method of order 2 takes the form</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e01f0979-925c-4e7a-8caa-eb8812a522eb">
-<span class="eqno">(7)<a class="headerlink" href="#equation-e01f0979-925c-4e7a-8caa-eb8812a522eb" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-78bb9ac8-2cc2-42b4-8066-522a310c7b4a">
+<span class="eqno">(7)<a class="headerlink" href="#equation-78bb9ac8-2cc2-42b4-8066-522a310c7b4a" title="Permalink to this equation">#</a></span>\[\begin{equation}
 y_{i+1} = y_i + h\big(w_1k_1 + w_2k_2\big),
 \end{equation}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-79357638-8c5d-4f46-9583-8fa900cd54a4">
-<span class="eqno">(8)<a class="headerlink" href="#equation-79357638-8c5d-4f46-9583-8fa900cd54a4" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a19f5a02-146b-4d0f-9c33-da3a6d210c40">
+<span class="eqno">(8)<a class="headerlink" href="#equation-a19f5a02-146b-4d0f-9c33-da3a6d210c40" title="Permalink to this equation">#</a></span>\[\begin{align}
 k_1 &amp;= f(x_i, y_i),\\
 k_2 &amp;= f(x_i+\alpha h, y_i + \beta hk_1),\\
 w_1 &amp;=\frac{1}{2\alpha},\\
 w_2 &amp;=\frac{1}{2\beta},\\
 w_1+w_2 &amp;=1,\\
 \end{align}\]</div>
-<p><em><strong>TODO: Insert proof that this family has order 2.</strong></em></p>
 <p>Any choice of parameters <span class="math notranslate nohighlight">\(\alpha, \beta, w_1, w_2\)</span> satisfying the above constraints yields a valid order <span class="math notranslate nohighlight">\(2\)</span> method.
 We mention the three most common choices here.
 Setting <span class="math notranslate nohighlight">\(w_1=w_2=1/2\)</span> and <span class="math notranslate nohighlight">\(\alpha=\beta=1\)</span> yields Heun’s (modified Euler) method which we have already met.
@@ -418,13 +421,13 @@ Finally, the <strong>midpoint method</strong> (or <strong>corrected Euler method
 <section id="the-classical-fourth-order-method">
 <h2>The classical fourth order method.<a class="headerlink" href="#the-classical-fourth-order-method" title="Link to this heading">#</a></h2>
 <p>Probably the most popular Runge–Kutta method is the <strong>classical fourth order Runge–Kutta method</strong> (<strong>RK4</strong>), which is defined by the equations</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4071e2a8-51db-4dba-b217-bd5ab756c25c">
-<span class="eqno">(9)<a class="headerlink" href="#equation-4071e2a8-51db-4dba-b217-bd5ab756c25c" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-354c493e-8c58-4e6c-99fb-307b2e728353">
+<span class="eqno">(9)<a class="headerlink" href="#equation-354c493e-8c58-4e6c-99fb-307b2e728353" title="Permalink to this equation">#</a></span>\[\begin{equation}
 y_{i+1} = \frac{h}{6}\big(k_1 + 2k_2 + 2k_3 + k_4\big),
 \end{equation}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-54f926d3-15d9-48b8-99ee-ae124d730e0f">
-<span class="eqno">(10)<a class="headerlink" href="#equation-54f926d3-15d9-48b8-99ee-ae124d730e0f" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-6a6c7b55-822f-40d3-81ed-47d76315712a">
+<span class="eqno">(10)<a class="headerlink" href="#equation-6a6c7b55-822f-40d3-81ed-47d76315712a" title="Permalink to this equation">#</a></span>\[\begin{align}
 k_1 &amp;= f(x_i, y_i),\\
 k_2 &amp;= f\big(x_i + h/2, y_i + hk_1/2\big),\\
 k_3 &amp;= f\big(x_i + h/2, y_i + hk_2/2\big),\\
@@ -435,8 +438,8 @@ k_4 &amp;= f(x_i + h, y_i + hk_3).
 <section id="example">
 <h2>Example.<a class="headerlink" href="#example" title="Link to this heading">#</a></h2>
 <p>Below we compare Euler’s method with the classical Runge–Kutta method of order 4 (RK4) for the IVP</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2a62074b-2346-4499-9d4b-90bf7808f857">
-<span class="eqno">(11)<a class="headerlink" href="#equation-2a62074b-2346-4499-9d4b-90bf7808f857" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-e39bac7f-8a8e-4982-8e9b-d7a55b221fc4">
+<span class="eqno">(11)<a class="headerlink" href="#equation-e39bac7f-8a8e-4982-8e9b-d7a55b221fc4" title="Permalink to this equation">#</a></span>\[\begin{align}
 y'&amp;=(y/x)-(y/x)^2,\\
 y(1)&amp;=1.
 \end{align}\]</div>
@@ -447,7 +450,6 @@ y(1)&amp;=1.
 <span class="kn">import</span> <span class="nn">sympy</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">from</span> <span class="nn">tabulate</span> <span class="kn">import</span> <span class="n">tabulate</span>
-<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">Markdown</span>
 
 <span class="c1"># define IVP parameters</span>
 <span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="p">(</span><span class="n">y</span><span class="o">/</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">y</span><span class="o">/</span><span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">;</span>
@@ -459,17 +461,17 @@ y(1)&amp;=1.
 <span class="n">y</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Function</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">);</span>
 <span class="n">ode</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Eq</span><span class="p">(</span><span class="n">y</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">(</span><span class="n">x</span><span class="p">)));</span>
 <span class="n">soln</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">dsolve</span><span class="p">(</span><span class="n">ode</span><span class="p">,</span> <span class="n">y</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">ics</span><span class="o">=</span><span class="p">{</span><span class="n">y</span><span class="p">(</span><span class="n">a</span><span class="p">):</span> <span class="n">y0</span><span class="p">});</span> 
-<span class="n">rhs</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">(</span><span class="n">x</span><span class="p">));</span>
-<span class="n">display</span><span class="p">(</span><span class="n">Markdown</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The true solution to the ODE </span><span class="se">\</span>
-<span class="s2">$y&#39;=</span><span class="si">{</span><span class="n">sympy</span><span class="o">.</span><span class="n">latex</span><span class="p">(</span><span class="n">rhs</span><span class="p">)</span><span class="si">}</span><span class="s2">$ with initial condition </span><span class="se">\</span>
-<span class="s2">$y(</span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2">)=</span><span class="si">{</span><span class="n">y0</span><span class="si">}</span><span class="s2">$ is $</span><span class="si">{</span><span class="n">sympy</span><span class="o">.</span><span class="n">latex</span><span class="p">(</span><span class="n">soln</span><span class="p">)</span><span class="si">}</span><span class="s2">$.&quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The exact symbolic solution to the IVP&quot;</span><span class="p">);</span>
+<span class="n">display</span><span class="p">(</span><span class="n">ode</span><span class="p">);</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;with initial condition y(</span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2">) = </span><span class="si">{</span><span class="n">y0</span><span class="si">}</span><span class="s2"> is&quot;</span><span class="p">);</span>
+<span class="n">display</span><span class="p">(</span><span class="n">soln</span><span class="p">);</span>
 
 <span class="c1"># convert the symbolic solution to a Python function and plot it with matplotlib.pyplot</span>
 <span class="n">sym_y</span><span class="o">=</span><span class="n">sympy</span><span class="o">.</span><span class="n">lambdify</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">soln</span><span class="o">.</span><span class="n">rhs</span><span class="p">,</span> <span class="n">modules</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;numpy&#39;</span><span class="p">]);</span> 
 <span class="n">xvals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">100</span><span class="p">);</span>
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">layout</span><span class="o">=</span><span class="s1">&#39;constrained&#39;</span><span class="p">);</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xvals</span><span class="p">,</span> <span class="n">sym_y</span><span class="p">(</span><span class="n">xvals</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;$</span><span class="si">{</span><span class="n">sympy</span><span class="o">.</span><span class="n">latex</span><span class="p">(</span><span class="n">soln</span><span class="p">)</span><span class="si">}</span><span class="s2">$&quot;</span><span class="p">);</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;$y&#39; = </span><span class="si">{</span><span class="n">sympy</span><span class="o">.</span><span class="n">latex</span><span class="p">(</span><span class="n">rhs</span><span class="p">)</span><span class="si">}</span><span class="s2">$, $y(</span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2">)=</span><span class="si">{</span><span class="n">y0</span><span class="si">}</span><span class="s2">$&quot;</span><span class="p">);</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;$y&#39; = </span><span class="si">{</span><span class="n">sympy</span><span class="o">.</span><span class="n">latex</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span><span class="si">}</span><span class="s2">$, $y(</span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2">)=</span><span class="si">{</span><span class="n">y0</span><span class="si">}</span><span class="s2">$&quot;</span><span class="p">);</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$x$&quot;</span><span class="p">);</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$y$&quot;</span><span class="p">);</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;$</span><span class="si">{</span><span class="n">sympy</span><span class="o">.</span><span class="n">latex</span><span class="p">(</span><span class="n">soln</span><span class="p">)</span><span class="si">}</span><span class="s2">$&quot;</span><span class="p">],</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper right&#39;</span><span class="p">);</span>
@@ -495,7 +497,16 @@ y(1)&amp;=1.
 </div>
 </div>
 <div class="cell_output docutils container">
-<p>The true solution to the ODE $y’=\frac{y{\left(x \right)}}{x} - \frac{y^{2}{\left(x \right)}}{x^{2}}$ with initial condition $y(1)=1$ is $y{\left(x \right)} = \frac{x}{\log{\left(x \right)} + 1}$.</p>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The exact symbolic solution to the IVP
+</pre></div>
+</div>
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle \frac{d}{d x} y{\left(x \right)} = \frac{y{\left(x \right)}}{x} - \frac{y^{2}{\left(x \right)}}{x^{2}}\]</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>with initial condition y(1) = 1 is
+</pre></div>
+</div>
+<div class="output text_latex math notranslate nohighlight">
+\[\displaystyle y{\left(x \right)} = \frac{x}{\log{\left(x \right)} + 1}\]</div>
 <img alt="_images/3576944564073c282c4deae0e6ca1fb86d8cdab21d71f1ee6623a32ec4e8c8b3.png" src="_images/3576944564073c282c4deae0e6ca1fb86d8cdab21d71f1ee6623a32ec4e8c8b3.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Global errors for Euler&#39;s method and RK4.
 ┍━━━━━┯━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━━━━━━━━┑
