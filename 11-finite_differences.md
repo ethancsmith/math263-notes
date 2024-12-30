@@ -104,10 +104,10 @@ y(1) &= 5.
 \end{align*}
 For this example, a little bit of algebra transforms equation {eq}`second-order-ode-approx` into the form
 \begin{equation*}
-y_{i+1} - (2+4h^2)y_i + y_{i-1} = 0
+y_{i+1} - (2+4h^2)y_i + y_{i-1} = 0\quad (1\le i< n).
 \end{equation*}
-for $1\le i < n$, and the two boundary conditions are $y_0 = 0$ and $y_n = 5$.
-Collecting the equations into a matrix, we see that we have a tridiagonal system
+The two boundary conditions then  require that $y_0 = 0$ and $y_n = 5$.
+Collecting all $n+1$  equations into a matrix, we see that we have a tridiagonal linear system
 \begin{equation*}
 \begin{bmatrix}
    1 & 0 &        &        &        & 0\\
@@ -123,9 +123,10 @@ y_0\\ y_1\\ y_2\\ \vdots\\ y_{n-1}\\ y_n
 =
 \begin{pmatrix}
 0\\ 0 \\ 0 \\ \vdots \\ 0\\ 5
-\end{pmatrix}.
+\end{pmatrix}
 \end{equation*}
-We solve this system below when $n = 10$.
+to solve.
+We solve this system below for the case of $n = 10$ steps.
 
 ```{code-cell}
 import numpy as np
