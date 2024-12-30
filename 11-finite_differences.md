@@ -13,7 +13,7 @@ kernelspec:
 
 # Lecture 11: Finite difference methods for boundary value problems.
 
-The shooting method replaces the given BVP with a family of IVPs which it solves numerically until it finds one that closely approximates the desired boundary condition(s).  The method of finite differences, on the other hand, imposes the boundary condition(s) exactly and instead approximates the differential equation with "finite differences" which leads to a system of equations that can hopefully be solved by a (numerical) equation solver.
+The shooting method replaces the given BVP with a family of IVP's which it solves numerically until it finds one that closely approximates the desired boundary condition(s).  The method of finite differences, on the other hand, imposes the boundary condition(s) exactly and instead approximates the differential equation with "finite differences" which leads to a system of equations that can hopefully be solved by a (numerical) equation solver.
 
 ## Forward differences and backward differences.
 
