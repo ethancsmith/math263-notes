@@ -63,6 +63,7 @@ y(x+h) + y(x-h) = 2y(x)h + 2\frac{y''(x)}{2!}h^2 + 2\frac{y^{(4)}(x)}{4!}h^4 + \
 \end{equation*}
 Solving for $y''(x)$, we obtain the approximation
 ```{math}
+:label: second-derivative-approx
 y''(x) = \frac{y(x+h) - 2y(x) + y(x-h)}{h^2} + O(h^2)
 ```
 as $h\to 0$.
@@ -70,16 +71,97 @@ One can play similar games (playing different Taylor series expressions off one 
 
 ## Finite differences for BVP's.
 
-TODO.
+Suppose that we wish to use the finite difference method to numerically approximate a solution to a BVP of the form
+```{math}
+:label: second-order-bvp
+y'' &= f(x, y, y'),\\
+y(a)&= \alpha,\\
+y(b)&= \beta.
+```
+We choose a small, positive step size $h$ and mesh points $x_0=a < x_1 < \dots < x_n=b$ so that $h=x_{i+1}-x_i$ for each $0\le i < n$.  Then equations {eq}`central-difference-approx` and {eq}`second-derivative-approx` may be rewritten as
+```{math}
+y'(x_i)  &= \frac{y(x_{i+1}) -y(x_{i-1})}{2h} + O(h^2),\\
+y''(x_i) &= \frac{y(x_{i+1}) - 2y(x_i) + y(x_{i-1})}{h^2} + O(h^2)
+```
+as $h\to 0$.  For $1\le i\le n-1$, we therefore approximate the ODE of {eq}`second-order-bvp` at the $i$th mesh point $x_i$ by the equation
+```{math}
+:label: second-order-ode-approx
+\frac{y_{i+1} - 2y_i + y_{i-1}}{h^2} = f\left(x, y_i, \frac{y_{i+1} -y_{i-1}}{2h}\right)
+```
+while the boundary conditions of {eq}`second-order-bvp` are rewritten as $y_0 = \alpha$ and $y_n = \beta$.  This yields a total of $n+1$ equations with $n+1$ unknowns.  Therefore, the method of finite differences requires a subroutine to solve the resulting system of equations.  Gaussian elimination (or one of its relatives) is usually chosen if the equations {eq}`second-order-ode-approx` are linear in the $y_i$'s.  Otherwise, some nonlinear method such as Newton's method (or one of its relatives) is required, but that is a topic for another class.  
 
 ## Advantages and disadvantages.
 
-In practice, achieving acceptable accuracy with a finite difference method requires a very small step-size $h$ as compared to a shooting method.  The smaller the step-size, the greater the number of variables involved in the system of equations.  The increase in variables puts pressure on both computing time and memory resources.  However, it is important to remember that the shooting method requires the numerical solution to a sequence of IVPs until tolerance is achieved.  Though finite difference methods tend to be more memory intensive than shooting methods, there are a number of factors that go into deciding which is more work intensive for a given problem.
+In practice, achieving acceptable accuracy with a finite difference method requires a very small step-size $h$ as compared to a shooting method.  The smaller the step-size, the greater the number of variables involved in the system of equations.  The increase in variables puts pressure on both computing time and memory resources.  However, it is important to remember that the shooting method requires the numerical solution to a sequence of IVP's until tolerance is achieved.  Though finite difference methods tend to be more memory intensive than shooting methods, there are a number of factors that go into deciding which is more work intensive for a given problem.
 
 ## Example.
 
-TODO.
+We once again consider the second-order BVP
+\begin{align*}
+y''  &= 4y,\\
+y(0) &= 0,\\
+y(1) &= 5.
+\end{align*}
+For this example, a little bit of algebra transforms equation {eq}`second-order-ode-approx` into the form
+\begin{equation*}
+y_{i+1} - (2+4h^2)y_i + y_{i-1} = 0
+\end{equation*}
+for $1\le i < n$, and the two boundary conditions are $y_0 = 0$ and $y_n = 5$.
+Collecting the equations into a matrix, we see that we have a tridiagonal system
+\begin{equation*}
+\begin{bmatrix}
+   1 & 0 &        &        &        & 0\\
+   1 & -(2+4h^2) & 1    &        &         & \\
+       & 1& -(2+4h^2)    & \ddots &        & \\
+       &     & \ddots & \ddots & 1 & \\
+      &     &        & 1    & -(2+4h^2) & 1\\
+   0   &     &        &    & 0 & 1
+\end{bmatrix}
+\begin{pmatrix}
+y_0\\ y_1\\ y_2\\ \vdots\\ y_{n-1}\\ y_n
+\end{pmatrix}
+=
+\begin{pmatrix}
+0\\ 0 \\ 0 \\ \vdots \\ 0\\ 5
+\end{pmatrix}.
+\end{equation*}
+We solve this system below when $n = 10$.
 
 ```{code-cell}
+import numpy as np
+from matplotlib import pyplot
+from tabulate import tabulate
 
+a, b = 0, 1;
+alpha, beta = 0, 5;
+
+# construct coefficient matrix A and RHS B 
+n = 10;
+h = (b - a)/n;
+A = np.diag(np.full(n+1, -(4*h**2 + 2))) + np.diag(np.full(n,1), -1) + np.diag(np.full(n,1),1);
+A[0] = np.eye(1, n + 1, 0);
+A[n] = np.eye(1, n + 1, n);
+B = 5*np.eye(n + 1, 1, -n);
+B = np.zeros((n + 1, 1));
+B[0] = alpha;
+B[n] = beta;
+
+# solve linear system AY = B.
+yi = np.linalg.solve(A, B);
+xi = np.linspace(a, b, n + 1);
+
+# tabulate the results
+data = np.c_[xi, yi];
+hdrs = ["i", "x_i", "y_i"];
+print("Finite difference method");
+print(tabulate(data, hdrs, tablefmt='mixed_grid', floatfmt='0.5f', showindex=True));
+
+# plot solution
+fig, ax = pyplot.subplots(layout='constrained');
+ax.plot(xi, yi, ':.', label=f"finite difference method");
+ax.set_title(r"$y'' = 4y, y(0)=0, y(1)=5$");
+ax.set_xlabel(r"$x$");
+ax.set_ylabel(r"$y$");
+ax.legend(loc='upper left');
+ax.grid(True);
 ```

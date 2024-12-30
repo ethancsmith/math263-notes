@@ -63,6 +63,7 @@ The goal then is to find a value of $s = u_1(0) = y'(0)$ so that when we solve t
 import numpy
 import math263
 from matplotlib import pyplot
+from tabulate import tabulate
 
 # set up IVP parameters
 f = lambda x, u: numpy.array([u[1], 4*u[0]]);
@@ -75,13 +76,15 @@ n = 10;
 s = 1;
 xi, ui = math263.rk4(f, a, b, u0(s), n)
 
-print(f"With s = {s}, we have y_{n} = u_{0, n} = {ui[-1, 0]:0.6g}");
+print(f"With s = {s}, we have y_{n} = u_{0, n} = {ui[-1, 0]:0.6g}.");
 
 fig, ax = pyplot.subplots(layout='constrained');
 ax.plot([a, b], bcond, "go");
-ax.plot(xi, ui[:, 0], ":.", label=f"RK4 $s$ = {s}")
+ax.plot(xi, ui[:, 0], ":.", label=f"RK4 $s$ = {s}");
+ax.set_title(r"$y'' = 4y, y(0)=0, y(1)=5$");
 ax.set_xlabel(r"$x$");
 ax.set_ylabel(r"$y$");
+ax.grid(True);
 ax.legend(loc="upper left");
 ```
 
@@ -93,7 +96,7 @@ n = 10;
 s = 2;
 xi, ui = math263.rk4(f, a, b, u0(s), n)
 
-print(f"With s = {s}, we have y_{n} = u_{0, n} = {ui[-1, 0]:0.6g}");
+print(f"With s = {s}, we have y_{n} = u_{0, n} = {ui[-1, 0]:0.6g}.");
 
 pyplot.figure(fig);
 ax.plot(xi, ui[:, 0], ":.", label=f"RK4 $s$ = {s}")
@@ -103,7 +106,7 @@ ax.legend(loc="upper left");
 pyplot.show()
 ```
 
-Again we are too low.  So, we try again with $s=3$.
+Again we are too low, and so we try $s=3$.
 
 ```{code-cell}
 # numerically solve the IVP with n = 10 steps of RK4
@@ -111,7 +114,7 @@ n = 10;
 s = 3;
 xi, ui = math263.rk4(f, a, b, u0(s), n)
 
-print(f"With s = {s}, we have y_{n} = u_{0, n} = {ui[-1, 0]:0.6g}");
+print(f"With s = {s}, we have y_{n} = u_{0, n} = {ui[-1, 0]:0.6g}.");
 
 pyplot.figure(fig);
 ax.plot(xi, ui[:, 0], ":.", label=f"RK4 $s$ = {s}")
@@ -122,3 +125,15 @@ pyplot.show()
 ```
 
 This time we are too high, and that is fortunate for now we have "bracketed" $s$.  In particular, we "know" (assuming that the solution varies continuously with $s$) that $s\in (2,3)$.  We can therefore bisect the interval and guess $s=(2+3)/2=5/2$.  If that guess is too low, we know that $s\in(5/2, 3)$.  If it is too high, we know that $s\in (2, 5/2)$.  We can then keep bisecting until our computed value $u_{0,n} = y_n$ is within some desired tolerance of our target $y(1)=5$.  In practice, it is a good idea to set a maximum number of iterations in case the convergence is rather slow and the work cost is too high.
+
+```{code-cell}
+# tabulate the results for last iteration
+data = numpy.c_[xi, ui[:, 0]];
+hdrs = ["i", "x_i", "y_i"];
+print(f"Shooting method (s = {s})\nBoundary error: |y({b})-y_{n}| = {abs(ui[-1,0]-bcond[1]):0.5g}");
+print(tabulate(data, hdrs, tablefmt='mixed_grid', floatfmt='0.5f', showindex=True));
+```
+
+```{code-cell}
+
+```

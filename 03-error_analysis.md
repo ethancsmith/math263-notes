@@ -43,7 +43,7 @@ Suppose $f$ and $g$ are functions of a real variable $x$ and that both are defin
 
 ```{prf:definition}
 
-We say that $f$ **is of order $g$ as $x$ tends toward $a$**, and we write
+We say that $f$ **is at most the of order $g$ as $x$ tends toward $a$**, and we write
 \begin{equation*}
 f(x) = O\big(g(x)\big)\text{ as } x\to a
 \end{equation*}
