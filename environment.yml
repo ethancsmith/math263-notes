@@ -1,4 +1,4 @@
-name: 'math263'
+name: 'math263-notes'
 channels:
   - conda-forge
   - defaults
@@ -15,4 +15,4 @@ dependencies:
   - pip
   - pip:
       - sphinx-proof
-prefix: /opt/anaconda3/envs/math263
+prefix: /opt/anaconda3/envs/math263-notes
