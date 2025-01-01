@@ -1,18 +1,17 @@
-name: 'math263-notes'
+name: math263-notes
 channels:
   - conda-forge
   - defaults
 dependencies:
-  - matplotlib
-  - numpy
-  - sympy
-  - jupytext
-  - tabulate
-  - notebook
-  - jupyterlab-myst
-  - jupyter-book
   - ghp-import
+  - jupyter-book
+  - jupyterlab-myst
+  - jupytext
+  - matplotlib
+  - notebook
+  - numpy
   - pip
-  - pip:
-      - sphinx-proof
+  - sympy
+  - tabulate
+  - scipy
 prefix: /opt/anaconda3/envs/math263-notes

@@ -1,4 +1,5 @@
 import numpy as np
+import scipy as sp
 
 def euler(f, a, b, y0, n):
 	'''
@@ -29,6 +30,22 @@ def mem(f, a, b, y0, n):
 		k2 = f(x[i + 1], y[i, :] + h*k1);
 		y[i + 1, :] = y[i, :] + h*(k1 + k2)/2;
 	return (x, y)
+
+def bem(f, a, b, y0, n):
+	'''
+	numerically solves the IVP
+		y' = f(x,y), y(a)=y0
+	over the interval [a, b] via n steps of the backward Euler method 
+	'''
+	h = (b - a)/n;
+	x = np.linspace(a, b, num=n + 1);
+	y = np.empty((x.size, np.size(y0)));
+	y[0, :] = y0;
+	for i in range(n):
+		func = lambda Y: Y - (y[i, :] + h*f(x[i], Y));
+		y[i + 1, :] = sp.optimize.fsolve(func, y[i, :]);
+	return (x, y)
+	
 
 def rk4(f, a, b, y0, n):
 	'''
