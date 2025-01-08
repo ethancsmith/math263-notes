@@ -34,9 +34,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="_static/proof.css?v=b4b7a797" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- So that users can add custom icons -->
@@ -513,6 +513,8 @@ Writing <span class="math notranslate nohighlight">\(\mathbf r = \langle x, y, z
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;dark_background&#39;</span><span class="p">);</span>
+
 <span class="c1"># lambdify the symbolic solution</span>
 <span class="n">sym_x</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">lambdify</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">soln</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">rhs</span><span class="p">,</span> <span class="n">modules</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;numpy&#39;</span><span class="p">]);</span>
 <span class="n">sym_y</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">lambdify</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">soln</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">rhs</span><span class="p">,</span> <span class="n">modules</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;numpy&#39;</span><span class="p">]);</span>
@@ -537,7 +539,7 @@ Writing <span class="math notranslate nohighlight">\(\mathbf r = \langle x, y, z
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/aba9db5261af94ce4d6eec84bd343b45217d2781d6f6088808cbb50293a113c5.png" src="_images/aba9db5261af94ce4d6eec84bd343b45217d2781d6f6088808cbb50293a113c5.png" />
+<img alt="_images/76db25c803914e7626c6f408e7ad0150d74fa1fb21ed2499847ac5d1ac559875.png" src="_images/76db25c803914e7626c6f408e7ad0150d74fa1fb21ed2499847ac5d1ac559875.png" />
 </div>
 </div>
 <p>Now we compute a numerical solution via Euler’s method and plot it along with the symbolic solution.</p>
@@ -562,7 +564,7 @@ Writing <span class="math notranslate nohighlight">\(\mathbf r = \langle x, y, z
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/a6b4b22c383af9fc58876c4549c05683255be0dc2ae7e27e5e7e3c4381572a28.png" src="_images/a6b4b22c383af9fc58876c4549c05683255be0dc2ae7e27e5e7e3c4381572a28.png" />
+<img alt="_images/ec8c35702ac6076897a9d0370b314187552b38001750f2cc3473fa401780edb9.png" src="_images/ec8c35702ac6076897a9d0370b314187552b38001750f2cc3473fa401780edb9.png" />
 </div>
 </div>
 <p>Finally, we compute the absolute and relative errors at each mesh point in <span class="math notranslate nohighlight">\(t\)</span>-space using the <span class="math notranslate nohighlight">\(2\)</span>-norm.</p>

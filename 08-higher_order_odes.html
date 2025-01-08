@@ -34,9 +34,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="_static/proof.css?v=b4b7a797" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- So that users can add custom icons -->
@@ -416,6 +416,8 @@ y'(0)&amp;= -3/5.\end{split}\]</div>
 <span class="kn">import</span> <span class="nn">sympy</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;dark_background&#39;</span><span class="p">);</span>
+
 <span class="c1"># solve the IVP symbolically with the sympy library</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">);</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Function</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">);</span>
@@ -454,7 +456,7 @@ y'(0)&amp;= -3/5.\end{split}\]</div>
 </div>
 <div class="output text_latex math notranslate nohighlight">
 \[\displaystyle y{\left(x \right)} = \frac{\left(\sin{\left(x \right)} - 2 \cos{\left(x \right)}\right) e^{2 x}}{5}\]</div>
-<img alt="_images/e5aa3c4b7997d684bef991dd82331ec0bdac319bfd6a0771a31772cd783e2f3f.png" src="_images/e5aa3c4b7997d684bef991dd82331ec0bdac319bfd6a0771a31772cd783e2f3f.png" />
+<img alt="_images/52c694f4a6dbb567e649280f1a395ef2a873091bae9a7da3caf851345248c90d.png" src="_images/52c694f4a6dbb567e649280f1a395ef2a873091bae9a7da3caf851345248c90d.png" />
 </div>
 </div>
 <p>To solve <a class="reference internal" href="#equation-higher-order-example">(24)</a> numerically, we introduce the variables <span class="math notranslate nohighlight">\(u_0=y\)</span> <span class="math notranslate nohighlight">\(u_1=y'\)</span>, and we rewrite the IVP as</p>
@@ -483,7 +485,7 @@ u_1(0) &amp;= -3/5\end{split}\]</div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/bc9670aded29549e8e28f73adbfebee94184130305d56794a4bc9b4bb20ca820.png" src="_images/bc9670aded29549e8e28f73adbfebee94184130305d56794a4bc9b4bb20ca820.png" />
+<img alt="_images/3dd19a664cb7f3d3fb825d93121d0243ab57c78a3d638cdbf99f51940b901e5e.png" src="_images/3dd19a664cb7f3d3fb825d93121d0243ab57c78a3d638cdbf99f51940b901e5e.png" />
 </div>
 </div>
 <div class="cell docutils container">

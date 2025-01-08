@@ -34,9 +34,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="_static/proof.css?v=b4b7a797" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- So that users can add custom icons -->
@@ -433,6 +433,8 @@ u_0(1) &amp;= 5.\end{split}\]</div>
 <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span>
 <span class="kn">from</span> <span class="nn">tabulate</span> <span class="kn">import</span> <span class="n">tabulate</span>
 
+<span class="n">pyplot</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;dark_background&#39;</span><span class="p">);</span>
+
 <span class="c1"># set up IVP parameters</span>
 <span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">u</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">u</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">4</span><span class="o">*</span><span class="n">u</span><span class="p">[</span><span class="mi">0</span><span class="p">]]);</span>
 <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">;</span>
@@ -461,7 +463,7 @@ u_0(1) &amp;= 5.\end{split}\]</div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>With s = 1, we have y_10 = u_(0, 10) = 1.81339.
 </pre></div>
 </div>
-<img alt="_images/85b77dde7b4d19d63b8278a2bc96e643d49f58f14c62afaa846b0809dc2d3632.png" src="_images/85b77dde7b4d19d63b8278a2bc96e643d49f58f14c62afaa846b0809dc2d3632.png" />
+<img alt="_images/25bc3ba0e5753651f8fb806290d76ee77ab6777a303fa747c9a8bf2906a59dfb.png" src="_images/25bc3ba0e5753651f8fb806290d76ee77ab6777a303fa747c9a8bf2906a59dfb.png" />
 </div>
 </div>
 <p>The guess <span class="math notranslate nohighlight">\(s=1\)</span> produces an approximate value for <span class="math notranslate nohighlight">\(y(1) = u_0(1)\)</span> that is too low.  This suggests that we should try a steeper guess for <span class="math notranslate nohighlight">\(s = u_1(0) = y'(0)\)</span>.  Below we try again with <span class="math notranslate nohighlight">\(s=2\)</span>.</p>
@@ -487,7 +489,7 @@ u_0(1) &amp;= 5.\end{split}\]</div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>With s = 2, we have y_10 = u_(0, 10) = 3.62677.
 </pre></div>
 </div>
-<img alt="_images/a897f95c78c36df5d2a2ff9fe0cb62b410351373bdb5bee6a249f7b2d4f34439.png" src="_images/a897f95c78c36df5d2a2ff9fe0cb62b410351373bdb5bee6a249f7b2d4f34439.png" />
+<img alt="_images/5e29aa3135f1c14dc2af9698d9b6894b6c0a356d41b7cd5874fa219efa93f403.png" src="_images/5e29aa3135f1c14dc2af9698d9b6894b6c0a356d41b7cd5874fa219efa93f403.png" />
 </div>
 </div>
 <p>Again we are too low, and so we try <span class="math notranslate nohighlight">\(s=3\)</span>.</p>
@@ -513,7 +515,7 @@ u_0(1) &amp;= 5.\end{split}\]</div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>With s = 3, we have y_10 = u_(0, 10) = 5.44016.
 </pre></div>
 </div>
-<img alt="_images/6fbaa4d81b05491f7ba525a565e646383d02ce601e6f3289b53dc5b16f5d6337.png" src="_images/6fbaa4d81b05491f7ba525a565e646383d02ce601e6f3289b53dc5b16f5d6337.png" />
+<img alt="_images/7072e11de76ea1cdef22598f3fd13947f79956534c78cdeade4b798e45d1511a.png" src="_images/7072e11de76ea1cdef22598f3fd13947f79956534c78cdeade4b798e45d1511a.png" />
 </div>
 </div>
 <p>This time we are too high, and that is fortunate for now we have “bracketed” <span class="math notranslate nohighlight">\(s\)</span>.  In particular, we “know” (assuming that the solution varies continuously with <span class="math notranslate nohighlight">\(s\)</span>) that <span class="math notranslate nohighlight">\(s\in (2,3)\)</span>.  We can therefore bisect the interval and guess <span class="math notranslate nohighlight">\(s=(2+3)/2=5/2\)</span>.  If that guess is too low, we know that <span class="math notranslate nohighlight">\(s\in(5/2, 3)\)</span>.  If it is too high, we know that <span class="math notranslate nohighlight">\(s\in (2, 5/2)\)</span>.  We can then keep bisecting until our computed value <span class="math notranslate nohighlight">\(u_{0,n} = y_n\)</span> is within some desired tolerance of our target <span class="math notranslate nohighlight">\(y(1)=5\)</span>.  In practice, it is a good idea to set a maximum number of iterations in case the convergence is rather slow and the work cost is too high.</p>

@@ -34,9 +34,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="_static/proof.css?v=b4b7a797" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- So that users can add custom icons -->
@@ -399,13 +399,13 @@ The Runge-Kutta method of order <span class="math notranslate nohighlight">\(1\)
 <section id="order-two-methods">
 <h2>Order two methods.<a class="headerlink" href="#order-two-methods" title="Link to this heading">#</a></h2>
 <p>The generic Runge-Kutta method of order 2 takes the form</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1a72103e-1ab6-4fe0-b15e-f4e6e17efcab">
-<span class="eqno">(7)<a class="headerlink" href="#equation-1a72103e-1ab6-4fe0-b15e-f4e6e17efcab" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-3a0fbd0c-196f-4880-a42e-51235d6c75f2">
+<span class="eqno">(7)<a class="headerlink" href="#equation-3a0fbd0c-196f-4880-a42e-51235d6c75f2" title="Permalink to this equation">#</a></span>\[\begin{equation}
 y_{i+1} = y_i + h\big(w_1k_1 + w_2k_2\big),
 \end{equation}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c4931007-3b54-4b47-bd0b-cf43b3edb8c4">
-<span class="eqno">(8)<a class="headerlink" href="#equation-c4931007-3b54-4b47-bd0b-cf43b3edb8c4" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-71a7509c-8110-4337-b0ed-272d2c773ccd">
+<span class="eqno">(8)<a class="headerlink" href="#equation-71a7509c-8110-4337-b0ed-272d2c773ccd" title="Permalink to this equation">#</a></span>\[\begin{align}
 k_1 &amp;= f(x_i, y_i),\\
 k_2 &amp;= f(x_i+\alpha h, y_i + \beta hk_1),\\
 w_1 &amp;=\frac{1}{2\alpha},\\
@@ -421,13 +421,13 @@ Finally, the <strong>midpoint method</strong> (or <strong>corrected Euler method
 <section id="the-classical-fourth-order-method">
 <h2>The classical fourth order method.<a class="headerlink" href="#the-classical-fourth-order-method" title="Link to this heading">#</a></h2>
 <p>Probably the most popular Runge–Kutta method is the <strong>classical fourth order Runge–Kutta method</strong> (<strong>RK4</strong>), which is defined by the equations</p>
-<div class="amsmath math notranslate nohighlight" id="equation-0adeec55-ae2b-4959-91f4-4296af4be788">
-<span class="eqno">(9)<a class="headerlink" href="#equation-0adeec55-ae2b-4959-91f4-4296af4be788" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-8313bc0e-8cdd-4273-b35d-997f0f762a9c">
+<span class="eqno">(9)<a class="headerlink" href="#equation-8313bc0e-8cdd-4273-b35d-997f0f762a9c" title="Permalink to this equation">#</a></span>\[\begin{equation}
 y_{i+1} = \frac{h}{6}\big(k_1 + 2k_2 + 2k_3 + k_4\big),
 \end{equation}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-36d2d65b-0f35-4182-b777-a0a68d6fb4c4">
-<span class="eqno">(10)<a class="headerlink" href="#equation-36d2d65b-0f35-4182-b777-a0a68d6fb4c4" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-53c9c386-ab98-4282-ba67-3638facf571f">
+<span class="eqno">(10)<a class="headerlink" href="#equation-53c9c386-ab98-4282-ba67-3638facf571f" title="Permalink to this equation">#</a></span>\[\begin{align}
 k_1 &amp;= f(x_i, y_i),\\
 k_2 &amp;= f\big(x_i + h/2, y_i + hk_1/2\big),\\
 k_3 &amp;= f\big(x_i + h/2, y_i + hk_2/2\big),\\
@@ -438,8 +438,8 @@ k_4 &amp;= f(x_i + h, y_i + hk_3).
 <section id="example">
 <h2>Example.<a class="headerlink" href="#example" title="Link to this heading">#</a></h2>
 <p>Below we compare Euler’s method with the classical Runge–Kutta method of order 4 (RK4) for the IVP</p>
-<div class="amsmath math notranslate nohighlight" id="equation-6729c944-448e-475f-b4b6-754dbc4dc325">
-<span class="eqno">(11)<a class="headerlink" href="#equation-6729c944-448e-475f-b4b6-754dbc4dc325" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-57201328-853f-483f-a606-e6293f2a2904">
+<span class="eqno">(11)<a class="headerlink" href="#equation-57201328-853f-483f-a606-e6293f2a2904" title="Permalink to this equation">#</a></span>\[\begin{align}
 y'&amp;=(y/x)-(y/x)^2,\\
 y(1)&amp;=1.
 \end{align}\]</div>
@@ -450,6 +450,8 @@ y(1)&amp;=1.
 <span class="kn">import</span> <span class="nn">sympy</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">from</span> <span class="nn">tabulate</span> <span class="kn">import</span> <span class="n">tabulate</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;dark_background&#39;</span><span class="p">);</span>
 
 <span class="c1"># define IVP parameters</span>
 <span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="p">(</span><span class="n">y</span><span class="o">/</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">y</span><span class="o">/</span><span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">;</span>
@@ -507,7 +509,7 @@ y(1)&amp;=1.
 </div>
 <div class="output text_latex math notranslate nohighlight">
 \[\displaystyle y{\left(x \right)} = \frac{x}{\log{\left(x \right)} + 1}\]</div>
-<img alt="_images/3576944564073c282c4deae0e6ca1fb86d8cdab21d71f1ee6623a32ec4e8c8b3.png" src="_images/3576944564073c282c4deae0e6ca1fb86d8cdab21d71f1ee6623a32ec4e8c8b3.png" />
+<img alt="_images/c87050749ecb0b4e36522c968330fced1947bb20bbf789e436aee1c553f71422.png" src="_images/c87050749ecb0b4e36522c968330fced1947bb20bbf789e436aee1c553f71422.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Global errors for Euler&#39;s method and RK4.
 ┍━━━━━┯━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━━━━━━━━┑
 │   i │   x_i │   e_{i,Euler} = |y(x_i)-y_i| │   e_{i,RK4} = |y(x_i)-y_i| │

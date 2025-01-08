@@ -1,0 +1,60 @@
+Traceback (most recent call last):
+  File "/opt/anaconda3/envs/math263-notes/lib/python3.13/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+    ~~~~~~~~~^
+        nb,
+        ^^^
+    ...<4 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "/opt/anaconda3/envs/math263-notes/lib/python3.13/site-packages/nbclient/client.py", line 1319, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/opt/anaconda3/envs/math263-notes/lib/python3.13/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "/opt/anaconda3/envs/math263-notes/lib/python3.13/asyncio/base_events.py", line 720, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "/opt/anaconda3/envs/math263-notes/lib/python3.13/site-packages/nbclient/client.py", line 709, in async_execute
+    await self.async_execute_cell(
+        cell, index, execution_count=self.code_cells_executed + 1
+    )
+  File "/opt/anaconda3/envs/math263-notes/lib/python3.13/site-packages/nbclient/client.py", line 1062, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/opt/anaconda3/envs/math263-notes/lib/python3.13/site-packages/nbclient/client.py", line 918, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+B = 4;
+tvals = numpy.linspace(a, b, n);
+ymin = min(y_euler[:B,0]);
+ymax = max(y_euler[:B,0]);
+
+# create new figure
+fig, ax = pyplot.subplots(layout='constrained');
+ax.plot(ti[:B], y_euler[:B, 0], "r:o", label="Euler method");
+for i in range(B):
+    # solve the IVP with initial condition y(t_i) = y_i (from Euler solution)
+    solni = sympy.dsolve(ode, y(t), ics={y(ti[i]): y_euler[i, 0]})
+    sym_yi = sympy.lambdify(t, solni.rhs, modules=['numpy']);  
+    tvals = numpy.linspace(a, b, num=300);
+    ax.plot(tvals, sym_yi(tvals), 'w', label="_nolegend_");
+
+ax.plot(tvals, sym_y(tvals), linewidth=2.5, 'b', label="Exact solution");
+ax.set_xlabel(r"$t$");
+ax.set_ylabel(r"$y$");
+ax.set_title("(Forward) Euler solution with transients");
+pyplot.ylim(ymin-100, ymax+100);
+ax.legend();
+------------------
+
+
+[0;36m  Cell [0;32mIn[4], line 16[0;36m[0m
+[0;31m    ax.plot(tvals, sym_y(tvals), linewidth=2.5, 'b', label="Exact solution");[0m
+[0m                                                                           ^[0m
+[0;31mSyntaxError[0m[0;31m:[0m positional argument follows keyword argument
+
+
