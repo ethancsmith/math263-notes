@@ -4,7 +4,7 @@ jupytext:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.16.6
+    jupytext_version: 1.16.3
 kernelspec:
   display_name: Python 3 (ipykernel)
   language: python
@@ -64,6 +64,8 @@ import numpy
 import math263
 from matplotlib import pyplot
 from tabulate import tabulate
+
+pyplot.style.use('dark_background');
 
 # set up IVP parameters
 f = lambda x, u: numpy.array([u[1], 4*u[0]]);

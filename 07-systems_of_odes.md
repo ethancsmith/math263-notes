@@ -4,7 +4,7 @@ jupytext:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.16.6
+    jupytext_version: 1.16.3
 kernelspec:
   display_name: Python 3 (ipykernel)
   language: python
@@ -134,6 +134,8 @@ Next we plot the solution in $xyz$-space.
 
 ```{code-cell}
 import matplotlib.pyplot as plt
+
+plt.style.use('dark_background');
 
 # lambdify the symbolic solution
 sym_x = sympy.lambdify(t, soln[0].rhs, modules=['numpy']);

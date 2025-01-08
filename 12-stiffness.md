@@ -31,6 +31,8 @@ from matplotlib import pyplot
 import math263
 from tabulate import tabulate
 
+pyplot.style.use('dark_background');
+
 # define IVP parameters
 f = lambda t, y: -200*y + 200*t + 101;
 a, b = 0, 1;
@@ -108,7 +110,7 @@ dy = f(T,Y);    # sample dy =(dy/dt)*dt, where dt=1 at each point of the 2D mesh
 [dt, dy] = [dt, dy]/numpy.sqrt(dt**2 + dy**2);
 
 # plot direction field on top of previous plot
-pyplot.quiver(T, Y, dt, dy, color="k", headlength=0, headwidth=1,
+pyplot.quiver(T, Y, dt, dy, color="w", headlength=0, headwidth=1,
            pivot="mid", label='_nolegend_'); 
 
 pyplot.ylim(ymin, ymax);
@@ -126,14 +128,13 @@ ymax = max(y_euler[:B,0]);
 # create new figure
 fig, ax = pyplot.subplots(layout='constrained');
 ax.plot(ti[:B], y_euler[:B, 0], "r:o", label="Euler method");
-ax.plot(tvals, sym_y(tvals), linewidth=2.5, label="Exact solution");
 for i in range(B):
     # solve the IVP with initial condition y(t_i) = y_i (from Euler solution)
     solni = sympy.dsolve(ode, y(t), ics={y(ti[i]): y_euler[i, 0]})
     sym_yi = sympy.lambdify(t, solni.rhs, modules=['numpy']);  
     tvals = numpy.linspace(a, b, num=300);
-    ax.plot(tvals, sym_yi(tvals), "k", label="_nolegend_");
-
+    ax.plot(tvals, sym_yi(tvals), label="_nolegend_");
+ax.plot(tvals, sym_y(tvals), 'b', linewidth=2.5, label="Exact solution");
 ax.set_xlabel(r"$t$");
 ax.set_ylabel(r"$y$");
 ax.set_title("(Forward) Euler solution with transients");

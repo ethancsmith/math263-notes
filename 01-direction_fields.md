@@ -52,6 +52,8 @@ The [NumPy](https://numpy.org/doc/stable/index.html) package provides efficient 
 import numpy as np 
 from matplotlib import pyplot as plt
 
+plt.style.use('dark_background');
+
 # define ODE RHS
 f = lambda x, y: y + np.sin(x)
 # set window boundaries
@@ -76,7 +78,7 @@ dy = f(X,Y);    # sample dy =(dy/dx)*dx, where dx=1 at each point of the 2D mesh
 fig, ax = plt.subplots(layout='constrained');
 # NOTE: pivot='mid' anchors the middle of the arrow to the mesh point
 # the _nolegend_ flag prevents a legend object from being generated in the later merged graphic
-dplot = ax.quiver(X, Y, dx, dy, color="b", headlength=0, headwidth=1, pivot="mid", label='_nolegend_'); 
+dplot = ax.quiver(X, Y, dx, dy, color="w", headlength=0, headwidth=1, pivot="mid", label='_nolegend_'); 
 ax.set_title(r"Direction field for $y' = y+\sin(x)$");
 ax.set_xlabel("$x$");
 ax.set_ylabel("$y$");
@@ -125,7 +127,7 @@ yfunc=sympy.lambdify(x, psoln.rhs, modules=['numpy']);
 xvals = np.linspace(xmin, xmax, num=100);
 
 plt.figure(fig) # set the current figure to direction field created above
-ax.plot(xvals, yfunc(xvals), color='k', label=f"${sympy.latex(psoln)}$");
+ax.plot(xvals, yfunc(xvals), color='w', label=f"${sympy.latex(psoln)}$");
 ax.set_title(f"Direction field for $y'(x)={sympy.latex(ode.rhs)}$" 
              "\n" f"with particular solution when y({x0})={y0}.");
 ax.plot(0,-1/2,'ro') # plot initial condition point (0,-1/2) in red

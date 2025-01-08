@@ -4,7 +4,7 @@ jupytext:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.16.6
+    jupytext_version: 1.16.3
 kernelspec:
   display_name: Python 3 (ipykernel)
   language: python
@@ -44,6 +44,8 @@ y'(0)&= -3/5.
 import numpy as np
 import sympy
 import matplotlib.pyplot as plt
+
+plt.style.use('dark_background');
 
 # solve the IVP symbolically with the sympy library
 x = sympy.Symbol('x');

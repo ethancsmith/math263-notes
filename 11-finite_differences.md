@@ -4,7 +4,7 @@ jupytext:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.16.6
+    jupytext_version: 1.16.3
 kernelspec:
   display_name: Python 3 (ipykernel)
   language: python
@@ -132,6 +132,8 @@ We solve this system below for the case of $n = 10$ steps.
 import numpy as np
 from matplotlib import pyplot
 from tabulate import tabulate
+
+pyplot.style.use('dark_background');
 
 a, b = 0, 1;
 alpha, beta = 0, 5;

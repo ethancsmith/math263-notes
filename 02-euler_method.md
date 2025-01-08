@@ -113,6 +113,8 @@ Since the IVP {eq}`example-02` can be solved analytically, we can plot the symbo
 import sympy
 import matplotlib.pyplot as plt
 
+plt.style.use('dark_background');
+
 # solve the IVP symbolically with the sympy library
 x = sympy.Symbol('x');
 y = sympy.Function('y');
@@ -162,7 +164,7 @@ dy = f(X,Y);    # sample dy =(dy/dx)*dx, where dx=1 at each point of the 2D mesh
 
 # plot direction field on top of previous plot
 plt.figure(fig);
-plt.quiver(X, Y, dx, dy, color="k", headlength=0, headwidth=1, 
+plt.quiver(X, Y, dx, dy, color="w", headlength=0, headwidth=1, 
            pivot="mid", label='_nolegend_'); 
 plt.show();
 ```
