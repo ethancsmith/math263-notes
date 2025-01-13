@@ -42,7 +42,7 @@ def bem(f, a, b, y0, n):
 	y = np.empty((x.size, np.size(y0)));
 	y[0, :] = y0;
 	for i in range(n):
-		func = lambda Y: Y - (y[i, :] + h*f(x[i], Y));
+		func = lambda Y: Y - (y[i, :] + h*f(x[i + 1], Y));
 		y[i + 1, :] = sp.optimize.fsolve(func, y[i, :]);
 	return (x, y)
 	

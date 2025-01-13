@@ -5,7 +5,7 @@ NOTEBOOKS = $(addsuffix .ipynb, $(SRCNAMES))
 
 all: $(NOTEBOOKS) book
 
-%.ipynb: %.$(SCRIPT_EXTN)
+%.ipynb: %.$(SCRIPT_EXTN) math263.py
 	jupytext --sync $<
 
 book: $(NOTEBOOKS) _config.yml _toc.yml 00-intro.md
