@@ -399,13 +399,13 @@ The Runge-Kutta method of order <span class="math notranslate nohighlight">\(1\)
 <section id="order-two-methods">
 <h2>Order two methods.<a class="headerlink" href="#order-two-methods" title="Link to this heading">#</a></h2>
 <p>The generic Runge-Kutta method of order 2 takes the form</p>
-<div class="amsmath math notranslate nohighlight" id="equation-a4d1a7c8-148f-4815-a10a-be2284b44a64">
-<span class="eqno">(7)<a class="headerlink" href="#equation-a4d1a7c8-148f-4815-a10a-be2284b44a64" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-c9b3f449-eaaf-4ac3-a265-16a2bfa05ba0">
+<span class="eqno">(7)<a class="headerlink" href="#equation-c9b3f449-eaaf-4ac3-a265-16a2bfa05ba0" title="Permalink to this equation">#</a></span>\[\begin{equation}
 y_{i+1} = y_i + h\big(w_1k_1 + w_2k_2\big),
 \end{equation}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d35c49a0-a36c-4f16-a061-98965f4efa0a">
-<span class="eqno">(8)<a class="headerlink" href="#equation-d35c49a0-a36c-4f16-a061-98965f4efa0a" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-097855ae-cdb1-4492-8df0-f23000bce0f4">
+<span class="eqno">(8)<a class="headerlink" href="#equation-097855ae-cdb1-4492-8df0-f23000bce0f4" title="Permalink to this equation">#</a></span>\[\begin{align}
 k_1 &amp;= f(x_i, y_i),\\
 k_2 &amp;= f(x_i+\alpha h, y_i + \beta hk_1),\\
 w_1 &amp;=\frac{1}{2\alpha},\\
@@ -421,13 +421,13 @@ Finally, the <strong>midpoint method</strong> (or <strong>corrected Euler method
 <section id="the-classical-fourth-order-method">
 <h2>The classical fourth order method.<a class="headerlink" href="#the-classical-fourth-order-method" title="Link to this heading">#</a></h2>
 <p>Probably the most popular Runge–Kutta method is the <strong>classical fourth order Runge–Kutta method</strong> (<strong>RK4</strong>), which is defined by the equations</p>
-<div class="amsmath math notranslate nohighlight" id="equation-e570143b-294b-4cf4-9592-50964bc210fd">
-<span class="eqno">(9)<a class="headerlink" href="#equation-e570143b-294b-4cf4-9592-50964bc210fd" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-3c7d3669-e16a-4ee4-b4ea-f85c2f07090d">
+<span class="eqno">(9)<a class="headerlink" href="#equation-3c7d3669-e16a-4ee4-b4ea-f85c2f07090d" title="Permalink to this equation">#</a></span>\[\begin{equation}
 y_{i+1} = \frac{h}{6}\big(k_1 + 2k_2 + 2k_3 + k_4\big),
 \end{equation}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-31009890-e546-409a-87a1-150f9beea345">
-<span class="eqno">(10)<a class="headerlink" href="#equation-31009890-e546-409a-87a1-150f9beea345" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-2bd53c45-53c8-41ae-b51b-ccf3b79a9c9d">
+<span class="eqno">(10)<a class="headerlink" href="#equation-2bd53c45-53c8-41ae-b51b-ccf3b79a9c9d" title="Permalink to this equation">#</a></span>\[\begin{align}
 k_1 &amp;= f(x_i, y_i),\\
 k_2 &amp;= f\big(x_i + h/2, y_i + hk_1/2\big),\\
 k_3 &amp;= f\big(x_i + h/2, y_i + hk_2/2\big),\\
@@ -438,8 +438,8 @@ k_4 &amp;= f(x_i + h, y_i + hk_3).
 <section id="example">
 <h2>Example.<a class="headerlink" href="#example" title="Link to this heading">#</a></h2>
 <p>Below we compare Euler’s method with the classical Runge–Kutta method of order 4 (RK4) for the IVP</p>
-<div class="amsmath math notranslate nohighlight" id="equation-f87ccc62-11df-46e4-ab46-fb26d346ee6a">
-<span class="eqno">(11)<a class="headerlink" href="#equation-f87ccc62-11df-46e4-ab46-fb26d346ee6a" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-e7743476-8321-4a42-85ef-05a2b1e6c8d9">
+<span class="eqno">(11)<a class="headerlink" href="#equation-e7743476-8321-4a42-85ef-05a2b1e6c8d9" title="Permalink to this equation">#</a></span>\[\begin{align}
 y'&amp;=(y/x)-(y/x)^2,\\
 y(1)&amp;=1.
 \end{align}\]</div>
