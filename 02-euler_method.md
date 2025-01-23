@@ -35,7 +35,7 @@ For much of this course, however, we will use equally-spaced meshes with step-si
 
 ## Linearization and Euler's method.
 
-Once the mesh points have been chosen, the most straightforward approach to computing the $y_i$'s is known as Euler's method.
+Once the mesh points have been chosen, the most straightforward approach to computing the $y_i$'s is known as [Euler's method](https://www.youtube.com/watch?v=gdxYsVniOYo).
 The basis for Euler's method is tangent line approximation from calculus known as linearization.
 Recall that if $y$ is differentiable at $x=x_0$, then
 \begin{equation*}
