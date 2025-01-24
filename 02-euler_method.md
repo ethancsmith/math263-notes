@@ -35,7 +35,8 @@ For much of this course, however, we will use equally-spaced meshes with step-si
 
 ## Linearization and Euler's method.
 
-Once the mesh points have been chosen, the most straightforward approach to computing the $y_i$'s is known as [Euler's method](https://www.youtube.com/watch?v=gdxYsVniOYo).
+Once the mesh points have been chosen, the most straightforward approach to computing the $y_i$'s is known as Euler's method.
+It is the method that [Katherine Johnson used](https://www.youtube.com/watch?v=gdxYsVniOYo) to compute (mostly by hand) the path that the Apollo astronauts would follow to land on the moon.
 The basis for Euler's method is tangent line approximation from calculus known as linearization.
 Recall that if $y$ is differentiable at $x=x_0$, then
 \begin{equation*}
@@ -138,7 +139,7 @@ ax.set_ylabel(r"$y$");
 ax.grid(True)
 ```
 
-Note that although the sequence of errors $e_i = |y(x_i) - y_i|$ is not necessarily increasing, there is a tendency for the errors made at previous steps tend to build up at subsequent steps. 
+Note that although the sequence of errors $e_i = |y(x_i) - y_i|$ is not necessarily increasing, there is a tendency for the errors made at previous steps to build up at subsequent steps. 
 
 Below we overlay the plot with a direction field plot for the ODE of {eq}`example-02`.
 This helps us to see that every pair of of points $(x_i, y_i)$, $(x_{i+1}, y_{i+1})$ approximates the true solution to the ODE that passes through the point $(x_i, y_i)$, but not necessarily the solution to the given IVP which passes through the initial condition point $(x_0, y_0)$.
