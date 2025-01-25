@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Lecture 6: Predictor–corrector methods. &#8212; MATH 263: Numerical differential equations</title>
+    <title>6: Predictor–corrector methods. &#8212; MATH 263: Numerical differential equations</title>
   
   
   
@@ -66,8 +66,8 @@
     <script>DOCUMENTATION_OPTIONS.pagename = '06-predictor-corrector_methods';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Lecture 7: Systems of first order ODE’s." href="07-systems_of_odes.html" />
-    <link rel="prev" title="Lecture 5: Multistep methods." href="05-multistep_methods.html" />
+    <link rel="next" title="7: Systems of first order ODE’s." href="07-systems_of_odes.html" />
+    <link rel="prev" title="5: Multistep methods." href="05-multistep_methods.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -172,18 +172,18 @@
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="01-direction_fields.html">Lecture 1: Direction fields.</a></li>
-<li class="toctree-l1"><a class="reference internal" href="02-euler_method.html">Lecture 2: Euler’s method.</a></li>
-<li class="toctree-l1"><a class="reference internal" href="03-error_analysis.html">Lecture 3: Error analysis.</a></li>
-<li class="toctree-l1"><a class="reference internal" href="04-runge-kutta_methods.html">Lecture 4: Runge–Kutta methods.</a></li>
-<li class="toctree-l1"><a class="reference internal" href="05-multistep_methods.html">Lecture 5: Multistep methods.</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Lecture 6: Predictor–corrector methods.</a></li>
-<li class="toctree-l1"><a class="reference internal" href="07-systems_of_odes.html">Lecture 7: Systems of first order ODE’s.</a></li>
-<li class="toctree-l1"><a class="reference internal" href="08-higher_order_odes.html">Lecture 8: Higher order initial value problems.</a></li>
-<li class="toctree-l1"><a class="reference internal" href="09-adaptive_methods.html">Lecture 9: Adaptive methods.</a></li>
-<li class="toctree-l1"><a class="reference internal" href="10-shooting_method.html">Lecture 10: Boundary value problems and the shooting method.</a></li>
-<li class="toctree-l1"><a class="reference internal" href="11-finite_differences.html">Lecture 11: Finite difference methods for boundary value problems.</a></li>
-<li class="toctree-l1"><a class="reference internal" href="12-stiffness.html">Lecture 12: Stiffness.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01-direction_fields.html">1: Direction fields.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02-euler_method.html">2: Euler’s method.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03-error_analysis.html">3: Error analysis.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04-runge-kutta_methods.html">4: Runge–Kutta methods.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05-multistep_methods.html">5: Multistep methods.</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">6: Predictor–corrector methods.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07-systems_of_odes.html">7: Systems of first order ODE’s.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08-higher_order_odes.html">8: Higher order initial value problems.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09-adaptive_methods.html">9: Adaptive methods.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10-shooting_method.html">10: Boundary value problems and the shooting method.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-finite_differences.html">11: Finite difference methods for boundary value problems.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12-stiffness.html">12: Stiffness.</a></li>
 </ul>
 
     </div>
@@ -366,7 +366,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Lecture 6: Predictor–corrector methods.</h1>
+    <h1>6: Predictor–corrector methods.</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -377,7 +377,7 @@
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-trouble-with-implicit-methods">The trouble with implicit methods.</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#predictorcorrector-methods">Predictor–corrector methods.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Predictor–corrector methods.</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advantages-and-disadvantages">Advantages and disadvantages.</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adamsmoulton-1-step-implicit-method">Adams–Moulton 1-step (implicit) method.</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adamsmoulton-3-step-implicit-method">Adams–Moulton 3-step (implicit) method.</a></li>
@@ -393,8 +393,8 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="lecture-6-predictorcorrector-methods">
-<h1>Lecture 6: Predictor–corrector methods.<a class="headerlink" href="#lecture-6-predictorcorrector-methods" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="predictorcorrector-methods">
+<h1>6: Predictor–corrector methods.<a class="headerlink" href="#predictorcorrector-methods" title="Link to this heading">#</a></h1>
 <section id="the-trouble-with-implicit-methods">
 <h2>The trouble with implicit methods.<a class="headerlink" href="#the-trouble-with-implicit-methods" title="Link to this heading">#</a></h2>
 <p>The numerical methods for solving ODE’s that we have considered so far have all been explicit,
@@ -419,8 +419,8 @@ If the function <span class="math notranslate nohighlight">\(f(x,y)\)</span> tur
 However, there are many important applications where <span class="math notranslate nohighlight">\(f(x,y)\)</span> is nonlinear in <span class="math notranslate nohighlight">\(y\)</span>.
 Thus, in order to use an implicit formula such as <a class="reference internal" href="#equation-backward-euler">(17)</a>, it is necessary to incorporate some nonlinear equation solver such as Newton’s method or fixed-point iteration to solve for <span class="math notranslate nohighlight">\(y_{i+1}\)</span>.</p>
 </section>
-<section id="predictorcorrector-methods">
-<h2>Predictor–corrector methods.<a class="headerlink" href="#predictorcorrector-methods" title="Link to this heading">#</a></h2>
+<section id="id1">
+<h2>Predictor–corrector methods.<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
 <p>Since fixed-point iteration techniques require an <em>initial guess</em>, it is common to use an explicit method to “predict” the value of <span class="math notranslate nohighlight">\(y_{i+1}\)</span> before employing the implicit method to “correct” the guess.
 Thus, the pairing of an explicit predictor method with an implicit corrector method is often referred to as a <strong>predictor-corrector method</strong>.
 The question of how many times to apply the fixed-point iteration of the corrector method can be a delicate matter.
@@ -616,7 +616,7 @@ y(0)&amp;=1/2\end{split}\]</div>
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Lecture 5: Multistep methods.</p>
+        <p class="prev-next-title">5: Multistep methods.</p>
       </div>
     </a>
     <a class="right-next"
@@ -624,7 +624,7 @@ y(0)&amp;=1/2\end{split}\]</div>
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Lecture 7: Systems of first order ODE’s.</p>
+        <p class="prev-next-title">7: Systems of first order ODE’s.</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -646,7 +646,7 @@ y(0)&amp;=1/2\end{split}\]</div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-trouble-with-implicit-methods">The trouble with implicit methods.</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#predictorcorrector-methods">Predictor–corrector methods.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Predictor–corrector methods.</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advantages-and-disadvantages">Advantages and disadvantages.</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adamsmoulton-1-step-implicit-method">Adams–Moulton 1-step (implicit) method.</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adamsmoulton-3-step-implicit-method">Adams–Moulton 3-step (implicit) method.</a></li>

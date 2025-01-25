@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Lecture 2: Euler’s method. &#8212; MATH 263: Numerical differential equations</title>
+    <title>2: Euler’s method. &#8212; MATH 263: Numerical differential equations</title>
   
   
   
@@ -66,8 +66,8 @@
     <script>DOCUMENTATION_OPTIONS.pagename = '02-euler_method';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Lecture 3: Error analysis." href="03-error_analysis.html" />
-    <link rel="prev" title="Lecture 1: Direction fields." href="01-direction_fields.html" />
+    <link rel="next" title="3: Error analysis." href="03-error_analysis.html" />
+    <link rel="prev" title="1: Direction fields." href="01-direction_fields.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -172,18 +172,18 @@
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="01-direction_fields.html">Lecture 1: Direction fields.</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Lecture 2: Euler’s method.</a></li>
-<li class="toctree-l1"><a class="reference internal" href="03-error_analysis.html">Lecture 3: Error analysis.</a></li>
-<li class="toctree-l1"><a class="reference internal" href="04-runge-kutta_methods.html">Lecture 4: Runge–Kutta methods.</a></li>
-<li class="toctree-l1"><a class="reference internal" href="05-multistep_methods.html">Lecture 5: Multistep methods.</a></li>
-<li class="toctree-l1"><a class="reference internal" href="06-predictor-corrector_methods.html">Lecture 6: Predictor–corrector methods.</a></li>
-<li class="toctree-l1"><a class="reference internal" href="07-systems_of_odes.html">Lecture 7: Systems of first order ODE’s.</a></li>
-<li class="toctree-l1"><a class="reference internal" href="08-higher_order_odes.html">Lecture 8: Higher order initial value problems.</a></li>
-<li class="toctree-l1"><a class="reference internal" href="09-adaptive_methods.html">Lecture 9: Adaptive methods.</a></li>
-<li class="toctree-l1"><a class="reference internal" href="10-shooting_method.html">Lecture 10: Boundary value problems and the shooting method.</a></li>
-<li class="toctree-l1"><a class="reference internal" href="11-finite_differences.html">Lecture 11: Finite difference methods for boundary value problems.</a></li>
-<li class="toctree-l1"><a class="reference internal" href="12-stiffness.html">Lecture 12: Stiffness.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01-direction_fields.html">1: Direction fields.</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">2: Euler’s method.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03-error_analysis.html">3: Error analysis.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04-runge-kutta_methods.html">4: Runge–Kutta methods.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05-multistep_methods.html">5: Multistep methods.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-predictor-corrector_methods.html">6: Predictor–corrector methods.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07-systems_of_odes.html">7: Systems of first order ODE’s.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08-higher_order_odes.html">8: Higher order initial value problems.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09-adaptive_methods.html">9: Adaptive methods.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10-shooting_method.html">10: Boundary value problems and the shooting method.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-finite_differences.html">11: Finite difference methods for boundary value problems.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12-stiffness.html">12: Stiffness.</a></li>
 </ul>
 
     </div>
@@ -366,7 +366,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Lecture 2: Euler’s method.</h1>
+    <h1>2: Euler’s method.</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -391,8 +391,8 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="lecture-2-eulers-method">
-<h1>Lecture 2: Euler’s method.<a class="headerlink" href="#lecture-2-eulers-method" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="eulers-method">
+<h1>2: Euler’s method.<a class="headerlink" href="#eulers-method" title="Link to this heading">#</a></h1>
 <section id="numerical-solutions-to-odes">
 <h2>Numerical solutions to ODE’s.<a class="headerlink" href="#numerical-solutions-to-odes" title="Link to this heading">#</a></h2>
 <p>Suppose that we want to compute a numerical solution to the first-order IVP</p>
@@ -414,7 +414,8 @@ For much of this course, however, we will use equally-spaced meshes with step-si
 </section>
 <section id="linearization-and-eulers-method">
 <h2>Linearization and Euler’s method.<a class="headerlink" href="#linearization-and-eulers-method" title="Link to this heading">#</a></h2>
-<p>Once the mesh points have been chosen, the most straightforward approach to computing the <span class="math notranslate nohighlight">\(y_i\)</span>’s is known as <a class="reference external" href="https://www.youtube.com/watch?v=gdxYsVniOYo">Euler’s method</a>.
+<p>Once the mesh points have been chosen, the most straightforward approach to computing the <span class="math notranslate nohighlight">\(y_i\)</span>’s is known as Euler’s method.
+It is the method that <a class="reference external" href="https://www.youtube.com/watch?v=gdxYsVniOYo">Katherine Johnson used</a> to compute (mostly by hand) the path that the Apollo astronauts would follow to land on the moon.
 The basis for Euler’s method is tangent line approximation from calculus known as linearization.
 Recall that if <span class="math notranslate nohighlight">\(y\)</span> is differentiable at <span class="math notranslate nohighlight">\(x=x_0\)</span>, then</p>
 <div class="amsmath math notranslate nohighlight">
@@ -562,7 +563,7 @@ y(0)&amp;=3\end{split}\]</div>
 <img alt="_images/b71836bf8bf25e5125816b64ec958c2394b378f562019de0f15242fa1444f386.png" src="_images/b71836bf8bf25e5125816b64ec958c2394b378f562019de0f15242fa1444f386.png" />
 </div>
 </div>
-<p>Note that although the sequence of errors <span class="math notranslate nohighlight">\(e_i = |y(x_i) - y_i|\)</span> is not necessarily increasing, there is a tendency for the errors made at previous steps tend to build up at subsequent steps.</p>
+<p>Note that although the sequence of errors <span class="math notranslate nohighlight">\(e_i = |y(x_i) - y_i|\)</span> is not necessarily increasing, there is a tendency for the errors made at previous steps to build up at subsequent steps.</p>
 <p>Below we overlay the plot with a direction field plot for the ODE of <a class="reference internal" href="#equation-example-02">(4)</a>.
 This helps us to see that every pair of of points <span class="math notranslate nohighlight">\((x_i, y_i)\)</span>, <span class="math notranslate nohighlight">\((x_{i+1}, y_{i+1})\)</span> approximates the true solution to the ODE that passes through the point <span class="math notranslate nohighlight">\((x_i, y_i)\)</span>, but not necessarily the solution to the given IVP which passes through the initial condition point <span class="math notranslate nohighlight">\((x_0, y_0)\)</span>.</p>
 <div class="cell docutils container">
@@ -636,7 +637,7 @@ This helps us to see that every pair of of points <span class="math notranslate 
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Lecture 1: Direction fields.</p>
+        <p class="prev-next-title">1: Direction fields.</p>
       </div>
     </a>
     <a class="right-next"
@@ -644,7 +645,7 @@ This helps us to see that every pair of of points <span class="math notranslate 
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Lecture 3: Error analysis.</p>
+        <p class="prev-next-title">3: Error analysis.</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

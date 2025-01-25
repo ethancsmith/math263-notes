@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Lecture 10: Boundary value problems and the shooting method. &#8212; MATH 263: Numerical differential equations</title>
+    <title>10: Boundary value problems and the shooting method. &#8212; MATH 263: Numerical differential equations</title>
   
   
   
@@ -66,8 +66,8 @@
     <script>DOCUMENTATION_OPTIONS.pagename = '10-shooting_method';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Lecture 11: Finite difference methods for boundary value problems." href="11-finite_differences.html" />
-    <link rel="prev" title="Lecture 9: Adaptive methods." href="09-adaptive_methods.html" />
+    <link rel="next" title="11: Finite difference methods for boundary value problems." href="11-finite_differences.html" />
+    <link rel="prev" title="9: Adaptive methods." href="09-adaptive_methods.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -172,18 +172,18 @@
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="01-direction_fields.html">Lecture 1: Direction fields.</a></li>
-<li class="toctree-l1"><a class="reference internal" href="02-euler_method.html">Lecture 2: Euler’s method.</a></li>
-<li class="toctree-l1"><a class="reference internal" href="03-error_analysis.html">Lecture 3: Error analysis.</a></li>
-<li class="toctree-l1"><a class="reference internal" href="04-runge-kutta_methods.html">Lecture 4: Runge–Kutta methods.</a></li>
-<li class="toctree-l1"><a class="reference internal" href="05-multistep_methods.html">Lecture 5: Multistep methods.</a></li>
-<li class="toctree-l1"><a class="reference internal" href="06-predictor-corrector_methods.html">Lecture 6: Predictor–corrector methods.</a></li>
-<li class="toctree-l1"><a class="reference internal" href="07-systems_of_odes.html">Lecture 7: Systems of first order ODE’s.</a></li>
-<li class="toctree-l1"><a class="reference internal" href="08-higher_order_odes.html">Lecture 8: Higher order initial value problems.</a></li>
-<li class="toctree-l1"><a class="reference internal" href="09-adaptive_methods.html">Lecture 9: Adaptive methods.</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Lecture 10: Boundary value problems and the shooting method.</a></li>
-<li class="toctree-l1"><a class="reference internal" href="11-finite_differences.html">Lecture 11: Finite difference methods for boundary value problems.</a></li>
-<li class="toctree-l1"><a class="reference internal" href="12-stiffness.html">Lecture 12: Stiffness.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01-direction_fields.html">1: Direction fields.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02-euler_method.html">2: Euler’s method.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03-error_analysis.html">3: Error analysis.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04-runge-kutta_methods.html">4: Runge–Kutta methods.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05-multistep_methods.html">5: Multistep methods.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06-predictor-corrector_methods.html">6: Predictor–corrector methods.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07-systems_of_odes.html">7: Systems of first order ODE’s.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08-higher_order_odes.html">8: Higher order initial value problems.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09-adaptive_methods.html">9: Adaptive methods.</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">10: Boundary value problems and the shooting method.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11-finite_differences.html">11: Finite difference methods for boundary value problems.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12-stiffness.html">12: Stiffness.</a></li>
 </ul>
 
     </div>
@@ -366,7 +366,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Lecture 10: Boundary value problems and the shooting method.</h1>
+    <h1>10: Boundary value problems and the shooting method.</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -390,8 +390,8 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="lecture-10-boundary-value-problems-and-the-shooting-method">
-<h1>Lecture 10: Boundary value problems and the shooting method.<a class="headerlink" href="#lecture-10-boundary-value-problems-and-the-shooting-method" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="boundary-value-problems-and-the-shooting-method">
+<h1>10: Boundary value problems and the shooting method.<a class="headerlink" href="#boundary-value-problems-and-the-shooting-method" title="Link to this heading">#</a></h1>
 <section id="boundary-value-problems">
 <h2>Boundary value problems.<a class="headerlink" href="#boundary-value-problems" title="Link to this heading">#</a></h2>
 <p>Side conditions must be imposed in order for a system of ODE’s to have a unique a solution.  If all the side conditions are imposed as a single point, then the problem is called an initial value problem (IVP).  If the side conditions are imposed at more than one point, then we have a <strong>boundary value problem (BVP)</strong>.  In typical situations, the conditions are imposed at the endpoints (boundary) of an interval <span class="math notranslate nohighlight">\([a,b]\)</span>, which of course explains the name.</p>
@@ -600,7 +600,7 @@ Boundary error: |y(1)-y_10| = 0.44016
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Lecture 9: Adaptive methods.</p>
+        <p class="prev-next-title">9: Adaptive methods.</p>
       </div>
     </a>
     <a class="right-next"
@@ -608,7 +608,7 @@ Boundary error: |y(1)-y_10| = 0.44016
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Lecture 11: Finite difference methods for boundary value problems.</p>
+        <p class="prev-next-title">11: Finite difference methods for boundary value problems.</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
