@@ -11,7 +11,7 @@ kernelspec:
   name: python3
 ---
 
-# Lecture 7: Systems of first order ODE's.
+# 7: Systems of first order ODE's.
 
 ## Systems of equations in vector form.
 

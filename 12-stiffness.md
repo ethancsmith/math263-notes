@@ -11,7 +11,7 @@ kernelspec:
   name: python3
 ---
 
-# Lecture 12: Stiffness.
+# 12: Stiffness.
 
 ## A badly-behaved example.
 

@@ -11,7 +11,7 @@ kernelspec:
   name: python3
 ---
 
-# Lecture 10: Boundary value problems and the shooting method.
+# 10: Boundary value problems and the shooting method.
 
 ## Boundary value problems.
 

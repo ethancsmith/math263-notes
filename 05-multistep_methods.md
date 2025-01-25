@@ -11,7 +11,7 @@ kernelspec:
   name: python3
 ---
 
-# Lecture 5: Multistep methods.
+# 5: Multistep methods.
 
 The methods that we have considered so far are called **single-step methods** because the point $(x_{i+1}, y_{i+1})$ is computed using only information from the previous step, namely $(x_i, y_i)$.
 In particular, the methods have all depended on a formula of the form 

@@ -11,7 +11,7 @@ kernelspec:
   name: python3
 ---
 
-# Lecture 6: Predictor–corrector methods.
+# 6: Predictor–corrector methods.
 
 ## The trouble with implicit methods.
 

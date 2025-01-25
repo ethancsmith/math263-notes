@@ -11,7 +11,7 @@ kernelspec:
   name: python3
 ---
 
-# Lecture 3: Error analysis.
+# 3: Error analysis.
 
 ## Types of error.
 

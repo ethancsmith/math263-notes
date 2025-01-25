@@ -12,7 +12,7 @@ kernelspec:
   name: python3
 ---
 
-# Lecture 4: Runge–Kutta methods.
+# 4: Runge–Kutta methods.
 
 Recalling our analysis of Euler's method, it is clear that we could obtain a higher order method if our recurrence for generating the $y_i$'s agreed with more terms of the Taylor series for $y_*$, the true solution to the ODE that passes through the point $(x_i, y_i)$.
 The **Runge–Kutta methods** are a family of numerical methods which generalize both the methods of Euler and Heun.

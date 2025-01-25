@@ -11,7 +11,7 @@ kernelspec:
   name: python3
 ---
 
-# Lecture 8: Higher order initial value problems.
+# 8: Higher order initial value problems.
 
 An **$m$th order ordinary differential equation** in *normal form* is an equation of the form
 ```{math}

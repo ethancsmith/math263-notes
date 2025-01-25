@@ -11,7 +11,7 @@ kernelspec:
   name: python3
 ---
 
-# Lecture 9: Adaptive methods.
+# 9: Adaptive methods.
 
 ## Adaptive methods.
 Up to this point, all of our methods have operated with a fixed step-size $h$. **Adaptive methods** incorporate a procedure to adjust the step-size in an attempt to keep the truncation error under control.  When we use numerical methods in practice, however, we typically cannot solve for the true solution exactly, and so it is impossible to compute the error.  Adaptive methods, therefore, incorporate some procedure to estimate the local truncation error at each step.  

@@ -11,7 +11,7 @@ kernelspec:
   name: python3
 ---
 
-# Lecture 1: Direction fields.
+# 1: Direction fields.
 
 ## Ordinary differential equations.
 

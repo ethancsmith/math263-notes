@@ -11,7 +11,7 @@ kernelspec:
   name: python3
 ---
 
-# Lecture 2: Euler's method.
+# 2: Euler's method.
 
 ## Numerical solutions to ODE's.
 
