@@ -55,7 +55,7 @@ for all $x$ so that $0<|x-a|<\delta$.
 ```
 
 For any reasonable numerical method, both the local and the global truncation errors should tend to zero as the step size $h = x_{i+1}-x_i$ tends to zero.
-So, we are usually interested in bounding errors as functions of $h$ which is tending toward zero.  
+So, we are usually interested in bounding errors as functions of $h$ which are tending toward zero as $h\to 0$.  
 
 ```{prf:definition}
 
