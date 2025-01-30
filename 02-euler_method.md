@@ -4,7 +4,7 @@ jupytext:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.16.6
+    jupytext_version: 1.16.3
 kernelspec:
   display_name: Python 3 (ipykernel)
   language: python
@@ -36,8 +36,8 @@ For much of this course, however, we will use equally-spaced meshes with step-si
 ## Linearization and Euler's method.
 
 Once the mesh points have been chosen, the most straightforward approach to computing the $y_i$'s is known as Euler's method.
-It is the method that [Katherine Johnson used](https://www.youtube.com/watch?v=gdxYsVniOYo) to compute (mostly by hand) the path that the Apollo astronauts would follow to land on the moon.
-The basis for Euler's method is tangent line approximation from calculus known as linearization.
+It is the method that [Katherine Johnson](https://www.youtube.com/watch?v=gdxYsVniOYo) and her team used to compute (mostly by hand) the path that the Apollo astronauts would follow to land on the moon.
+The basis for Euler's method is the tangent line approximation from calculus known as linearization.
 Recall that if $y$ is differentiable at $x=x_0$, then
 \begin{equation*}
 y(x)\approx y(x_0) + y'(x_0)(x-x_0)
