@@ -6,7 +6,7 @@ jupytext:
     format_version: 0.13
     jupytext_version: 1.16.6
 kernelspec:
-  display_name: Python 3 (ipykernel)
+  display_name: math263-notes
   language: python
   name: python3
 ---
@@ -105,7 +105,7 @@ Writing $\mathbf r = \langle x, y, z\rangle$ for the solution, we may repackage 
 ```
 First we solve the system symbolic with SymPy.
 
-```{code-cell}
+```{code-cell} ipython3
 import sympy
 import numpy as np
 from IPython.display import display, Markdown
@@ -132,7 +132,7 @@ display(soln[2]);
 
 Next we plot the solution in $xyz$-space.
 
-```{code-cell}
+```{code-cell} ipython3
 import matplotlib.pyplot as plt
 
 plt.style.use('dark_background');
@@ -144,8 +144,8 @@ sym_z = sympy.lambdify(t, soln[2].rhs, modules=['numpy']);
 tvals = np.linspace(a, b, num=40);
 
 # plot symbolic solution with matplotlib.pyplot
-fig, ax = plt.subplots(subplot_kw=dict(projection='3d'))
-fig.set_size_inches(8, 8)
+fig, ax = plt.subplots(subplot_kw=dict(projection='3d'));
+fig.set_size_inches(8, 8);
 ax.plot(sym_x(tvals), sym_y(tvals), sym_z(tvals), 
         label=r"$\mathbf{r}(t)=\langle x(t), y(t), z(t)\rangle$");
 ax.set_xlabel(r"$x$");
@@ -161,7 +161,7 @@ ax.grid(True)
 
 Now we compute a numerical solution via Euler's method and plot it along with the symbolic solution.
 
-```{code-cell}
+```{code-cell} ipython3
 import math263
 
 # define IVP parameters
@@ -181,7 +181,7 @@ plt.show()
 
 Finally, we compute the absolute and relative errors at each mesh point in $t$-space using the $2$-norm.
 
-```{code-cell}
+```{code-cell} ipython3
 from tabulate import tabulate
 
 rvals = np.c_[sym_x(ti), sym_y(ti), sym_z(ti)];
