@@ -6,7 +6,7 @@ jupytext:
     format_version: 0.13
     jupytext_version: 1.16.6
 kernelspec:
-  display_name: Python 3 (ipykernel)
+  display_name: math263-notes
   language: python
   name: python3
 ---
@@ -71,14 +71,56 @@ In practice, $\delta$ is usually chosen somewhat more conservatively since there
 
 An adaptive method offers the advantage of being able to estimate the local truncation error at each step of the algorithm and adjust the step size $h_i$ to control the estimated error.  The major disadvantages are that adaptive methods are typically more computationally expensive, and they are typically much harder to implement than non-adaptive methods. 
 
-## Runge–Kutta–Fehlberg.
+## Runge–Kutta–Fehlberg and Dormand–Prince.
 
-One of the most popular adaptive methods employing this scheme is the **Runge-Kutta-Fehlberg method (RKF45)**, which uses an order 4 Runge-Kutta method (but not the classical one) together with an order 5 Runge-Kutta method to estimate and control the error.  The two methods were chosen so as to share as many of the evaluations of the right-hand side $f(x,y)$ as possible.  In general, an order 4 method requires 4 functional evaluations and an order 5 method requires another 6 for a total of 10.  The RKF45 method, however, requires only 6 total.
+One popular adaptive method employing this scheme is the **Runge-Kutta-Fehlberg method (RKF45)**, which uses a 4th order Runge-Kutta method (but not _the_ RK4) together with a 5th order Runge-Kutta method to estimate and control the error.  The two methods were chosen so as to share as many of the evaluations of the right-hand side $f(x,y)$ as possible.  In general, an order 4 method requires 4 functional evaluations and an order 5 method requires another 6 for a total of 10.  The RKF45 method, however, requires only 6 total.
+
+The **Dormand–Prince method** works similarly to RKF45, employing a different pair of 4th and 5th order Runge–Kutta formulas, but with the roles of the two methods reversed.
+It is a "method of choice" available in several "off-the-shelf" libraries.
+For example, it is implemented in SciPy under the name [RK45](https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.RK45.html#id1).
 
 ## Example.
 
-TODO.
+As an example, we consider a two-body gravitational orbit problem which takes the form
+\begin{align*}
+\ddot{\boldsymbol{r}} &= -\frac{\hat{\boldsymbol{r}}}{|\boldsymbol{r}|^2},\\
+\boldsymbol{r}(0) & = \langle 1-e, 0\rangle,\\
+\dot{\boldsymbol{r}}(0) &= \left\langle 0, \sqrt{\frac{(1+e)}{(1-e)}}\right\rangle.
+\end{align*}
+The initial conditions ensure that the orbit will have eccentricity $e$.
+Below we consider the case when $e = 0.9$, and we solve over the time interval $[0, 20]$.
 
 ```{code-cell}
-#
+# import modules
+import numpy
+from numpy import log, e
+from scipy.integrate import solve_ivp
+from matplotlib import pyplot
+import math263
+
+# define IVP parameters
+f = lambda x, y: numpy.array([-2*x*y[0]*log(y[1]), 2*x*y[1]*log(y[0])]);
+a, b = 0, 15;
+y0 = numpy.array([e, 1]);
+
+fig, ax = pyplot.subplots(subplot_kw=dict(projection='3d'))
+fig.set_size_inches(8, 8);
+ax.set_box_aspect(aspect=None, zoom=0.85)
+
+# numerically solve IVP with Dormand-Prince (RK45)
+dp54_soln = solve_ivp(f, [a, b], y0, method='RK45');
+xi, yi = dp54_soln.t, dp54_soln.y;
+ax.plot(xi, yi[0], yi[1], "o:");
+ax.set_xlabel("$x$");
+ax.set_ylabel("$y$");
+ax.set_zlabel("$z$");
+
+# numerically solve IVP with classical RK4
+#n = len(xi);
+#xi, yi = math263.rk4(f, a, b, y0, n);
+#ax.plot(xi, yi[:,0], yi[:, 1], "o:");
+```
+
+```{code-cell}
+
 ```
