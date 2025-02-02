@@ -82,43 +82,76 @@ For example, it is implemented in SciPy under the name [RK45](https://docs.scipy
 ## Example.
 
 As an example, we consider a two-body gravitational orbit problem which takes the form
-\begin{align*}
+```{math}
+:label: two-body-problem
 \ddot{\boldsymbol{r}} &= -\frac{\hat{\boldsymbol{r}}}{|\boldsymbol{r}|^2},\\
 \boldsymbol{r}(0) & = \langle 1-e, 0\rangle,\\
-\dot{\boldsymbol{r}}(0) &= \left\langle 0, \sqrt{\frac{(1+e)}{(1-e)}}\right\rangle.
-\end{align*}
+\dot{\boldsymbol{r}}(0) &= \left\langle 0, \sqrt{\frac{(1+e)}{(1-e)}}\right\rangle,
+```
+where $\boldsymbol r$ represents the position (or radial) vector of one body relative to the other and we denote time-derivatives with the usual dot notation.
 The initial conditions ensure that the orbit will have eccentricity $e$.
-Below we consider the case when $e = 0.9$, and we solve over the time interval $[0, 20]$.
+
+Since IVP {eq}`two-body-problem` is a second-order problem, we introduce the auxillary vector
+$\boldsymbol w = \langle \boldsymbol r,  \boldsymbol v\rangle$,
+where $\boldsymbol v = \dot{\boldsymbol r}$ is the velocity vector for one body relative to the other.
+We then rewrite the second-order ODE as the first-order ODE
+```{math}
+:label: 1st-order-vector-ode
+\dot{\boldsymbol w} 
+=\begin{pmatrix}\dot{\boldsymbol r}\\ \dot{\boldsymbol v}\end{pmatrix}
+=\begin{pmatrix}\boldsymbol v \\ -\frac{\hat{\boldsymbol{r}}}{|\boldsymbol{r}|^2}\end{pmatrix}.
+```
+Since we may assume that both bodies reside in a common plane, we may write 
+$\boldsymbol w = \langle w_0, w_1, w_2, w_3\rangle$, where 
+\begin{align*}
+\boldsymbol r &= \langle x, y\rangle = \langle w_0, w_1\rangle,\\
+\boldsymbol v &= \langle \dot x, \dot y\rangle = \langle w_2, w_3\rangle.
+\end{align*}
+We then rewrite the vector ODE {eq}`1st-order-vector-ode` as the scalar system
+\begin{align*}
+\dot{w_0} &= w_2,\\
+\dot{w_1} &= w_3,\\
+\dot{w_2} &= -w_0/(w_0^2+w_1^2)^{3/2},\\
+\dot{w_3} &= -w_1/(w_0^2+w_1^2)^{3/2},\\
+\end{align*}
+
+We now numerically solve this problem over the time-interval $[0, 10]$ using SciPy's implementation of the Dormand-Prince method for the case when the eccentricity $e = 0.9$.
 
 ```{code-cell}
 # import modules
 import numpy
-from numpy import log, e
+from numpy import sqrt
+from numpy.linalg import norm
 from scipy.integrate import solve_ivp
 from matplotlib import pyplot
 import math263
 
 # define IVP parameters
-f = lambda x, y: numpy.array([-2*x*y[0]*log(y[1]), 2*x*y[1]*log(y[0])]);
-a, b = 0, 15;
-y0 = numpy.array([e, 1]);
+f = lambda t, w: numpy.array(
+    [w[2], 
+     w[3], 
+     -w[0]/sqrt(w[0]**2 + w[1]**2)**3,
+     -w[1]/sqrt(w[0]**2 + w[1]**2)**3]) 
+e = 0.9;
+w0 = numpy.array([1-e, 0, 0, sqrt((1+e)/(1-e))]);
+a, b = 0, 20;
 
-fig, ax = pyplot.subplots(subplot_kw=dict(projection='3d'))
-fig.set_size_inches(8, 8);
-ax.set_box_aspect(aspect=None, zoom=0.85)
+#fig, ax = pyplot.subplots(subplot_kw=dict(projection='3d'))
+#fig.set_size_inches(8, 8);
+#ax.set_box_aspect(aspect=None, zoom=0.85)
+fig, ax = pyplot.subplots(layout='constrained');
 
 # numerically solve IVP with Dormand-Prince (RK45)
-dp54_soln = solve_ivp(f, [a, b], y0, method='RK45');
-xi, yi = dp54_soln.t, dp54_soln.y;
-ax.plot(xi, yi[0], yi[1], "o:");
+dp54_soln = solve_ivp(f, [a, b], w0, method='RK45');
+ti = dp54_soln.t; # extract time-steps
+wi = dp54_soln.y; 
+ri = wi[:2];      # extract radial vector
+ax.plot(0, 0, "ro", label="Mass 0")
+ax.plot(ri[0], ri[1], "o", label="Mass 1 (DP54 solution)");
+ax.set_title(r"$\ddot{\boldsymbol{r}} = -\frac{\hat{\boldsymbol{r}}}{r^2},\quad \boldsymbol{r}(0) = \langle 0.1, 0\rangle$")
 ax.set_xlabel("$x$");
 ax.set_ylabel("$y$");
-ax.set_zlabel("$z$");
-
-# numerically solve IVP with classical RK4
-#n = len(xi);
-#xi, yi = math263.rk4(f, a, b, y0, n);
-#ax.plot(xi, yi[:,0], yi[:, 1], "o:");
+ax.legend();
 ```
 
 ```{code-cell}

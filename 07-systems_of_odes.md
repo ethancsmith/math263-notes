@@ -105,7 +105,7 @@ Writing $\mathbf r = \langle x, y, z\rangle$ for the solution, we may repackage 
 ```
 First we solve the system symbolic with SymPy.
 
-```{code-cell} ipython3
+```{code-cell}
 import sympy
 import numpy as np
 from IPython.display import display, Markdown
@@ -132,7 +132,7 @@ display(soln[2]);
 
 Next we plot the solution in $xyz$-space.
 
-```{code-cell} ipython3
+```{code-cell}
 import matplotlib.pyplot as plt
 
 plt.style.use('dark_background');
@@ -161,7 +161,7 @@ ax.grid(True)
 
 Now we compute a numerical solution via Euler's method and plot it along with the symbolic solution.
 
-```{code-cell} ipython3
+```{code-cell}
 import math263
 
 # define IVP parameters
@@ -181,7 +181,7 @@ plt.show()
 
 Finally, we compute the absolute and relative errors at each mesh point in $t$-space using the $2$-norm.
 
-```{code-cell} ipython3
+```{code-cell}
 from tabulate import tabulate
 
 rvals = np.c_[sym_x(ti), sym_y(ti), sym_z(ti)];
