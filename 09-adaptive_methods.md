@@ -13,12 +13,18 @@ kernelspec:
 
 # 9: Adaptive methods.
 
-## Adaptive methods.
-Up to this point, all of our methods have operated with a fixed step-size $h$. **Adaptive methods** incorporate a procedure to adjust the step-size in an attempt to keep the truncation error under control.  When we use numerical methods in practice, however, we typically cannot solve for the true solution exactly, and so it is impossible to compute the error.  Adaptive methods, therefore, incorporate some procedure to estimate the local truncation error at each step.  
+Up to this point, our methods have operated with a fixed step-size $h$.
+**Adaptive methods** incorporate a procedure to adjust the step-size in an attempt to keep the truncation error under control.
+When we use numerical methods in practice, however, we typically cannot solve for the true solution exactly, and so it is impossible to compute the error.
+Adaptive methods, therefore, incorporate some procedure to estimate the local truncation error at each step.  
 
 ## Estimating the unknown.
 
-Here we give a description of how adaptive methods estimate local truncation error – something that is typically unknowable.  As we will see, the idea is to use a second numerical method of one higher order of accuracy.  Suppose that we have 2 methods for numerically integrating an ODE.  For simplicity, we assume that both are single step methods.  We assume that the first method takes the form
+Here we give a description of how adaptive methods estimate local truncation error – something that is typically unknowable.
+As we will see, the basic idea is to use a second numerical method of one higher order of accuracy.
+Suppose that we have 2 methods for numerically integrating an ODE.
+For simplicity, we assume that both are single step methods.
+We assume that the first method takes the form
 \begin{equation*}
 y_{i+1} = y_i + h\phi_1(x_i, y_i, h),
 \end{equation*}
@@ -31,7 +37,8 @@ Furthermore, we assume that the first method has local truncation error $l_{i+1}
 y(x_{i+1}) &= y(x_i) + h\phi_1(x_i, y(x_i), h) + O(h^{p+1}),\\
 y(x_{i+1}) &= y(x_i) + h\phi_2(x_i, y(x_i), h) + O(h^{p+2}).
 \end{align*}
-Since we are interested in the local truncation error, we assume that previous step was exact, i.e., we assume $y_i = y(x_i) = \hat{y_i}$ exactly.  Then the local truncation error for the first method is
+Since we are interested in the local truncation error, we assume that previous step was exact, i.e., we assume $y_i = y(x_i) = \hat{y_i}$ exactly.
+Then the local truncation error for the first method is
 \begin{equation*}
 l_{i+1} = y(x_{i+1}) - y_i - h\phi_1(x_i, y_i, h) 
 = y(x_{i+1}) - y_{i+1}
@@ -53,7 +60,8 @@ when $h$ is small.
 
 ## Controlling error.
 
-Treating the truncation error as a function of $h$, we assume that $l_{i+1}(h) \approx K h^{p+1}$ for some constant $K$.  Suppose then that we are willing to adjust the step size from $h$ to $\delta h$ so as to keep the average local truncation error under some tolerance $\epsilon$, i.e., we want to choose $\delta$ so that
+Treating the truncation error as a function of $h$, we assume that $l_{i+1}(h) \approx K h^{p+1}$ for some constant $K$.
+Suppose then that we are willing to adjust the step size from $h$ to $\delta h$ so as to keep the average local truncation error under some tolerance $\epsilon$, i.e., we want to choose $\delta$ so that
 \begin{equation*}
 \left|\frac{l_{i+1}(\delta h)}{\delta h}\right|\le \epsilon.
 \end{equation*}
@@ -69,11 +77,15 @@ In practice, $\delta$ is usually chosen somewhat more conservatively since there
 
 ## Advantages and disadvantages.
 
-An adaptive method offers the advantage of being able to estimate the local truncation error at each step of the algorithm and adjust the step size $h_i$ to control the estimated error.  The major disadvantages are that adaptive methods are typically more computationally expensive, and they are typically much harder to implement than non-adaptive methods. 
+An adaptive method offers the advantage of being able to estimate the local truncation error at each step of the algorithm and adjust the step size $h_i$ to control the estimated error.
+The major disadvantages are that adaptive methods are typically more computationally expensive, and they are typically much harder to implement than non-adaptive methods. 
 
 ## Runge–Kutta–Fehlberg and Dormand–Prince.
 
-One popular adaptive method employing this scheme is the **Runge-Kutta-Fehlberg method (RKF45)**, which uses a 4th order Runge-Kutta method (but not _the_ RK4) together with a 5th order Runge-Kutta method to estimate and control the error.  The two methods were chosen so as to share as many of the evaluations of the right-hand side $f(x,y)$ as possible.  In general, an order 4 method requires 4 functional evaluations and an order 5 method requires another 6 for a total of 10.  The RKF45 method, however, requires only 6 total.
+One popular adaptive method employing this scheme is the **Runge-Kutta-Fehlberg method (RKF45)**, which uses a 4th order Runge-Kutta method (but not _the_ RK4) together with a 5th order Runge-Kutta method to estimate and control the error.
+The two methods were chosen so as to share as many of the evaluations of the right-hand side $f(x,y)$ as possible.
+In general, an order 4 method requires 4 functional evaluations and an order 5 method requires another 6 for a total of 10.
+The RKF45 method, however, requires only 6 total.
 
 The **Dormand–Prince method** works similarly to RKF45, employing a different pair of 4th and 5th order Runge–Kutta formulas, but with the roles of the two methods reversed.
 It is a "method of choice" available in several "off-the-shelf" libraries.
@@ -91,9 +103,7 @@ As an example, we consider a two-body gravitational orbit problem which takes th
 where $\boldsymbol r$ represents the position (or radial) vector of one body relative to the other and we denote time-derivatives with the usual dot notation.
 The initial conditions ensure that the orbit will have eccentricity $e$.
 
-Since IVP {eq}`two-body-problem` is a second-order problem, we introduce the auxillary vector
-$\boldsymbol w = \langle \boldsymbol r,  \boldsymbol v\rangle$,
-where $\boldsymbol v = \dot{\boldsymbol r}$ is the velocity vector for one body relative to the other.
+Since IVP {eq}`two-body-problem` is a second-order problem, we introduce the auxillary vector $\boldsymbol w = \langle \boldsymbol r,  \boldsymbol v\rangle$, where $\boldsymbol v = \dot{\boldsymbol r}$ is the velocity vector for one body relative to the other.
 We then rewrite the second-order ODE as the first-order ODE
 ```{math}
 :label: 1st-order-vector-ode
@@ -115,7 +125,8 @@ We then rewrite the vector ODE {eq}`1st-order-vector-ode` as the scalar system
 \dot{w_3} &= -w_1/(w_0^2+w_1^2)^{3/2},\\
 \end{align*}
 
-We now numerically solve this problem over the time-interval $[0, 10]$ using SciPy's implementation of the Dormand-Prince method for the case when the eccentricity $e = 0.9$.
+We now numerically solve this problem over the time-interval $[0, 25]$ using SciPy's implementation of the Dormand-Prince method for the case when the eccentricity $e = 0.9$.
+With the default settings, the implementation aims to keep the estimated relative error below $10^{-3}$ and the estimated absolute error below $10^{-6}$.
 
 ```{code-cell}
 # import modules
@@ -125,6 +136,7 @@ from numpy.linalg import norm
 from scipy.integrate import solve_ivp
 from matplotlib import pyplot
 import math263
+from tabulate import tabulate
 
 # define IVP parameters
 f = lambda t, w: numpy.array(
@@ -134,24 +146,36 @@ f = lambda t, w: numpy.array(
      -w[1]/sqrt(w[0]**2 + w[1]**2)**3]) 
 e = 0.9;
 w0 = numpy.array([1-e, 0, 0, sqrt((1+e)/(1-e))]);
-a, b = 0, 20;
+a, b = 0, 25;
 
-#fig, ax = pyplot.subplots(subplot_kw=dict(projection='3d'))
-#fig.set_size_inches(8, 8);
-#ax.set_box_aspect(aspect=None, zoom=0.85)
+pyplot.style.use('dark_background');
 fig, ax = pyplot.subplots(layout='constrained');
 
 # numerically solve IVP with Dormand-Prince (RK45)
 dp54_soln = solve_ivp(f, [a, b], w0, method='RK45');
-ti = dp54_soln.t; # extract time-steps
-wi = dp54_soln.y; 
-ri = wi[:2];      # extract radial vector
-ax.plot(0, 0, "ro", label="Mass 0")
-ax.plot(ri[0], ri[1], "o", label="Mass 1 (DP54 solution)");
-ax.set_title(r"$\ddot{\boldsymbol{r}} = -\frac{\hat{\boldsymbol{r}}}{r^2},\quad \boldsymbol{r}(0) = \langle 0.1, 0\rangle$")
-ax.set_xlabel("$x$");
-ax.set_ylabel("$y$");
-ax.legend();
+if dp54_soln.status:
+    print("Dormand-Prince method failed.");
+else:
+    print("Dormand-Prince method successfully reached end of time span.");
+    ti = dp54_soln.t; # extract time-steps
+    wi = dp54_soln.y; 
+    ri = wi[:2];      # extract radial vectors
+    vi = wi[-2:];     # extract velocity vectors
+    n = len(ti);
+    print(f"End of time-interval [{a}, {b}] reached in n = {n} time-steps.");
+    T = min(10, n);
+    print(f"Displaying results for first {T} steps.");
+    data = numpy.c_[ti[:T], ri[0,:T], ri[1,:T], vi[0,:T], vi[1,:T]];
+    hdrs = ["i", "t_i", "x_i", "y_i", "x_i'", "y_i'"];
+    print(tabulate(data, hdrs, showindex=True, floatfmt='0.5f', tablefmt="mixed_grid"));
+    print("Plotting solution in spatial domain (xy-plane).");
+    ax.plot(0, 0, "wo", label="Mass 0")
+    ax.plot(ri[0], ri[1], "ro", label="Mass 1 (DP54 solution)");
+    ax.set_title(r"$\ddot{\boldsymbol{r}} = -\frac{\hat{\boldsymbol{r}}}{r^2},\quad \boldsymbol{r}(0) = \langle 0.1, 0\rangle$")
+    ax.set_xlabel("$x$");
+    ax.set_ylabel("$y$");
+    ax.legend();
+    ax.grid(True);
 ```
 
 ```{code-cell}
