@@ -399,40 +399,40 @@
 <h2>Forward differences and backward differences.<a class="headerlink" href="#forward-differences-and-backward-differences" title="Link to this heading">#</a></h2>
 <p>The same germ that lead to Euler’s method gives us the finite difference method, viz., if <span class="math notranslate nohighlight">\(h\)</span> is small and nonzero, then</p>
 <div class="math notranslate nohighlight" id="equation-difference-quotient">
-<span class="eqno">(29)<a class="headerlink" href="#equation-difference-quotient" title="Link to this equation">#</a></span>\[y'(x) \approx \frac{y(x+h) - y(x)}{h}\]</div>
-<p>since <span class="math notranslate nohighlight">\(y'(x)\)</span> is the limit of the difference quotient as <span class="math notranslate nohighlight">\(h\to 0\)</span>.  When <span class="math notranslate nohighlight">\(h&gt;0\)</span>, we refer to this approximation as a <strong>forward difference</strong>, and when <span class="math notranslate nohighlight">\(h&lt;0\)</span> we refer to the approximation as a <strong>backward difference</strong>. To quantify the error in <a class="reference internal" href="#equation-difference-quotient">(29)</a>, we appeal (once again) to Taylor’s theorem.  Assuming that <span class="math notranslate nohighlight">\(h&gt;0\)</span> and that the exact solution <span class="math notranslate nohighlight">\(y\)</span> has sufficiently many continuous derivatives, Taylor’s theorem</p>
+<span class="eqno">(31)<a class="headerlink" href="#equation-difference-quotient" title="Link to this equation">#</a></span>\[y'(x) \approx \frac{y(x+h) - y(x)}{h}\]</div>
+<p>since <span class="math notranslate nohighlight">\(y'(x)\)</span> is the limit of the difference quotient as <span class="math notranslate nohighlight">\(h\to 0\)</span>.  When <span class="math notranslate nohighlight">\(h&gt;0\)</span>, we refer to this approximation as a <strong>forward difference</strong>, and when <span class="math notranslate nohighlight">\(h&lt;0\)</span> we refer to the approximation as a <strong>backward difference</strong>. To quantify the error in <a class="reference internal" href="#equation-difference-quotient">(31)</a>, we appeal (once again) to Taylor’s theorem.  Assuming that <span class="math notranslate nohighlight">\(h&gt;0\)</span> and that the exact solution <span class="math notranslate nohighlight">\(y\)</span> has sufficiently many continuous derivatives, Taylor’s theorem</p>
 <div class="math notranslate nohighlight" id="equation-forward-taylor">
-<span class="eqno">(30)<a class="headerlink" href="#equation-forward-taylor" title="Link to this equation">#</a></span>\[y(x+h) = y(x) + y'(x)h + \frac{y''(x)}{2!}h^2 + \frac{y'''(x)}{3!}h^3 + \dots.\]</div>
+<span class="eqno">(32)<a class="headerlink" href="#equation-forward-taylor" title="Link to this equation">#</a></span>\[y(x+h) = y(x) + y'(x)h + \frac{y''(x)}{2!}h^2 + \frac{y'''(x)}{3!}h^3 + \dots.\]</div>
 <p>A bit of algebra then shows us that the forward difference approximation</p>
 <div class="math notranslate nohighlight" id="equation-forward-difference-approx">
-<span class="eqno">(31)<a class="headerlink" href="#equation-forward-difference-approx" title="Link to this equation">#</a></span>\[y'(x) = \frac{y(x+h) - y(x)}{h} + O(h)\]</div>
-<p>as <span class="math notranslate nohighlight">\(h\to 0\)</span>.  Furthermore, replacing <span class="math notranslate nohighlight">\(h\)</span> by <span class="math notranslate nohighlight">\(-h\)</span> in <a class="reference internal" href="#equation-forward-taylor">(30)</a> gives</p>
+<span class="eqno">(33)<a class="headerlink" href="#equation-forward-difference-approx" title="Link to this equation">#</a></span>\[y'(x) = \frac{y(x+h) - y(x)}{h} + O(h)\]</div>
+<p>as <span class="math notranslate nohighlight">\(h\to 0\)</span>.  Furthermore, replacing <span class="math notranslate nohighlight">\(h\)</span> by <span class="math notranslate nohighlight">\(-h\)</span> in <a class="reference internal" href="#equation-forward-taylor">(32)</a> gives</p>
 <div class="math notranslate nohighlight" id="equation-backward-taylor">
-<span class="eqno">(32)<a class="headerlink" href="#equation-backward-taylor" title="Link to this equation">#</a></span>\[y(x-h) = y(x) - y'(x)h + \frac{y''(x)}{2!}h^2 - \frac{y'''(x)}{3!}h^3 + \dots.\]</div>
+<span class="eqno">(34)<a class="headerlink" href="#equation-backward-taylor" title="Link to this equation">#</a></span>\[y(x-h) = y(x) - y'(x)h + \frac{y''(x)}{2!}h^2 - \frac{y'''(x)}{3!}h^3 + \dots.\]</div>
 <p>Solving for <span class="math notranslate nohighlight">\(y'(x)\)</span> as before, we see that the backwards difference approximation</p>
 <div class="math notranslate nohighlight" id="equation-backward-difference-approx">
-<span class="eqno">(33)<a class="headerlink" href="#equation-backward-difference-approx" title="Link to this equation">#</a></span>\[y'(x) = \frac{y(x) - y(x-h)}{h} + O(h)\]</div>
+<span class="eqno">(35)<a class="headerlink" href="#equation-backward-difference-approx" title="Link to this equation">#</a></span>\[y'(x) = \frac{y(x) - y(x-h)}{h} + O(h)\]</div>
 <p>as <span class="math notranslate nohighlight">\(h\to 0\)</span>.  Thus, we see that both the forward difference and the backward difference approximations are order 1 accurate.</p>
 </section>
 <section id="central-differences-and-higher-order-approximations">
 <h2>Central differences and higher-order approximations.<a class="headerlink" href="#central-differences-and-higher-order-approximations" title="Link to this heading">#</a></h2>
-<p>The difference in sign pattern between <a class="reference internal" href="#equation-forward-taylor">(30)</a> and <a class="reference internal" href="#equation-backward-taylor">(32)</a> has a number of happy consequences.  First, subtracting <a class="reference internal" href="#equation-backward-taylor">(32)</a> from <a class="reference internal" href="#equation-forward-taylor">(30)</a> annihilates all the even order terms.  In particular, we have</p>
+<p>The difference in sign pattern between <a class="reference internal" href="#equation-forward-taylor">(32)</a> and <a class="reference internal" href="#equation-backward-taylor">(34)</a> has a number of happy consequences.  First, subtracting <a class="reference internal" href="#equation-backward-taylor">(34)</a> from <a class="reference internal" href="#equation-forward-taylor">(32)</a> annihilates all the even order terms.  In particular, we have</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{equation*}
 y(x+h) - y(x-h) = 2y'(x)h + 2\frac{y'''(x)}{3!}h^3 + \dots.
 \end{equation*}\]</div>
 <p>Solving for <span class="math notranslate nohighlight">\(y'(x)\)</span> here gives the order 2 accurate <strong>central difference</strong> approximation</p>
 <div class="math notranslate nohighlight" id="equation-central-difference-approx">
-<span class="eqno">(34)<a class="headerlink" href="#equation-central-difference-approx" title="Link to this equation">#</a></span>\[y'(x) = \frac{y(x+h) - y(x-h)}{2h} + O(h^2)\]</div>
+<span class="eqno">(36)<a class="headerlink" href="#equation-central-difference-approx" title="Link to this equation">#</a></span>\[y'(x) = \frac{y(x+h) - y(x-h)}{2h} + O(h^2)\]</div>
 <p>as <span class="math notranslate nohighlight">\(h\to 0\)</span>.</p>
-<p>But there’s more!  Adding <a class="reference internal" href="#equation-backward-taylor">(32)</a> and <a class="reference internal" href="#equation-forward-taylor">(30)</a> annihilates all the odd order terms so that we have</p>
+<p>But there’s more!  Adding <a class="reference internal" href="#equation-backward-taylor">(34)</a> and <a class="reference internal" href="#equation-forward-taylor">(32)</a> annihilates all the odd order terms so that we have</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{equation*}
 y(x+h) + y(x-h) = 2y(x)h + 2\frac{y''(x)}{2!}h^2 + 2\frac{y^{(4)}(x)}{4!}h^4 + \dots.
 \end{equation*}\]</div>
 <p>Solving for <span class="math notranslate nohighlight">\(y''(x)\)</span>, we obtain the approximation</p>
 <div class="math notranslate nohighlight" id="equation-second-derivative-approx">
-<span class="eqno">(35)<a class="headerlink" href="#equation-second-derivative-approx" title="Link to this equation">#</a></span>\[y''(x) = \frac{y(x+h) - 2y(x) + y(x-h)}{h^2} + O(h^2)\]</div>
+<span class="eqno">(37)<a class="headerlink" href="#equation-second-derivative-approx" title="Link to this equation">#</a></span>\[y''(x) = \frac{y(x+h) - 2y(x) + y(x-h)}{h^2} + O(h^2)\]</div>
 <p>as <span class="math notranslate nohighlight">\(h\to 0\)</span>.
 One can play similar games (playing different Taylor series expressions off one another) to obtain even higher order approximations to <span class="math notranslate nohighlight">\(y'(x)\)</span> and <span class="math notranslate nohighlight">\(y''(x)\)</span> as well as approximations approximations for higher-order derivatives as needed.</p>
 </section>
@@ -440,17 +440,17 @@ One can play similar games (playing different Taylor series expressions off one 
 <h2>Finite differences for BVP’s.<a class="headerlink" href="#finite-differences-for-bvps" title="Link to this heading">#</a></h2>
 <p>Suppose that we wish to use the finite difference method to numerically approximate a solution to a BVP of the form</p>
 <div class="math notranslate nohighlight" id="equation-second-order-bvp">
-<span class="eqno">(36)<a class="headerlink" href="#equation-second-order-bvp" title="Link to this equation">#</a></span>\[\begin{split}y'' &amp;= f(x, y, y'),\\
+<span class="eqno">(38)<a class="headerlink" href="#equation-second-order-bvp" title="Link to this equation">#</a></span>\[\begin{split}y'' &amp;= f(x, y, y'),\\
 y(a)&amp;= \alpha,\\
 y(b)&amp;= \beta.\end{split}\]</div>
-<p>We choose a small, positive step size <span class="math notranslate nohighlight">\(h\)</span> and mesh points <span class="math notranslate nohighlight">\(x_0=a &lt; x_1 &lt; \dots &lt; x_n=b\)</span> so that <span class="math notranslate nohighlight">\(h=x_{i+1}-x_i\)</span> for each <span class="math notranslate nohighlight">\(0\le i &lt; n\)</span>.  Then equations <a class="reference internal" href="#equation-central-difference-approx">(34)</a> and <a class="reference internal" href="#equation-second-derivative-approx">(35)</a> may be rewritten as</p>
+<p>We choose a small, positive step size <span class="math notranslate nohighlight">\(h\)</span> and mesh points <span class="math notranslate nohighlight">\(x_0=a &lt; x_1 &lt; \dots &lt; x_n=b\)</span> so that <span class="math notranslate nohighlight">\(h=x_{i+1}-x_i\)</span> for each <span class="math notranslate nohighlight">\(0\le i &lt; n\)</span>.  Then equations <a class="reference internal" href="#equation-central-difference-approx">(36)</a> and <a class="reference internal" href="#equation-second-derivative-approx">(37)</a> may be rewritten as</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}y'(x_i)  &amp;= \frac{y(x_{i+1}) -y(x_{i-1})}{2h} + O(h^2),\\
 y''(x_i) &amp;= \frac{y(x_{i+1}) - 2y(x_i) + y(x_{i-1})}{h^2} + O(h^2)\end{split}\]</div>
-<p>as <span class="math notranslate nohighlight">\(h\to 0\)</span>.  For <span class="math notranslate nohighlight">\(1\le i\le n-1\)</span>, we therefore approximate the ODE of <a class="reference internal" href="#equation-second-order-bvp">(36)</a> at the <span class="math notranslate nohighlight">\(i\)</span>th mesh point <span class="math notranslate nohighlight">\(x_i\)</span> by the equation</p>
+<p>as <span class="math notranslate nohighlight">\(h\to 0\)</span>.  For <span class="math notranslate nohighlight">\(1\le i\le n-1\)</span>, we therefore approximate the ODE of <a class="reference internal" href="#equation-second-order-bvp">(38)</a> at the <span class="math notranslate nohighlight">\(i\)</span>th mesh point <span class="math notranslate nohighlight">\(x_i\)</span> by the equation</p>
 <div class="math notranslate nohighlight" id="equation-second-order-ode-approx">
-<span class="eqno">(37)<a class="headerlink" href="#equation-second-order-ode-approx" title="Link to this equation">#</a></span>\[\frac{y_{i+1} - 2y_i + y_{i-1}}{h^2} = f\left(x, y_i, \frac{y_{i+1} -y_{i-1}}{2h}\right)\]</div>
-<p>while the boundary conditions of <a class="reference internal" href="#equation-second-order-bvp">(36)</a> are rewritten as <span class="math notranslate nohighlight">\(y_0 = \alpha\)</span> and <span class="math notranslate nohighlight">\(y_n = \beta\)</span>.  This yields a total of <span class="math notranslate nohighlight">\(n+1\)</span> equations with <span class="math notranslate nohighlight">\(n+1\)</span> unknowns.  Therefore, the method of finite differences requires a subroutine to solve the resulting system of equations.  Gaussian elimination (or one of its relatives) is usually chosen if the equations <a class="reference internal" href="#equation-second-order-ode-approx">(37)</a> are linear in the <span class="math notranslate nohighlight">\(y_i\)</span>’s.  Otherwise, some nonlinear method such as Newton’s method (or one of its relatives) is required, but that is a topic for another class.</p>
+<span class="eqno">(39)<a class="headerlink" href="#equation-second-order-ode-approx" title="Link to this equation">#</a></span>\[\frac{y_{i+1} - 2y_i + y_{i-1}}{h^2} = f\left(x, y_i, \frac{y_{i+1} -y_{i-1}}{2h}\right)\]</div>
+<p>while the boundary conditions of <a class="reference internal" href="#equation-second-order-bvp">(38)</a> are rewritten as <span class="math notranslate nohighlight">\(y_0 = \alpha\)</span> and <span class="math notranslate nohighlight">\(y_n = \beta\)</span>.  This yields a total of <span class="math notranslate nohighlight">\(n+1\)</span> equations with <span class="math notranslate nohighlight">\(n+1\)</span> unknowns.  Therefore, the method of finite differences requires a subroutine to solve the resulting system of equations.  Gaussian elimination (or one of its relatives) is usually chosen if the equations <a class="reference internal" href="#equation-second-order-ode-approx">(39)</a> are linear in the <span class="math notranslate nohighlight">\(y_i\)</span>’s.  Otherwise, some nonlinear method such as Newton’s method (or one of its relatives) is required, but that is a topic for another class.</p>
 </section>
 <section id="advantages-and-disadvantages">
 <h2>Advantages and disadvantages.<a class="headerlink" href="#advantages-and-disadvantages" title="Link to this heading">#</a></h2>
@@ -465,7 +465,7 @@ y''  &amp;= 4y,\\
 y(0) &amp;= 0,\\
 y(1) &amp;= 5.
 \end{align*}\]</div>
-<p>For this example, a little bit of algebra transforms equation <a class="reference internal" href="#equation-second-order-ode-approx">(37)</a> into the form</p>
+<p>For this example, a little bit of algebra transforms equation <a class="reference internal" href="#equation-second-order-ode-approx">(39)</a> into the form</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{equation*}
 y_{i+1} - (2+4h^2)y_i + y_{i-1} = 0\quad (1\le i&lt; n).

@@ -376,11 +376,10 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Adaptive methods.</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estimating-the-unknown">Estimating the unknown.</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#controlling-error">Controlling error.</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advantages-and-disadvantages">Advantages and disadvantages.</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rungekuttafehlberg">Runge–Kutta–Fehlberg.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rungekuttafehlberg-and-dormandprince">Runge–Kutta–Fehlberg and Dormand–Prince.</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example.</a></li>
 </ul>
             </nav>
@@ -395,13 +394,17 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="adaptive-methods">
 <h1>9: Adaptive methods.<a class="headerlink" href="#adaptive-methods" title="Link to this heading">#</a></h1>
-<section id="id1">
-<h2>Adaptive methods.<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
-<p>Up to this point, all of our methods have operated with a fixed step-size <span class="math notranslate nohighlight">\(h\)</span>. <strong>Adaptive methods</strong> incorporate a procedure to adjust the step-size in an attempt to keep the truncation error under control.  When we use numerical methods in practice, however, we typically cannot solve for the true solution exactly, and so it is impossible to compute the error.  Adaptive methods, therefore, incorporate some procedure to estimate the local truncation error at each step.</p>
-</section>
+<p>Up to this point, our methods have operated with a fixed step-size <span class="math notranslate nohighlight">\(h\)</span>.
+<strong>Adaptive methods</strong> incorporate a procedure to adjust the step-size in an attempt to keep the truncation error under control.
+When we use numerical methods in practice, however, we typically cannot solve for the true solution exactly, and so it is impossible to compute the error.
+Adaptive methods, therefore, incorporate some procedure to estimate the local truncation error at each step.</p>
 <section id="estimating-the-unknown">
 <h2>Estimating the unknown.<a class="headerlink" href="#estimating-the-unknown" title="Link to this heading">#</a></h2>
-<p>Here we give a description of how adaptive methods estimate local truncation error – something that is typically unknowable.  As we will see, the idea is to use a second numerical method of one higher order of accuracy.  Suppose that we have 2 methods for numerically integrating an ODE.  For simplicity, we assume that both are single step methods.  We assume that the first method takes the form</p>
+<p>Here we give a description of how adaptive methods estimate local truncation error – something that is typically unknowable.
+As we will see, the basic idea is to use a second numerical method of one higher order of accuracy.
+Suppose that we have 2 methods for numerically integrating an ODE.
+For simplicity, we assume that both are single step methods.
+We assume that the first method takes the form</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{equation*}
 y_{i+1} = y_i + h\phi_1(x_i, y_i, h),
@@ -417,7 +420,8 @@ y_{i+1} = y_i + h\phi_1(x_i, y_i, h),
 y(x_{i+1}) &amp;= y(x_i) + h\phi_1(x_i, y(x_i), h) + O(h^{p+1}),\\
 y(x_{i+1}) &amp;= y(x_i) + h\phi_2(x_i, y(x_i), h) + O(h^{p+2}).
 \end{align*}\]</div>
-<p>Since we are interested in the local truncation error, we assume that previous step was exact, i.e., we assume <span class="math notranslate nohighlight">\(y_i = y(x_i) = \hat{y_i}\)</span> exactly.  Then the local truncation error for the first method is</p>
+<p>Since we are interested in the local truncation error, we assume that previous step was exact, i.e., we assume <span class="math notranslate nohighlight">\(y_i = y(x_i) = \hat{y_i}\)</span> exactly.
+Then the local truncation error for the first method is</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{equation*}
 l_{i+1} = y(x_{i+1}) - y_i - h\phi_1(x_i, y_i, h) 
@@ -443,7 +447,8 @@ l_{i+1}\approx \hat{y_{i+1}} - y_{i+1}
 </section>
 <section id="controlling-error">
 <h2>Controlling error.<a class="headerlink" href="#controlling-error" title="Link to this heading">#</a></h2>
-<p>Treating the truncation error as a function of <span class="math notranslate nohighlight">\(h\)</span>, we assume that <span class="math notranslate nohighlight">\(l_{i+1}(h) \approx K h^{p+1}\)</span> for some constant <span class="math notranslate nohighlight">\(K\)</span>.  Suppose then that we are willing to adjust the step size from <span class="math notranslate nohighlight">\(h\)</span> to <span class="math notranslate nohighlight">\(\delta h\)</span> so as to keep the average local truncation error under some tolerance <span class="math notranslate nohighlight">\(\epsilon\)</span>, i.e., we want to choose <span class="math notranslate nohighlight">\(\delta\)</span> so that</p>
+<p>Treating the truncation error as a function of <span class="math notranslate nohighlight">\(h\)</span>, we assume that <span class="math notranslate nohighlight">\(l_{i+1}(h) \approx K h^{p+1}\)</span> for some constant <span class="math notranslate nohighlight">\(K\)</span>.
+Suppose then that we are willing to adjust the step size from <span class="math notranslate nohighlight">\(h\)</span> to <span class="math notranslate nohighlight">\(\delta h\)</span> so as to keep the average local truncation error under some tolerance <span class="math notranslate nohighlight">\(\epsilon\)</span>, i.e., we want to choose <span class="math notranslate nohighlight">\(\delta\)</span> so that</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{equation*}
 \left|\frac{l_{i+1}(\delta h)}{\delta h}\right|\le \epsilon.
@@ -462,20 +467,134 @@ l_{i+1}(\delta h) \approx K(\delta h)^{p+1} \approx \delta^{p+1} l_{i+1}(h) \app
 </section>
 <section id="advantages-and-disadvantages">
 <h2>Advantages and disadvantages.<a class="headerlink" href="#advantages-and-disadvantages" title="Link to this heading">#</a></h2>
-<p>An adaptive method offers the advantage of being able to estimate the local truncation error at each step of the algorithm and adjust the step size <span class="math notranslate nohighlight">\(h_i\)</span> to control the estimated error.  The major disadvantages are that adaptive methods are typically more computationally expensive, and they are typically much harder to implement than non-adaptive methods.</p>
+<p>An adaptive method offers the advantage of being able to estimate the local truncation error at each step of the algorithm and adjust the step size <span class="math notranslate nohighlight">\(h_i\)</span> to control the estimated error.
+The major disadvantages are that adaptive methods are typically more computationally expensive, and they are typically much harder to implement than non-adaptive methods.</p>
 </section>
-<section id="rungekuttafehlberg">
-<h2>Runge–Kutta–Fehlberg.<a class="headerlink" href="#rungekuttafehlberg" title="Link to this heading">#</a></h2>
-<p>One of the most popular adaptive methods employing this scheme is the <strong>Runge-Kutta-Fehlberg method (RKF45)</strong>, which uses an order 4 Runge-Kutta method (but not the classical one) together with an order 5 Runge-Kutta method to estimate and control the error.  The two methods were chosen so as to share as many of the evaluations of the right-hand side <span class="math notranslate nohighlight">\(f(x,y)\)</span> as possible.  In general, an order 4 method requires 4 functional evaluations and an order 5 method requires another 6 for a total of 10.  The RKF45 method, however, requires only 6 total.</p>
+<section id="rungekuttafehlberg-and-dormandprince">
+<h2>Runge–Kutta–Fehlberg and Dormand–Prince.<a class="headerlink" href="#rungekuttafehlberg-and-dormandprince" title="Link to this heading">#</a></h2>
+<p>One popular adaptive method employing this scheme is the <strong>Runge-Kutta-Fehlberg method (RKF45)</strong>, which uses a 4th order Runge-Kutta method (but not <em>the</em> RK4) together with a 5th order Runge-Kutta method to estimate and control the error.
+The two methods were chosen so as to share as many of the evaluations of the right-hand side <span class="math notranslate nohighlight">\(f(x,y)\)</span> as possible.
+In general, an order 4 method requires 4 functional evaluations and an order 5 method requires another 6 for a total of 10.
+The RKF45 method, however, requires only 6 total.</p>
+<p>The <strong>Dormand–Prince method</strong> works similarly to RKF45, employing a different pair of 4th and 5th order Runge–Kutta formulas, but with the roles of the two methods reversed.
+It is a “method of choice” available in several “off-the-shelf” libraries.
+For example, it is implemented in SciPy under the name <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.RK45.html#id1">RK45</a>.</p>
 </section>
 <section id="example">
 <h2>Example.<a class="headerlink" href="#example" title="Link to this heading">#</a></h2>
-<p>TODO.</p>
+<p>As an example, we consider a two-body gravitational orbit problem which takes the form</p>
+<div class="math notranslate nohighlight" id="equation-two-body-problem">
+<span class="eqno">(25)<a class="headerlink" href="#equation-two-body-problem" title="Link to this equation">#</a></span>\[\begin{split}\ddot{\boldsymbol{r}} &amp;= -\frac{\hat{\boldsymbol{r}}}{|\boldsymbol{r}|^2},\\
+\boldsymbol{r}(0) &amp; = \langle 1-e, 0\rangle,\\
+\dot{\boldsymbol{r}}(0) &amp;= \left\langle 0, \sqrt{\frac{(1+e)}{(1-e)}}\right\rangle,\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\boldsymbol r\)</span> represents the position (or radial) vector of one body relative to the other and we denote time-derivatives with the usual dot notation.
+The initial conditions ensure that the orbit will have eccentricity <span class="math notranslate nohighlight">\(e\)</span>.</p>
+<p>Since IVP <a class="reference internal" href="#equation-two-body-problem">(25)</a> is a second-order problem, we introduce the auxillary vector <span class="math notranslate nohighlight">\(\boldsymbol w = \langle \boldsymbol r,  \boldsymbol v\rangle\)</span>, where <span class="math notranslate nohighlight">\(\boldsymbol v = \dot{\boldsymbol r}\)</span> is the velocity vector for one body relative to the other.
+We then rewrite the second-order ODE as the first-order ODE</p>
+<div class="math notranslate nohighlight" id="equation-1st-order-vector-ode">
+<span class="eqno">(26)<a class="headerlink" href="#equation-1st-order-vector-ode" title="Link to this equation">#</a></span>\[\begin{split}\dot{\boldsymbol w} 
+=\begin{pmatrix}\dot{\boldsymbol r}\\ \dot{\boldsymbol v}\end{pmatrix}
+=\begin{pmatrix}\boldsymbol v \\ -\frac{\hat{\boldsymbol{r}}}{|\boldsymbol{r}|^2}\end{pmatrix}.\end{split}\]</div>
+<p>Since we may assume that both bodies reside in a common plane, we may write
+<span class="math notranslate nohighlight">\(\boldsymbol w = \langle w_0, w_1, w_2, w_3\rangle\)</span>, where</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+\boldsymbol r &amp;= \langle x, y\rangle = \langle w_0, w_1\rangle,\\
+\boldsymbol v &amp;= \langle \dot x, \dot y\rangle = \langle w_2, w_3\rangle.
+\end{align*}\]</div>
+<p>We then rewrite the vector ODE <a class="reference internal" href="#equation-1st-order-vector-ode">(26)</a> as the scalar system</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+\dot{w_0} &amp;= w_2,\\
+\dot{w_1} &amp;= w_3,\\
+\dot{w_2} &amp;= -w_0/(w_0^2+w_1^2)^{3/2},\\
+\dot{w_3} &amp;= -w_1/(w_0^2+w_1^2)^{3/2},\\
+\end{align*}\]</div>
+<p>We now numerically solve this problem over the time-interval <span class="math notranslate nohighlight">\([0, 25]\)</span> using SciPy’s implementation of the Dormand-Prince method for the case when the eccentricity <span class="math notranslate nohighlight">\(e = 0.9\)</span>.
+With the default settings, the implementation aims to keep the estimated relative error below <span class="math notranslate nohighlight">\(10^{-3}\)</span> and the estimated absolute error below <span class="math notranslate nohighlight">\(10^{-6}\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import modules</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">sqrt</span>
+<span class="kn">from</span> <span class="nn">numpy.linalg</span> <span class="kn">import</span> <span class="n">norm</span>
+<span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">solve_ivp</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span>
+<span class="kn">import</span> <span class="nn">math263</span>
+<span class="kn">from</span> <span class="nn">tabulate</span> <span class="kn">import</span> <span class="n">tabulate</span>
+
+<span class="c1"># define IVP parameters</span>
+<span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">t</span><span class="p">,</span> <span class="n">w</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+    <span class="p">[</span><span class="n">w</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> 
+     <span class="n">w</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> 
+     <span class="o">-</span><span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="n">sqrt</span><span class="p">(</span><span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">3</span><span class="p">,</span>
+     <span class="o">-</span><span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">sqrt</span><span class="p">(</span><span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">3</span><span class="p">])</span> 
+<span class="n">e</span> <span class="o">=</span> <span class="mf">0.9</span><span class="p">;</span>
+<span class="n">w0</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="o">-</span><span class="n">e</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sqrt</span><span class="p">((</span><span class="mi">1</span><span class="o">+</span><span class="n">e</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">e</span><span class="p">))]);</span>
+<span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">25</span><span class="p">;</span>
+
+<span class="n">pyplot</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;dark_background&#39;</span><span class="p">);</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">pyplot</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">layout</span><span class="o">=</span><span class="s1">&#39;constrained&#39;</span><span class="p">);</span>
+
+<span class="c1"># numerically solve IVP with Dormand-Prince (RK45)</span>
+<span class="n">dp54_soln</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="n">w0</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;RK45&#39;</span><span class="p">);</span>
+<span class="k">if</span> <span class="n">dp54_soln</span><span class="o">.</span><span class="n">status</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Dormand-Prince method failed.&quot;</span><span class="p">);</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Dormand-Prince method successfully reached end of time span.&quot;</span><span class="p">);</span>
+    <span class="n">ti</span> <span class="o">=</span> <span class="n">dp54_soln</span><span class="o">.</span><span class="n">t</span><span class="p">;</span> <span class="c1"># extract time-steps</span>
+    <span class="n">wi</span> <span class="o">=</span> <span class="n">dp54_soln</span><span class="o">.</span><span class="n">y</span><span class="p">;</span> 
+    <span class="n">ri</span> <span class="o">=</span> <span class="n">wi</span><span class="p">[:</span><span class="mi">2</span><span class="p">];</span>      <span class="c1"># extract radial vectors</span>
+    <span class="n">vi</span> <span class="o">=</span> <span class="n">wi</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:];</span>     <span class="c1"># extract velocity vectors</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ti</span><span class="p">);</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;End of time-interval [</span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s2">] reached in n = </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> time-steps.&quot;</span><span class="p">);</span>
+    <span class="n">T</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">n</span><span class="p">);</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Displaying results for first </span><span class="si">{</span><span class="n">T</span><span class="si">}</span><span class="s2"> steps.&quot;</span><span class="p">);</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">ti</span><span class="p">[:</span><span class="n">T</span><span class="p">],</span> <span class="n">ri</span><span class="p">[</span><span class="mi">0</span><span class="p">,:</span><span class="n">T</span><span class="p">],</span> <span class="n">ri</span><span class="p">[</span><span class="mi">1</span><span class="p">,:</span><span class="n">T</span><span class="p">],</span> <span class="n">vi</span><span class="p">[</span><span class="mi">0</span><span class="p">,:</span><span class="n">T</span><span class="p">],</span> <span class="n">vi</span><span class="p">[</span><span class="mi">1</span><span class="p">,:</span><span class="n">T</span><span class="p">]];</span>
+    <span class="n">hdrs</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;i&quot;</span><span class="p">,</span> <span class="s2">&quot;t_i&quot;</span><span class="p">,</span> <span class="s2">&quot;x_i&quot;</span><span class="p">,</span> <span class="s2">&quot;y_i&quot;</span><span class="p">,</span> <span class="s2">&quot;x_i&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;y_i&#39;&quot;</span><span class="p">];</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">tabulate</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">hdrs</span><span class="p">,</span> <span class="n">showindex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">floatfmt</span><span class="o">=</span><span class="s1">&#39;0.5f&#39;</span><span class="p">,</span> <span class="n">tablefmt</span><span class="o">=</span><span class="s2">&quot;mixed_grid&quot;</span><span class="p">));</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Plotting solution in spatial domain (xy-plane).&quot;</span><span class="p">);</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;wo&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Mass 0&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ri</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ri</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;ro&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Mass 1 (DP54 solution)&quot;</span><span class="p">);</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\ddot{\boldsymbol</span><span class="si">{r}</span><span class="s2">} = -\frac{\hat{\boldsymbol</span><span class="si">{r}</span><span class="s2">}}{r^2},\quad \boldsymbol</span><span class="si">{r}</span><span class="s2">(0) = \langle 0.1, 0\rangle$&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;$x$&quot;</span><span class="p">);</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;$y$&quot;</span><span class="p">);</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">);</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dormand-Prince method successfully reached end of time span.
+End of time-interval [0, 25] reached in n = 85 time-steps.
+Displaying results for first 10 steps.
+┍━━━━━┯━━━━━━━━━┯━━━━━━━━━━┯━━━━━━━━━┯━━━━━━━━━━┯━━━━━━━━━┑
+│   i │     t_i │      x_i │     y_i │     x_i&#39; │    y_i&#39; │
+┝━━━━━┿━━━━━━━━━┿━━━━━━━━━━┿━━━━━━━━━┿━━━━━━━━━━┿━━━━━━━━━┥
+│   0 │ 0.00000 │  0.10000 │ 0.00000 │  0.00000 │ 4.35890 │
+├─────┼─────────┼──────────┼─────────┼──────────┼─────────┤
+│   1 │ 0.00001 │  0.10000 │ 0.00006 │ -0.00141 │ 4.35890 │
+├─────┼─────────┼──────────┼─────────┼──────────┼─────────┤
+│   2 │ 0.00015 │  0.10000 │ 0.00067 │ -0.01546 │ 4.35885 │
+├─────┼─────────┼──────────┼─────────┼──────────┼─────────┤
+│   3 │ 0.00156 │  0.09988 │ 0.00680 │ -0.15580 │ 4.35360 │
+├─────┼─────────┼──────────┼─────────┼──────────┼─────────┤
+│   4 │ 0.01562 │  0.08862 │ 0.06558 │ -1.36479 │ 3.90878 │
+├─────┼─────────┼──────────┼─────────┼──────────┼─────────┤
+│   5 │ 0.04237 │  0.03718 │ 0.15202 │ -2.23110 │ 2.60706 │
+├─────┼─────────┼──────────┼─────────┼──────────┼─────────┤
+│   6 │ 0.08196 │ -0.05293 │ 0.23142 │ -2.24030 │ 1.55115 │
+├─────┼─────────┼──────────┼─────────┼──────────┼─────────┤
+│   7 │ 0.14297 │ -0.18142 │ 0.30259 │ -1.97226 │ 0.88377 │
+├─────┼─────────┼──────────┼─────────┼──────────┼─────────┤
+│   8 │ 0.24986 │ -0.37199 │ 0.36918 │ -1.62151 │ 0.43572 │
+├─────┼─────────┼──────────┼─────────┼──────────┼─────────┤
+│   9 │ 0.42862 │ -0.62811 │ 0.41789 │ -1.27693 │ 0.15445 │
+┕━━━━━┷━━━━━━━━━┷━━━━━━━━━━┷━━━━━━━━━┷━━━━━━━━━━┷━━━━━━━━━┙
+Plotting solution in spatial domain (xy-plane).
+</pre></div>
+</div>
+<img alt="_images/c571af8596f4c5b7b5f81e470125559abc0b49818afe494a8e4f86d79a184311.png" src="_images/c571af8596f4c5b7b5f81e470125559abc0b49818afe494a8e4f86d79a184311.png" />
 </div>
 </div>
 </section>
@@ -546,11 +665,10 @@ l_{i+1}(\delta h) \approx K(\delta h)^{p+1} \approx \delta^{p+1} l_{i+1}(h) \app
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Adaptive methods.</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estimating-the-unknown">Estimating the unknown.</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#controlling-error">Controlling error.</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advantages-and-disadvantages">Advantages and disadvantages.</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rungekuttafehlberg">Runge–Kutta–Fehlberg.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rungekuttafehlberg-and-dormandprince">Runge–Kutta–Fehlberg and Dormand–Prince.</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example.</a></li>
 </ul>
   </nav></div>
