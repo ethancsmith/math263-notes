@@ -78,8 +78,11 @@ e_n = y(b) -y_n = \frac{b-a}{h}O\big(h^{p+1}\big) = O\big(h^p\big) \text{ as }h\
 \end{equation*}
 Note well that this is only a heuristic argument and not a proof.  Why?
 
-In practice, the global truncation error is usually easier to measure empirically while the local truncation error is easier to determine analytically.
-Since the two types of error are typically related as in the above note, we will provide analytic arguments for the order of numerical methods based on the local truncation error.
+
+In practice, local truncation error is easier to determine analytically than global truncation error, 
+and so we will provide analytic "evidence" for the order of numerical methods based on local truncation error.
+However, global truncation error is usually easier to measure empirically for test problems where the exact symbolic solution is known.
+We will therefore compute global errors for our examples.
 
 ## Analysis of Euler's method.
 
