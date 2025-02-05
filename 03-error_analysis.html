@@ -34,9 +34,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="_static/proof.css?v=b4b7a797" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- So that users can add custom icons -->
@@ -460,8 +460,10 @@ Whence</p>
 e_n = y(b) -y_n = \frac{b-a}{h}O\big(h^{p+1}\big) = O\big(h^p\big) \text{ as }h\to 0.
 \end{equation*}\]</div>
 <p>Note well that this is only a heuristic argument and not a proof.  Why?</p>
-<p>In practice, the global truncation error is usually easier to measure empirically while the local truncation error is easier to determine analytically.
-Since the two types of error are typically related as in the above note, we will provide analytic arguments for the order of numerical methods based on the local truncation error.</p>
+<p>In practice, local truncation error is easier to determine analytically than global truncation error,
+and so we will provide analytic “evidence” for the order of numerical methods based on local truncation error.
+However, global truncation error is usually easier to measure empirically for test problems where the exact symbolic solution is known.
+We will therefore compute global errors for our examples.</p>
 </section>
 <section id="analysis-of-eulers-method">
 <h2>Analysis of Euler’s method.<a class="headerlink" href="#analysis-of-eulers-method" title="Link to this heading">#</a></h2>
