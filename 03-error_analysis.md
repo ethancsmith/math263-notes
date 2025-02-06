@@ -114,7 +114,7 @@ The local truncation error for Euler's method is $O(h^2)$ as $h\to 0$.
 
 ```{prf:proof}
 
-Recall that Euler's method defines a sequence of approximates values by the recursion
+Recall that Euler's method defines a sequence of approximate values by the recursion
 \begin{equation*}
 y_{i+1} = y_i + hf(x_i, y_i).
 \end{equation*}
