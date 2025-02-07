@@ -399,35 +399,33 @@ The Runge-Kutta method of order <span class="math notranslate nohighlight">\(1\)
 <section id="order-two-methods">
 <h2>Order two methods.<a class="headerlink" href="#order-two-methods" title="Link to this heading">#</a></h2>
 <p>The generic Runge-Kutta method of order 2 takes the form</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3dc59e55-cfbc-4855-bfed-a7bcc29d52b1">
-<span class="eqno">(7)<a class="headerlink" href="#equation-3dc59e55-cfbc-4855-bfed-a7bcc29d52b1" title="Permalink to this equation">#</a></span>\[\begin{equation}
-y_{i+1} = y_i + h\big(w_1k_1 + w_2k_2\big),
-\end{equation}\]</div>
+<div class="math notranslate nohighlight">
+\[y_{i+1} = y_i + h\big(w_1k_1 + w_2k_2\big),\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c0731064-4220-4956-a6f5-9f6c0b060c73">
-<span class="eqno">(8)<a class="headerlink" href="#equation-c0731064-4220-4956-a6f5-9f6c0b060c73" title="Permalink to this equation">#</a></span>\[\begin{align}
-k_1 &amp;= f(x_i, y_i),\\
-k_2 &amp;= f(x_i+\alpha h, y_i + \beta hk_1),\\
-w_1 &amp;=\frac{1}{2\alpha},\\
-w_2 &amp;=\frac{1}{2\beta},\\
-w_1+w_2 &amp;=1,\\
-\end{align}\]</div>
-<p>Any choice of parameters <span class="math notranslate nohighlight">\(\alpha, \beta, w_1, w_2\)</span> satisfying the above constraints yields a valid order <span class="math notranslate nohighlight">\(2\)</span> method.
-We mention the three most common choices here.
-Setting <span class="math notranslate nohighlight">\(w_1=w_2=1/2\)</span> and <span class="math notranslate nohighlight">\(\alpha=\beta=1\)</span> yields Heun’s (modified Euler) method which we have already met.
-<strong>Ralston’s order 2 method</strong>, which also occasionally goes by the name “Heun’s method,” arises by setting <span class="math notranslate nohighlight">\(w_1=1/4\)</span>, <span class="math notranslate nohighlight">\(w_2=3/4\)</span>, and <span class="math notranslate nohighlight">\(\alpha=\beta=2/3\)</span>.
-Finally, the <strong>midpoint method</strong> (or <strong>corrected Euler method</strong>) is defined by the choices <span class="math notranslate nohighlight">\(w_1=0\)</span>, <span class="math notranslate nohighlight">\(w_2=1\)</span>, and  <span class="math notranslate nohighlight">\(\alpha=\beta=1/2\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}k_1 &amp;= f(x_i, y_i),\\
+k_2 &amp;= f(x_i+\alpha h, y_i + \beta hk_1).\end{split}\]</div>
+<p>A valid order <span class="math notranslate nohighlight">\(2\)</span> method is obtained by imposing the parameter constraints</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\alpha &amp;&gt; 0,\\
+\beta &amp;=\alpha,\\
+w_1 &amp;= 1-\frac{1}{2\alpha},\\
+w_2 &amp;= \frac{1}{2\alpha}.\end{split}\]</div>
+<p>We mention the three most common choices here.
+Setting <span class="math notranslate nohighlight">\(\alpha=\beta=1\)</span> and <span class="math notranslate nohighlight">\(w_1=w_2=1/2\)</span> yields Heun’s (modified Euler) method which we have already met.
+<strong>Ralston’s order 2 method</strong>, which also occasionally goes by the name “Heun’s method,” arises by setting <span class="math notranslate nohighlight">\(\alpha=\beta=2/3\)</span>, <span class="math notranslate nohighlight">\(w_1=1/4\)</span>, and <span class="math notranslate nohighlight">\(w_2=3/4\)</span>.
+Finally, the <strong>midpoint method</strong> (or <strong>corrected Euler method</strong>) is defined by the choices <span class="math notranslate nohighlight">\(\alpha=\beta=1/2\)</span>, <span class="math notranslate nohighlight">\(w_1=0\)</span>, and <span class="math notranslate nohighlight">\(w_2=1\)</span>.</p>
 </section>
 <section id="the-classical-fourth-order-method">
 <h2>The classical fourth order method.<a class="headerlink" href="#the-classical-fourth-order-method" title="Link to this heading">#</a></h2>
 <p>Probably the most popular Runge–Kutta method is the <strong>classical fourth order Runge–Kutta method</strong> (<strong>RK4</strong>), which is defined by the equations</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2da4e53c-6a31-4049-803e-c130417f0197">
-<span class="eqno">(9)<a class="headerlink" href="#equation-2da4e53c-6a31-4049-803e-c130417f0197" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-18f436d6-2587-45ca-ad72-8df351c2084d">
+<span class="eqno">(7)<a class="headerlink" href="#equation-18f436d6-2587-45ca-ad72-8df351c2084d" title="Permalink to this equation">#</a></span>\[\begin{equation}
 y_{i+1} = \frac{h}{6}\big(k_1 + 2k_2 + 2k_3 + k_4\big),
 \end{equation}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-2ad815fa-6b5b-4239-8066-f6333bb1a611">
-<span class="eqno">(10)<a class="headerlink" href="#equation-2ad815fa-6b5b-4239-8066-f6333bb1a611" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-5c7c70c3-8a42-42be-ac5a-5393bad2d00d">
+<span class="eqno">(8)<a class="headerlink" href="#equation-5c7c70c3-8a42-42be-ac5a-5393bad2d00d" title="Permalink to this equation">#</a></span>\[\begin{align}
 k_1 &amp;= f(x_i, y_i),\\
 k_2 &amp;= f\big(x_i + h/2, y_i + hk_1/2\big),\\
 k_3 &amp;= f\big(x_i + h/2, y_i + hk_2/2\big),\\
@@ -438,8 +436,8 @@ k_4 &amp;= f(x_i + h, y_i + hk_3).
 <section id="example">
 <h2>Example.<a class="headerlink" href="#example" title="Link to this heading">#</a></h2>
 <p>Below we compare Euler’s method with the classical Runge–Kutta method of order 4 (RK4) for the IVP</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b4c75785-7d7b-424b-93ca-db499a419107">
-<span class="eqno">(11)<a class="headerlink" href="#equation-b4c75785-7d7b-424b-93ca-db499a419107" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-ca3b46f1-8d09-409d-9f67-4f4176ecfc3a">
+<span class="eqno">(9)<a class="headerlink" href="#equation-ca3b46f1-8d09-409d-9f67-4f4176ecfc3a" title="Permalink to this equation">#</a></span>\[\begin{align}
 y'&amp;=(y/x)-(y/x)^2,\\
 y(1)&amp;=1.
 \end{align}\]</div>

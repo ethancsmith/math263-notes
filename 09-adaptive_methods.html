@@ -484,15 +484,15 @@ For example, it is implemented in SciPy under the name <a class="reference exter
 <h2>Example.<a class="headerlink" href="#example" title="Link to this heading">#</a></h2>
 <p>As an example, we consider a two-body gravitational orbit problem which takes the form</p>
 <div class="math notranslate nohighlight" id="equation-two-body-problem">
-<span class="eqno">(25)<a class="headerlink" href="#equation-two-body-problem" title="Link to this equation">#</a></span>\[\begin{split}\ddot{\boldsymbol{r}} &amp;= -\frac{\hat{\boldsymbol{r}}}{|\boldsymbol{r}|^2},\\
+<span class="eqno">(23)<a class="headerlink" href="#equation-two-body-problem" title="Link to this equation">#</a></span>\[\begin{split}\ddot{\boldsymbol{r}} &amp;= -\frac{\hat{\boldsymbol{r}}}{|\boldsymbol{r}|^2},\\
 \boldsymbol{r}(0) &amp; = \langle 1-e, 0\rangle,\\
 \dot{\boldsymbol{r}}(0) &amp;= \left\langle 0, \sqrt{\frac{(1+e)}{(1-e)}}\right\rangle,\end{split}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\boldsymbol r\)</span> represents the position (or radial) vector of one body relative to the other and we denote time-derivatives with the usual dot notation.
 The initial conditions ensure that the orbit will have eccentricity <span class="math notranslate nohighlight">\(e\)</span>.</p>
-<p>Since IVP <a class="reference internal" href="#equation-two-body-problem">(25)</a> is a second-order problem, we introduce the auxillary vector <span class="math notranslate nohighlight">\(\boldsymbol w = \langle \boldsymbol r,  \boldsymbol v\rangle\)</span>, where <span class="math notranslate nohighlight">\(\boldsymbol v = \dot{\boldsymbol r}\)</span> is the velocity vector for one body relative to the other.
+<p>Since IVP <a class="reference internal" href="#equation-two-body-problem">(23)</a> is a second-order problem, we introduce the auxillary vector <span class="math notranslate nohighlight">\(\boldsymbol w = \langle \boldsymbol r,  \boldsymbol v\rangle\)</span>, where <span class="math notranslate nohighlight">\(\boldsymbol v = \dot{\boldsymbol r}\)</span> is the velocity vector for one body relative to the other.
 We then rewrite the second-order ODE as the first-order ODE</p>
 <div class="math notranslate nohighlight" id="equation-1st-order-vector-ode">
-<span class="eqno">(26)<a class="headerlink" href="#equation-1st-order-vector-ode" title="Link to this equation">#</a></span>\[\begin{split}\dot{\boldsymbol w} 
+<span class="eqno">(24)<a class="headerlink" href="#equation-1st-order-vector-ode" title="Link to this equation">#</a></span>\[\begin{split}\dot{\boldsymbol w} 
 =\begin{pmatrix}\dot{\boldsymbol r}\\ \dot{\boldsymbol v}\end{pmatrix}
 =\begin{pmatrix}\boldsymbol v \\ -\frac{\hat{\boldsymbol{r}}}{|\boldsymbol{r}|^2}\end{pmatrix}.\end{split}\]</div>
 <p>Since we may assume that both bodies reside in a common plane, we may write
@@ -502,7 +502,7 @@ We then rewrite the second-order ODE as the first-order ODE</p>
 \boldsymbol r &amp;= \langle x, y\rangle = \langle w_0, w_1\rangle,\\
 \boldsymbol v &amp;= \langle \dot x, \dot y\rangle = \langle w_2, w_3\rangle.
 \end{align*}\]</div>
-<p>We then rewrite the vector ODE <a class="reference internal" href="#equation-1st-order-vector-ode">(26)</a> as the scalar system</p>
+<p>We then rewrite the vector ODE <a class="reference internal" href="#equation-1st-order-vector-ode">(24)</a> as the scalar system</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{align*}
 \dot{w_0} &amp;= w_2,\\

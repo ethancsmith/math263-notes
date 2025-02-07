@@ -413,11 +413,11 @@ y_{i+1} = y_{i} + h f(x_i, y_i),
 <p>which we have already discussed in detail.
 On the other hand, linearization at the <span class="math notranslate nohighlight">\((i+1)\)</span>st mesh point <span class="math notranslate nohighlight">\(x_{i+1}\)</span> and projecting backward along the tangent line yields the <strong>backward Euler method</strong></p>
 <div class="math notranslate nohighlight" id="equation-backward-euler">
-<span class="eqno">(17)<a class="headerlink" href="#equation-backward-euler" title="Link to this equation">#</a></span>\[y_{i+1} = y_{i} + h f(x_{i+1}, y_{i+1}).\]</div>
+<span class="eqno">(15)<a class="headerlink" href="#equation-backward-euler" title="Link to this equation">#</a></span>\[y_{i+1} = y_{i} + h f(x_{i+1}, y_{i+1}).\]</div>
 <p>Since the precise form of the “right-hand side” <span class="math notranslate nohighlight">\(f(x,y)\)</span> is not known in advance, we cannot explicitly solve this equation for <span class="math notranslate nohighlight">\(y_{i+1}\)</span> in the general case – that is without knowing <span class="math notranslate nohighlight">\(f(x,y)\)</span>.
-If the function <span class="math notranslate nohighlight">\(f(x,y)\)</span> turns out to be linear in <span class="math notranslate nohighlight">\(y\)</span>, then equation <a class="reference internal" href="#equation-backward-euler">(17)</a> can easily be solved for <span class="math notranslate nohighlight">\(y\)</span>.
+If the function <span class="math notranslate nohighlight">\(f(x,y)\)</span> turns out to be linear in <span class="math notranslate nohighlight">\(y\)</span>, then equation <a class="reference internal" href="#equation-backward-euler">(15)</a> can easily be solved for <span class="math notranslate nohighlight">\(y\)</span>.
 However, there are many important applications where <span class="math notranslate nohighlight">\(f(x,y)\)</span> is nonlinear in <span class="math notranslate nohighlight">\(y\)</span>.
-Thus, in order to use an implicit formula such as <a class="reference internal" href="#equation-backward-euler">(17)</a>, it is necessary to incorporate some nonlinear equation solver such as Newton’s method or fixed-point iteration to solve for <span class="math notranslate nohighlight">\(y_{i+1}\)</span>.</p>
+Thus, in order to use an implicit formula such as <a class="reference internal" href="#equation-backward-euler">(15)</a>, it is necessary to incorporate some nonlinear equation solver such as Newton’s method or fixed-point iteration to solve for <span class="math notranslate nohighlight">\(y_{i+1}\)</span>.</p>
 </section>
 <section id="id1">
 <h2>Predictor–corrector methods.<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
@@ -426,7 +426,7 @@ Thus, the pairing of an explicit predictor method with an implicit corrector met
 The question of how many times to apply the fixed-point iteration of the corrector method can be a delicate matter.
 Each iteration brings us closer to convergence but at the cost of more evaluations of the function <span class="math notranslate nohighlight">\(f(x,y)\)</span>.
 In theory, one might choose to iterate the corrector until the value <span class="math notranslate nohighlight">\(y_{i+1}\)</span> converges to within some tolerance.
-Since iteration of corrector method such as <a class="reference internal" href="#equation-backward-euler">(17)</a> only brings us closer to the solution of <a class="reference internal" href="#equation-backward-euler">(17)</a> and not necessarily the true solution <span class="math notranslate nohighlight">\(y(x_{i+1})\)</span>, it is often not worth the additional cost to apply more than 1 iteration.
+Since iteration of corrector method such as <a class="reference internal" href="#equation-backward-euler">(15)</a> only brings us closer to the solution of <a class="reference internal" href="#equation-backward-euler">(15)</a> and not necessarily the true solution <span class="math notranslate nohighlight">\(y(x_{i+1})\)</span>, it is often not worth the additional cost to apply more than 1 iteration.
 If higher accuracy is needed, it is probably more efficient to reduce the step size <span class="math notranslate nohighlight">\(h\)</span>.</p>
 </section>
 <section id="advantages-and-disadvantages">

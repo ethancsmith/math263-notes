@@ -402,10 +402,10 @@ y_2' &amp;= f_2(x, y_1, y_2, \dots, y_m),\\
 y_m' &amp;= f_m(x, y_1, y_2, \dots, y_m).\end{split}\]</div>
 <p>Since humans are much better at holding onto to one object at time, it is convenient (and conceptually more illuminating) to place the <span class="math notranslate nohighlight">\(m\)</span> objects into a single vector equation, namely</p>
 <div class="math notranslate nohighlight" id="equation-first-order-vector-ode">
-<span class="eqno">(18)<a class="headerlink" href="#equation-first-order-vector-ode" title="Link to this equation">#</a></span>\[\mathbf{y}' = \mathbf{f}(x, \mathbf{y}),\]</div>
+<span class="eqno">(16)<a class="headerlink" href="#equation-first-order-vector-ode" title="Link to this equation">#</a></span>\[\mathbf{y}' = \mathbf{f}(x, \mathbf{y}),\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mathbf{y}(x) = \langle y_1(x), y_2(x), \dots, y_m(x)\rangle\)</span> is a vector-valued function of the scalar <span class="math notranslate nohighlight">\(x\)</span>,</p>
 <div class="math notranslate nohighlight" id="equation-vector-derivative">
-<span class="eqno">(19)<a class="headerlink" href="#equation-vector-derivative" title="Link to this equation">#</a></span>\[\begin{split}\mathbf{y}' %= \frac{\mathrm{d}\mathbf{y}}{\mathrm{d} x}
+<span class="eqno">(17)<a class="headerlink" href="#equation-vector-derivative" title="Link to this equation">#</a></span>\[\begin{split}\mathbf{y}' %= \frac{\mathrm{d}\mathbf{y}}{\mathrm{d} x}
 =\lim_{h\to 0}\frac{\mathbf{y}(x+h) - \mathbf{y}(x)}{h}
 = \begin{pmatrix}
 \displaystyle\lim_{h\to 0}\frac{y_1(x+h) - y_1(x)}{h}\\
@@ -429,22 +429,22 @@ f_m(x, y_1, y_2, \dots, y_m)
 </section>
 <section id="numerical-solutions-to-systems-of-odes">
 <h2>Numerical solutions to systems of ODE’s.<a class="headerlink" href="#numerical-solutions-to-systems-of-odes" title="Link to this heading">#</a></h2>
-<p>Evidently, the derivative <a class="reference internal" href="#equation-vector-derivative">(19)</a> of a vector-valued function is the vector of derivatives of the scalar-valued components.  This is true, and even important, but it is much more important that the derivative is defined as a limit in precisely the same way as for the scalar theory.  That means that much of what we already know about the scalar theory continues to work for vectors.  In particular, linearization looks exactly the same.  To see this, we just note that if <span class="math notranslate nohighlight">\(h\)</span> is small, then</p>
+<p>Evidently, the derivative <a class="reference internal" href="#equation-vector-derivative">(17)</a> of a vector-valued function is the vector of derivatives of the scalar-valued components.  This is true, and even important, but it is much more important that the derivative is defined as a limit in precisely the same way as for the scalar theory.  That means that much of what we already know about the scalar theory continues to work for vectors.  In particular, linearization looks exactly the same.  To see this, we just note that if <span class="math notranslate nohighlight">\(h\)</span> is small, then</p>
 <div class="math notranslate nohighlight" id="equation-approx-vector-derivative">
-<span class="eqno">(20)<a class="headerlink" href="#equation-approx-vector-derivative" title="Link to this equation">#</a></span>\[\mathbf{y}'(x) \approx \frac{\mathbf{y}(x+h) - \mathbf{y}(x)}{h}.\]</div>
+<span class="eqno">(18)<a class="headerlink" href="#equation-approx-vector-derivative" title="Link to this equation">#</a></span>\[\mathbf{y}'(x) \approx \frac{\mathbf{y}(x+h) - \mathbf{y}(x)}{h}.\]</div>
 <p>In fact, there is even a theory of multiple-variable Taylor series to precisely quantify what is meant by this assertion though we will not pursue such a precise statement this time.
-Now, solving <a class="reference internal" href="#equation-approx-vector-derivative">(20)</a> for <span class="math notranslate nohighlight">\(\mathbf{y}(x+h)\)</span> yields the usual linear approximation</p>
+Now, solving <a class="reference internal" href="#equation-approx-vector-derivative">(18)</a> for <span class="math notranslate nohighlight">\(\mathbf{y}(x+h)\)</span> yields the usual linear approximation</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{equation*}
 \mathbf{y}(x+h) \approx \mathbf{y}(x) + h\mathbf{y}'(x).
 \end{equation*}\]</div>
 <p>Since linearization works — and looks exactly the same, Euler’s method works — and looks exactly the same.  In particular, to numerically approximate a solution to the first order IVP</p>
 <div class="math notranslate nohighlight" id="equation-first-order-vector-ivp">
-<span class="eqno">(21)<a class="headerlink" href="#equation-first-order-vector-ivp" title="Link to this equation">#</a></span>\[\begin{split}\mathbf{y}' &amp;= \mathbf{f}(x, \mathbf{y})\\
+<span class="eqno">(19)<a class="headerlink" href="#equation-first-order-vector-ivp" title="Link to this equation">#</a></span>\[\begin{split}\mathbf{y}' &amp;= \mathbf{f}(x, \mathbf{y})\\
 \mathbf{y}(x_0) &amp;= \mathbf{y}_0\end{split}\]</div>
 <p>we have the (vectorized) <strong>forward Euler method</strong></p>
 <div class="math notranslate nohighlight" id="equation-vector-forward-euler">
-<span class="eqno">(22)<a class="headerlink" href="#equation-vector-forward-euler" title="Link to this equation">#</a></span>\[\mathbf{y}_{i+1} = \mathbf{y}_i + h \mathbf{f}(x_i, \mathbf{y}_i).\]</div>
+<span class="eqno">(20)<a class="headerlink" href="#equation-vector-forward-euler" title="Link to this equation">#</a></span>\[\mathbf{y}_{i+1} = \mathbf{y}_i + h \mathbf{f}(x_i, \mathbf{y}_i).\]</div>
 <p>For those less familiar with vector arithmetic (or those interested in implementing the method is a low-level programming language) we note that the above vector formula is equivalent to the <span class="math notranslate nohighlight">\(m\)</span> scalar formulas</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{align*}
