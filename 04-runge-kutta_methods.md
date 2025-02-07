@@ -24,23 +24,25 @@ The Runge-Kutta method of order $1$ is Euler's method. Heun's modified Euler met
 ## Order two methods.
 
 The generic Runge-Kutta method of order 2 takes the form
-\begin{equation}
+```{math}
 y_{i+1} = y_i + h\big(w_1k_1 + w_2k_2\big),
-\end{equation}
+```
 where
-\begin{align}
+```{math}
 k_1 &= f(x_i, y_i),\\
-k_2 &= f(x_i+\alpha h, y_i + \beta hk_1),\\
-w_1 &=\frac{1}{2\alpha},\\
-w_2 &=\frac{1}{2\beta},\\
-w_1+w_2 &=1,\\
-\end{align}
-
-Any choice of parameters $\alpha, \beta, w_1, w_2$ satisfying the above constraints yields a valid order $2$ method.
+k_2 &= f(x_i+\alpha h, y_i + \beta hk_1).
+```
+A valid order $2$ method is obtained by imposing the parameter constraints
+```{math}
+\alpha &> 0,\\
+\beta &=\alpha,\\
+w_1 &= 1-\frac{1}{2\alpha},\\
+w_2 &= \frac{1}{2\alpha}.
+```
 We mention the three most common choices here.
-Setting $w_1=w_2=1/2$ and $\alpha=\beta=1$ yields Heun's (modified Euler) method which we have already met. 
-**Ralston's order 2 method**, which also occasionally goes by the name "Heun's method," arises by setting $w_1=1/4$, $w_2=3/4$, and $\alpha=\beta=2/3$.
-Finally, the **midpoint method** (or **corrected Euler method**) is defined by the choices $w_1=0$, $w_2=1$, and  $\alpha=\beta=1/2$.
+Setting $\alpha=\beta=1$ and $w_1=w_2=1/2$ yields Heun's (modified Euler) method which we have already met. 
+**Ralston's order 2 method**, which also occasionally goes by the name "Heun's method," arises by setting $\alpha=\beta=2/3$, $w_1=1/4$, and $w_2=3/4$.
+Finally, the **midpoint method** (or **corrected Euler method**) is defined by the choices $\alpha=\beta=1/2$, $w_1=0$, and $w_2=1$.
 
 +++
 
