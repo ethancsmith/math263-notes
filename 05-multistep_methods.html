@@ -488,6 +488,7 @@ We then present the global truncation errors <span class="math notranslate nohig
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">sympy</span>
 <span class="kn">from</span> <span class="nn">tabulate</span> <span class="kn">import</span> <span class="n">tabulate</span>
+<span class="kn">import</span> <span class="nn">timeit</span>
 
 <span class="c1"># define IVP parameters</span>
 <span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">y</span> <span class="o">-</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
@@ -589,8 +590,7 @@ We then present the global truncation errors <span class="math notranslate nohig
 <p>We also compare the empirical average running time for our implementations as the number of steps increases.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">timeit</span>
-<span class="n">num_trials</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">num_trials</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
 <span class="n">mem_times</span> <span class="o">=</span> <span class="p">[</span><span class="n">timeit</span><span class="o">.</span><span class="n">timeit</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">math263</span><span class="o">.</span><span class="n">mem</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">base</span><span class="o">**</span><span class="n">j</span><span class="p">),</span> 
             <span class="n">number</span><span class="o">=</span><span class="n">num_trials</span><span class="p">)</span><span class="o">/</span><span class="n">num_trials</span> 
             <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_exp</span><span class="p">)];</span>
@@ -615,13 +615,13 @@ We then present the global truncation errors <span class="math notranslate nohig
 ├─────────────┼───────────────────┼───────────────────┤
 │         100 │           0.00040 │           0.00030 │
 ├─────────────┼───────────────────┼───────────────────┤
-│        1000 │           0.00412 │           0.00307 │
+│        1000 │           0.00402 │           0.00303 │
 ├─────────────┼───────────────────┼───────────────────┤
-│       10000 │           0.04047 │           0.03053 │
+│       10000 │           0.04151 │           0.03001 │
 ├─────────────┼───────────────────┼───────────────────┤
-│      100000 │           0.41121 │           0.30684 │
+│      100000 │           0.41108 │           0.29872 │
 ├─────────────┼───────────────────┼───────────────────┤
-│     1000000 │           4.25855 │           3.06146 │
+│     1000000 │           4.13263 │           3.23417 │
 ┕━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━┙
 </pre></div>
 </div>

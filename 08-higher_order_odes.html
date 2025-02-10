@@ -415,6 +415,8 @@ y'(0)&amp;= -3/5.\end{split}\]</div>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">sympy</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">math263</span>
+<span class="kn">from</span> <span class="nn">tabulate</span> <span class="kn">import</span> <span class="n">tabulate</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;dark_background&#39;</span><span class="p">);</span>
 
@@ -467,9 +469,7 @@ u_0(0) &amp;= -2/5,\\
 u_1(0) &amp;= -3/5\end{split}\]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math263</span>
-
-<span class="c1"># define IVP parameters</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># define IVP parameters</span>
 <span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">u</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">u</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">2</span><span class="o">*</span><span class="n">u</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">u</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)]);</span>
 <span class="n">alpha</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="o">/</span><span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="o">/</span><span class="mi">5</span><span class="p">];</span>
 
@@ -490,9 +490,7 @@ u_1(0) &amp;= -3/5\end{split}\]</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tabulate</span> <span class="kn">import</span> <span class="n">tabulate</span>
-
-<span class="n">uvals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">sym_y</span><span class="p">(</span><span class="n">xi</span><span class="p">),</span> <span class="n">sym_Dy</span><span class="p">(</span><span class="n">xi</span><span class="p">)];</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">uvals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">sym_y</span><span class="p">(</span><span class="n">xi</span><span class="p">),</span> <span class="n">sym_Dy</span><span class="p">(</span><span class="n">xi</span><span class="p">)];</span>
 <span class="n">errors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">uvals</span> <span class="o">-</span> <span class="n">u_rk4</span><span class="p">)</span>
 <span class="n">table</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">xi</span><span class="p">,</span> <span class="n">u_rk4</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">errors</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">u_rk4</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">errors</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]];</span>
 <span class="n">hdrs</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;i&quot;</span><span class="p">,</span> <span class="s2">&quot;x_i&quot;</span><span class="p">,</span> <span class="s2">&quot;y_i&quot;</span><span class="p">,</span> <span class="s2">&quot;|y(x_i) - y_i|&quot;</span><span class="p">,</span> <span class="s2">&quot;y_i&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;|y&#39;(x_i) - y_i&#39;|&quot;</span><span class="p">];</span>
