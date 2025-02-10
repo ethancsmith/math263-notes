@@ -44,6 +44,8 @@ y'(0)&= -3/5.
 import numpy as np
 import sympy
 import matplotlib.pyplot as plt
+import math263
+from tabulate import tabulate
 
 plt.style.use('dark_background');
 
@@ -87,8 +89,6 @@ u_1(0) &= -3/5
 ```
 
 ```{code-cell}
-import math263
-
 # define IVP parameters
 f = lambda x, u: np.array([u[1], 2*u[1] - 2*u[0] + np.exp(2*x)*np.sin(x)]);
 alpha = [-2/5, -3/5];
@@ -104,8 +104,6 @@ plt.show();
 ```
 
 ```{code-cell}
-from tabulate import tabulate
-
 uvals = np.c_[sym_y(xi), sym_Dy(xi)];
 errors = np.abs(uvals - u_rk4)
 table = np.c_[xi, u_rk4[:, 0], errors[:, 0], u_rk4[:, 1], errors[:, 1]];

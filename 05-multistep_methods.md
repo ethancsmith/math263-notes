@@ -123,6 +123,7 @@ import math263
 import numpy as np
 import sympy
 from tabulate import tabulate
+import timeit
 
 # define IVP parameters
 f = lambda x, y: y - x**2 + 1;
@@ -170,7 +171,6 @@ print(tabulate(table, hdrs, tablefmt='mixed_grid', floatfmt=['0.7f','g','g']))
 We also compare the empirical average running time for our implementations as the number of steps increases.
 
 ```{code-cell}
-import timeit
 num_trials = 10;
 mem_times = [timeit.timeit(lambda: math263.mem(f, a, b, y0, base**j), 
             number=num_trials)/num_trials 

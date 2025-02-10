@@ -51,6 +51,7 @@ The [NumPy](https://numpy.org/doc/stable/index.html) package provides efficient 
 # import numpy and matplotlib.pyplot with conventional shorthands
 import numpy as np 
 from matplotlib import pyplot as plt
+import sympy
 
 plt.style.use('dark_background');
 
@@ -91,8 +92,6 @@ If the ODE in question can be solved analytically, we can try using the SymPy mo
 The code snippet below demonstrates how to compute the general solution to the ODE of {eq}`example-01`.
 
 ```{code-cell}
-import sympy
-
 # redefine RHS of ODE using sympy's symbolic version of sin(x)
 f = lambda x, y: y + sympy.sin(x)
 

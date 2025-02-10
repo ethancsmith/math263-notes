@@ -109,6 +109,9 @@ First we solve the system symbolic with SymPy.
 import sympy
 import numpy as np
 from IPython.display import display, Markdown
+import matplotlib.pyplot as plt
+import math263
+from tabulate import tabulate
 
 # solve the IVP symbolically with the sympy library
 t = sympy.Symbol('t');
@@ -133,8 +136,6 @@ display(soln[2]);
 Next we plot the solution in $xyz$-space.
 
 ```{code-cell}
-import matplotlib.pyplot as plt
-
 plt.style.use('dark_background');
 
 # lambdify the symbolic solution
@@ -162,8 +163,6 @@ ax.grid(True)
 Now we compute a numerical solution via Euler's method and plot it along with the symbolic solution.
 
 ```{code-cell}
-import math263
-
 # define IVP parameters
 f = lambda t, r: np.array([r[0] + r[2], r[0] + r[1], -2*r[0] - r[2]]);
 a, b = 0, 2*np.pi;
@@ -182,8 +181,6 @@ plt.show()
 Finally, we compute the absolute and relative errors at each mesh point in $t$-space using the $2$-norm.
 
 ```{code-cell}
-from tabulate import tabulate
-
 rvals = np.c_[sym_x(ti), sym_y(ti), sym_z(ti)];
 error_vecs = rvals - r_euler
 p=2; # set 'p = inf.inf' to use infinity norm

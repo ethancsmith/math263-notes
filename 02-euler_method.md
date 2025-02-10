@@ -91,6 +91,8 @@ over the interval $[0, 2]$.
 import math263
 import numpy as np
 from tabulate import tabulate
+import sympy
+import matplotlib.pyplot as plt
 
 # define IVP parameters
 f = lambda x, y: x**2 - y;
@@ -111,9 +113,6 @@ print(tabulate(data, hdrs, tablefmt='mixed_grid', floatfmt='0.5f', showindex=Tru
 Since the IVP {eq}`example-02` can be solved analytically, we can plot the symbolic and numerical solutions together on the same set of axes.
 
 ```{code-cell}
-import sympy
-import matplotlib.pyplot as plt
-
 plt.style.use('dark_background');
 
 # solve the IVP symbolically with the sympy library
