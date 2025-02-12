@@ -121,5 +121,5 @@ plt.show();
 print("Global errors for Euler's method and RK4.")
 table = np.c_[xi, abs(sym_y(xi) - y_euler[:, 0]), abs(sym_y(xi) - y_rk4[:, 0])];
 hdrs = ["i", "x_i", "e_{i,Euler} = |y(x_i)-y_i|", "e_{i,RK4} = |y(x_i)-y_i|"];
-print(tabulate(table, hdrs, tablefmt='mixed_grid', floatfmt='0.5g', showindex=True))
+print(tabulate(table, hdrs, tablefmt='mixed_grid', floatfmt=['0.0f', '0.1f', '0.5e', '0.5e'], showindex=True))
 ```

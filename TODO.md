@@ -1,5 +1,6 @@
 # TODO
 
+1. Switch to using $t$ as generic independent variable?
 1. Include RKF45 example of adaptive methods.
 1. Revisit IPython display of Markdown output.
 	- Works fine in Jupyter Lab.
