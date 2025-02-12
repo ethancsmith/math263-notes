@@ -34,9 +34,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="_static/proof.css?v=b4b7a797" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- So that users can add custom icons -->
@@ -419,13 +419,13 @@ Finally, the <strong>midpoint method</strong> (or <strong>corrected Euler method
 <section id="the-classical-fourth-order-method">
 <h2>The classical fourth order method.<a class="headerlink" href="#the-classical-fourth-order-method" title="Link to this heading">#</a></h2>
 <p>Probably the most popular Runge–Kutta method is the <strong>classical fourth order Runge–Kutta method</strong> (<strong>RK4</strong>), which is defined by the equations</p>
-<div class="amsmath math notranslate nohighlight" id="equation-b4f9b8e2-d891-4e0d-81cc-e82a9c9ec285">
-<span class="eqno">(7)<a class="headerlink" href="#equation-b4f9b8e2-d891-4e0d-81cc-e82a9c9ec285" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-9419b77a-41f3-4da5-9b0b-ee492ca04913">
+<span class="eqno">(7)<a class="headerlink" href="#equation-9419b77a-41f3-4da5-9b0b-ee492ca04913" title="Permalink to this equation">#</a></span>\[\begin{equation}
 y_{i+1} = \frac{h}{6}\big(k_1 + 2k_2 + 2k_3 + k_4\big),
 \end{equation}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9fb783bd-f55a-4030-974a-c2169339c4c1">
-<span class="eqno">(8)<a class="headerlink" href="#equation-9fb783bd-f55a-4030-974a-c2169339c4c1" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-c244f4f1-4f73-464e-a737-32ef448d7677">
+<span class="eqno">(8)<a class="headerlink" href="#equation-c244f4f1-4f73-464e-a737-32ef448d7677" title="Permalink to this equation">#</a></span>\[\begin{align}
 k_1 &amp;= f(x_i, y_i),\\
 k_2 &amp;= f\big(x_i + h/2, y_i + hk_1/2\big),\\
 k_3 &amp;= f\big(x_i + h/2, y_i + hk_2/2\big),\\
@@ -436,8 +436,8 @@ k_4 &amp;= f(x_i + h, y_i + hk_3).
 <section id="example">
 <h2>Example.<a class="headerlink" href="#example" title="Link to this heading">#</a></h2>
 <p>Below we compare Euler’s method with the classical Runge–Kutta method of order 4 (RK4) for the IVP</p>
-<div class="amsmath math notranslate nohighlight" id="equation-773d663d-3a99-43a1-acad-5fd9a522d731">
-<span class="eqno">(9)<a class="headerlink" href="#equation-773d663d-3a99-43a1-acad-5fd9a522d731" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-d1dc2596-6b99-4c14-baa3-05435492fac1">
+<span class="eqno">(9)<a class="headerlink" href="#equation-d1dc2596-6b99-4c14-baa3-05435492fac1" title="Permalink to this equation">#</a></span>\[\begin{align}
 y'&amp;=(y/x)-(y/x)^2,\\
 y(1)&amp;=1.
 \end{align}\]</div>
@@ -492,7 +492,7 @@ y(1)&amp;=1.
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Global errors for Euler&#39;s method and RK4.&quot;</span><span class="p">)</span>
 <span class="n">table</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">xi</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="n">sym_y</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span> <span class="o">-</span> <span class="n">y_euler</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">sym_y</span><span class="p">(</span><span class="n">xi</span><span class="p">)</span> <span class="o">-</span> <span class="n">y_rk4</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])];</span>
 <span class="n">hdrs</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;i&quot;</span><span class="p">,</span> <span class="s2">&quot;x_i&quot;</span><span class="p">,</span> <span class="s2">&quot;e_{i,Euler} = |y(x_i)-y_i|&quot;</span><span class="p">,</span> <span class="s2">&quot;e_{i,RK4} = |y(x_i)-y_i|&quot;</span><span class="p">];</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">tabulate</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">hdrs</span><span class="p">,</span> <span class="n">tablefmt</span><span class="o">=</span><span class="s1">&#39;mixed_grid&#39;</span><span class="p">,</span> <span class="n">floatfmt</span><span class="o">=</span><span class="s1">&#39;0.5g&#39;</span><span class="p">,</span> <span class="n">showindex</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tabulate</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">hdrs</span><span class="p">,</span> <span class="n">tablefmt</span><span class="o">=</span><span class="s1">&#39;mixed_grid&#39;</span><span class="p">,</span> <span class="n">floatfmt</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;0.0f&#39;</span><span class="p">,</span> <span class="s1">&#39;0.1f&#39;</span><span class="p">,</span> <span class="s1">&#39;0.5e&#39;</span><span class="p">,</span> <span class="s1">&#39;0.5e&#39;</span><span class="p">],</span> <span class="n">showindex</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -512,27 +512,27 @@ y(1)&amp;=1.
 ┍━━━━━┯━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━━━━━━━━┑
 │   i │   x_i │   e_{i,Euler} = |y(x_i)-y_i| │   e_{i,RK4} = |y(x_i)-y_i| │
 ┝━━━━━┿━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━━━━━━━┥
-│   0 │   1   │                    0         │                 0          │
+│   0 │   1.0 │                  0.00000e+00 │                0.00000e+00 │
 ├─────┼───────┼──────────────────────────────┼────────────────────────────┤
-│   1 │   1.1 │                    0.0042817 │                 2.2415e-07 │
+│   1 │   1.1 │                  4.28173e-03 │                2.24147e-07 │
 ├─────┼───────┼──────────────────────────────┼────────────────────────────┤
-│   2 │   1.2 │                    0.0066879 │                 3.1076e-07 │
+│   2 │   1.2 │                  6.68785e-03 │                3.10759e-07 │
 ├─────┼───────┼──────────────────────────────┼────────────────────────────┤
-│   3 │   1.3 │                    0.0081242 │                 3.4637e-07 │
+│   3 │   1.3 │                  8.12422e-03 │                3.46369e-07 │
 ├─────┼───────┼──────────────────────────────┼────────────────────────────┤
-│   4 │   1.4 │                    0.0090192 │                 3.6099e-07 │
+│   4 │   1.4 │                  9.01919e-03 │                3.60986e-07 │
 ├─────┼───────┼──────────────────────────────┼────────────────────────────┤
-│   5 │   1.5 │                    0.0095942 │                 3.6638e-07 │
+│   5 │   1.5 │                  9.59416e-03 │                3.66382e-07 │
 ├─────┼───────┼──────────────────────────────┼────────────────────────────┤
-│   6 │   1.6 │                    0.0099716 │                 3.6761e-07 │
+│   6 │   1.6 │                  9.97159e-03 │                3.67611e-07 │
 ├─────┼───────┼──────────────────────────────┼────────────────────────────┤
-│   7 │   1.7 │                    0.010223  │                 3.6699e-07 │
+│   7 │   1.7 │                  1.02229e-02 │                3.66990e-07 │
 ├─────┼───────┼──────────────────────────────┼────────────────────────────┤
-│   8 │   1.8 │                    0.010392  │                 3.6563e-07 │
+│   8 │   1.8 │                  1.03915e-02 │                3.65627e-07 │
 ├─────┼───────┼──────────────────────────────┼────────────────────────────┤
-│   9 │   1.9 │                    0.010505  │                 3.6407e-07 │
+│   9 │   1.9 │                  1.05048e-02 │                3.64068e-07 │
 ├─────┼───────┼──────────────────────────────┼────────────────────────────┤
-│  10 │   2   │                    0.010581  │                 3.6258e-07 │
+│  10 │   2.0 │                  1.05806e-02 │                3.62576e-07 │
 ┕━━━━━┷━━━━━━━┷━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━━━━━━━━━┙
 </pre></div>
 </div>
