@@ -404,7 +404,7 @@ On the other hand, <strong>multistep methods</strong> use more than one of the p
 An <strong><span class="math notranslate nohighlight">\(m\)</span>-step method</strong> would use the previous <span class="math notranslate nohighlight">\(m\)</span> values: <span class="math notranslate nohighlight">\((x_i,y_i), (x_{i-1},y_{i-1}),\dots, (x_{i-m+1},y_{i-m+1})\)</span>.
 A <strong>linear <span class="math notranslate nohighlight">\(m\)</span>-step method</strong> takes the form</p>
 <div class="math notranslate nohighlight" id="equation-linear-multistep-form">
-<span class="eqno">(10)<a class="headerlink" href="#equation-linear-multistep-form" title="Link to this equation">#</a></span>\[y_{i+1} = \sum_{j=1}^m\alpha_jy_{i+1-j} + h\sum_{j=0}^m\beta_jf(x_{i+1-j}, y_{i+1-j}).\]</div>
+<span class="eqno">(14)<a class="headerlink" href="#equation-linear-multistep-form" title="Link to this equation">#</a></span>\[y_{i+1} = \sum_{j=1}^m\alpha_jy_{i+1-j} + h\sum_{j=0}^m\beta_jf(x_{i+1-j}, y_{i+1-j}).\]</div>
 <p>Clearly such a method cannot be used until <span class="math notranslate nohighlight">\(m\)</span> previous values are known.
 For this reason, these methods must be paired with a starting method and are themselves called <strong>continuing methods</strong>.
 However, there is additional wrinkle if <span class="math notranslate nohighlight">\(\beta_0\ne 0\)</span> since in that case <span class="math notranslate nohighlight">\(y_{i+1}\)</span> appears on both sides of the defining equation.
@@ -416,23 +416,23 @@ For now, we concentrate on the case of explicit methods.
 Some of the most popular explicit linear multistep methods are the <em>Adams–Bashforth methods</em>.</p>
 <section id="adamsbashforth-2-step-method">
 <h2>Adams–Bashforth 2-step method.<a class="headerlink" href="#adamsbashforth-2-step-method" title="Link to this heading">#</a></h2>
-<p>For an explicit, linear <span class="math notranslate nohighlight">\(2\)</span>-step method equation <a class="reference internal" href="#equation-linear-multistep-form">(10)</a> simplifies to</p>
+<p>For an explicit, linear <span class="math notranslate nohighlight">\(2\)</span>-step method equation <a class="reference internal" href="#equation-linear-multistep-form">(14)</a> simplifies to</p>
 <div class="math notranslate nohighlight" id="equation-2-step-form">
-<span class="eqno">(11)<a class="headerlink" href="#equation-2-step-form" title="Link to this equation">#</a></span>\[y_{i+1} = \alpha_1y_i + h\big(\beta_1f(x_i,y_i) + \beta_2f(x_{i-1},y_{i-1}\big).\]</div>
+<span class="eqno">(15)<a class="headerlink" href="#equation-2-step-form" title="Link to this equation">#</a></span>\[y_{i+1} = \alpha_1y_i + h\big(\beta_1f(x_i,y_i) + \beta_2f(x_{i-1},y_{i-1}\big).\]</div>
 <p>The idea of the Adams–Bashforth method is to force this formula to be exact for the first 3 terms of the Taylor series for the true solution <span class="math notranslate nohighlight">\(y\)</span>.
 This will ensure that the local truncation error for the method is <span class="math notranslate nohighlight">\(O(h^3)\)</span> as <span class="math notranslate nohighlight">\(h\to 0\)</span>.
 Note that with only <span class="math notranslate nohighlight">\(3\)</span> parameters to determine (viz, <span class="math notranslate nohighlight">\(\alpha_1, \beta_1, \beta_2)\)</span>, this is the best that can be done.
 By linearity, it is enough to make it exact for the cases <span class="math notranslate nohighlight">\(y(x)=1\)</span>, <span class="math notranslate nohighlight">\(y(x)=x\)</span>, and <span class="math notranslate nohighlight">\(y(x)=x^2\)</span>.
-If <span class="math notranslate nohighlight">\(y(x)=1\)</span>, then <span class="math notranslate nohighlight">\(f(x,y(x)) = y'(x) = 0\)</span>, and so the equation <a class="reference internal" href="#equation-2-step-form">(11)</a> becomes</p>
+If <span class="math notranslate nohighlight">\(y(x)=1\)</span>, then <span class="math notranslate nohighlight">\(f(x,y(x)) = y'(x) = 0\)</span>, and so the equation <a class="reference internal" href="#equation-2-step-form">(15)</a> becomes</p>
 <div class="math notranslate nohighlight" id="equation-ab2-condition-1">
-<span class="eqno">(12)<a class="headerlink" href="#equation-ab2-condition-1" title="Link to this equation">#</a></span>\[1=\alpha_1.\]</div>
-<p>Similarly, if <span class="math notranslate nohighlight">\(y(x)=x\)</span>, then <span class="math notranslate nohighlight">\(y'(x)=1\)</span> and <a class="reference internal" href="#equation-2-step-form">(11)</a> becomes</p>
+<span class="eqno">(16)<a class="headerlink" href="#equation-ab2-condition-1" title="Link to this equation">#</a></span>\[1=\alpha_1.\]</div>
+<p>Similarly, if <span class="math notranslate nohighlight">\(y(x)=x\)</span>, then <span class="math notranslate nohighlight">\(y'(x)=1\)</span> and <a class="reference internal" href="#equation-2-step-form">(15)</a> becomes</p>
 <div class="math notranslate nohighlight" id="equation-ab2-condition-2">
-<span class="eqno">(13)<a class="headerlink" href="#equation-ab2-condition-2" title="Link to this equation">#</a></span>\[x_{i+1}=\alpha_1 x_i + h(\beta_1+\beta_2).\]</div>
-<p>Finally, if <span class="math notranslate nohighlight">\(y(x)=x^2\)</span>, then <span class="math notranslate nohighlight">\(y'(x)=2x\)</span> and <a class="reference internal" href="#equation-2-step-form">(11)</a> becomes</p>
+<span class="eqno">(17)<a class="headerlink" href="#equation-ab2-condition-2" title="Link to this equation">#</a></span>\[x_{i+1}=\alpha_1 x_i + h(\beta_1+\beta_2).\]</div>
+<p>Finally, if <span class="math notranslate nohighlight">\(y(x)=x^2\)</span>, then <span class="math notranslate nohighlight">\(y'(x)=2x\)</span> and <a class="reference internal" href="#equation-2-step-form">(15)</a> becomes</p>
 <div class="math notranslate nohighlight" id="equation-ab2-condition-3">
-<span class="eqno">(14)<a class="headerlink" href="#equation-ab2-condition-3" title="Link to this equation">#</a></span>\[x_{i+1}^2 = \alpha_1x_i^2+ h(2\beta_1x_i + 2\beta_2x_{i-1}).\]</div>
-<p>Now, equations <a class="reference internal" href="#equation-ab2-condition-1">(12)</a>, <a class="reference internal" href="#equation-ab2-condition-2">(13)</a>, and <a class="reference internal" href="#equation-ab2-condition-3">(14)</a> must hold for all values of <span class="math notranslate nohighlight">\(x_i\)</span> and <span class="math notranslate nohighlight">\(h\)</span>.
+<span class="eqno">(18)<a class="headerlink" href="#equation-ab2-condition-3" title="Link to this equation">#</a></span>\[x_{i+1}^2 = \alpha_1x_i^2+ h(2\beta_1x_i + 2\beta_2x_{i-1}).\]</div>
+<p>Now, equations <a class="reference internal" href="#equation-ab2-condition-1">(16)</a>, <a class="reference internal" href="#equation-ab2-condition-2">(17)</a>, and <a class="reference internal" href="#equation-ab2-condition-3">(18)</a> must hold for all values of <span class="math notranslate nohighlight">\(x_i\)</span> and <span class="math notranslate nohighlight">\(h\)</span>.
 Choosing <span class="math notranslate nohighlight">\(x_{i}=1\)</span> and <span class="math notranslate nohighlight">\(h=1\)</span> so that <span class="math notranslate nohighlight">\(x_{i-1}=0\)</span> and <span class="math notranslate nohighlight">\(x_{i+1}=2\)</span>, we arrive at the system of equations</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{align*}
@@ -613,15 +613,15 @@ We then present the global truncation errors <span class="math notranslate nohig
 ┝━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━┥
 │          10 │           0.00005 │           0.00004 │
 ├─────────────┼───────────────────┼───────────────────┤
-│         100 │           0.00040 │           0.00030 │
+│         100 │           0.00040 │           0.00029 │
 ├─────────────┼───────────────────┼───────────────────┤
-│        1000 │           0.00402 │           0.00303 │
+│        1000 │           0.00393 │           0.00302 │
 ├─────────────┼───────────────────┼───────────────────┤
-│       10000 │           0.04151 │           0.03001 │
+│       10000 │           0.04040 │           0.03017 │
 ├─────────────┼───────────────────┼───────────────────┤
-│      100000 │           0.41108 │           0.29872 │
+│      100000 │           0.41008 │           0.30103 │
 ├─────────────┼───────────────────┼───────────────────┤
-│     1000000 │           4.13263 │           3.23417 │
+│     1000000 │           4.16538 │           3.02034 │
 ┕━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━┙
 </pre></div>
 </div>

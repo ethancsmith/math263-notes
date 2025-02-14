@@ -618,7 +618,7 @@ y(x_0+h)&amp;\approx y(x_0) + hf\big(x_0, y(x_0)\big)\\
 For this reason, we often speak of “integrating the ODE.”
 Indeed, if <span class="math notranslate nohighlight">\(y\)</span> is the true solution to the IVP above, then the fundamental theorem of calculus tells us that</p>
 <div class="math notranslate nohighlight" id="equation-ftc">
-<span class="eqno">(5)<a class="headerlink" href="#equation-ftc" title="Link to this equation">#</a></span>\[y(x_0+h)-y_0=y(x_1)-y(x_0)=\int_{x_0}^{x_0+h}y'(x)\mathrm{d}x=\int_{x_0}^{x_0+h}f\big(x,y(x)\big)\mathrm{d} x.\]</div>
+<span class="eqno">(6)<a class="headerlink" href="#equation-ftc" title="Link to this equation">#</a></span>\[y(x_0+h)-y_0=y(x_1)-y(x_0)=\int_{x_0}^{x_0+h}y'(x)\mathrm{d}x=\int_{x_0}^{x_0+h}f\big(x,y(x)\big)\mathrm{d} x.\]</div>
 <p>The difficulty then is in evaluating the integral whose integrand depends on the unknown function <span class="math notranslate nohighlight">\(y(x)\)</span>.
 Euler’s method follows by approximating the integral with the left-hand rule, namely</p>
 <div class="math notranslate nohighlight">
@@ -627,36 +627,32 @@ Euler’s method follows by approximating the integral with the left-hand rule, 
 <section id="heuns-modified-euler-method">
 <h2>Heun’s modified Euler method.<a class="headerlink" href="#heuns-modified-euler-method" title="Link to this heading">#</a></h2>
 <p>We now derive a method of Heun by replacing the left-hand rule with the trapezoidal rule.
-Returning to equation <a class="reference internal" href="#equation-ftc">(5)</a> and assuming that the expression <span class="math notranslate nohighlight">\(f(x,y)\)</span> has a continuous second derivative (as a function of <span class="math notranslate nohighlight">\(x\)</span>) on the interval <span class="math notranslate nohighlight">\([x_0, x_0+h]\)</span>, the trapezoidal rule gives</p>
+Returning to equation <a class="reference internal" href="#equation-ftc">(6)</a> and assuming that the expression <span class="math notranslate nohighlight">\(f(x,y)\)</span> has a continuous second derivative (as a function of <span class="math notranslate nohighlight">\(x\)</span>) on the interval <span class="math notranslate nohighlight">\([x_0, x_0+h]\)</span>, the trapezoidal rule gives</p>
 <div class="math notranslate nohighlight" id="equation-trapezoidal-approx">
-<span class="eqno">(6)<a class="headerlink" href="#equation-trapezoidal-approx" title="Link to this equation">#</a></span>\[\begin{split}y(x_0+h)-y_0 
+<span class="eqno">(7)<a class="headerlink" href="#equation-trapezoidal-approx" title="Link to this equation">#</a></span>\[\begin{split}y(x_0+h)-y_0 
 &amp;=\int_{x_0}^{x_0+h}f\big(x,y(x)\big)\mathrm{d} x\\
 &amp;=\frac{h}{2}\Big(f\big(x_0, y(x_0)\big)+f\big(x_{0}+h, y(x_0+h)\big)\Big) +O\big(h^3\big)\\
 &amp;=\frac{h}{2}\Big(f(x_0, y_0)+f\big(x_{0}+h, y(x_0+h)\big)\Big) +O\big(h^3\big)\end{split}\]</div>
 <p>as <span class="math notranslate nohighlight">\(h\to 0\)</span>.
 Unfortunately, we do not know how to evaluate <span class="math notranslate nohighlight">\(f\big(x_0+h,y(x_0+h)\big)\)</span> since it depends on <span class="math notranslate nohighlight">\(y(x_0+h)\)</span> and our goal is to approximate <span class="math notranslate nohighlight">\(y(x_0+h)\)</span>.
-Our solution is to approximate the <span class="math notranslate nohighlight">\(y(x_0+h)\)</span> appearing on the right-hand side of <a class="reference internal" href="#equation-trapezoidal-approx">(6)</a> by the original Euler method.
+Our solution is to approximate the <span class="math notranslate nohighlight">\(y(x_0+h)\)</span> appearing on the right-hand side of <a class="reference internal" href="#equation-trapezoidal-approx">(7)</a> by the original Euler method.
 In particular,</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{equation*}
 y(x_0+h) = y_0 + hf(x_0, y_0) + O\big(h^2\big)\text{ as } h\to 0.
 \end{equation*}\]</div>
-<p>Substituting this estimate into <a class="reference internal" href="#equation-trapezoidal-approx">(6)</a>, we can use Taylor series to argue that</p>
+<p>Substituting this estimate into <a class="reference internal" href="#equation-trapezoidal-approx">(7)</a>, we can use Taylor series to argue that</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{equation*}
 y(x_0+h)-y_0=\frac{h}{2}\Big(f(x_0, y_0)+f\big(x_0+h,y_0+hf(x_0,y_0)\big)\Big)+O\big(h^3\big)\text{ as }h\to 0.
 \end{equation*}\]</div>
-<p>The <strong>modified Euler method</strong> (also known as <strong>Heun’s method</strong>) is then defined by the recurrence</p>
-<div class="amsmath math notranslate nohighlight">
-\[\begin{equation*}
-y_{i+1} = y_i + \frac{h}{2}\left(k_1 + k_2\right),
-\end{equation*}\]</div>
+<p>The <strong>modified Euler method</strong> (<strong>MEM</strong>) (also known as <strong>Heun’s method</strong>) is then defined by the recurrence</p>
+<div class="math notranslate nohighlight" id="equation-mem-method">
+<span class="eqno">(8)<a class="headerlink" href="#equation-mem-method" title="Link to this equation">#</a></span>\[y_{i+1} = y_i + \frac{h}{2}\left(k_1 + k_2\right),\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight">
-\[\begin{align*}
-k_1 &amp;= f(x_i, y_i),\\
-k_2 &amp;= f(x_i+h, y_i+hk_1).
-\end{align*}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}k_1 &amp;= f(x_i, y_i),\\
+k_2 &amp;= f(x_i+h, y_i+hk_1).\end{split}\]</div>
 <p>The above derivation demonstrates the following result, which we take as evidence for the fact that the modified Euler method is an order <span class="math notranslate nohighlight">\(2\)</span> numerical method.</p>
 <div class="proof theorem admonition" id="theorem-4">
 <p class="admonition-title"><span class="caption-number">Theorem 3 </span></p>

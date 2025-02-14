@@ -430,10 +430,8 @@ y(x_1)\approx y_0 + f(x_0, y_0)h.
 \end{equation*}\]</div>
 <p>Whence choosing <span class="math notranslate nohighlight">\(y_1 = y_0 + hf(x_0, y_0)\)</span>, we have <span class="math notranslate nohighlight">\(y_1\approx y(x_1)\)</span> as desired.
 Continuing in this fashion, <strong>Euler’s method</strong> is defined by the recurrence</p>
-<div class="amsmath math notranslate nohighlight">
-\[\begin{equation*}
-y_{i+1} = y_i + f(x_i, y_i)h
-\end{equation*}\]</div>
+<div class="math notranslate nohighlight" id="equation-euler-method">
+<span class="eqno">(4)<a class="headerlink" href="#equation-euler-method" title="Link to this equation">#</a></span>\[y_{i+1} = y_i + f(x_i, y_i)h\]</div>
 <p>for <span class="math notranslate nohighlight">\(i\ge 0\)</span>.</p>
 </section>
 <section id="python-implementation">
@@ -461,7 +459,7 @@ y_{i+1} = y_i + f(x_i, y_i)h
 <h2>Example.<a class="headerlink" href="#example" title="Link to this heading">#</a></h2>
 <p>We now show how to use Euler’s method to solve the IVP</p>
 <div class="math notranslate nohighlight" id="equation-example-02">
-<span class="eqno">(4)<a class="headerlink" href="#equation-example-02" title="Link to this equation">#</a></span>\[\begin{split}y'&amp;= x^2 - y,\\
+<span class="eqno">(5)<a class="headerlink" href="#equation-example-02" title="Link to this equation">#</a></span>\[\begin{split}y'&amp;= x^2 - y,\\
 y(0)&amp;=3\end{split}\]</div>
 <p>over the interval <span class="math notranslate nohighlight">\([0, 2]\)</span>.</p>
 <div class="cell docutils container">
@@ -521,7 +519,7 @@ y(0)&amp;=3\end{split}\]</div>
 </div>
 </div>
 </div>
-<p>Since the IVP <a class="reference internal" href="#equation-example-02">(4)</a> can be solved analytically, we can plot the symbolic and numerical solutions together on the same set of axes.</p>
+<p>Since the IVP <a class="reference internal" href="#equation-example-02">(5)</a> can be solved analytically, we can plot the symbolic and numerical solutions together on the same set of axes.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;dark_background&#39;</span><span class="p">);</span>
@@ -563,7 +561,7 @@ y(0)&amp;=3\end{split}\]</div>
 </div>
 </div>
 <p>Note that although the sequence of errors <span class="math notranslate nohighlight">\(e_i = |y(x_i) - y_i|\)</span> is not necessarily increasing, there is a tendency for the errors made at previous steps to build up at subsequent steps.</p>
-<p>Below we overlay the plot with a direction field plot for the ODE of <a class="reference internal" href="#equation-example-02">(4)</a>.
+<p>Below we overlay the plot with a direction field plot for the ODE of <a class="reference internal" href="#equation-example-02">(5)</a>.
 This helps us to see that every pair of of points <span class="math notranslate nohighlight">\((x_i, y_i)\)</span>, <span class="math notranslate nohighlight">\((x_{i+1}, y_{i+1})\)</span> approximates the true solution to the ODE that passes through the point <span class="math notranslate nohighlight">\((x_i, y_i)\)</span>, but not necessarily the solution to the given IVP which passes through the initial condition point <span class="math notranslate nohighlight">\((x_0, y_0)\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">

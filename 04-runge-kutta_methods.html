@@ -34,9 +34,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/proof.css?v=b4b7a797" />
+    <link rel="stylesheet" type="text/css" href="_static/proof.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- So that users can add custom icons -->
@@ -376,8 +376,8 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#order-two-methods">Order two methods.</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-classical-fourth-order-method">The classical fourth order method.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rethinking-heuns-modified-euler-method">Rethinking Heun’s modified Euler method.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#higher-order-methods">Higher-order methods.</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example.</a></li>
 </ul>
             </nav>
@@ -392,40 +392,72 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="rungekutta-methods">
 <h1>4: Runge–Kutta methods.<a class="headerlink" href="#rungekutta-methods" title="Link to this heading">#</a></h1>
-<p>Recalling our analysis of Euler’s method, it is clear that we could obtain a higher order method if our recurrence for generating the <span class="math notranslate nohighlight">\(y_i\)</span>’s agreed with more terms of the Taylor series for <span class="math notranslate nohighlight">\(y_*\)</span>, the true solution to the ODE that passes through the point <span class="math notranslate nohighlight">\((x_i, y_i)\)</span>.
-The <strong>Runge–Kutta methods</strong> are a family of numerical methods which generalize both the methods of Euler and Heun.
-As with Heun’s method, the essence of the idea is to use additional terms of the Taylor series without actually computing the higher order derivatives and instead replacing each with some finite difference approximation.
-The Runge-Kutta method of order <span class="math notranslate nohighlight">\(1\)</span> is Euler’s method. Heun’s modified Euler method is an example of an order <span class="math notranslate nohighlight">\(2\)</span> Runge–Kutta method.</p>
-<section id="order-two-methods">
-<h2>Order two methods.<a class="headerlink" href="#order-two-methods" title="Link to this heading">#</a></h2>
-<p>The generic Runge-Kutta method of order 2 takes the form</p>
+<p>The <strong>Runge–Kutta methods</strong> are a family of numerical methods which generalize both Euler’s method <a class="reference internal" href="02-euler_method.html#equation-euler-method">(4)</a> and Heun’s modified Euler method <a class="reference internal" href="03-error_analysis.html#equation-mem-method">(8)</a>.
+Indeed, the Runge-Kutta method of order <span class="math notranslate nohighlight">\(1\)</span> is Euler’s method,
+while Heun’s modified Euler method is an example of a second order Runge–Kutta method.
+The essence of the Runge-Kutta methods is to approximate the true solution using additional terms of the Taylor series without actually computing the higher order derivatives.</p>
+<section id="rethinking-heuns-modified-euler-method">
+<h2>Rethinking Heun’s modified Euler method.<a class="headerlink" href="#rethinking-heuns-modified-euler-method" title="Link to this heading">#</a></h2>
+<p>Previously, we derived Heun’s modified Euler method based on numerical integration via the trapezoidal rule.
+We now take a different viewpoint that leads to the development of a whole family of second order methods.</p>
+<p>Suppose as usual that we are given an IVP of the form</p>
 <div class="math notranslate nohighlight">
-\[y_{i+1} = y_i + h\big(w_1k_1 + w_2k_2\big),\]</div>
+\[\begin{split}y' &amp;= f(x,y),\\
+y(x_0) &amp;= y_0,\end{split}\]</div>
+<p>and our goal is to approximate <span class="math notranslate nohighlight">\(y(x_1)\)</span>, where <span class="math notranslate nohighlight">\(x_1 = x_0+h\)</span>.
+The Taylor series approach previously developed tells us that to first order we can do no better than Euler’s method, viz,</p>
+<div class="math notranslate nohighlight">
+\[y(x_1) \approx y(x_0) + y'(x_0)(x_1-x_0) = y_0 + f(x_0,y_0)h.\]</div>
+<p>The Taylor series approach also makes it clear that to obtain a second order approximation, we require an estimate for <span class="math notranslate nohighlight">\(y''(x_0)\)</span>.
+Now numerical methods are mostly just ways of faking limits.
+Indeed, if <span class="math notranslate nohighlight">\(\alpha\)</span> is constant with repect to <span class="math notranslate nohighlight">\(h\)</span>, then under reasonable assumptions on <span class="math notranslate nohighlight">\(f\)</span> and the solution <span class="math notranslate nohighlight">\(y\)</span>, we have</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}y''(x_0) &amp;= \lim_{h\to 0}\frac{y'(x_0+h) - y'(x_0)}{h}\\
+&amp;=\frac{y'(x_0+\alpha h) - y'(x_0)}{\alpha h} + O(h)\\
+&amp;=\frac{k_1-k_2}{\alpha h} + O(h)\end{split}\]</div>
+<p>as <span class="math notranslate nohighlight">\(h\to 0\)</span>, where <span class="math notranslate nohighlight">\(k_1 = f(x_0, y_0)\)</span> and <span class="math notranslate nohighlight">\(k_2 = f(x_0+\alpha h, y_0 + \alpha hk_1)\)</span>.
+This estimate then yields second order approximation for <span class="math notranslate nohighlight">\(y(x_1)\)</span>, namely,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}y(x_1) &amp;= y(x_0) + y'(x_0)h +\frac{y''(x_0)}{2}h^2 + O(h^3)\\
+&amp;= y_0 + k_1h  + \frac{k_2-k_1}{2\alpha h}h^2 + O(h^3)\end{split}\]</div>
+<p>as <span class="math notranslate nohighlight">\(h\to 0\)</span>.
+The <strong>generic Runge–Kutta method of order 2</strong> is therefore defined by the recurrence</p>
+<div class="math notranslate nohighlight" id="equation-generic-rk2">
+<span class="eqno">(9)<a class="headerlink" href="#equation-generic-rk2" title="Link to this equation">#</a></span>\[y_{i+1} = y_i + h\left(w_1k_1 + w_2k_2\right),\]</div>
 <p>where</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}k_1 &amp;= f(x_i, y_i),\\
-k_2 &amp;= f(x_i+\alpha h, y_i + \beta hk_1).\end{split}\]</div>
-<p>A valid order <span class="math notranslate nohighlight">\(2\)</span> method is obtained by imposing the parameter constraints</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}\alpha &amp;&gt; 0,\\
-\beta &amp;=\alpha,\\
+k_2 &amp;= f(x_i + \alpha h, y_i + h\alpha k_1),\\
 w_1 &amp;= 1-\frac{1}{2\alpha},\\
-w_2 &amp;= \frac{1}{2\alpha}.\end{split}\]</div>
-<p>We mention the three most common choices here.
-Setting <span class="math notranslate nohighlight">\(\alpha=\beta=1\)</span> and <span class="math notranslate nohighlight">\(w_1=w_2=1/2\)</span> yields Heun’s (modified Euler) method which we have already met.
-<strong>Ralston’s order 2 method</strong>, which also occasionally goes by the name “Heun’s method,” arises by setting <span class="math notranslate nohighlight">\(\alpha=\beta=2/3\)</span>, <span class="math notranslate nohighlight">\(w_1=1/4\)</span>, and <span class="math notranslate nohighlight">\(w_2=3/4\)</span>.
-Finally, the <strong>midpoint method</strong> (or <strong>corrected Euler method</strong>) is defined by the choices <span class="math notranslate nohighlight">\(\alpha=\beta=1/2\)</span>, <span class="math notranslate nohighlight">\(w_1=0\)</span>, and <span class="math notranslate nohighlight">\(w_2=1\)</span>.</p>
+w_2 &amp;= \frac{1}{2\alpha},\end{split}\]</div>
+<p>and <span class="math notranslate nohighlight">\(\alpha\)</span> is any positive constant.
+We mention the three most common choices here.
+Setting <span class="math notranslate nohighlight">\(\alpha=1\)</span> yields Heun’s (modified Euler) method which we have already met.
+<strong>Ralston’s order 2 method</strong>, which also occasionally goes by the name “Heun’s method,” arises by setting <span class="math notranslate nohighlight">\(\alpha=2/3\)</span>.
+Finally, the <strong>midpoint method</strong> (or <strong>corrected Euler method</strong>) is defined by the choice <span class="math notranslate nohighlight">\(\alpha=1/2\)</span>.</p>
 </section>
-<section id="the-classical-fourth-order-method">
-<h2>The classical fourth order method.<a class="headerlink" href="#the-classical-fourth-order-method" title="Link to this heading">#</a></h2>
-<p>Probably the most popular Runge–Kutta method is the <strong>classical fourth order Runge–Kutta method</strong> (<strong>RK4</strong>), which is defined by the equations</p>
-<div class="amsmath math notranslate nohighlight" id="equation-9419b77a-41f3-4da5-9b0b-ee492ca04913">
-<span class="eqno">(7)<a class="headerlink" href="#equation-9419b77a-41f3-4da5-9b0b-ee492ca04913" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<section id="higher-order-methods">
+<h2>Higher-order methods.<a class="headerlink" href="#higher-order-methods" title="Link to this heading">#</a></h2>
+<p>It is natural to speculate that higher-order methods could be obtained by taking a weighted average of additional (approximate) slopes “sampled” from the subinterval <span class="math notranslate nohighlight">\([x_i, x_{i+1}]\)</span>.
+An <span class="math notranslate nohighlight">\(s\)</span>-stage Runge–Kutta method is the result of an average of <span class="math notranslate nohighlight">\(s\)</span> such samples.
+The general form of an <span class="math notranslate nohighlight">\(s\)</span>-stage method is</p>
+<div class="math notranslate nohighlight" id="equation-s-stage-rk">
+<span class="eqno">(10)<a class="headerlink" href="#equation-s-stage-rk" title="Link to this equation">#</a></span>\[y_{i+1} = y_i + h\sum_{j=1}^s b_jk_j,\]</div>
+<p>where</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}k_1 &amp;= f(x_i, y_i),\\
+k_2 &amp;= f(x_i + c_2h, y_i + ha_{2,1}k_1),\\
+&amp;\vdots\\
+k_s &amp;= f\big(x_i + c_sh, y_i + h(a_{s,1}k_1 + \dots + a_{s,s-1}k_s)\big).\end{split}\]</div>
+<p>Of course care must be taken when choosing the coefficients so that the method is consistent with the Taylor series of the true solution.</p>
+<p>Perhaps the most popular Runge–Kutta method is the <strong>classical fourth order Runge–Kutta method</strong> (<strong>RK4</strong>), which is defined by the recurrence</p>
+<div class="amsmath math notranslate nohighlight" id="equation-dd93a171-55f4-4d29-b4f5-7fc2ad0cf981">
+<span class="eqno">(11)<a class="headerlink" href="#equation-dd93a171-55f4-4d29-b4f5-7fc2ad0cf981" title="Permalink to this equation">#</a></span>\[\begin{equation}
 y_{i+1} = \frac{h}{6}\big(k_1 + 2k_2 + 2k_3 + k_4\big),
 \end{equation}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-c244f4f1-4f73-464e-a737-32ef448d7677">
-<span class="eqno">(8)<a class="headerlink" href="#equation-c244f4f1-4f73-464e-a737-32ef448d7677" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-8105e347-6b61-4d33-9b61-6d45215c45de">
+<span class="eqno">(12)<a class="headerlink" href="#equation-8105e347-6b61-4d33-9b61-6d45215c45de" title="Permalink to this equation">#</a></span>\[\begin{align}
 k_1 &amp;= f(x_i, y_i),\\
 k_2 &amp;= f\big(x_i + h/2, y_i + hk_1/2\big),\\
 k_3 &amp;= f\big(x_i + h/2, y_i + hk_2/2\big),\\
@@ -436,8 +468,8 @@ k_4 &amp;= f(x_i + h, y_i + hk_3).
 <section id="example">
 <h2>Example.<a class="headerlink" href="#example" title="Link to this heading">#</a></h2>
 <p>Below we compare Euler’s method with the classical Runge–Kutta method of order 4 (RK4) for the IVP</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d1dc2596-6b99-4c14-baa3-05435492fac1">
-<span class="eqno">(9)<a class="headerlink" href="#equation-d1dc2596-6b99-4c14-baa3-05435492fac1" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a2a6e401-2e59-4f66-92f3-fe4ee999817b">
+<span class="eqno">(13)<a class="headerlink" href="#equation-a2a6e401-2e59-4f66-92f3-fe4ee999817b" title="Permalink to this equation">#</a></span>\[\begin{align}
 y'&amp;=(y/x)-(y/x)^2,\\
 y(1)&amp;=1.
 \end{align}\]</div>
@@ -606,8 +638,8 @@ y(1)&amp;=1.
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#order-two-methods">Order two methods.</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-classical-fourth-order-method">The classical fourth order method.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#rethinking-heuns-modified-euler-method">Rethinking Heun’s modified Euler method.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#higher-order-methods">Higher-order methods.</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example.</a></li>
 </ul>
   </nav></div>

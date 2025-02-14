@@ -395,7 +395,7 @@
 <h2>A badly-behaved example.<a class="headerlink" href="#a-badly-behaved-example" title="Link to this heading">#</a></h2>
 <p>Consider the initial value problem</p>
 <div class="math notranslate nohighlight" id="equation-stiff-example">
-<span class="eqno">(38)<a class="headerlink" href="#equation-stiff-example" title="Link to this equation">#</a></span>\[\begin{split}\dot{y} &amp;= -200y + 200t + 101,\\
+<span class="eqno">(42)<a class="headerlink" href="#equation-stiff-example" title="Link to this equation">#</a></span>\[\begin{split}\dot{y} &amp;= -200y + 200t + 101,\\
 y(0)&amp;= 1.01\end{split}\]</div>
 <p>over the <span class="math notranslate nohighlight">\(t\)</span>-interval <span class="math notranslate nohighlight">\([0, 1]\)</span>.
 The problem is easy to solve analytically.</p>
@@ -501,7 +501,7 @@ The problem is easy to solve analytically.</p>
 <section id="id1">
 <h2>Stiffness.<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
 <p>The reason that the above example behaves so poorly is that the desired solution is surrounded by other rapidly decaying transient solutions to the ODE.  The fact that these other solutions converge to our desired solution as <span class="math notranslate nohighlight">\(t\to\infty\)</span> should help dampen out the errors in our numerical methods, but the problem here is that the convergence is (relatively) too fast.  It is as though the equation is too stable causing the numerical method to become unstable.  This condition is known as <strong>stiffness</strong>.  “Physically, stiffness corresponds to a process whose components have highly disparate time scales or a process whose time scale is very short compared to the interval over which it is being studied (Heath. <em>Scientific Computing</em>, 2e., 2002).”</p>
-<p>Below we give a plot of the desired solution to the IVP <a class="reference internal" href="#equation-stiff-example">(38)</a> together with several other solutions to the ODE (with different initial value conditions) on top of a direction field.  Observe that the slopes of these other solutions are very steep at locations very near the desired solution.</p>
+<p>Below we give a plot of the desired solution to the IVP <a class="reference internal" href="#equation-stiff-example">(42)</a> together with several other solutions to the ODE (with different initial value conditions) on top of a direction field.  Observe that the slopes of these other solutions are very steep at locations very near the desired solution.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pyplot</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">fig</span><span class="p">);</span>
@@ -573,7 +573,7 @@ The problem is easy to solve analytically.</p>
 <img alt="_images/65e3632c9ec6f9fe9e39b5de8b326c5a70d68801d8129ebe7603a79909e47a57.png" src="_images/65e3632c9ec6f9fe9e39b5de8b326c5a70d68801d8129ebe7603a79909e47a57.png" />
 </div>
 </div>
-<p>For this reason, stiff differential equations are typically solved using implicit methods, which tend to be much less sensitive to small perturbations in initial conditions.  The simplest implicit method is the <strong>backward Euler method (BEM)</strong>, which is defined by the equation <a class="reference internal" href="06-predictor-corrector_methods.html#equation-backward-euler">(15)</a>.  By their very nature, implicit methods require an equation solving subroutine.  Typically, Newton’s method or some variant is used.  For our Python implementation, we decided to use the <code class="docutils literal notranslate"><span class="pre">fsolve</span></code> routine from the <a class="reference external" href="https://scipy.org/">SciPy</a> library.</p>
+<p>For this reason, stiff differential equations are typically solved using implicit methods, which tend to be much less sensitive to small perturbations in initial conditions.  The simplest implicit method is the <strong>backward Euler method (BEM)</strong>, which is defined by the equation <a class="reference internal" href="06-predictor-corrector_methods.html#equation-backward-euler">(19)</a>.  By their very nature, implicit methods require an equation solving subroutine.  Typically, Newton’s method or some variant is used.  For our Python implementation, we decided to use the <code class="docutils literal notranslate"><span class="pre">fsolve</span></code> routine from the <a class="reference external" href="https://scipy.org/">SciPy</a> library.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">scipy</span> <span class="k">as</span> <span class="nn">sp</span>
 
