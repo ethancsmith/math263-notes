@@ -14,41 +14,82 @@ kernelspec:
 
 # 4: Runge–Kutta methods.
 
-Recalling our analysis of Euler's method, it is clear that we could obtain a higher order method if our recurrence for generating the $y_i$'s agreed with more terms of the Taylor series for $y_*$, the true solution to the ODE that passes through the point $(x_i, y_i)$.
-The **Runge–Kutta methods** are a family of numerical methods which generalize both the methods of Euler and Heun.
-As with Heun's method, the essence of the idea is to use additional terms of the Taylor series without actually computing the higher order derivatives and instead replacing each with some finite difference approximation.
-The Runge-Kutta method of order $1$ is Euler's method. Heun's modified Euler method is an example of an order $2$ Runge–Kutta method.
+The **Runge–Kutta methods** are a family of numerical methods which generalize both Euler's method {eq}`euler-method` and Heun's modified Euler method {eq}`mem-method`.
+Indeed, the Runge-Kutta method of order $1$ is Euler's method,
+while Heun's modified Euler method is an example of a second order Runge–Kutta method.
+The essence of the Runge-Kutta methods is to approximate the true solution using additional terms of the Taylor series without actually computing the higher order derivatives.
 
 +++
 
-## Order two methods.
+## Rethinking Heun's modified Euler method.
 
-The generic Runge-Kutta method of order 2 takes the form
+Previously, we derived Heun's modified Euler method based on numerical integration via the trapezoidal rule.
+We now take a different viewpoint that leads to the development of a whole family of second order methods.
+
+Suppose as usual that we are given an IVP of the form
 ```{math}
-y_{i+1} = y_i + h\big(w_1k_1 + w_2k_2\big),
+y' &= f(x,y),\\
+y(x_0) &= y_0,
+```
+and our goal is to approximate $y(x_1)$, where $x_1 = x_0+h$.
+The Taylor series approach previously developed tells us that to first order we can do no better than Euler's method, viz,
+```{math}
+y(x_1) \approx y(x_0) + y'(x_0)(x_1-x_0) = y_0 + f(x_0,y_0)h.
+```
+The Taylor series approach also makes it clear that to obtain a second order approximation, we require an estimate for $y''(x_0)$.
+Now numerical methods are mostly just ways of faking limits.
+Indeed, if $\alpha$ is constant with repect to $h$, then under reasonable assumptions on $f$ and the solution $y$, we have
+```{math}
+y''(x_0) &= \lim_{h\to 0}\frac{y'(x_0+h) - y'(x_0)}{h}\\
+&=\frac{y'(x_0+\alpha h) - y'(x_0)}{\alpha h} + O(h)\\
+&=\frac{k_1-k_2}{\alpha h} + O(h)
+```
+as $h\to 0$, where $k_1 = f(x_0, y_0)$ and $k_2 = f(x_0+\alpha h, y_0 + \alpha hk_1)$.
+This estimate then yields second order approximation for $y(x_1)$, namely,
+```{math}
+y(x_1) &= y(x_0) + y'(x_0)h +\frac{y''(x_0)}{2}h^2 + O(h^3)\\
+&= y_0 + k_1h  + \frac{k_2-k_1}{2\alpha h}h^2 + O(h^3)
+```
+as $h\to 0$.
+The **generic Runge–Kutta method of order 2** is therefore defined by the recurrence
+```{math}
+:label: generic-RK2
+y_{i+1} = y_i + h\left(w_1k_1 + w_2k_2\right),
 ```
 where
 ```{math}
 k_1 &= f(x_i, y_i),\\
-k_2 &= f(x_i+\alpha h, y_i + \beta hk_1).
-```
-A valid order $2$ method is obtained by imposing the parameter constraints
-```{math}
-\alpha &> 0,\\
-\beta &=\alpha,\\
+k_2 &= f(x_i + \alpha h, y_i + h\alpha k_1),\\
 w_1 &= 1-\frac{1}{2\alpha},\\
-w_2 &= \frac{1}{2\alpha}.
+w_2 &= \frac{1}{2\alpha},
 ```
+and $\alpha$ is any positive constant.
 We mention the three most common choices here.
-Setting $\alpha=\beta=1$ and $w_1=w_2=1/2$ yields Heun's (modified Euler) method which we have already met. 
-**Ralston's order 2 method**, which also occasionally goes by the name "Heun's method," arises by setting $\alpha=\beta=2/3$, $w_1=1/4$, and $w_2=3/4$.
-Finally, the **midpoint method** (or **corrected Euler method**) is defined by the choices $\alpha=\beta=1/2$, $w_1=0$, and $w_2=1$.
+Setting $\alpha=1$ yields Heun's (modified Euler) method which we have already met. 
+**Ralston's order 2 method**, which also occasionally goes by the name "Heun's method," arises by setting $\alpha=2/3$.
+Finally, the **midpoint method** (or **corrected Euler method**) is defined by the choice $\alpha=1/2$.
 
 +++
 
-## The classical fourth order method.
+## Higher-order methods.
 
-Probably the most popular Runge–Kutta method is the **classical fourth order Runge–Kutta method** (**RK4**), which is defined by the equations
+It is natural to speculate that higher-order methods could be obtained by taking a weighted average of additional (approximate) slopes "sampled" from the subinterval $[x_i, x_{i+1}]$.
+An $s$-stage Runge–Kutta method is the result of an average of $s$ such samples.
+The general form of an $s$-stage method is
+```{math}
+:label: s-stage-RK
+y_{i+1} = y_i + h\sum_{j=1}^s b_jk_j,
+```
+where
+```{math}
+k_1 &= f(x_i, y_i),\\
+k_2 &= f(x_i + c_2h, y_i + ha_{2,1}k_1),\\
+&\vdots\\
+k_s &= f\big(x_i + c_sh, y_i + h(a_{s,1}k_1 + \dots + a_{s,s-1}k_s)\big).
+```
+Of course care must be taken when choosing the coefficients so that the method is consistent with the Taylor series of the true solution.
+
+Perhaps the most popular Runge–Kutta method is the **classical fourth order Runge–Kutta method** (**RK4**), which is defined by the recurrence
 \begin{equation}
 y_{i+1} = \frac{h}{6}\big(k_1 + 2k_2 + 2k_3 + k_4\big),
 \end{equation}
@@ -71,7 +112,7 @@ y'&=(y/x)-(y/x)^2,\\
 y(1)&=1.
 \end{align}
 
-```{code-cell}
+```{code-cell} ipython3
 import math263
 import numpy as np
 import sympy

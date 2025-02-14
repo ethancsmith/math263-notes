@@ -49,9 +49,10 @@ y(x_1)\approx y_0 + f(x_0, y_0)h.
 \end{equation*}
 Whence choosing $y_1 = y_0 + hf(x_0, y_0)$, we have $y_1\approx y(x_1)$ as desired.
 Continuing in this fashion, **Euler's method** is defined by the recurrence
-\begin{equation*}
+```{math}
+:label: euler-method
 y_{i+1} = y_i + f(x_i, y_i)h
-\end{equation*}
+```
 for $i\ge 0$.
 
 ## Python implementation.

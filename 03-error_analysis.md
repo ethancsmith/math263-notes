@@ -231,15 +231,16 @@ Substituting this estimate into {eq}`trapezoidal-approx`, we can use Taylor seri
 y(x_0+h)-y_0=\frac{h}{2}\Big(f(x_0, y_0)+f\big(x_0+h,y_0+hf(x_0,y_0)\big)\Big)+O\big(h^3\big)\text{ as }h\to 0.
 \end{equation*}
 
-The **modified Euler method** (also known as **Heun's method**) is then defined by the recurrence
-\begin{equation*}
+The **modified Euler method** (**MEM**) (also known as **Heun's method**) is then defined by the recurrence
+```{math}
+:label: mem-method
 y_{i+1} = y_i + \frac{h}{2}\left(k_1 + k_2\right),
-\end{equation*}
+```
 where
-\begin{align*}
+```{math}
 k_1 &= f(x_i, y_i),\\
 k_2 &= f(x_i+h, y_i+hk_1).
-\end{align*}
+```
 The above derivation demonstrates the following result, which we take as evidence for the fact that the modified Euler method is an order $2$ numerical method.
 
 ```{prf:theorem}
