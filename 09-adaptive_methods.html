@@ -537,7 +537,7 @@ With the default settings, the implementation aims to keep the estimated relativ
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">pyplot</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">layout</span><span class="o">=</span><span class="s1">&#39;constrained&#39;</span><span class="p">);</span>
 
 <span class="c1"># numerically solve IVP with Dormand-Prince (RK45)</span>
-<span class="n">dp54_soln</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="n">w0</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;RK45&#39;</span><span class="p">);</span>
+<span class="n">dp54_soln</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="n">w0</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;RK45&#39;</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mi">10</span><span class="o">**-</span><span class="mi">6</span><span class="p">);</span>
 <span class="k">if</span> <span class="n">dp54_soln</span><span class="o">.</span><span class="n">status</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Dormand-Prince method failed.&quot;</span><span class="p">);</span>
 <span class="k">else</span><span class="p">:</span>
@@ -566,35 +566,35 @@ With the default settings, the implementation aims to keep the estimated relativ
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dormand-Prince method successfully reached end of time span.
-End of time-interval [0, 25] reached in n = 85 time-steps.
+End of time-interval [0, 25] reached in n = 183 time-steps.
 Displaying results for first 10 steps.
 ┍━━━━━┯━━━━━━━━━┯━━━━━━━━━━┯━━━━━━━━━┯━━━━━━━━━━┯━━━━━━━━━┑
 │   i │     t_i │      x_i │     y_i │     x_i&#39; │    y_i&#39; │
 ┝━━━━━┿━━━━━━━━━┿━━━━━━━━━━┿━━━━━━━━━┿━━━━━━━━━━┿━━━━━━━━━┥
 │   0 │ 0.00000 │  0.10000 │ 0.00000 │  0.00000 │ 4.35890 │
 ├─────┼─────────┼──────────┼─────────┼──────────┼─────────┤
-│   1 │ 0.00001 │  0.10000 │ 0.00006 │ -0.00141 │ 4.35890 │
+│   1 │ 0.00643 │  0.09796 │ 0.02785 │ -0.62732 │ 4.27146 │
 ├─────┼─────────┼──────────┼─────────┼──────────┼─────────┤
-│   2 │ 0.00015 │  0.10000 │ 0.00067 │ -0.01546 │ 4.35885 │
+│   2 │ 0.01264 │  0.09238 │ 0.05372 │ -1.15321 │ 4.04799 │
 ├─────┼─────────┼──────────┼─────────┼──────────┼─────────┤
-│   3 │ 0.00156 │  0.09988 │ 0.00680 │ -0.15580 │ 4.35360 │
+│   3 │ 0.01963 │  0.08264 │ 0.08087 │ -1.60459 │ 3.70439 │
 ├─────┼─────────┼──────────┼─────────┼──────────┼─────────┤
-│   4 │ 0.01562 │  0.08862 │ 0.06558 │ -1.36479 │ 3.90878 │
+│   4 │ 0.02771 │  0.06820 │ 0.10906 │ -1.94517 │ 3.28108 │
 ├─────┼─────────┼──────────┼─────────┼──────────┼─────────┤
-│   5 │ 0.04237 │  0.03718 │ 0.15202 │ -2.23110 │ 2.60706 │
+│   5 │ 0.03705 │  0.04889 │ 0.13757 │ -2.16169 │ 2.83304 │
 ├─────┼─────────┼──────────┼─────────┼──────────┼─────────┤
-│   6 │ 0.08196 │ -0.05293 │ 0.23142 │ -2.24030 │ 1.55115 │
+│   6 │ 0.04790 │  0.02475 │ 0.16589 │ -2.26905 │ 2.40325 │
 ├─────┼─────────┼──────────┼─────────┼──────────┼─────────┤
-│   7 │ 0.14297 │ -0.18142 │ 0.30259 │ -1.97226 │ 0.88377 │
+│   7 │ 0.06067 │ -0.00445 │ 0.19395 │ -2.29356 │ 2.01212 │
 ├─────┼─────────┼──────────┼─────────┼──────────┼─────────┤
-│   8 │ 0.24986 │ -0.37199 │ 0.36918 │ -1.62151 │ 0.43572 │
+│   8 │ 0.07587 │ -0.03913 │ 0.22179 │ -2.25928 │ 1.66619 │
 ├─────┼─────────┼──────────┼─────────┼──────────┼─────────┤
-│   9 │ 0.42862 │ -0.62811 │ 0.41789 │ -1.27693 │ 0.15445 │
+│   9 │ 0.09417 │ -0.07980 │ 0.24936 │ -2.18500 │ 1.36548 │
 ┕━━━━━┷━━━━━━━━━┷━━━━━━━━━━┷━━━━━━━━━┷━━━━━━━━━━┷━━━━━━━━━┙
 Plotting solution in spatial domain (xy-plane).
 </pre></div>
 </div>
-<img alt="_images/c571af8596f4c5b7b5f81e470125559abc0b49818afe494a8e4f86d79a184311.png" src="_images/c571af8596f4c5b7b5f81e470125559abc0b49818afe494a8e4f86d79a184311.png" />
+<img alt="_images/eeefb74a8c7c8b6d4b9df9b7894c1d3800d73cf55b50ab649a548af1b1c0ed60.png" src="_images/eeefb74a8c7c8b6d4b9df9b7894c1d3800d73cf55b50ab649a548af1b1c0ed60.png" />
 </div>
 </div>
 </section>
