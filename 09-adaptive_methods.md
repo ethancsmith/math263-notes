@@ -128,7 +128,7 @@ We then rewrite the vector ODE {eq}`1st-order-vector-ode` as the scalar system
 We now numerically solve this problem over the time-interval $[0, 25]$ using SciPy's implementation of the Dormand-Prince method for the case when the eccentricity $e = 0.9$.
 With the default settings, the implementation aims to keep the estimated relative error below $10^{-3}$ and the estimated absolute error below $10^{-6}$.
 
-```{code-cell} ipython3
+```{code-cell}
 # import modules
 import numpy
 from numpy import sqrt

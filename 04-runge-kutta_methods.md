@@ -112,7 +112,7 @@ y'&=(y/x)-(y/x)^2,\\
 y(1)&=1.
 \end{align}
 
-```{code-cell} ipython3
+```{code-cell}
 import math263
 import numpy as np
 import sympy
