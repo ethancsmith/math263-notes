@@ -17,7 +17,7 @@ deploy: # deploy web version to gh-pages branches
 	ghp-import -n -p -f _build/html
 
 test: math263.py test_math263.py test_data.yaml
-	python -m test_math263 -v
+	pytest -v
 
 clean:
 	git clean -xf

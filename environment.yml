@@ -14,4 +14,5 @@ dependencies:
   - sympy
   - tabulate
   - scipy
+  - pytest
 prefix: /opt/anaconda3/envs/math263-notes
