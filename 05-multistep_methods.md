@@ -160,9 +160,12 @@ num_steps = [base**j for j in range(1, max_exp)];
 h = [(b-a)/n for n in num_steps];
 mem_errors = [abs(math263.mem(f, a, b, y0, n)[1][:, 0][-1]-sym_y(b)) for n in num_steps];
 ab2_errors = [abs(math263.ab2(f, a, b, y0, n)[1][:, 0][-1]-sym_y(b)) for n in num_steps];
-mem_cutdown = [mem_errors[i+1]/mem_errors[i] for i in range(len(num_steps)-1)] # compare size of error to size at previous step-size
+# compare size of error to size at previous step-size
+mem_cutdown = [mem_errors[i+1]/mem_errors[i] 
+               for i in range(len(num_steps)-1)] 
 mem_cutdown.insert(0, None)
-ab2_cutdown = [ab2_errors[i+1]/ab2_errors[i] for i in range(len(num_steps)-1)] # compare size of error to size at previous step-size
+ab2_cutdown = [ab2_errors[i+1]/ab2_errors[i] 
+               for i in range(len(num_steps)-1)] 
 ab2_cutdown.insert(0, None)
 
 # tabulate the results
