@@ -28,9 +28,9 @@ y_{i+1} = \sum_{j=1}^m\alpha_jy_{i+1-j} + h\sum_{j=0}^m\beta_jf(x_{i+1-j}, y_{i+
 ```
 Clearly such a method cannot be used until $m$ previous values are known.
 For this reason, these methods must be paired with a starting method and are themselves called **continuing methods**.
-However, there is additional wrinkle if $\beta_0\ne 0$ since in that case $y_{i+1}$ appears on both sides of the defining equation.
-If $\beta_0=0$, the method is said to be **explicit**.
-Otherwise, the method is said to be **implicit**.
+However, there is an additional wrinkle if $\beta_0\ne 0$.
+In particular, if $\beta_0\ne 0$, then $y_{i+1}$ appears on both sides of the defining equation.
+Therefore, we say that the method is **explicit** if $\beta_0=0$ and **implicit** otherwise.
 If the method is implicit and the function $f(x, y)$ is linear in $y$, then it is easy to solve for $y_{i+1}$ once the specific IVP is given, but in practice this is often not the case.
 We will consider implicit methods in the next lecture.
 For now, we concentrate on the case of explicit methods.
@@ -43,7 +43,7 @@ Some of the most popular explicit linear multistep methods are the _Adams–Bash
 For an explicit, linear $2$-step method equation {eq}`linear-multistep-form` simplifies to
 ```{math}
 :label: 2-step-form
-y_{i+1} = \alpha_1y_i + h\big(\beta_1f(x_i,y_i) + \beta_2f(x_{i-1},y_{i-1}\big).
+y_{i+1} = \alpha_1y_i + h\big(\beta_1f(x_i,y_i) + \beta_2f(x_{i-1},y_{i-1})\big).
 ```
 The idea of the Adams–Bashforth method is to force this formula to be exact for the first 3 terms of the Taylor series for the true solution $y$.
 This will ensure that the local truncation error for the method is $O(h^3)$ as $h\to 0$.
@@ -160,12 +160,16 @@ num_steps = [base**j for j in range(1, max_exp)];
 h = [(b-a)/n for n in num_steps];
 mem_errors = [abs(math263.mem(f, a, b, y0, n)[1][:, 0][-1]-sym_y(b)) for n in num_steps];
 ab2_errors = [abs(math263.ab2(f, a, b, y0, n)[1][:, 0][-1]-sym_y(b)) for n in num_steps];
+mem_cutdown = [mem_errors[i+1]/mem_errors[i] for i in range(len(num_steps)-1)] # compare size of error to size at previous step-size
+mem_cutdown.insert(0, None)
+ab2_cutdown = [ab2_errors[i+1]/ab2_errors[i] for i in range(len(num_steps)-1)] # compare size of error to size at previous step-size
+ab2_cutdown.insert(0, None)
 
 # tabulate the results
 print(f"Comparison of global errors |y_n - y({b})| for various step-sizes.")
-table = np.c_[h, mem_errors, ab2_errors];
-hdrs = ["step-size", "MEM global error", "AB2 global error"];
-print(tabulate(table, hdrs, tablefmt='mixed_grid', floatfmt=['0.7f','g','g']))
+table = np.c_[h, mem_errors, mem_cutdown, ab2_errors, ab2_cutdown];
+hdrs = ["step-size", "MEM global error", "cutdown", "AB2 global error", "cutdown"];
+print(tabulate(table, hdrs, tablefmt='mixed_grid', floatfmt=['0.7f','e', 'f','e', 'f']))
 ```
 
 We also compare the empirical average running time for our implementations as the number of steps increases.
