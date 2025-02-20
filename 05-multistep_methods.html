@@ -34,9 +34,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="_static/proof.css?v=b4b7a797" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- So that users can add custom icons -->
@@ -379,6 +379,7 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adamsbashforth-2-step-method">Adams–Bashforth 2-step method.</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adamsbashforth-4-step-method">Adams–Bashforth 4-step method.</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advantages-and-disadvantages">Advantages and disadvantages.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#python-implementation">Python implementation.</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example.</a></li>
 </ul>
             </nav>
@@ -407,9 +408,9 @@ A <strong>linear <span class="math notranslate nohighlight">\(m\)</span>-step me
 <span class="eqno">(14)<a class="headerlink" href="#equation-linear-multistep-form" title="Link to this equation">#</a></span>\[y_{i+1} = \sum_{j=1}^m\alpha_jy_{i+1-j} + h\sum_{j=0}^m\beta_jf(x_{i+1-j}, y_{i+1-j}).\]</div>
 <p>Clearly such a method cannot be used until <span class="math notranslate nohighlight">\(m\)</span> previous values are known.
 For this reason, these methods must be paired with a starting method and are themselves called <strong>continuing methods</strong>.
-However, there is additional wrinkle if <span class="math notranslate nohighlight">\(\beta_0\ne 0\)</span> since in that case <span class="math notranslate nohighlight">\(y_{i+1}\)</span> appears on both sides of the defining equation.
-If <span class="math notranslate nohighlight">\(\beta_0=0\)</span>, the method is said to be <strong>explicit</strong>.
-Otherwise, the method is said to be <strong>implicit</strong>.
+However, there is an additional wrinkle if <span class="math notranslate nohighlight">\(\beta_0\ne 0\)</span>.
+In particular, if <span class="math notranslate nohighlight">\(\beta_0\ne 0\)</span>, then <span class="math notranslate nohighlight">\(y_{i+1}\)</span> appears on both sides of the defining equation.
+Therefore, we say that the method is <strong>explicit</strong> if <span class="math notranslate nohighlight">\(\beta_0=0\)</span> and <strong>implicit</strong> otherwise.
 If the method is implicit and the function <span class="math notranslate nohighlight">\(f(x, y)\)</span> is linear in <span class="math notranslate nohighlight">\(y\)</span>, then it is easy to solve for <span class="math notranslate nohighlight">\(y_{i+1}\)</span> once the specific IVP is given, but in practice this is often not the case.
 We will consider implicit methods in the next lecture.
 For now, we concentrate on the case of explicit methods.
@@ -418,7 +419,7 @@ Some of the most popular explicit linear multistep methods are the <em>Adams–B
 <h2>Adams–Bashforth 2-step method.<a class="headerlink" href="#adamsbashforth-2-step-method" title="Link to this heading">#</a></h2>
 <p>For an explicit, linear <span class="math notranslate nohighlight">\(2\)</span>-step method equation <a class="reference internal" href="#equation-linear-multistep-form">(14)</a> simplifies to</p>
 <div class="math notranslate nohighlight" id="equation-2-step-form">
-<span class="eqno">(15)<a class="headerlink" href="#equation-2-step-form" title="Link to this equation">#</a></span>\[y_{i+1} = \alpha_1y_i + h\big(\beta_1f(x_i,y_i) + \beta_2f(x_{i-1},y_{i-1}\big).\]</div>
+<span class="eqno">(15)<a class="headerlink" href="#equation-2-step-form" title="Link to this equation">#</a></span>\[y_{i+1} = \alpha_1y_i + h\big(\beta_1f(x_i,y_i) + \beta_2f(x_{i-1},y_{i-1})\big).\]</div>
 <p>The idea of the Adams–Bashforth method is to force this formula to be exact for the first 3 terms of the Taylor series for the true solution <span class="math notranslate nohighlight">\(y\)</span>.
 This will ensure that the local truncation error for the method is <span class="math notranslate nohighlight">\(O(h^3)\)</span> as <span class="math notranslate nohighlight">\(h\to 0\)</span>.
 Note that with only <span class="math notranslate nohighlight">\(3\)</span> parameters to determine (viz, <span class="math notranslate nohighlight">\(\alpha_1, \beta_1, \beta_2)\)</span>, this is the best that can be done.
@@ -470,6 +471,36 @@ We usually measure the work per step of a numerical method based on the number o
 The typical single-step Runge-Kutta method of order 2 (e.g., Heun’s modified Euler method) requires 2 functional evaluations per step.
 We compare this to the Adams–Bashforth 2-step method which has the same order of accuracy and only requires one additional functional evaluation per step since it saves the evaluations from previous steps until it is finished with them.
 Furthermore, since the error <span class="math notranslate nohighlight">\(|y(x_i)-y_i|\)</span> tends to increase with <span class="math notranslate nohighlight">\(i\)</span>, it is reasonable to hope that a multistep may have better accuracy (not just order of accuracy) by mere fact that it explicitly incorporates more accurate previous data when approximating <span class="math notranslate nohighlight">\(y_{i+1}\)</span>.</p>
+</section>
+<section id="python-implementation">
+<h2>Python implementation.<a class="headerlink" href="#python-implementation" title="Link to this heading">#</a></h2>
+<p>Our Python implementation of the Adams–Bashforth 2-step method uses Heun’s modified Euler method as starter.
+The code is included in the <code class="docutils literal notranslate"><span class="pre">math263</span></code> module.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="k">def</span> <span class="nf">ab2</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+<span class="w">	</span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">	numerically solves the IVP</span>
+<span class="sd">		y&#39; = f(x,y), y(a)=y0</span>
+<span class="sd">	over the interval [a, b] via n steps of second order Adams–Bashforth method</span>
+<span class="sd">	&#39;&#39;&#39;</span>
+	<span class="n">h</span> <span class="o">=</span> <span class="p">(</span><span class="n">b</span> <span class="o">-</span> <span class="n">a</span><span class="p">)</span><span class="o">/</span><span class="n">n</span><span class="p">;</span>
+	<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+	<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">y0</span><span class="p">)));</span>
+	<span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">y0</span><span class="p">;</span>
+	<span class="c1"># take first step with Heun&#39;s MEM</span>
+	<span class="n">k1</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+	<span class="n">k2</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">h</span><span class="o">*</span><span class="n">k1</span><span class="p">);</span>
+	<span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">h</span><span class="o">*</span><span class="p">(</span><span class="n">k1</span> <span class="o">+</span> <span class="n">k2</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>
+	<span class="c1"># begin multistepping</span>
+	<span class="n">f2</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+		<span class="n">f1</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+		<span class="n">y</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">h</span><span class="o">*</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">f1</span> <span class="o">-</span> <span class="n">f2</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>
+		<span class="n">f2</span> <span class="o">=</span> <span class="n">f1</span><span class="p">;</span> <span class="c1"># step f-vals down to get ready for next step</span>
+	<span class="k">return</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
 </section>
 <section id="example">
 <h2>Example.<a class="headerlink" href="#example" title="Link to this heading">#</a></h2>
@@ -557,32 +588,39 @@ We then present the global truncation errors <span class="math notranslate nohig
 <span class="n">h</span> <span class="o">=</span> <span class="p">[(</span><span class="n">b</span><span class="o">-</span><span class="n">a</span><span class="p">)</span><span class="o">/</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">num_steps</span><span class="p">];</span>
 <span class="n">mem_errors</span> <span class="o">=</span> <span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">math263</span><span class="o">.</span><span class="n">mem</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">n</span><span class="p">)[</span><span class="mi">1</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">sym_y</span><span class="p">(</span><span class="n">b</span><span class="p">))</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">num_steps</span><span class="p">];</span>
 <span class="n">ab2_errors</span> <span class="o">=</span> <span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">math263</span><span class="o">.</span><span class="n">ab2</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">n</span><span class="p">)[</span><span class="mi">1</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">sym_y</span><span class="p">(</span><span class="n">b</span><span class="p">))</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">num_steps</span><span class="p">];</span>
+<span class="c1"># compare size of error to size at previous step-size</span>
+<span class="n">mem_cutdown</span> <span class="o">=</span> <span class="p">[</span><span class="n">mem_errors</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">mem_errors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> 
+               <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">num_steps</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)]</span> 
+<span class="n">mem_cutdown</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<span class="n">ab2_cutdown</span> <span class="o">=</span> <span class="p">[</span><span class="n">ab2_errors</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">ab2_errors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> 
+               <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">num_steps</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)]</span> 
+<span class="n">ab2_cutdown</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
 <span class="c1"># tabulate the results</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Comparison of global errors |y_n - y(</span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s2">)| for various step-sizes.&quot;</span><span class="p">)</span>
-<span class="n">table</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">h</span><span class="p">,</span> <span class="n">mem_errors</span><span class="p">,</span> <span class="n">ab2_errors</span><span class="p">];</span>
-<span class="n">hdrs</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;step-size&quot;</span><span class="p">,</span> <span class="s2">&quot;MEM global error&quot;</span><span class="p">,</span> <span class="s2">&quot;AB2 global error&quot;</span><span class="p">];</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">tabulate</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">hdrs</span><span class="p">,</span> <span class="n">tablefmt</span><span class="o">=</span><span class="s1">&#39;mixed_grid&#39;</span><span class="p">,</span> <span class="n">floatfmt</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;0.7f&#39;</span><span class="p">,</span><span class="s1">&#39;g&#39;</span><span class="p">,</span><span class="s1">&#39;g&#39;</span><span class="p">]))</span>
+<span class="n">table</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">h</span><span class="p">,</span> <span class="n">mem_errors</span><span class="p">,</span> <span class="n">mem_cutdown</span><span class="p">,</span> <span class="n">ab2_errors</span><span class="p">,</span> <span class="n">ab2_cutdown</span><span class="p">];</span>
+<span class="n">hdrs</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;step-size&quot;</span><span class="p">,</span> <span class="s2">&quot;MEM global error&quot;</span><span class="p">,</span> <span class="s2">&quot;cutdown&quot;</span><span class="p">,</span> <span class="s2">&quot;AB2 global error&quot;</span><span class="p">,</span> <span class="s2">&quot;cutdown&quot;</span><span class="p">];</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tabulate</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">hdrs</span><span class="p">,</span> <span class="n">tablefmt</span><span class="o">=</span><span class="s1">&#39;mixed_grid&#39;</span><span class="p">,</span> <span class="n">floatfmt</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;0.7f&#39;</span><span class="p">,</span><span class="s1">&#39;e&#39;</span><span class="p">,</span> <span class="s1">&#39;f&#39;</span><span class="p">,</span><span class="s1">&#39;e&#39;</span><span class="p">,</span> <span class="s1">&#39;f&#39;</span><span class="p">]))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Comparison of global errors |y_n - y(2)| for various step-sizes.
-┍━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━┑
-│   step-size │   MEM global error │   AB2 global error │
-┝━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━┥
-│   0.2000000 │        0.0724173   │        0.0729153   │
-├─────────────┼────────────────────┼────────────────────┤
-│   0.0200000 │        0.000779726 │        0.00117961  │
-├─────────────┼────────────────────┼────────────────────┤
-│   0.0020000 │        7.84668e-06 │        1.22633e-05 │
-├─────────────┼────────────────────┼────────────────────┤
-│   0.0002000 │        7.85154e-08 │        1.23099e-07 │
-├─────────────┼────────────────────┼────────────────────┤
-│   0.0000200 │        7.85132e-10 │        1.23135e-09 │
-├─────────────┼────────────────────┼────────────────────┤
-│   0.0000020 │        7.70672e-12 │        1.18954e-11 │
-┕━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━┙
+┍━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━┯━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━┯━━━━━━━━━━━┑
+│   step-size │   MEM global error │   cutdown │   AB2 global error │   cutdown │
+┝━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━┥
+│   0.2000000 │       7.241732e-02 │           │       7.291525e-02 │           │
+├─────────────┼────────────────────┼───────────┼────────────────────┼───────────┤
+│   0.0200000 │       7.797255e-04 │  0.010767 │       1.179610e-03 │  0.016178 │
+├─────────────┼────────────────────┼───────────┼────────────────────┼───────────┤
+│   0.0020000 │       7.846676e-06 │  0.010063 │       1.226335e-05 │  0.010396 │
+├─────────────┼────────────────────┼───────────┼────────────────────┼───────────┤
+│   0.0002000 │       7.851535e-08 │  0.010006 │       1.230993e-07 │  0.010038 │
+├─────────────┼────────────────────┼───────────┼────────────────────┼───────────┤
+│   0.0000200 │       7.851320e-10 │  0.010000 │       1.231354e-09 │  0.010003 │
+├─────────────┼────────────────────┼───────────┼────────────────────┼───────────┤
+│   0.0000020 │       7.706724e-12 │  0.009816 │       1.189537e-11 │  0.009660 │
+┕━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━┷━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━┷━━━━━━━━━━━┙
 </pre></div>
 </div>
 </div>
@@ -613,15 +651,15 @@ We then present the global truncation errors <span class="math notranslate nohig
 ┝━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━┥
 │          10 │           0.00005 │           0.00004 │
 ├─────────────┼───────────────────┼───────────────────┤
-│         100 │           0.00041 │           0.00032 │
+│         100 │           0.00042 │           0.00031 │
 ├─────────────┼───────────────────┼───────────────────┤
-│        1000 │           0.00418 │           0.00311 │
+│        1000 │           0.00416 │           0.00301 │
 ├─────────────┼───────────────────┼───────────────────┤
-│       10000 │           0.04399 │           0.03076 │
+│       10000 │           0.04147 │           0.03012 │
 ├─────────────┼───────────────────┼───────────────────┤
-│      100000 │           0.42934 │           0.30694 │
+│      100000 │           0.41257 │           0.29760 │
 ├─────────────┼───────────────────┼───────────────────┤
-│     1000000 │           4.41338 │           3.10769 │
+│     1000000 │           4.29311 │           3.03325 │
 ┕━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━┙
 </pre></div>
 </div>
@@ -698,6 +736,7 @@ We then present the global truncation errors <span class="math notranslate nohig
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adamsbashforth-2-step-method">Adams–Bashforth 2-step method.</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adamsbashforth-4-step-method">Adams–Bashforth 4-step method.</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advantages-and-disadvantages">Advantages and disadvantages.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#python-implementation">Python implementation.</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example.</a></li>
 </ul>
   </nav></div>
