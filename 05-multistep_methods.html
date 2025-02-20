@@ -34,9 +34,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/proof.css?v=b4b7a797" />
+    <link rel="stylesheet" type="text/css" href="_static/proof.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- So that users can add custom icons -->
@@ -427,10 +427,10 @@ By linearity, it is enough to make it exact for the cases <span class="math notr
 If <span class="math notranslate nohighlight">\(y(x)=1\)</span>, then <span class="math notranslate nohighlight">\(f(x,y(x)) = y'(x) = 0\)</span>, and so the equation <a class="reference internal" href="#equation-2-step-form">(15)</a> becomes</p>
 <div class="math notranslate nohighlight" id="equation-ab2-condition-1">
 <span class="eqno">(16)<a class="headerlink" href="#equation-ab2-condition-1" title="Link to this equation">#</a></span>\[1=\alpha_1.\]</div>
-<p>Similarly, if <span class="math notranslate nohighlight">\(y(x)=x\)</span>, then <span class="math notranslate nohighlight">\(y'(x)=1\)</span> and <a class="reference internal" href="#equation-2-step-form">(15)</a> becomes</p>
+<p>Similarly, if <span class="math notranslate nohighlight">\(y(x)=x\)</span>, then <span class="math notranslate nohighlight">\(y'(x)=1\)</span>, and <a class="reference internal" href="#equation-2-step-form">(15)</a> becomes</p>
 <div class="math notranslate nohighlight" id="equation-ab2-condition-2">
 <span class="eqno">(17)<a class="headerlink" href="#equation-ab2-condition-2" title="Link to this equation">#</a></span>\[x_{i+1}=\alpha_1 x_i + h(\beta_1+\beta_2).\]</div>
-<p>Finally, if <span class="math notranslate nohighlight">\(y(x)=x^2\)</span>, then <span class="math notranslate nohighlight">\(y'(x)=2x\)</span> and <a class="reference internal" href="#equation-2-step-form">(15)</a> becomes</p>
+<p>Finally, if <span class="math notranslate nohighlight">\(y(x)=x^2\)</span>, then <span class="math notranslate nohighlight">\(y'(x)=2x\)</span>, and <a class="reference internal" href="#equation-2-step-form">(15)</a> becomes</p>
 <div class="math notranslate nohighlight" id="equation-ab2-condition-3">
 <span class="eqno">(18)<a class="headerlink" href="#equation-ab2-condition-3" title="Link to this equation">#</a></span>\[x_{i+1}^2 = \alpha_1x_i^2+ h(2\beta_1x_i + 2\beta_2x_{i-1}).\]</div>
 <p>Now, equations <a class="reference internal" href="#equation-ab2-condition-1">(16)</a>, <a class="reference internal" href="#equation-ab2-condition-2">(17)</a>, and <a class="reference internal" href="#equation-ab2-condition-3">(18)</a> must hold for all values of <span class="math notranslate nohighlight">\(x_i\)</span> and <span class="math notranslate nohighlight">\(h\)</span>.
@@ -651,15 +651,15 @@ We then present the global truncation errors <span class="math notranslate nohig
 ┝━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━┥
 │          10 │           0.00005 │           0.00004 │
 ├─────────────┼───────────────────┼───────────────────┤
-│         100 │           0.00042 │           0.00031 │
+│         100 │           0.00039 │           0.00030 │
 ├─────────────┼───────────────────┼───────────────────┤
-│        1000 │           0.00416 │           0.00301 │
+│        1000 │           0.00398 │           0.00294 │
 ├─────────────┼───────────────────┼───────────────────┤
-│       10000 │           0.04147 │           0.03012 │
+│       10000 │           0.04037 │           0.02940 │
 ├─────────────┼───────────────────┼───────────────────┤
-│      100000 │           0.41257 │           0.29760 │
+│      100000 │           0.41052 │           0.29125 │
 ├─────────────┼───────────────────┼───────────────────┤
-│     1000000 │           4.29311 │           3.03325 │
+│     1000000 │           4.04944 │           2.94547 │
 ┕━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━┙
 </pre></div>
 </div>
