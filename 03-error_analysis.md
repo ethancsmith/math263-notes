@@ -37,6 +37,8 @@ where $y$ is the true solution to the given IVP.
 When solving an IVP, the global truncation error and the local truncation error always agree at the first step.
 Although it is potentially misleading, the global truncation error may be viewed as the accumulation of local errors made at all previous steps.
 
++++
+
 ## The order of a numerical method.
 
 Suppose $f$ and $g$ are functions of a real variable $x$ and that both are defined on an open interval containing $x=a$ except possibly at $x=a$ itself.
@@ -83,6 +85,8 @@ In practice, local truncation error is easier to determine analytically than glo
 and so we will provide analytic "evidence" for the order of numerical methods based on local truncation error.
 However, global truncation error is usually easier to measure empirically for test problems where the exact symbolic solution is known.
 We will therefore compute global errors for our examples.
+
++++
 
 ## Analysis of Euler's method.
 
@@ -181,6 +185,8 @@ print(tabulate(table, hdrs, tablefmt='mixed_grid', floatfmt='0.5f', showindex=Tr
 
 Since the absolute error $|y(1) - y_n|$ is roughly cut in half each time that the step-size $h$ is cut in half, we view the table above as evidence that the global truncation error for Euler's method is $O(h)$ as $h\to 0$, i.e., Euler's method is an order $1$ numerical method.
 
++++
+
 ## Numerical integration and Euler's method.
 
 Euler's method for numerically solving the IVP
@@ -207,6 +213,8 @@ Euler's method follows by approximating the integral with the left-hand rule, na
 ```{math}
 y(x_0+h)=y_0+\int_{x_0}^{x_0+h}f\big(x,y(x)\big)\mathrm{d} x \approx y_0+hf\big(x_0, y(x_0)\big).
 ```
+
++++
 
 ## Heun's modified Euler method.
 
