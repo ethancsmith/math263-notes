@@ -85,12 +85,47 @@ In a similar manner, one may derive the **Adams–Moulton three-step (implicit) 
 y_{i+1}=y_i+\frac{h}{24}(9y_{i+1}'+19y_i'-5y_{i-1}'+y_{i-2}')
 ```
 and has local truncation error that is $O(h^5)$.  It is, therefore, considered an order 4 method.
-This method is commonly paired with the order 4 Adams--Bashforth four-step (explicit) method to create the **order 4 Adams–Bashforth–Moulton (predictor-corrector) method (ABM4)**
+This method is commonly paired with the order 4 Adams–Bashforth four-step (explicit) method to create the **order 4 Adams–Bashforth–Moulton (predictor-corrector) method (ABM4)**
 ```{math}
 \hat{y_{i+1}}&=y_i+\frac{h}{24}(55y_i'-59y_{i-1}'+37y_{i-2}'-9y_{i-3}'),\\
 y_{i+1}&=y_i+\frac{h}{24}(9\hat{y_{i+1}}'+19y_i'-5y_{i-1}'+y_{i-2}')
 ```
 where $y_i'=f(x_i,y_i)$ and $\hat{y_{i+1}}' =f(x_{i+1},\hat{y_{i+1}})$ for each $i\ge 0$.
+
++++
+
+## A Python implementation of ABM2.
+
+The following Python implementation of ABM2 is included in the `math263` module.
+
+```python
+import numpy as np
+
+def abm2(f, a, b, y0, n):
+    '''
+	numerically solves the IVP
+		y' = f(x,y), y(a)=y0
+	over the interval [a, b] via n steps of second order Adams–Bashforth–Moulton 
+    predictor-corrector method
+	'''
+    h = (b - a)/n;
+    x = np.linspace(a,b, num=n + 1);
+    y = np.empty((x.size, np.size(y0)));
+    y[0] = y0;
+    # starter method: Heun's modified Euler method
+    k1 = f(x[0], y[0]);
+    k2 = f(x[1], y[0] + h*k1);
+    y[1] = y[0] + h*(k1 + k2)/2;
+    # continuing method: ABM2 predictor-corrector
+    f2 = f(x[0], y[0]);
+    for i in range(1, n):
+        f1 = f(x[i], y[i]);
+        yhat = y[i] + h*(3*f1 - f2)/2;   # predict with AB2
+        f0 = f(x[i + 1], yhat);
+        y[i + 1] = y[i] + h*(f0 + f1)/2; # correct with AM1
+        f2 = f1;
+    return (x, y)
+```
 
 +++
 
