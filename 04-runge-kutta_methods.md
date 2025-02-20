@@ -104,6 +104,34 @@ As the name would seem to imply, RK4 is an order $4$ numerical method.
 
 +++
 
+## A Python implemenation of RK4.
+
+The following Python implementation of RK4 is included in the `math263` module.
+
+```python
+import numpy as np
+
+def rk4(f, a, b, y0, n):
+	'''
+	numerically solves the IVP
+		y' = f(x,y), y(a)=y0
+	over the interval [a, b] via n steps of the 4th order (classical) Runge–Kutta method 
+	'''
+	h = (b - a)/n;
+	x = np.linspace(a, b, num=n + 1);
+	y = np.empty((x.size, np.size(y0)));
+	y[0] = y0;
+	for i in range(n):
+		k1 = f(x[i], y[i])
+		k2 = f(x[i]+ h/2, y[i] + h*k1/2)
+		k3 = f(x[i]+ h/2, y[i] + h*k2/2)
+		k4 = f(x[i]+ h, y[i] + h*k3)
+		y[i + 1] = y[i] + h*(k1 + 2*(k2 + k3) + k4)/6;
+	return (x, y)
+```
+
++++
+
 ## Example.
 
 Below we compare Euler's method with the classical Runge–Kutta method of order 4 (RK4) for the IVP 
