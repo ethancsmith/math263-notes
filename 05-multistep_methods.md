@@ -54,12 +54,12 @@ If $y(x)=1$, then $f(x,y(x)) = y'(x) = 0$, and so the equation {eq}`2-step-form`
 :label: ab2-condition-1
 1=\alpha_1.
 ```
-Similarly, if $y(x)=x$, then $y'(x)=1$ and {eq}`2-step-form` becomes
+Similarly, if $y(x)=x$, then $y'(x)=1$, and {eq}`2-step-form` becomes
 ```{math}
 :label: ab2-condition-2
 x_{i+1}=\alpha_1 x_i + h(\beta_1+\beta_2).
 ```
-Finally, if $y(x)=x^2$, then $y'(x)=2x$ and {eq}`2-step-form` becomes
+Finally, if $y(x)=x^2$, then $y'(x)=2x$, and {eq}`2-step-form` becomes
 ```{math}
 :label: ab2-condition-3
 x_{i+1}^2 = \alpha_1x_i^2+ h(2\beta_1x_i + 2\beta_2x_{i-1}).
@@ -112,7 +112,7 @@ Furthermore, since the error $|y(x_i)-y_i|$ tends to increase with $i$, it is re
 Our Python implementation of the Adams–Bashforth 2-step method uses Heun's modified Euler method as starter.
 The code is included in the `math263` module.
 
-``` python
+```python
 import numpy as np
 
 def ab2(f, a, b, y0, n):
