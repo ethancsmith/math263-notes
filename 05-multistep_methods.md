@@ -151,8 +151,8 @@ as a test case.
 First we use both methods to solve the problem over the interval $[0,2]$ in $n=10$ steps.
 We then present the global truncation errors $e_i=|y(x_i) - y_i|$ for each method at each step in a table.
 
-```{code-cell}
-import timeit
+```{code-cell} ipython3
+from timeit import timeit
 
 import numpy as np
 import sympy
@@ -161,69 +161,77 @@ from tabulate import tabulate
 import math263
 
 # define IVP parameters
-f = lambda x, y: y - x**2 + 1;
-a, b = 0, 2;
-y0 = 1/2;
+f = lambda x, y: y - x**2 + 1
+a, b = 0, 2
+y0 = 1 / 2
 
 # solve the IVP symbolically with the sympy library
-x = sympy.Symbol('x');
-y = sympy.Function('y');
-ode = sympy.Eq(y(x).diff(x), f(x,y(x)));
-soln = sympy.dsolve(ode, y(x), ics={y(a): y0}); 
-sym_y = sympy.lambdify(x, soln.rhs, modules=['numpy']);
+x = sympy.Symbol("x")
+y = sympy.Function("y")
+ode = sympy.Eq(y(x).diff(x), f(x, y(x)))
+soln = sympy.dsolve(ode, y(x), ics={y(a): y0})
+sym_y = sympy.lambdify(x, soln.rhs, modules=["numpy"])
 
 # numerically solve the IVP with n=10 steps of forward Euler and n=10 steps of RK4
-n = 10;
-(x, y_mem) = math263.mem(f, a, b, y0, n);
-(x, y_ab2) = math263.ab2(f, a, b, y0, n); 
+n = 10
+x, y_mem = math263.mem(f, a, b, y0, n)
+x, y_ab2 = math263.ab2(f, a, b, y0, n)
 
 # tabulate the results
-print(f"Comparison of global errors for MEM and AB2\
- across interval for step-size h = {(b - a)/n}.")
-table = np.c_[x, abs(sym_y(x)-y_mem[:, 0]), abs(sym_y(x)-y_ab2[:, 0])];
-hdrs = ["i", "x_i", "MEM global error", "AB2 global error"];
-print(tabulate(table, hdrs, tablefmt='mixed_grid', floatfmt='0.5f', showindex=True))
+print(
+    f"Comparison of global errors for MEM and AB2\
+ across interval for step-size h = {(b - a)/n}."
+)
+table = np.c_[x, abs(sym_y(x) - y_mem[:, 0]), abs(sym_y(x) - y_ab2[:, 0])]
+hdrs = ["i", "x_i", "MEM global error", "AB2 global error"]
+print(tabulate(table, hdrs, tablefmt="mixed_grid", floatfmt="0.5f", showindex=True))
 ```
 
 We now compare the global error for AB2 at the right endpoint of the interval with that of MEM as we shrink the step-size.
 
-```{code-cell}
+```{code-cell} ipython3
 # compute abs errors at right endpoint for various step-sizes
-base = 10;
-max_exp = 7;
-num_steps = [base**j for j in range(1, max_exp)];
-h = [(b-a)/n for n in num_steps];
-mem_errors = [abs(math263.mem(f, a, b, y0, n)[1][:, 0][-1]-sym_y(b)) for n in num_steps];
-ab2_errors = [abs(math263.ab2(f, a, b, y0, n)[1][:, 0][-1]-sym_y(b)) for n in num_steps];
+base = 10
+max_exp = 7
+num_steps = [base**j for j in range(1, max_exp)]
+h = [(b - a) / n for n in num_steps]
+mem_errors = [
+    abs(math263.mem(f, a, b, y0, n)[1][:, 0][-1] - sym_y(b)) for n in num_steps
+]
+ab2_errors = [
+    abs(math263.ab2(f, a, b, y0, n)[1][:, 0][-1] - sym_y(b)) for n in num_steps
+]
 # compare size of error to size at previous step-size
-mem_cutdown = [mem_errors[i+1]/mem_errors[i] 
-               for i in range(len(num_steps)-1)] 
+mem_cutdown = [mem_errors[i + 1] / mem_errors[i] for i in range(len(num_steps) - 1)]
 mem_cutdown.insert(0, None)
-ab2_cutdown = [ab2_errors[i+1]/ab2_errors[i] 
-               for i in range(len(num_steps)-1)] 
+ab2_cutdown = [ab2_errors[i + 1] / ab2_errors[i] for i in range(len(num_steps) - 1)]
 ab2_cutdown.insert(0, None)
 
 # tabulate the results
 print(f"Comparison of global errors |y_n - y({b})| for various step-sizes.")
-table = np.c_[h, mem_errors, mem_cutdown, ab2_errors, ab2_cutdown];
-hdrs = ["step-size", "MEM global error", "cutdown", "AB2 global error", "cutdown"];
-print(tabulate(table, hdrs, tablefmt='mixed_grid', floatfmt=['0.7f','e', 'f','e', 'f']))
+table = np.c_[h, mem_errors, mem_cutdown, ab2_errors, ab2_cutdown]
+hdrs = ["step-size", "MEM global error", "cutdown", "AB2 global error", "cutdown"]
+print(
+    tabulate(table, hdrs, tablefmt="mixed_grid", floatfmt=["0.7f", "e", "f", "e", "f"])
+)
 ```
 
 We also compare the empirical average running time for our implementations as the number of steps increases.
 
-```{code-cell}
-num_trials = 10;
-mem_times = [timeit.timeit(lambda: math263.mem(f, a, b, y0, base**j), 
-            number=num_trials)/num_trials 
-            for j in range(1, max_exp)];
-ab2_times = [timeit.timeit(lambda: math263.ab2(f, a, b, y0, base**j), 
-            number=num_trials)/num_trials 
-            for j in range(1, max_exp)];
+```{code-cell} ipython3
+num_trials = 10
+mem_times = [
+    timeit(lambda: math263.mem(f, a, b, y0, base**j), number=num_trials) / num_trials
+    for j in range(1, max_exp)
+]
+ab2_times = [
+    timeit(lambda: math263.ab2(f, a, b, y0, base**j), number=num_trials) / num_trials
+    for j in range(1, max_exp)
+]
 
 # tabulate the results
 print(f"Comparison of average compute time for various step-sizes.")
-table = np.c_[num_steps, mem_times, ab2_times];
-hdrs = ["num steps", "MEM time (secs)", "AB2 time (secs)"];
-print(tabulate(table, hdrs, tablefmt='mixed_grid', floatfmt=['0.0f', '0.5f', '0.5f']))
+table = np.c_[num_steps, mem_times, ab2_times]
+hdrs = ["num steps", "MEM time (secs)", "AB2 time (secs)"]
+print(tabulate(table, hdrs, tablefmt="mixed_grid", floatfmt=["0.0f", "0.5f", "0.5f"]))
 ```
