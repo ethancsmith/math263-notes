@@ -152,11 +152,13 @@ First we use both methods to solve the problem over the interval $[0,2]$ in $n=1
 We then present the global truncation errors $e_i=|y(x_i) - y_i|$ for each method at each step in a table.
 
 ```{code-cell}
-import math263
+import timeit
+
 import numpy as np
 import sympy
 from tabulate import tabulate
-import timeit
+
+import math263
 
 # define IVP parameters
 f = lambda x, y: y - x**2 + 1;

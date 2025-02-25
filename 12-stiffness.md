@@ -25,11 +25,12 @@ over the $t$-interval $[0, 1]$.
 The problem is easy to solve analytically.
 
 ```{code-cell}
-import sympy
 import numpy
+import sympy
 from matplotlib import pyplot
-import math263
 from tabulate import tabulate
+
+import math263
 
 pyplot.style.use('dark_background');
 

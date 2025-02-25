@@ -139,10 +139,11 @@ y(0)&=1/2
 over the interval $[a,b]=[0,2]$ with $n=10$ steps.
 
 ```{code-cell}
-import math263
 import numpy as np
 import sympy
 from tabulate import tabulate
+
+import math263
 
 # define IVP parameters
 f = lambda x, y: y - x**2 + 1;

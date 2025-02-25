@@ -153,34 +153,39 @@ The code block below computes the absolute errors obtained when approximating th
 ```{code-cell}
 import numpy as np
 import sympy
+from tabulate import tabulate
+
 import math263
-from tabulate import tabulate 
 
 # define IVP parameters
-f = lambda x, y: x + y;
-a, b = 0, 1;
-y0=1;
+f = lambda x, y: x + y
+a, b = 0, 1
+y0 = 1
 
 # solve the IVP symbolically
-x = sympy.Symbol('x');
-y = sympy.Function('y');
-ode = sympy.Eq(y(x).diff(x), f(x,y(x)));
-soln = sympy.dsolve(ode, y(x), ics={y(a): y0}); 
-rhs = f(x,y(x));
-sym_y=sympy.lambdify(x, soln.rhs, modules=['numpy']);
+x = sympy.Symbol("x")
+y = sympy.Function("y")
+ode = sympy.Eq(y(x).diff(x), f(x, y(x)))
+soln = sympy.dsolve(ode, y(x), ics={y(a): y0})
+rhs = f(x, y(x))
+sym_y = sympy.lambdify(x, soln.rhs, modules=["numpy"])
 
 # solve the IVP numerically via Euler's method
-num = 10;
-base = 2;
-h_vals = [(b - a)/(base**e) for e in range(num)]
-errors = [abs(math263.euler(f, a, b, y0, base**e)[1][:, 0][-1] - sym_y(b)) for e in range(num)];
-cutdown = [errors[i+1]/errors[i] for i in range(num-1)] # compare size of error to size at previous step-size
+num = 10
+base = 2
+h_vals = [(b - a) / (base**e) for e in range(num)]
+errors = [
+    abs(math263.euler(f, a, b, y0, base**e)[1][:, 0][-1] - sym_y(b)) for e in range(num)
+]
+cutdown = [
+    errors[i + 1] / errors[i] for i in range(num - 1)
+]  # compare size of error to size at previous step-size
 cutdown.insert(0, None)
 
 # tabulate/display errors
-table = np.c_[h_vals, errors, cutdown];
-hdrs = ["h", f"|y({b})-y_n|", "cutdown"];
-print(tabulate(table, hdrs, tablefmt='mixed_grid', floatfmt='0.5f', showindex=True))
+table = np.c_[h_vals, errors, cutdown]
+hdrs = ["h", f"|y({b})-y_n|", "cutdown"]
+print(tabulate(table, hdrs, tablefmt="mixed_grid", floatfmt="0.5f", showindex=True))
 ```
 
 Since the absolute error $|y(1) - y_n|$ is roughly cut in half each time that the step-size $h$ is cut in half, we view the table above as evidence that the global truncation error for Euler's method is $O(h)$ as $h\to 0$, i.e., Euler's method is an order $1$ numerical method.

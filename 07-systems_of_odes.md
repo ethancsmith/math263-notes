@@ -106,12 +106,13 @@ Writing $\mathbf r = \langle x, y, z\rangle$ for the solution, we may repackage 
 First we solve the system symbolic with SymPy.
 
 ```{code-cell}
-import sympy
-import numpy as np
-from IPython.display import display, Markdown
 import matplotlib.pyplot as plt
-import math263
+import numpy as np
+import sympy
+from IPython.display import Markdown, display
 from tabulate import tabulate
+
+import math263
 
 # solve the IVP symbolically with the sympy library
 t = sympy.Symbol('t');

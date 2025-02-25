@@ -49,40 +49,45 @@ The [NumPy](https://numpy.org/doc/stable/index.html) package provides efficient 
 
 ```{code-cell}
 # import numpy and matplotlib.pyplot with conventional shorthands
-import numpy as np 
-from matplotlib import pyplot as plt
+import numpy as np
 import sympy
+from matplotlib import pyplot as plt
 
-plt.style.use('dark_background');
+plt.style.use("dark_background")
 
 # define ODE RHS
 f = lambda x, y: y + np.sin(x)
 # set window boundaries
-xmin, xmax = -3, 3;
-ymin, ymax = -2, 2;
+xmin, xmax = -3, 3
+ymin, ymax = -2, 2
 
 # set step sizes defining the horizontal/vertical distances between mesh points
-hx, hy = 0.25, 0.25;
+hx, hy = 0.25, 0.25
 
 # sample x- and y-intervals at appropriate step sizes; explicitly creating array of doubles
-xvals = np.arange(xmin, xmax+hx, hx, dtype=np.double);
-yvals = np.arange(ymin, ymax+hy, hy, dtype=np.double);
+xvals = np.arange(xmin, xmax + hx, hx, dtype=np.double)
+yvals = np.arange(ymin, ymax + hy, hy, dtype=np.double)
 
 # create rectangle mesh in xy-plane; data for each variable is stored in a separate rectangle array
-X, Y = np.meshgrid(xvals, yvals);
-dx = np.ones(X.shape); # create a dx=1 at each point of the 2D mesh
-dy = f(X,Y);    # sample dy =(dy/dx)*dx, where dx=1 at each point of the 2D mesh
+X, Y = np.meshgrid(xvals, yvals)
+dx = np.ones(X.shape)
+# create a dx=1 at each point of the 2D mesh
+dy = f(X, Y)
+# sample dy =(dy/dx)*dx, where dx=1 at each point of the 2D mesh
 # normalize each vector <dx, dy> so that it has "unit" length
-[dx, dy] = [dx, dy]/np.sqrt(dx**2 + dy**2);
+[dx, dy] = [dx, dy] / np.sqrt(dx**2 + dy**2)
 
 # plot "vector field" without arrowheads
-fig, ax = plt.subplots(layout='constrained');
+fig, ax = plt.subplots(layout="constrained")
 # NOTE: pivot='mid' anchors the middle of the arrow to the mesh point
 # the _nolegend_ flag prevents a legend object from being generated in the later merged graphic
-dplot = ax.quiver(X, Y, dx, dy, color="w", headlength=0, headwidth=1, pivot="mid", label='_nolegend_'); 
-ax.set_title(r"Direction field for $y' = y+\sin(x)$");
-ax.set_xlabel("$x$");
-ax.set_ylabel("$y$");
+dplot = ax.quiver(
+    X, Y, dx, dy, color="w", headlength=0, headwidth=1, pivot="mid", label="_nolegend_"
+)
+ax.set_title(r"Direction field for $y' = y+\sin(x)$")
+ax.set_xlabel("$x$")
+ax.set_ylabel("$y$")
+plt.show()
 ```
 
 ## Computing symbolic solutions with SymPy.
@@ -96,40 +101,43 @@ The code snippet below demonstrates how to compute the general solution to the O
 f = lambda x, y: y + sympy.sin(x)
 
 # define symbolic function y and symbolic variable x
-x = sympy.Symbol('x');
-y = sympy.Function('y');
+x = sympy.Symbol("x")
+y = sympy.Function("y")
 
 # create an Eq object representing the ODE
-ode = sympy.Eq(y(x).diff(x), f(x,y(x)));
+ode = sympy.Eq(y(x).diff(x), f(x, y(x)))
 
 # solve the ODE for y(x) using sympy's dsolve
-soln=sympy.dsolve(ode, y(x)); 
-print("The general solution to the ODE");
+soln = sympy.dsolve(ode, y(x))
+print("The general solution to the ODE")
 display(ode)
-print("is");
-display(soln);
+print("is")
+display(soln)
 ```
 
 To solve an IVP with SymPy, we simply pass the initial conditions of the problem stored as a Python dictionary.  The code snippet below computes the particular solution to the IVP {eq}`example-01`
 
 ```{code-cell}
-x0, y0 = 0, -1/2;
-psoln=sympy.dsolve(ode, ics={y(x0): y0}); 
-print(f"The particular solution to the IVP with initial condition y({x0}) = {y0} is");
-display(psoln);
+x0, y0 = 0, -1 / 2
+psoln = sympy.dsolve(ode, ics={y(x0): y0})
+print(f"The particular solution to the IVP with initial condition y({x0}) = {y0} is")
+display(psoln)
 ```
 
 We can plot the particular solution on top of the direction field that we created by first converting the solution expression to a lambda function that can be evaluated numerically.
 
 ```{code-cell}
-yfunc=sympy.lambdify(x, psoln.rhs, modules=['numpy']); 
-xvals = np.linspace(xmin, xmax, num=100);
+yfunc = sympy.lambdify(x, psoln.rhs, modules=["numpy"])
+xvals = np.linspace(xmin, xmax, num=100)
 
-plt.figure(fig) # set the current figure to direction field created above
-ax.plot(xvals, yfunc(xvals), color='w', label=f"${sympy.latex(psoln)}$");
-ax.set_title(f"Direction field for $y'(x)={sympy.latex(ode.rhs)}$" 
-             "\n" f"with particular solution when y({x0})={y0}.");
-ax.plot(0,-1/2,'ro') # plot initial condition point (0,-1/2) in red
-ax.legend(loc='upper right');
+plt.figure(fig)  # set the current figure to direction field created above
+ax.plot(xvals, yfunc(xvals), color="w", label=f"${sympy.latex(psoln)}$")
+ax.set_title(
+    f"Direction field for $y'(x)={sympy.latex(ode.rhs)}$"
+    "\n"
+    f"with particular solution when y({x0})={y0}."
+)
+ax.plot(0, -1 / 2, "ro")  # plot initial condition point (0,-1/2) in red
+ax.legend(loc="upper right")
 plt.show()
 ```

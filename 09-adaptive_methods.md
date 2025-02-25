@@ -131,12 +131,13 @@ With the default settings, the implementation aims to keep the estimated relativ
 ```{code-cell}
 # import modules
 import numpy
+from matplotlib import pyplot
 from numpy import sqrt
 from numpy.linalg import norm
 from scipy.integrate import solve_ivp
-from matplotlib import pyplot
-import math263
 from tabulate import tabulate
+
+import math263
 
 # define IVP parameters
 f = lambda t, w: numpy.array(

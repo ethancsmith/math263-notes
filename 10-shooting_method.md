@@ -61,9 +61,10 @@ The goal then is to find a value of $s = u_1(0) = y'(0)$ so that when we solve t
 
 ```{code-cell}
 import numpy
-import math263
 from matplotlib import pyplot
 from tabulate import tabulate
+
+import math263
 
 pyplot.style.use('dark_background');
 

@@ -62,19 +62,20 @@ The `math263` module contains the following Python implementation of Euler's met
 ```python
 import numpy as np
 
+
 def euler(f, a, b, y0, n):
-	'''
-	numerically solves the IVP
-		y' = f(x,y), y(a) = y0
-	over the interval [a, b] via n steps of Euler's method 
-	'''
-	h = (b - a)/n;
-	x = np.linspace(a, b, num=n + 1);
-	y = np.empty((np.size(y0), x.size));
-	y[0] = y0;
-	for i in range(n):
-		y[i + 1] = y[i] + h*f(x[i], y[i]);
-	return (x, y)
+    """
+    numerically solves the IVP
+            y' = f(x,y), y(a) = y0
+    over the interval [a, b] via n steps of Euler's method
+    """
+    h = (b - a) / n
+    x = np.linspace(a, b, num=n + 1)
+    y = np.empty((x.size, np.size(y0)))
+    y[0] = y0
+    for i in range(n):
+        y[i + 1] = y[i] + h * f(x[i], y[i])
+    return (x, y)
 ```
 
 ## Example.
@@ -89,53 +90,54 @@ over the interval $[0, 2]$.
 
 ```{code-cell}
 # load modules
-import math263
-import numpy as np
-from tabulate import tabulate
-import sympy
 import matplotlib.pyplot as plt
+import numpy as np
+import sympy
+from tabulate import tabulate
+
+import math263
 
 # define IVP parameters
-f = lambda x, y: x**2 - y;
-a, b = 0, 2;
-y0 = 3;
+f = lambda x, y: x**2 - y
+a, b = 0, 2
+y0 = 3
 
 # use the Euler's method from the math263 module to compute numerical solution
-n = 10;
-(xi, yi) = math263.euler(f, a, b, y0, n);
+n = 10
+xi, yi = math263.euler(f, a, b, y0, n)
 
 # tabulate the results
-data = np.c_[xi, yi[:, 0]];
-hdrs = ["i", "x_i", "y_i"];
-print("Euler's method");
-print(tabulate(data, hdrs, tablefmt='mixed_grid', floatfmt='0.5f', showindex=True));
+data = np.c_[xi, yi[:, 0]]
+hdrs = ["i", "x_i", "y_i"]
+print("Euler's method")
+print(tabulate(data, hdrs, tablefmt="mixed_grid", floatfmt="0.5f", showindex=True))
 ```
 
 Since the IVP {eq}`example-02` can be solved analytically, we can plot the symbolic and numerical solutions together on the same set of axes.
 
 ```{code-cell}
-plt.style.use('dark_background');
+plt.style.use("dark_background")
 
 # solve the IVP symbolically with the sympy library
-x = sympy.Symbol('x');
-y = sympy.Function('y');
-ode = sympy.Eq(y(x).diff(x), f(x,y(x)));
-soln = sympy.dsolve(ode, y(x), ics={y(a): y0}); 
-print("The function");
-display(soln);
-print("is the exact symbolic solution to the IVP.");
-rhs=f(x,y(x));
+x = sympy.Symbol("x")
+y = sympy.Function("y")
+ode = sympy.Eq(y(x).diff(x), f(x, y(x)))
+soln = sympy.dsolve(ode, y(x), ics={y(a): y0})
+print("The function")
+display(soln)
+print("is the exact symbolic solution to the IVP.")
+rhs = f(x, y(x))
 
 # convert the symbolic solution to a Python function and plot it with matplotlib.pyplot
-sym_y = sympy.lambdify(x, soln.rhs, modules=['numpy']); 
-xvals = np.linspace(a, b, num=100);
-fig, ax = plt.subplots(layout="constrained");
-ax.plot(xvals, sym_y(xvals), color='b', label=f"${sympy.latex(soln)}$");
-ax.plot(xi, yi[:, 0],'ro:', label="Euler's method");
-ax.legend(loc='upper right');
-ax.set_title(f"$y' = {sympy.latex(rhs)}$, $y({a})={y0}$");
-ax.set_xlabel(r"$x$");
-ax.set_ylabel(r"$y$");
+sym_y = sympy.lambdify(x, soln.rhs, modules=["numpy"])
+xvals = np.linspace(a, b, num=100)
+fig, ax = plt.subplots(layout="constrained")
+ax.plot(xvals, sym_y(xvals), color="b", label=f"${sympy.latex(soln)}$")
+ax.plot(xi, yi[:, 0], "ro:", label="Euler's method")
+ax.legend(loc="upper right")
+ax.set_title(f"$y' = {sympy.latex(rhs)}$, $y({a})={y0}$")
+ax.set_xlabel(r"$x$")
+ax.set_ylabel(r"$y$")
 ax.grid(True)
 ```
 
@@ -146,26 +148,29 @@ This helps us to see that every pair of of points $(x_i, y_i)$, $(x_{i+1}, y_{i+
 
 ```{code-cell}
 # set window boundaries
-xmin, xmax = a, b;
-ymin, ymax = 1, 3;
+xmin, xmax = a, b
+ymin, ymax = 1, 3
 
 # set step sizes defining the horizontal/vertical distances between mesh points
-hx, hy = (b-a)/n, 0.1;
+hx, hy = (b - a) / n, 0.1
 
 # sample x- and y-intervals at appropriate step sizes; explicitly creating array of doubles
-xvals = np.arange(xmin, xmax+hx, hx, dtype=np.double);
-yvals = np.arange(ymin, ymax+hy, hy, dtype=np.double);
+xvals = np.arange(xmin, xmax + hx, hx, dtype=np.double)
+yvals = np.arange(ymin, ymax + hy, hy, dtype=np.double)
 
-# create rectangle mesh in xy-plane; 
-X, Y = np.meshgrid(xvals, yvals);
-dx = np.ones(X.shape); # create a dx=1 at each point of the 2D mesh
-dy = f(X,Y);    # sample dy =(dy/dx)*dx, where dx=1 at each point of the 2D mesh
+# create rectangle mesh in xy-plane;
+X, Y = np.meshgrid(xvals, yvals)
+dx = np.ones(X.shape)
+# create a dx=1 at each point of the 2D mesh
+dy = f(X, Y)
+# sample dy =(dy/dx)*dx, where dx=1 at each point of the 2D mesh
 # normalize each vector <dx, dy> so that it has "unit" length
-[dx, dy] = [dx, dy]/np.sqrt(dx**2 + dy**2);
+[dx, dy] = [dx, dy] / np.sqrt(dx**2 + dy**2)
 
 # plot direction field on top of previous plot
-plt.figure(fig);
-plt.quiver(X, Y, dx, dy, color="w", headlength=0, headwidth=1, 
-           pivot="mid", label='_nolegend_'); 
-plt.show();
+plt.figure(fig)
+plt.quiver(
+    X, Y, dx, dy, color="w", headlength=0, headwidth=1, pivot="mid", label="_nolegend_"
+)
+plt.show()
 ```

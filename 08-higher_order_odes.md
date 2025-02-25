@@ -41,11 +41,12 @@ y'(0)&= -3/5.
 ```
 
 ```{code-cell}
+import matplotlib.pyplot as plt
 import numpy as np
 import sympy
-import matplotlib.pyplot as plt
-import math263
 from tabulate import tabulate
+
+import math263
 
 plt.style.use('dark_background');
 

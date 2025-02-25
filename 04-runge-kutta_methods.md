@@ -108,26 +108,27 @@ As the name would seem to imply, RK4 is an order $4$ numerical method.
 
 The following Python implementation of RK4 is included in the `math263` module.
 
-```python
+``` python
 import numpy as np
 
+
 def rk4(f, a, b, y0, n):
-	'''
-	numerically solves the IVP
-		y' = f(x,y), y(a)=y0
-	over the interval [a, b] via n steps of the 4th order (classical) Runge–Kutta method 
-	'''
-	h = (b - a)/n;
-	x = np.linspace(a, b, num=n + 1);
-	y = np.empty((x.size, np.size(y0)));
-	y[0] = y0;
-	for i in range(n):
-		k1 = f(x[i], y[i])
-		k2 = f(x[i]+ h/2, y[i] + h*k1/2)
-		k3 = f(x[i]+ h/2, y[i] + h*k2/2)
-		k4 = f(x[i]+ h, y[i] + h*k3)
-		y[i + 1] = y[i] + h*(k1 + 2*(k2 + k3) + k4)/6;
-	return (x, y)
+    """
+    numerically solves the IVP
+            y' = f(x,y), y(a)=y0
+    over the interval [a, b] via n steps of the 4th order (classical) Runge–Kutta method
+    """
+    h = (b - a) / n
+    x = np.linspace(a, b, num=n + 1)
+    y = np.empty((x.size, np.size(y0)))
+    y[0] = y0
+    for i in range(n):
+        k1 = f(x[i], y[i])
+        k2 = f(x[i] + h / 2, y[i] + h * k1 / 2)
+        k3 = f(x[i] + h / 2, y[i] + h * k2 / 2)
+        k4 = f(x[i] + h, y[i] + h * k3)
+        y[i + 1] = y[i] + h * (k1 + 2 * (k2 + k3) + k4) / 6
+    return (x, y)
 ```
 
 +++
@@ -141,54 +142,63 @@ y(1)&=1.
 \end{align}
 
 ```{code-cell}
-import math263
+import matplotlib.pyplot as plt
 import numpy as np
 import sympy
-import matplotlib.pyplot as plt
 from tabulate import tabulate
 
-plt.style.use('dark_background');
+import math263
+
+plt.style.use("dark_background")
 
 # define IVP parameters
-f = lambda x, y: (y/x) - (y/x)**2;
-a, b = 1, 2;
-y0=1;
+f = lambda x, y: (y / x) - (y / x) ** 2
+a, b = 1, 2
+y0 = 1
 
 # solve the IVP symbolically with the sympy library
-x = sympy.Symbol('x');
-y = sympy.Function('y');
-ode = sympy.Eq(y(x).diff(x), f(x,y(x)));
-soln = sympy.dsolve(ode, y(x), ics={y(a): y0}); 
-print("The exact symbolic solution to the IVP");
-display(ode);
-print(f"with initial condition y({a}) = {y0} is");
-display(soln);
+x = sympy.Symbol("x")
+y = sympy.Function("y")
+ode = sympy.Eq(y(x).diff(x), f(x, y(x)))
+soln = sympy.dsolve(ode, y(x), ics={y(a): y0})
+print("The exact symbolic solution to the IVP")
+display(ode)
+print(f"with initial condition y({a}) = {y0} is")
+display(soln)
 
 # convert the symbolic solution to a Python function and plot it with matplotlib.pyplot
-sym_y=sympy.lambdify(x, soln.rhs, modules=['numpy']); 
-xvals = np.linspace(a, b, num=100);
-fig, ax = plt.subplots(layout='constrained');
-ax.plot(xvals, sym_y(xvals), color='b', label=f"${sympy.latex(soln)}$");
-ax.set_title(f"$y' = {sympy.latex(f(x,y(x)))}$, $y({a})={y0}$");
-ax.set_xlabel(r"$x$");
-ax.set_ylabel(r"$y$");
-ax.legend([f"${sympy.latex(soln)}$"], loc='upper right');
+sym_y = sympy.lambdify(x, soln.rhs, modules=["numpy"])
+xvals = np.linspace(a, b, num=100)
+fig, ax = plt.subplots(layout="constrained")
+ax.plot(xvals, sym_y(xvals), color="b", label=f"${sympy.latex(soln)}$")
+ax.set_title(f"$y' = {sympy.latex(f(x,y(x)))}$, $y({a})={y0}$")
+ax.set_xlabel(r"$x$")
+ax.set_ylabel(r"$y$")
+ax.legend([f"${sympy.latex(soln)}$"], loc="upper right")
 plt.grid(True)
 
 # numerically solve the IVP with n=10 steps of forward Euler and n=10 steps of RK4
-n = 10;
-(xi, y_euler) = math263.euler(f, a, b, y0, n);
-(xi, y_rk4)   = math263.rk4(f, a, b, y0, n);
+n = 10
+xi, y_euler = math263.euler(f, a, b, y0, n)
+xi, y_rk4 = math263.rk4(f, a, b, y0, n)
 
 # plot numerical solutions on top of true solution
-ax.plot(xi, y_euler[:, 0], 'ro:', label="Euler");
-ax.plot(xi, y_rk4[:, 0], 'go:', label="RK4");
-ax.legend(loc='upper left');
-plt.show();
+ax.plot(xi, y_euler[:, 0], "ro:", label="Euler")
+ax.plot(xi, y_rk4[:, 0], "go:", label="RK4")
+ax.legend(loc="upper left")
+plt.show()
 
 # tabulate the results
 print("Global errors for Euler's method and RK4.")
-table = np.c_[xi, abs(sym_y(xi) - y_euler[:, 0]), abs(sym_y(xi) - y_rk4[:, 0])];
-hdrs = ["i", "x_i", "e_{i,Euler} = |y(x_i)-y_i|", "e_{i,RK4} = |y(x_i)-y_i|"];
-print(tabulate(table, hdrs, tablefmt='mixed_grid', floatfmt=['0.0f', '0.1f', '0.5e', '0.5e'], showindex=True))
+table = np.c_[xi, abs(sym_y(xi) - y_euler[:, 0]), abs(sym_y(xi) - y_rk4[:, 0])]
+hdrs = ["i", "x_i", "e_{i,Euler} = |y(x_i)-y_i|", "e_{i,RK4} = |y(x_i)-y_i|"]
+print(
+    tabulate(
+        table,
+        hdrs,
+        tablefmt="mixed_grid",
+        floatfmt=["0.0f", "0.1f", "0.5e", "0.5e"],
+        showindex=True,
+    )
+)
 ```
