@@ -59,14 +59,14 @@ for $i\ge 0$.
 
 The `math263` module contains the following Python implementation of Euler's method.
 
-```python
+``` python
 import numpy as np
 
 
 def euler(f, a, b, y0, n):
     """
     numerically solves the IVP
-            y' = f(x,y), y(a) = y0
+        y' = f(x,y), y(a) = y0
     over the interval [a, b] via n steps of Euler's method
     """
     h = (b - a) / n
@@ -75,7 +75,7 @@ def euler(f, a, b, y0, n):
     y[0] = y0
     for i in range(n):
         y[i + 1] = y[i] + h * f(x[i], y[i])
-    return (x, y)
+    return x, y
 ```
 
 ## Example.

@@ -112,30 +112,32 @@ Furthermore, since the error $|y(x_i)-y_i|$ tends to increase with $i$, it is re
 Our Python implementation of the Adams–Bashforth 2-step method uses Heun's modified Euler method as starter.
 The code is included in the `math263` module.
 
-```python
+``` python
 import numpy as np
 
+
 def ab2(f, a, b, y0, n):
-	'''
-	numerically solves the IVP
-		y' = f(x,y), y(a)=y0
-	over the interval [a, b] via n steps of second order Adams–Bashforth method
-	'''
-	h = (b - a)/n;
-	x = np.linspace(a, b, num=n + 1);
-	y = np.empty((x.size, np.size(y0)));
-	y[0] = y0;
-	# take first step with Heun's MEM
-	k1 = f(x[0], y[0]);
-	k2 = f(x[1], y[0] + h*k1);
-	y[1] = y[0] + h*(k1 + k2)/2;
-	# begin multistepping
-	f2 = f(x[0], y[0]);
-	for i in range(1, n):
-		f1 = f(x[i], y[i]);
-		y[i + 1] = y[i] + h*(3*f1 - f2)/2;
-		f2 = f1; # step f-vals down to get ready for next step
-	return (x, y)
+    """
+    numerically solves the IVP
+        y' = f(x,y), y(a)=y0
+    over the interval [a, b] via n steps of second order Adams–Bashforth method
+    """
+    h = (b - a) / n
+    x = np.linspace(a, b, num=n + 1)
+    y = np.empty((x.size, np.size(y0)))
+    y[0] = y0
+    # take first step with Heun's MEM
+    k1 = f(x[0], y[0])
+    k2 = f(x[1], y[0] + h * k1)
+    y[1] = y[0] + h * (k1 + k2) / 2
+    # begin multistepping
+    f2 = f(x[0], y[0])
+    for i in range(1, n):
+        f1 = f(x[i], y[i])
+        y[i + 1] = y[i] + h * (3 * f1 - f2) / 2
+        f2 = f1
+        # step f-vals down to get ready for next step
+    return x, y
 ```
 
 +++
@@ -151,7 +153,7 @@ as a test case.
 First we use both methods to solve the problem over the interval $[0,2]$ in $n=10$ steps.
 We then present the global truncation errors $e_i=|y(x_i) - y_i|$ for each method at each step in a table.
 
-```{code-cell} ipython3
+```{code-cell}
 from timeit import timeit
 
 import numpy as np
@@ -189,7 +191,7 @@ print(tabulate(table, hdrs, tablefmt="mixed_grid", floatfmt="0.5f", showindex=Tr
 
 We now compare the global error for AB2 at the right endpoint of the interval with that of MEM as we shrink the step-size.
 
-```{code-cell} ipython3
+```{code-cell}
 # compute abs errors at right endpoint for various step-sizes
 base = 10
 max_exp = 7
@@ -218,7 +220,7 @@ print(
 
 We also compare the empirical average running time for our implementations as the number of steps increases.
 
-```{code-cell} ipython3
+```{code-cell}
 num_trials = 10
 mem_times = [
     timeit(lambda: math263.mem(f, a, b, y0, base**j), number=num_trials) / num_trials

@@ -5,7 +5,7 @@ import scipy as sp
 def euler(f, a, b, y0, n):
     """
     numerically solves the IVP
-            y' = f(x,y), y(a) = y0
+        y' = f(x,y), y(a) = y0
     over the interval [a, b] via n steps of Euler's method
     """
     h = (b - a) / n
@@ -20,7 +20,7 @@ def euler(f, a, b, y0, n):
 def mem(f, a, b, y0, n):
     """
     numerically solves the IVP
-            y' = f(x,y), y(a)=y0
+        y' = f(x,y), y(a)=y0
     over the interval [a, b] via n steps of Heun's modified Euler method
     """
     h = (b - a) / n
@@ -37,7 +37,7 @@ def mem(f, a, b, y0, n):
 def bem(f, a, b, y0, n):
     """
     numerically solves the IVP
-            y' = f(x,y), y(a)=y0
+        y' = f(x,y), y(a)=y0
     over the interval [a, b] via n steps of the backward Euler method
     """
     h = (b - a) / n
@@ -53,7 +53,7 @@ def bem(f, a, b, y0, n):
 def rk4(f, a, b, y0, n):
     """
     numerically solves the IVP
-            y' = f(x,y), y(a)=y0
+        y' = f(x,y), y(a)=y0
     over the interval [a, b] via n steps of the 4th order (classical) Runge–Kutta method
     """
     h = (b - a) / n
@@ -72,7 +72,7 @@ def rk4(f, a, b, y0, n):
 def ab2(f, a, b, y0, n):
     """
     numerically solves the IVP
-            y' = f(x,y), y(a)=y0
+        y' = f(x,y), y(a)=y0
     over the interval [a, b] via n steps of second order Adams–Bashforth method
     """
     h = (b - a) / n
@@ -95,9 +95,9 @@ def ab2(f, a, b, y0, n):
 
 def abm2(f, a, b, y0, n):
     """
-        numerically solves the IVP
-                y' = f(x,y), y(a)=y0
-        over the interval [a, b] via n steps of second order Adams–Bashforth–Moulton
+    numerically solves the IVP
+        y' = f(x,y), y(a)=y0
+    over the interval [a, b] via n steps of second order Adams–Bashforth–Moulton
     predictor-corrector method
     """
     h = (b - a) / n
