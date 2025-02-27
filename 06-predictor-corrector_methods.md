@@ -74,7 +74,7 @@ This method is often paired with the order 2 Adams–Bashforth two-step (explici
 \hat{y_{i+1}}&=y_i+\frac{h}{2}\left(3y_i'-y_{i-1}'\right),\\
 y_{i+1}&=y_i + \frac{h}{2}\left(\hat{y_{i+1}}'+ y_i'\right),
 ```
-where $y_i'=f(x_i,y_i)$ and $\hat{y_{i+1}}' = f(x_{i+1}, \hat{y_{i+1}}')$ for each $i\ge 0$.  Here $\hat{y_{i+1}}'$ is referred to as the **predicted value** and $y_{i+1}$ the **corrected value**.
+where $y_i'=f(x_i,y_i)$ and $\hat{y_{i+1}}' = f(x_{i+1}, \hat{y_{i+1}})$ for each $i\ge 0$.  Here $\hat{y_{i+1}}$ is referred to as the **predicted value** and $y_{i+1}$ the **corrected value**.
 
 +++
 
