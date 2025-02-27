@@ -34,18 +34,18 @@ Therefore, we say that the method is **explicit** if $\beta_0=0$ and **implicit*
 If the method is implicit and the function $f(x, y)$ is linear in $y$, then it is easy to solve for $y_{i+1}$ once the specific IVP is given, but in practice this is often not the case.
 We will consider implicit methods in the next lecture.
 For now, we concentrate on the case of explicit methods.
-Some of the most popular explicit linear multistep methods are the _Adams–Bashforth methods_.
+Some of the most popular explicit linear multistep methods are the _Adams–Bashforth methods_, which set $\beta_0=0$ and $\alpha_j=0$ for $j\ge 2$.
 
 +++
 
 ## Adams–Bashforth 2-step method.
 
-For an explicit, linear $2$-step method equation {eq}`linear-multistep-form` simplifies to
+For a $2$-step Adams—Bashforth method, equation {eq}`linear-multistep-form` simplifies to
 ```{math}
 :label: 2-step-form
 y_{i+1} = \alpha_1y_i + h\big(\beta_1f(x_i,y_i) + \beta_2f(x_{i-1},y_{i-1})\big).
 ```
-The idea of the Adams–Bashforth method is to force this formula to be exact for the first 3 terms of the Taylor series for the true solution $y$.
+The idea then is to force this formula to be exact for the first 3 terms of the Taylor series of the true solution $y$.
 This will ensure that the local truncation error for the method is $O(h^3)$ as $h\to 0$.
 Note that with only $3$ parameters to determine (viz, $\alpha_1, \beta_1, \beta_2)$, this is the best that can be done.
 By linearity, it is enough to make it exact for the cases $y(x)=1$, $y(x)=x$, and $y(x)=x^2$.

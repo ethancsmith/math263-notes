@@ -119,12 +119,12 @@ def abm2(f, a, b, y0, n):
     # continuing method: ABM2 predictor-corrector
     f2 = f(x[0], y[0])
     for i in range(1, n):
+        # predict with AB2
         f1 = f(x[i], y[i])
         yhat = y[i] + h * (3 * f1 - f2) / 2
-        # predict with AB2
+        # correct with AM1
         f0 = f(x[i + 1], yhat)
         y[i + 1] = y[i] + h * (f0 + f1) / 2
-        # correct with AM1
         f2 = f1
     return x, y
 ```
