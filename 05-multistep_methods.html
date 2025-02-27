@@ -414,13 +414,13 @@ Therefore, we say that the method is <strong>explicit</strong> if <span class="m
 If the method is implicit and the function <span class="math notranslate nohighlight">\(f(x, y)\)</span> is linear in <span class="math notranslate nohighlight">\(y\)</span>, then it is easy to solve for <span class="math notranslate nohighlight">\(y_{i+1}\)</span> once the specific IVP is given, but in practice this is often not the case.
 We will consider implicit methods in the next lecture.
 For now, we concentrate on the case of explicit methods.
-Some of the most popular explicit linear multistep methods are the <em>Adams–Bashforth methods</em>.</p>
+Some of the most popular explicit linear multistep methods are the <em>Adams–Bashforth methods</em>, which set <span class="math notranslate nohighlight">\(\beta_0=0\)</span> and <span class="math notranslate nohighlight">\(\alpha_j=0\)</span> for <span class="math notranslate nohighlight">\(j\ge 2\)</span>.</p>
 <section id="adamsbashforth-2-step-method">
 <h2>Adams–Bashforth 2-step method.<a class="headerlink" href="#adamsbashforth-2-step-method" title="Link to this heading">#</a></h2>
-<p>For an explicit, linear <span class="math notranslate nohighlight">\(2\)</span>-step method equation <a class="reference internal" href="#equation-linear-multistep-form">(14)</a> simplifies to</p>
+<p>For a <span class="math notranslate nohighlight">\(2\)</span>-step Adams—Bashforth method, equation <a class="reference internal" href="#equation-linear-multistep-form">(14)</a> simplifies to</p>
 <div class="math notranslate nohighlight" id="equation-2-step-form">
 <span class="eqno">(15)<a class="headerlink" href="#equation-2-step-form" title="Link to this equation">#</a></span>\[y_{i+1} = \alpha_1y_i + h\big(\beta_1f(x_i,y_i) + \beta_2f(x_{i-1},y_{i-1})\big).\]</div>
-<p>The idea of the Adams–Bashforth method is to force this formula to be exact for the first 3 terms of the Taylor series for the true solution <span class="math notranslate nohighlight">\(y\)</span>.
+<p>The idea then is to force this formula to be exact for the first 3 terms of the Taylor series of the true solution <span class="math notranslate nohighlight">\(y\)</span>.
 This will ensure that the local truncation error for the method is <span class="math notranslate nohighlight">\(O(h^3)\)</span> as <span class="math notranslate nohighlight">\(h\to 0\)</span>.
 Note that with only <span class="math notranslate nohighlight">\(3\)</span> parameters to determine (viz, <span class="math notranslate nohighlight">\(\alpha_1, \beta_1, \beta_2)\)</span>, this is the best that can be done.
 By linearity, it is enough to make it exact for the cases <span class="math notranslate nohighlight">\(y(x)=1\)</span>, <span class="math notranslate nohighlight">\(y(x)=x\)</span>, and <span class="math notranslate nohighlight">\(y(x)=x^2\)</span>.
@@ -663,15 +663,15 @@ We then present the global truncation errors <span class="math notranslate nohig
 ┝━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━┥
 │          10 │           0.00005 │           0.00004 │
 ├─────────────┼───────────────────┼───────────────────┤
-│         100 │           0.00039 │           0.00031 │
+│         100 │           0.00039 │           0.00029 │
 ├─────────────┼───────────────────┼───────────────────┤
-│        1000 │           0.00396 │           0.00307 │
+│        1000 │           0.00397 │           0.00294 │
 ├─────────────┼───────────────────┼───────────────────┤
-│       10000 │           0.04062 │           0.03035 │
+│       10000 │           0.04023 │           0.02918 │
 ├─────────────┼───────────────────┼───────────────────┤
-│      100000 │           0.40400 │           0.30492 │
+│      100000 │           0.39699 │           0.29015 │
 ├─────────────┼───────────────────┼───────────────────┤
-│     1000000 │           4.15337 │           3.01180 │
+│     1000000 │           4.07669 │           2.92853 │
 ┕━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━┙
 </pre></div>
 </div>
