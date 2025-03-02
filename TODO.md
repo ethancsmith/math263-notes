@@ -1,5 +1,6 @@
 # TODO
 
+1. Memoize f-vals for continuing methods to avoid shifting data. 
 1. Rewrite methods to initialize y-arrays differently depending on whether y0 is scalar or vector.
 1. Switch to using $t$ as generic independent variable?
 1. Include RKF45 example of adaptive methods.
