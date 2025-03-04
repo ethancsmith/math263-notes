@@ -10,7 +10,7 @@ Set up your environment with `conda` and the included environment file.
 
 ```shell
 conda env create -f environment.yml
-conda activate math263
+conda activate math263-notes
 ```
 
 The MyST Markdown scripts can now be used within Jupyter Lab as Jupyter notebooks.
