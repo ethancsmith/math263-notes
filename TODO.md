@@ -1,6 +1,6 @@
 # TODO
 
-1. Memoize f-vals for continuing methods to avoid shifting data. 
+1. Store f-vals in an array for continuing methods to avoid shifting data. 
 1. Rewrite methods to initialize y-arrays differently depending on whether y0 is scalar or vector.
 1. Simplify pyplot code.
 1. Switch to using $t$ as generic independent variable?
