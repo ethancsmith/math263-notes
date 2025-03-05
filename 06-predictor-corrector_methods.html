@@ -531,46 +531,52 @@ y(0)&amp;=1/2\end{split}\]</div>
 
 <span class="c1"># numerically solve the IVP with n=10 steps of AB2 and n=10 steps of ABM2</span>
 <span class="n">n</span> <span class="o">=</span> <span class="mi">10</span>
-<span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_ab2</span><span class="p">)</span> <span class="o">=</span> <span class="n">math263</span><span class="o">.</span><span class="n">ab2</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
-<span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_abm2</span><span class="p">)</span> <span class="o">=</span> <span class="n">math263</span><span class="o">.</span><span class="n">abm2</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+<span class="n">x</span><span class="p">,</span> <span class="n">y_ab2</span> <span class="o">=</span> <span class="n">math263</span><span class="o">.</span><span class="n">ab2</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+<span class="n">x</span><span class="p">,</span> <span class="n">y_abm2</span> <span class="o">=</span> <span class="n">math263</span><span class="o">.</span><span class="n">abm2</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
 
 <span class="c1"># tabulate the results</span>
-<span class="nb">print</span><span class="p">(</span>
-    <span class="sa">f</span><span class="s2">&quot;Comparison of global errors for AB2 and ABM2 across interval for step-size h = </span><span class="si">{</span><span class="p">(</span><span class="n">b</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">a</span><span class="p">)</span><span class="o">/</span><span class="n">n</span><span class="si">}</span><span class="s2">.&quot;</span>
-<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Comparison of global errors for AB2 and ABM2.&quot;</span><span class="p">)</span>
 <span class="n">table</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="n">sym_y</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="n">y_ab2</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">sym_y</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="n">y_abm2</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])]</span>
 <span class="n">hdrs</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;i&quot;</span><span class="p">,</span> <span class="s2">&quot;x_i&quot;</span><span class="p">,</span> <span class="s2">&quot;AB2 global error&quot;</span><span class="p">,</span> <span class="s2">&quot;ABM2 global error&quot;</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">tabulate</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">hdrs</span><span class="p">,</span> <span class="n">tablefmt</span><span class="o">=</span><span class="s2">&quot;mixed_grid&quot;</span><span class="p">,</span> <span class="n">floatfmt</span><span class="o">=</span><span class="s2">&quot;0.5f&quot;</span><span class="p">,</span> <span class="n">showindex</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="n">tabulate</span><span class="p">(</span>
+        <span class="n">table</span><span class="p">,</span>
+        <span class="n">hdrs</span><span class="p">,</span>
+        <span class="n">tablefmt</span><span class="o">=</span><span class="s2">&quot;mixed_grid&quot;</span><span class="p">,</span>
+        <span class="n">floatfmt</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;0.0f&quot;</span><span class="p">,</span> <span class="s2">&quot;0.2f&quot;</span><span class="p">,</span> <span class="s2">&quot;0.5e&quot;</span><span class="p">,</span> <span class="s2">&quot;0.5e&quot;</span><span class="p">],</span>
+        <span class="n">showindex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Comparison of global errors for AB2 and ABM2 across interval for step-size h = 0.2.
-┍━━━━━┯━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━┑
-│   i │     x_i │   AB2 global error │   ABM2 global error │
-┝━━━━━┿━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━┥
-│   0 │ 0.00000 │            0.00000 │             0.00000 │
-├─────┼─────────┼────────────────────┼─────────────────────┤
-│   1 │ 0.20000 │            0.00330 │             0.00330 │
-├─────┼─────────┼────────────────────┼─────────────────────┤
-│   2 │ 0.40000 │            0.00229 │             0.00431 │
-├─────┼─────────┼────────────────────┼─────────────────────┤
-│   3 │ 0.60000 │            0.00020 │             0.00557 │
-├─────┼─────────┼────────────────────┼─────────────────────┤
-│   4 │ 0.80000 │            0.00295 │             0.00718 │
-├─────┼─────────┼────────────────────┼─────────────────────┤
-│   5 │ 1.00000 │            0.00750 │             0.00924 │
-├─────┼─────────┼────────────────────┼─────────────────────┤
-│   6 │ 1.20000 │            0.01391 │             0.01185 │
-├─────┼─────────┼────────────────────┼─────────────────────┤
-│   7 │ 1.40000 │            0.02277 │             0.01516 │
-├─────┼─────────┼────────────────────┼─────────────────────┤
-│   8 │ 1.60000 │            0.03486 │             0.01936 │
-├─────┼─────────┼────────────────────┼─────────────────────┤
-│   9 │ 1.80000 │            0.05115 │             0.02467 │
-├─────┼─────────┼────────────────────┼─────────────────────┤
-│  10 │ 2.00000 │            0.07292 │             0.03139 │
-┕━━━━━┷━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━━┙
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Comparison of global errors for AB2 and ABM2.
+┍━━━━━┯━━━━━━━┯━━━━━━━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━┑
+│   i │   x_i │   AB2 global error │   ABM2 global error │
+┝━━━━━┿━━━━━━━┿━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━┥
+│   0 │  0.00 │        0.00000e+00 │         0.00000e+00 │
+├─────┼───────┼────────────────────┼─────────────────────┤
+│   1 │  0.20 │        3.29862e-03 │         3.29862e-03 │
+├─────┼───────┼────────────────────┼─────────────────────┤
+│   2 │  0.40 │        2.28765e-03 │         4.30765e-03 │
+├─────┼───────┼────────────────────┼─────────────────────┤
+│   3 │  0.60 │        2.00600e-04 │         5.57120e-03 │
+├─────┼───────┼────────────────────┼─────────────────────┤
+│   4 │  0.80 │        2.95246e-03 │         7.18297e-03 │
+├─────┼───────┼────────────────────┼─────────────────────┤
+│   5 │  1.00 │        7.50351e-03 │         9.23551e-03 │
+├─────┼───────┼────────────────────┼─────────────────────┤
+│   6 │  1.20 │        1.39116e-02 │         1.18450e-02 │
+├─────┼───────┼────────────────────┼─────────────────────┤
+│   7 │  1.40 │        2.27729e-02 │         1.51575e-02 │
+├─────┼───────┼────────────────────┼─────────────────────┤
+│   8 │  1.60 │        3.48556e-02 │         1.93565e-02 │
+├─────┼───────┼────────────────────┼─────────────────────┤
+│   9 │  1.80 │        5.11477e-02 │         2.46721e-02 │
+├─────┼───────┼────────────────────┼─────────────────────┤
+│  10 │  2.00 │        7.29153e-02 │         3.13931e-02 │
+┕━━━━━┷━━━━━━━┷━━━━━━━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━━┙
 </pre></div>
 </div>
 </div>
@@ -594,7 +600,7 @@ y(0)&amp;=1/2\end{split}\]</div>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Comparison of global errors |y_n - y(</span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s2">)| for various step-sizes.&quot;</span><span class="p">)</span>
 <span class="n">table</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">h</span><span class="p">,</span> <span class="n">ab2_errors</span><span class="p">,</span> <span class="n">abm2_errors</span><span class="p">]</span>
 <span class="n">hdrs</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;step-size&quot;</span><span class="p">,</span> <span class="s2">&quot;AB2 global error&quot;</span><span class="p">,</span> <span class="s2">&quot;ABM2 global error&quot;</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">tabulate</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">hdrs</span><span class="p">,</span> <span class="n">tablefmt</span><span class="o">=</span><span class="s2">&quot;mixed_grid&quot;</span><span class="p">,</span> <span class="n">floatfmt</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;0.6f&quot;</span><span class="p">,</span> <span class="s2">&quot;0.6g&quot;</span><span class="p">,</span> <span class="s2">&quot;0.6g&quot;</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tabulate</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">hdrs</span><span class="p">,</span> <span class="n">tablefmt</span><span class="o">=</span><span class="s2">&quot;mixed_grid&quot;</span><span class="p">,</span> <span class="n">floatfmt</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;0.6f&quot;</span><span class="p">,</span> <span class="s2">&quot;0.6e&quot;</span><span class="p">,</span> <span class="s2">&quot;0.6e&quot;</span><span class="p">]))</span>
 </pre></div>
 </div>
 </div>
@@ -603,17 +609,17 @@ y(0)&amp;=1/2\end{split}\]</div>
 ┍━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━┑
 │   step-size │   AB2 global error │   ABM2 global error │
 ┝━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━┥
-│    0.200000 │        0.0729153   │         0.0313931   │
+│    0.200000 │       7.291525e-02 │        3.139310e-02 │
 ├─────────────┼────────────────────┼─────────────────────┤
-│    0.020000 │        0.00117961  │         0.000253639 │
+│    0.020000 │       1.179610e-03 │        2.536390e-04 │
 ├─────────────┼────────────────────┼─────────────────────┤
-│    0.002000 │        1.22633e-05 │         2.4704e-06  │
+│    0.002000 │       1.226335e-05 │        2.470403e-06 │
 ├─────────────┼────────────────────┼─────────────────────┤
-│    0.000200 │        1.23099e-07 │         2.46376e-08 │
+│    0.000200 │       1.230993e-07 │        2.463756e-08 │
 ├─────────────┼────────────────────┼─────────────────────┤
-│    0.000020 │        1.23135e-09 │         2.46373e-10 │
+│    0.000020 │       1.231354e-09 │        2.463727e-10 │
 ├─────────────┼────────────────────┼─────────────────────┤
-│    0.000002 │        1.18954e-11 │         2.40874e-12 │
+│    0.000002 │       1.189537e-11 │        2.408740e-12 │
 ┕━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━━┙
 </pre></div>
 </div>
