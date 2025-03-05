@@ -22,7 +22,7 @@ y_2' &= f_2(x, y_1, y_2, \dots, y_m),\\
 &\quad \vdots\\
 y_m' &= f_m(x, y_1, y_2, \dots, y_m).
 ```
-Since humans are much better at holding onto to one object at time, it is convenient (and conceptually more illuminating) to place the $m$ objects into a single vector equation, namely
+Since humans are much better at holding onto to one object at time, it is convenient (and conceptually more illuminating) to place the $m$ objects into a single vector equation of the form
 ```{math}
 :label: first-order-vector-ode
 \mathbf{y}' = \mathbf{f}(x, \mathbf{y}),
@@ -60,7 +60,6 @@ Evidently, the derivative {eq}`vector-derivative` of a vector-valued function is
 :label: approx-vector-derivative
 \mathbf{y}'(x) \approx \frac{\mathbf{y}(x+h) - \mathbf{y}(x)}{h}.
 ```
-In fact, there is even a theory of multiple-variable Taylor series to precisely quantify what is meant by this assertion though we will not pursue such a precise statement this time.
 Now, solving {eq}`approx-vector-derivative` for $\mathbf{y}(x+h)$ yields the usual linear approximation
 \begin{equation*}
 \mathbf{y}(x+h) \approx \mathbf{y}(x) + h\mathbf{y}'(x).
@@ -76,7 +75,7 @@ we have the (vectorized) **forward Euler method**
 :label: vector-forward-euler
 \mathbf{y}_{i+1} = \mathbf{y}_i + h \mathbf{f}(x_i, \mathbf{y}_i).
 ```
-For those less familiar with vector arithmetic (or those interested in implementing the method is a low-level programming language) we note that the above vector formula is equivalent to the $m$ scalar formulas
+For those less familiar with vector arithmetic (or those interested in implementing the method in a low-level programming language) we note that the above vector formula is equivalent to the $m$ scalar formulas
 \begin{align*}
 y_{1, i+1} &= y_{1,i} + h f_1(x_i, y_{1, i}, y_{2, i}, \dots, y_{m, i}),\\
 y_{2, i+1} &= y_{2,i} + h f_2(x_i, y_{1, i}, y_{2, i}, \dots, y_{m, i}),\\
@@ -115,66 +114,77 @@ from tabulate import tabulate
 import math263
 
 # solve the IVP symbolically with the sympy library
-t = sympy.Symbol('t');
-x = sympy.Function('x');
-y = sympy.Function('y');
-z = sympy.Function('z');
-ode_rhs = [x(t) + z(t), x(t) + y(t), -2*x(t) - z(t)];
-ode = [sympy.Eq(x(t).diff(t), ode_rhs[0]), 
-       sympy.Eq(y(t).diff(t), ode_rhs[1]), 
-       sympy.Eq(z(t).diff(t), ode_rhs[2])];
-a, b = 0, 2*np.pi;
-soln=sympy.dsolve(ode,[x(t), y(t), z(t)], 
-                  ics={x(a): 1, y(a): sympy.Rational(-1,2), z(a): -1}); 
-soln_rhs = sympy.Matrix([eq.rhs for eq in soln]);
+t = sympy.Symbol("t")
+x = sympy.Function("x")
+y = sympy.Function("y")
+z = sympy.Function("z")
+ode_rhs = [x(t) + z(t), x(t) + y(t), -2 * x(t) - z(t)]
+ode = [
+    sympy.Eq(x(t).diff(t), ode_rhs[0]),
+    sympy.Eq(y(t).diff(t), ode_rhs[1]),
+    sympy.Eq(z(t).diff(t), ode_rhs[2]),
+]
+a, b = 0, 2 * np.pi
+soln = sympy.dsolve(
+    ode, [x(t), y(t), z(t)], ics={x(a): 1, y(a): sympy.Rational(-1, 2), z(a): -1}
+)
+soln_rhs = sympy.Matrix([eq.rhs for eq in soln])
 
-print("The exact symbolic solution to the IVP is");
-display(soln[0]);
-display(soln[1]);
-display(soln[2]);
+print("The exact symbolic solution to the IVP is")
+display(soln[0])
+display(soln[1])
+display(soln[2])
 ```
 
 Next we plot the solution in $xyz$-space.
 
 ```{code-cell}
-plt.style.use('dark_background');
+plt.style.use("dark_background")
 
 # lambdify the symbolic solution
-sym_x = sympy.lambdify(t, soln[0].rhs, modules=['numpy']);
-sym_y = sympy.lambdify(t, soln[1].rhs, modules=['numpy']);
-sym_z = sympy.lambdify(t, soln[2].rhs, modules=['numpy']);
-tvals = np.linspace(a, b, num=40);
+sym_x = sympy.lambdify(t, soln[0].rhs, modules=["numpy"])
+sym_y = sympy.lambdify(t, soln[1].rhs, modules=["numpy"])
+sym_z = sympy.lambdify(t, soln[2].rhs, modules=["numpy"])
+tvals = np.linspace(a, b, num=40)
 
 # plot symbolic solution with matplotlib.pyplot
-fig, ax = plt.subplots(subplot_kw=dict(projection='3d'));
-fig.set_size_inches(8, 8);
-ax.plot(sym_x(tvals), sym_y(tvals), sym_z(tvals), 
-        label=r"$\mathbf{r}(t)=\langle x(t), y(t), z(t)\rangle$");
-ax.set_xlabel(r"$x$");
-ax.set_ylabel(r"$y$");
-ax.set_zlabel(r"$z$");
-ax.set_title(r"$\frac{\mathrm{d}\mathbf{r}}{\mathrm{d}t} = \langle$" 
-             f"${sympy.latex(ode_rhs[0])}$, ${sympy.latex(ode_rhs[1])}$, ${sympy.latex(ode_rhs[2])}$"
-             r"$\rangle$, $\mathbf{r}(0) = \langle 1, -1/2, -1\rangle$");
+fig, ax = plt.subplots(subplot_kw=dict(projection="3d"))
+fig.set_size_inches(8, 8)
+ax.plot(
+    sym_x(tvals),
+    sym_y(tvals),
+    sym_z(tvals),
+    "b",
+    label=r"$\mathbf{r}(t)=\langle x(t), y(t), z(t)\rangle$",
+)
+ax.set_xlabel(r"$x$")
+ax.set_ylabel(r"$y$")
+ax.set_zlabel(r"$z$")
+ax.set_title(
+    r"$\frac{\mathrm{d}\mathbf{r}}{\mathrm{d}t} = \langle$"
+    f"${sympy.latex(ode_rhs[0])}$, ${sympy.latex(ode_rhs[1])}$, ${sympy.latex(ode_rhs[2])}$"
+    r"$\rangle$, $\mathbf{r}(0) = \langle 1, -1/2, -1\rangle$"
+)
 ax.set_box_aspect(aspect=None, zoom=0.85)
 ax.legend(loc="upper right")
 ax.grid(True)
 ```
 
-Now we compute a numerical solution via Euler's method and plot it along with the symbolic solution.
+Now we compute a numerical solution with RK4 and plot it along with the symbolic solution.
 
 ```{code-cell}
 # define IVP parameters
-f = lambda t, r: np.array([r[0] + r[2], r[0] + r[1], -2*r[0] - r[2]]);
-a, b = 0, 2*np.pi;
-r0=np.array([1, -1/2, -1]);
+f = lambda t, r: np.array([r[0] + r[2], r[0] + r[1], -2 * r[0] - r[2]])
+a, b = 0, 2 * np.pi
+r0 = np.array([1, -1 / 2, -1])
 
-h=0.1;
-n = round((b - a)/h + 0.5);
-(ti, r_euler) = math263.euler(f, a, b, r0, n); 
+h = 0.1
+n = round((b - a) / h + 0.5)
+n = 10
+(ti, r_rk4) = math263.rk4(f, a, b, r0, n)
 
-plt.figure(fig);
-ax.plot(r_euler[:, 0], r_euler[:, 1], r_euler[:, 2], 'ro:', label="Euler's method");
+plt.figure(fig)
+ax.plot(r_rk4[:, 0], r_rk4[:, 1], r_rk4[:, 2], "ro:", label="RK4")
 ax.legend(loc="upper right")
 plt.show()
 ```
@@ -182,13 +192,15 @@ plt.show()
 Finally, we compute the absolute and relative errors at each mesh point in $t$-space using the $2$-norm.
 
 ```{code-cell}
-rvals = np.c_[sym_x(ti), sym_y(ti), sym_z(ti)];
-error_vecs = rvals - r_euler
-p=2; # set 'p = inf.inf' to use infinity norm
-errors = np.linalg.norm(error_vecs, axis=1, ord=p) 
-rel_errors = errors/np.linalg.norm(rvals, axis=1, ord=p);
-table = np.c_[ti, errors, rel_errors];
-hdrs = ["i", "t_i", "abs. error", "rel. error"];
-print(f"Global {p}-norm errors for Euler's method.")
-print(tabulate(table, hdrs, tablefmt='mixed_grid', floatfmt='0.5g', showindex=True))
+rvals = np.c_[sym_x(ti), sym_y(ti), sym_z(ti)]
+error_vecs = rvals - r_rk4
+p = 2
+# set 'p = inf.inf' to use infinity norm
+errors = np.linalg.norm(error_vecs, axis=1, ord=p)
+rel_errors = errors / np.linalg.norm(rvals, axis=1, ord=p)
+table = np.c_[ti, errors, rel_errors]
+hdrs = ["i", "t_i", "abs. error", "rel. error"]
+print(f"Global {p}-norm errors for RK4.")
+print(tabulate(table, hdrs, tablefmt="mixed_grid", 
+    floatfmt=["0.of", "0.5f", "0.5e", "0.5e"], showindex=True))
 ```
