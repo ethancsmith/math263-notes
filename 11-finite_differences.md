@@ -128,7 +128,7 @@ y_0\\ y_1\\ y_2\\ \vdots\\ y_{n-1}\\ y_n
 to solve.
 We solve this system below for the case of $n = 10$ steps.
 
-```{code-cell} ipython3
+```{code-cell}
 import numpy as np
 from matplotlib import pyplot
 from tabulate import tabulate
@@ -171,4 +171,8 @@ ax.set_ylabel(r"$y$")
 ax.legend(loc="upper left")
 ax.grid(True)
 pyplot.show()
+```
+
+```{code-cell}
+
 ```
