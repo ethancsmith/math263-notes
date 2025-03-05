@@ -187,7 +187,3 @@ else:
     ax.grid(True)
     pyplot.show()
 ```
-
-```{code-cell}
-
-```
