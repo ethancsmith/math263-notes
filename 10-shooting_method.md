@@ -59,7 +59,7 @@ For the shooting method, we ignore what the boundary condition $\mathbf{g} = \ma
 ```
 The goal then is to find a value of $s = u_1(0) = y'(0)$ so that when we solve the resulting IVP $u_0(1)\approx 5$, i.e., $|u_0(1) - 5|$ is within a specified tolerance.  Below we make an initial guess of $s = 1$ and solve the IVP with $n = 10$ steps of RK4.
 
-```{code-cell} ipython3
+```{code-cell}
 import numpy
 from matplotlib import pyplot
 from tabulate import tabulate
@@ -95,7 +95,7 @@ ax.legend(loc="upper left")
 
 The guess $s=1$ produces an approximate value for $y(1) = u_0(1)$ that is too low.  This suggests that we should try a steeper guess for $s = u_1(0) = y'(0)$.  Below we try again with $s=2$.
 
-```{code-cell} ipython3
+```{code-cell}
 # numerically solve the IVP with n = 10 steps of RK4
 n = 10
 s = 2
@@ -113,7 +113,7 @@ pyplot.show()
 
 Again we are too low, and so we try $s=3$.
 
-```{code-cell} ipython3
+```{code-cell}
 # numerically solve the IVP with n = 10 steps of RK4
 n = 10
 s = 3
@@ -131,7 +131,7 @@ pyplot.show()
 
 This time we are too high, and that is fortunate for now we have "bracketed" $s$.  In particular, we "know" (assuming that the solution varies continuously with $s$) that $s\in (2,3)$.  We can therefore bisect the interval and guess $s=(2+3)/2=5/2$.  If that guess is too low, we know that $s\in(5/2, 3)$.  If it is too high, we know that $s\in (2, 5/2)$.  We can then keep bisecting until our computed value $u_{0,n} = y_n$ is within some desired tolerance of our target $y(1)=5$.  In practice, it is a good idea to set a maximum number of iterations in case the convergence is rather slow and the work cost is too high.
 
-```{code-cell} ipython3
+```{code-cell}
 # tabulate the results for last iteration
 data = numpy.c_[xi, ui[:, 0]]
 hdrs = ["i", "x_i", "y_i"]

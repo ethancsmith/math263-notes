@@ -128,43 +128,47 @@ y_0\\ y_1\\ y_2\\ \vdots\\ y_{n-1}\\ y_n
 to solve.
 We solve this system below for the case of $n = 10$ steps.
 
-```{code-cell}
+```{code-cell} ipython3
 import numpy as np
 from matplotlib import pyplot
 from tabulate import tabulate
 
-pyplot.style.use('dark_background');
+pyplot.style.use("dark_background")
 
-a, b = 0, 1;
-alpha, beta = 0, 5;
+a, b = 0, 1
+alpha, beta = 0, 5
 
-# construct coefficient matrix A and RHS B 
-n = 10;
-h = (b - a)/n;
-A = np.diag(np.full(n+1, -(4*h**2 + 2))) + np.diag(np.full(n,1), -1) + np.diag(np.full(n,1),1);
-A[0] = np.eye(1, n + 1, 0);
-A[n] = np.eye(1, n + 1, n);
-B = 5*np.eye(n + 1, 1, -n);
-B = np.zeros((n + 1, 1));
-B[0] = alpha;
-B[n] = beta;
+# construct coefficient matrix A and RHS B
+n = 10
+h = (b - a) / n
+A = (
+    np.diag(np.full(n + 1, -(4 * h**2 + 2)))
+    + np.diag(np.full(n, 1), -1)
+    + np.diag(np.full(n, 1), 1)
+)
+A[0] = np.eye(1, n + 1, 0)
+A[n] = np.eye(1, n + 1, n)
+B = np.zeros((n + 1, 1))
+B[0] = alpha
+B[n] = beta
 
 # solve linear system AY = B.
-yi = np.linalg.solve(A, B);
-xi = np.linspace(a, b, n + 1);
+yi = np.linalg.solve(A, B)
+xi = np.linspace(a, b, n + 1)
 
 # tabulate the results
-data = np.c_[xi, yi];
-hdrs = ["i", "x_i", "y_i"];
-print("Finite difference method");
-print(tabulate(data, hdrs, tablefmt='mixed_grid', floatfmt='0.5f', showindex=True));
+data = np.c_[xi, yi]
+hdrs = ["i", "x_i", "y_i"]
+print("Finite difference method.")
+print(tabulate(data, hdrs, tablefmt="mixed_grid", floatfmt="0.5f", showindex=True))
 
 # plot solution
-fig, ax = pyplot.subplots(layout='constrained');
-ax.plot(xi, yi, ':.', label=f"finite difference method");
-ax.set_title(r"$y'' = 4y, y(0)=0, y(1)=5$");
-ax.set_xlabel(r"$x$");
-ax.set_ylabel(r"$y$");
-ax.legend(loc='upper left');
-ax.grid(True);
+fig, ax = pyplot.subplots(layout="constrained")
+ax.plot(xi, yi, "r:.", label=f"finite difference method")
+ax.set_title(r"$y'' = 4y, y(0)=0, y(1)=5$")
+ax.set_xlabel(r"$x$")
+ax.set_ylabel(r"$y$")
+ax.legend(loc="upper left")
+ax.grid(True)
+pyplot.show()
 ```
