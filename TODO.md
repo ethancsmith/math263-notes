@@ -1,5 +1,6 @@
 # TODO
 
+1. Consider moving systems and higher order ODEs up before multistep methods.
 1. Store f-vals in an array for continuing methods to avoid shifting data. 
 1. Rewrite methods to initialize y-arrays differently depending on whether y0 is scalar or vector.
 1. Simplify pyplot code.

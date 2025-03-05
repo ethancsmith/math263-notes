@@ -48,37 +48,40 @@ from tabulate import tabulate
 
 import math263
 
-plt.style.use('dark_background');
+plt.style.use("dark_background")
 
 # solve the IVP symbolically with the sympy library
-x = sympy.Symbol('x');
-y = sympy.Function('y');
-ode = sympy.Eq(y(x).diff(x, 2)-2*y(x).diff(x) + 2*y(x), sympy.exp(2*x)*sympy.sin(x));
-a, b = 0, 1;
-alpha = [sympy.Rational(-2,5), sympy.Rational(-3,5)];
-soln = sympy.dsolve(ode, y(x), ics={y(a): alpha[0], y(x).diff(x).subs(x, a): alpha[1]});
-soln = sympy.simplify(soln);
+x = sympy.Symbol("x")
+y = sympy.Function("y")
+ode = sympy.Eq(
+    y(x).diff(x, 2) - 2 * y(x).diff(x) + 2 * y(x), sympy.exp(2 * x) * sympy.sin(x)
+)
+a, b = 0, 1
+alpha = [sympy.Rational(-2, 5), sympy.Rational(-3, 5)]
+soln = sympy.dsolve(ode, y(x), ics={y(a): alpha[0], y(x).diff(x).subs(x, a): alpha[1]})
+soln = sympy.simplify(soln)
 
-print("The exact symbolic solution to the IVP is");
-display(soln);
-Dsoln_rhs = sympy.simplify(soln.rhs.diff(x));
+print("The exact symbolic solution to the IVP is")
+display(soln)
+Dsoln_rhs = sympy.simplify(soln.rhs.diff(x))
 
 # lambdify the symbolic solution
-sym_y = sympy.lambdify(x, soln.rhs, modules=['numpy']);
-sym_Dy = sympy.lambdify(x, Dsoln_rhs, modules=['numpy']);
-xvals = np.linspace(a, b, num=40);
+sym_y = sympy.lambdify(x, soln.rhs, modules=["numpy"])
+sym_Dy = sympy.lambdify(x, Dsoln_rhs, modules=["numpy"])
+xvals = np.linspace(a, b, num=40)
 
 # plot symbolic solution with matplotlib.pyplot
-fig, axs = plt.subplots(ncols=2, figsize=(8, 5), layout="constrained");
-axs[0].plot(xvals, sym_y(xvals), label=f"${sympy.latex(soln)}$");
-axs[1].plot(xvals, sym_Dy(xvals), label=f"$y'(x) = {sympy.latex(Dsoln_rhs)}$");
+fig, axs = plt.subplots(ncols=2, figsize=(8, 5), layout="constrained")
+axs[0].plot(xvals, sym_y(xvals), "b", label=f"${sympy.latex(soln)}$")
+axs[1].plot(xvals, sym_Dy(xvals), "b", label=f"$y'(x) = {sympy.latex(Dsoln_rhs)}$")
 fig.suptitle(f"${sympy.latex(ode)}$, $y({a}) = {alpha[0]}$, $y'({a}) = {alpha[1]}$")
 for i in range(len(axs)):
-	axs[i].set_xlabel(r"$x$");
-	axs[i].legend(loc="upper left");
-	axs[i].grid(True)
-axs[0].set_ylabel(r"$y$");
-axs[1].set_ylabel(r"$y'$");
+    axs[i].set_xlabel(r"$x$")
+    axs[i].legend(loc="upper left")
+    axs[i].grid(True)
+axs[0].set_ylabel(r"$y$")
+axs[1].set_ylabel(r"$y'$")
+plt.show()
 ```
 
 To solve {eq}`higher-order-example` numerically, we introduce the variables $u_0=y$ $u_1=y'$, and we rewrite the IVP as
@@ -91,23 +94,24 @@ u_1(0) &= -3/5
 
 ```{code-cell}
 # define IVP parameters
-f = lambda x, u: np.array([u[1], 2*u[1] - 2*u[0] + np.exp(2*x)*np.sin(x)]);
-alpha = [-2/5, -3/5];
+f = lambda x, u: np.array([u[1], 2 * u[1] - 2 * u[0] + np.exp(2 * x) * np.sin(x)])
+alpha = [-2 / 5, -3 / 5]
 
-n = 5;
-(xi, u_rk4) = math263.rk4(f, a, b, alpha, n); 
+n = 10
+(xi, u_rk4) = math263.rk4(f, a, b, alpha, n)
 
-plt.figure(fig);
+plt.figure(fig)
 for i in range(len(axs)):
-	axs[i].plot(xi, u_rk4[:, i], 'ro:', label='RK4 solution');
-	axs[i].legend(loc="upper left");
-plt.show();
+    axs[i].plot(xi, u_rk4[:, i], "ro:", label="RK4 solution")
+    axs[i].legend(loc="upper left")
+plt.show()
 ```
 
 ```{code-cell}
-uvals = np.c_[sym_y(xi), sym_Dy(xi)];
+uvals = np.c_[sym_y(xi), sym_Dy(xi)]
 errors = np.abs(uvals - u_rk4)
-table = np.c_[xi, u_rk4[:, 0], errors[:, 0], u_rk4[:, 1], errors[:, 1]];
-hdrs = ["i", "x_i", "y_i", "|y(x_i) - y_i|", "y_i'", "|y'(x_i) - y_i'|"];
-print(tabulate(table, hdrs, tablefmt='mixed_grid', floatfmt='0.5g', showindex=True))
+table = np.c_[xi, u_rk4[:, 0], errors[:, 0], u_rk4[:, 1], errors[:, 1]]
+hdrs = ["i", "x_i", "y_i", "|y(x_i) - y_i|", "y_i'", "|y'(x_i) - y_i'|"]
+print(tabulate(table, hdrs, tablefmt="mixed_grid", 
+    floatfmt=["0.0f", "0.2f", "0.5f", "0.5e", "0.5f", "0.5e"], showindex=True))
 ```
