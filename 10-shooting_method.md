@@ -15,7 +15,7 @@ kernelspec:
 
 ## Boundary value problems.
 
-Side conditions must be imposed in order for a system of ODE's to have a unique a solution.  If all the side conditions are imposed as a single point, then the problem is called an initial value problem (IVP).  If the side conditions are imposed at more than one point, then we have a **boundary value problem (BVP)**.  In typical situations, the conditions are imposed at the endpoints (boundary) of an interval $[a,b]$, which of course explains the name.  
+Side conditions must be imposed in order for a system of ODE's to have a unique a solution.  If all the side conditions are imposed at a single point, then the problem is called an initial value problem (IVP).  If the side conditions are imposed at more than one point, then we have a **boundary value problem (BVP)**.  In typical situations, the conditions are imposed at the endpoints (boundary) of an interval $[a,b]$, which of course explains the name.  
 
 Since higher-order equations can be expressed as systems of first order equations, we can restrict attention to problems of the form
 ```{math}
@@ -59,84 +59,84 @@ For the shooting method, we ignore what the boundary condition $\mathbf{g} = \ma
 ```
 The goal then is to find a value of $s = u_1(0) = y'(0)$ so that when we solve the resulting IVP $u_0(1)\approx 5$, i.e., $|u_0(1) - 5|$ is within a specified tolerance.  Below we make an initial guess of $s = 1$ and solve the IVP with $n = 10$ steps of RK4.
 
-```{code-cell}
+```{code-cell} ipython3
 import numpy
 from matplotlib import pyplot
 from tabulate import tabulate
 
 import math263
 
-pyplot.style.use('dark_background');
+pyplot.style.use("dark_background")
 
 # set up IVP parameters
-f = lambda x, u: numpy.array([u[1], 4*u[0]]);
-a, b = 0, 1;
-bcond = 0, 5; # boundary conditions on y = u_0
-u0 = lambda s: numpy.array([0, s]); # set u_1(0) = s unknown
+f = lambda x, u: numpy.array([u[1], 4 * u[0]])
+a, b = 0, 1
+bcond = 0, 5
+# boundary conditions on y = u_0
+u0 = lambda s: numpy.array([0, s])
+# set u_1(0) = s unknown
 
 # numerically solve the IVP with n = 10 steps of RK4
-n = 10;
-s = 1;
+n = 10
+s = 1
 xi, ui = math263.rk4(f, a, b, u0(s), n)
 
-print(f"With s = {s}, we have y_{n} = u_{0, n} = {ui[-1, 0]:0.6g}.");
+print(f"With s = {s}, we have y_{n} = u_{0, n} = {ui[-1, 0]:0.6g}.")
 
-fig, ax = pyplot.subplots(layout='constrained');
-ax.plot([a, b], bcond, "go");
-ax.plot(xi, ui[:, 0], ":.", label=f"RK4 $s$ = {s}");
-ax.set_title(r"$y'' = 4y, y(0)=0, y(1)=5$");
-ax.set_xlabel(r"$x$");
-ax.set_ylabel(r"$y$");
-ax.grid(True);
-ax.legend(loc="upper left");
+fig, ax = pyplot.subplots(layout="constrained")
+ax.plot([a, b], bcond, "go")
+ax.plot(xi, ui[:, 0], ":.", label=f"RK4 $s$ = {s}")
+ax.set_title(r"$y'' = 4y, y(0)=0, y(1)=5$")
+ax.set_xlabel(r"$x$")
+ax.set_ylabel(r"$y$")
+ax.grid(True)
+ax.legend(loc="upper left")
 ```
 
 The guess $s=1$ produces an approximate value for $y(1) = u_0(1)$ that is too low.  This suggests that we should try a steeper guess for $s = u_1(0) = y'(0)$.  Below we try again with $s=2$.
 
-```{code-cell}
+```{code-cell} ipython3
 # numerically solve the IVP with n = 10 steps of RK4
-n = 10;
-s = 2;
+n = 10
+s = 2
 xi, ui = math263.rk4(f, a, b, u0(s), n)
 
-print(f"With s = {s}, we have y_{n} = u_{0, n} = {ui[-1, 0]:0.6g}.");
+print(f"With s = {s}, we have y_{n} = u_{0, n} = {ui[-1, 0]:0.6g}.")
 
-pyplot.figure(fig);
+pyplot.figure(fig)
 ax.plot(xi, ui[:, 0], ":.", label=f"RK4 $s$ = {s}")
-ax.set_xlabel(r"$x$");
-ax.set_ylabel(r"$y$");
-ax.legend(loc="upper left");
+ax.set_xlabel(r"$x$")
+ax.set_ylabel(r"$y$")
+ax.legend(loc="upper left")
 pyplot.show()
 ```
 
 Again we are too low, and so we try $s=3$.
 
-```{code-cell}
+```{code-cell} ipython3
 # numerically solve the IVP with n = 10 steps of RK4
-n = 10;
-s = 3;
+n = 10
+s = 3
 xi, ui = math263.rk4(f, a, b, u0(s), n)
 
-print(f"With s = {s}, we have y_{n} = u_{0, n} = {ui[-1, 0]:0.6g}.");
+print(f"With s = {s}, we have y_{n} = u_{0, n} = {ui[-1, 0]:0.6g}.")
 
-pyplot.figure(fig);
+pyplot.figure(fig)
 ax.plot(xi, ui[:, 0], ":.", label=f"RK4 $s$ = {s}")
-ax.set_xlabel(r"$x$");
-ax.set_ylabel(r"$y$");
-ax.legend(loc="upper left");
+ax.set_xlabel(r"$x$")
+ax.set_ylabel(r"$y$")
+ax.legend(loc="upper left")
 pyplot.show()
 ```
 
 This time we are too high, and that is fortunate for now we have "bracketed" $s$.  In particular, we "know" (assuming that the solution varies continuously with $s$) that $s\in (2,3)$.  We can therefore bisect the interval and guess $s=(2+3)/2=5/2$.  If that guess is too low, we know that $s\in(5/2, 3)$.  If it is too high, we know that $s\in (2, 5/2)$.  We can then keep bisecting until our computed value $u_{0,n} = y_n$ is within some desired tolerance of our target $y(1)=5$.  In practice, it is a good idea to set a maximum number of iterations in case the convergence is rather slow and the work cost is too high.
 
-```{code-cell}
+```{code-cell} ipython3
 # tabulate the results for last iteration
-data = numpy.c_[xi, ui[:, 0]];
-hdrs = ["i", "x_i", "y_i"];
-print(f"Shooting method (s = {s})\nBoundary error: |y({b})-y_{n}| = {abs(ui[-1,0]-bcond[1]):0.5g}");
-print(tabulate(data, hdrs, tablefmt='mixed_grid', floatfmt='0.5f', showindex=True));
-```
-
-```{code-cell}
-
+data = numpy.c_[xi, ui[:, 0]]
+hdrs = ["i", "x_i", "y_i"]
+print(
+    f"Shooting method (s = {s})\nBoundary error: |y({b})-y_{n}| = {abs(ui[-1,0]-bcond[1]):0.5g}"
+)
+print(tabulate(data, hdrs, tablefmt="mixed_grid", floatfmt="0.5f", showindex=True))
 ```
