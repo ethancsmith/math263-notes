@@ -9,6 +9,7 @@
 1. Revisit IPython display of Markdown output.
 	- Works fine in Jupyter Lab.
 	- Jupyter Book does not handle this correctly at present. See [Open issue](https://github.com/executablebooks/jupyter-book/issues/1771).
+	- Try using {eval} tags to embed computed results in Markdown cells?
 
 ## Reference collection
 
