@@ -125,7 +125,7 @@ We then rewrite the vector ODE {eq}`1st-order-vector-ode` as the scalar system
 \dot{w_3} &= -w_1/(w_0^2+w_1^2)^{3/2},\\
 \end{align*}
 
-We now numerically solve this problem over the time-interval $[0, 25]$ using SciPy's implementation of the Dormand-Prince method for the case when the eccentricity $e = 0.9$.
+We now numerically solve this problem over the time-interval $[0, 10]$ using SciPy's implementation of the Dormand-Prince method for the case when the eccentricity $e = 0.9$.
 With the default settings, the implementation aims to keep the estimated relative error below $10^{-3}$ and the estimated absolute error below $10^{-6}$.
 
 ```{code-cell}
@@ -141,40 +141,53 @@ import math263
 
 # define IVP parameters
 f = lambda t, w: numpy.array(
-    [w[2], 
-     w[3], 
-     -w[0]/sqrt(w[0]**2 + w[1]**2)**3,
-     -w[1]/sqrt(w[0]**2 + w[1]**2)**3]) 
-e = 0.9;
-w0 = numpy.array([1-e, 0, 0, sqrt((1+e)/(1-e))]);
-a, b = 0, 25;
+    [
+        w[2],
+        w[3],
+        -w[0] / sqrt(w[0] ** 2 + w[1] ** 2) ** 3,
+        -w[1] / sqrt(w[0] ** 2 + w[1] ** 2) ** 3,
+    ]
+)
+e = 0.9
+w0 = numpy.array([1 - e, 0, 0, sqrt((1 + e) / (1 - e))])
+a, b = 0, 10
 
-pyplot.style.use('dark_background');
-fig, ax = pyplot.subplots(layout='constrained');
+pyplot.style.use("dark_background")
+fig, ax = pyplot.subplots(layout="constrained")
 
 # numerically solve IVP with Dormand-Prince (RK45)
-dp54_soln = solve_ivp(f, [a, b], w0, method='RK45', rtol=10**-6);
+dp54_soln = solve_ivp(f, [a, b], w0, method="RK45", rtol=10**-6)
 if dp54_soln.status:
-    print("Dormand-Prince method failed.");
+    print("Dormand-Prince method failed.")
 else:
-    print("Dormand-Prince method successfully reached end of time span.");
-    ti = dp54_soln.t; # extract time-steps
-    wi = dp54_soln.y; 
-    ri = wi[:2];      # extract radial vectors
-    vi = wi[-2:];     # extract velocity vectors
-    n = len(ti);
-    print(f"End of time-interval [{a}, {b}] reached in n = {n} time-steps.");
-    T = min(10, n);
-    print(f"Displaying results for first {T} steps.");
-    data = numpy.c_[ti[:T], ri[0,:T], ri[1,:T], vi[0,:T], vi[1,:T]];
-    hdrs = ["i", "t_i", "x_i", "y_i", "x_i'", "y_i'"];
-    print(tabulate(data, hdrs, showindex=True, floatfmt='0.5f', tablefmt="mixed_grid"));
-    print("Plotting solution in spatial domain (xy-plane).");
+    print("Dormand-Prince method successfully reached end of time span.")
+    ti = dp54_soln.t
+    # extract time-steps
+    wi = dp54_soln.y
+    ri = wi[:2]
+    # extract radial vectors
+    vi = wi[-2:]
+    # extract velocity vectors
+    n = len(ti)
+    print(f"End of time-interval [{a}, {b}] reached in n = {n} time-steps.")
+    T = min(10, n)
+    print(f"Displaying results for first {T} steps.")
+    data = numpy.c_[ti[:T], ri[0, :T], ri[1, :T], vi[0, :T], vi[1, :T]]
+    hdrs = ["i", "t_i", "x_i", "y_i", "x_i'", "y_i'"]
+    print(tabulate(data, hdrs, showindex=True, floatfmt="0.5f", tablefmt="mixed_grid"))
+    print("Plotting solution in spatial domain (xy-plane).")
     ax.plot(0, 0, "wo", label="Mass 0")
-    ax.plot(ri[0], ri[1], "ro", label="Mass 1 (DP54 solution)");
-    ax.set_title(r"$\ddot{\boldsymbol{r}} = -\frac{\hat{\boldsymbol{r}}}{r^2},\quad \boldsymbol{r}(0) = \langle 0.1, 0\rangle$")
-    ax.set_xlabel("$x$");
-    ax.set_ylabel("$y$");
-    ax.legend();
-    ax.grid(True);
+    ax.plot(ri[0], ri[1], "ro", label="Mass 1 (DP54 solution)")
+    ax.set_title(
+        r"$\ddot{\boldsymbol{r}} = -\frac{\hat{\boldsymbol{r}}}{r^2},\quad \boldsymbol{r}(0) = \langle 0.1, 0\rangle$"
+    )
+    ax.set_xlabel("$x$")
+    ax.set_ylabel("$y$")
+    ax.legend()
+    ax.grid(True)
+    pyplot.show()
+```
+
+```{code-cell}
+
 ```
