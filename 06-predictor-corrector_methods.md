@@ -161,16 +161,22 @@ sym_y = sympy.lambdify(x, soln.rhs, modules=["numpy"])
 
 # numerically solve the IVP with n=10 steps of AB2 and n=10 steps of ABM2
 n = 10
-(x, y_ab2) = math263.ab2(f, a, b, y0, n)
-(x, y_abm2) = math263.abm2(f, a, b, y0, n)
+x, y_ab2 = math263.ab2(f, a, b, y0, n)
+x, y_abm2 = math263.abm2(f, a, b, y0, n)
 
 # tabulate the results
-print(
-    f"Comparison of global errors for AB2 and ABM2 across interval for step-size h = {(b - a)/n}."
-)
+print(f"Comparison of global errors for AB2 and ABM2.")
 table = np.c_[x, abs(sym_y(x) - y_ab2[:, 0]), abs(sym_y(x) - y_abm2[:, 0])]
 hdrs = ["i", "x_i", "AB2 global error", "ABM2 global error"]
-print(tabulate(table, hdrs, tablefmt="mixed_grid", floatfmt="0.5f", showindex=True))
+print(
+    tabulate(
+        table,
+        hdrs,
+        tablefmt="mixed_grid",
+        floatfmt=["0.0f", "0.2f", "0.5e", "0.5e"],
+        showindex=True,
+    )
+)
 ```
 
 Below we include a comparison of the global errors at the right-most endpoint of the interval.  It is evident that each is an order 2 method.  However, the ABM2 predictor-corrector method is more accurate for this example.
@@ -192,5 +198,9 @@ abm2_errors = [
 print(f"Comparison of global errors |y_n - y({b})| for various step-sizes.")
 table = np.c_[h, ab2_errors, abm2_errors]
 hdrs = ["step-size", "AB2 global error", "ABM2 global error"]
-print(tabulate(table, hdrs, tablefmt="mixed_grid", floatfmt=["0.6f", "0.6g", "0.6g"]))
+print(tabulate(table, hdrs, tablefmt="mixed_grid", floatfmt=["0.6f", "0.6e", "0.6e"]))
+```
+
+```{code-cell}
+
 ```
