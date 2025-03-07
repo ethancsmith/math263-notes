@@ -91,6 +91,7 @@ ax.set_xlabel(r"$x$")
 ax.set_ylabel(r"$y$")
 ax.grid(True)
 ax.legend(loc="upper left")
+pyplot.show()
 ```
 
 The guess $s=1$ produces an approximate value for $y(1) = u_0(1)$ that is too low.  This suggests that we should try a steeper guess for $s = u_1(0) = y'(0)$.  Below we try again with $s=2$.
