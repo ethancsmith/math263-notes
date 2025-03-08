@@ -14,6 +14,7 @@
 			mystnb:
  	   			execution_mode: 'inline'
 		```
+	- [Glue](https://jupyterbook.org/en/stable/content/executable/output-insert.html) is another option to consider. Could keep the Python glue code in a separate cell and ["remove-input"](https://myst-nb.readthedocs.io/en/latest/render/hiding.html).
 
 ## Reference collection
 
