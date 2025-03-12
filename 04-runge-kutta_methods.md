@@ -91,7 +91,7 @@ Of course care must be taken when choosing the coefficients so that the method i
 
 Perhaps the most popular Runge–Kutta method is the **classical fourth order Runge–Kutta method** (**RK4**), which is defined by the recurrence
 \begin{equation}
-y_{i+1} = \frac{h}{6}\big(k_1 + 2k_2 + 2k_3 + k_4\big),
+y_{i+1} = y_i + \frac{h}{6}\big(k_1 + 2k_2 + 2k_3 + k_4\big),
 \end{equation}
 where
 \begin{align}
