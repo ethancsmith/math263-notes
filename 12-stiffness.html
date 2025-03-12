@@ -447,7 +447,7 @@ The problem is easy to solve analytically.</p>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>is the exact symbolic solution to the IVP.
 </pre></div>
 </div>
-<img alt="_images/48f5757ab3dbdb85b75e06ebe4192a9b94cfc7fd09185c79b18012ac32e6a63e.png" src="_images/48f5757ab3dbdb85b75e06ebe4192a9b94cfc7fd09185c79b18012ac32e6a63e.png" />
+<img alt="_images/e57670ec16a763cc503732e5afe719a3b8f99c75ac7c59b97e8c6a52a5bedc94.png" src="_images/e57670ec16a763cc503732e5afe719a3b8f99c75ac7c59b97e8c6a52a5bedc94.png" />
 </div>
 </div>
 <p>Since the solution <span class="math notranslate nohighlight">\(y\)</span> is (for the most part) slowly varying over the <span class="math notranslate nohighlight">\(t\)</span>-interval <span class="math notranslate nohighlight">\([0, 1]\)</span>, it seems that this problem <em>should</em> pose no problem for our numerical methods.  However, the  Euler method with step-size <span class="math notranslate nohighlight">\(h=0.1\)</span> is awesomely terrible, and RK4 is even worse!</p>
@@ -553,7 +553,7 @@ The problem is easy to solve analytically.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9b7213c00774f1593b17e95e7860eb8892e8c956c0e0005be7c40bf9773dee15.png" src="_images/9b7213c00774f1593b17e95e7860eb8892e8c956c0e0005be7c40bf9773dee15.png" />
+<img alt="_images/47fe1174e6727700a07354a07220a982ee817ad834500f2c45293110a6f311b9.png" src="_images/47fe1174e6727700a07354a07220a982ee817ad834500f2c45293110a6f311b9.png" />
 </div>
 </div>
 <p>If we plot the first 4 points of the Euler method solution together with each corresponding tangent line, we can see why this situation would tend to “confuse” Euler’s method (or really any explicit method).  An explicit method would require a very short step-size <span class="math notranslate nohighlight">\(h\)</span> in order to avoid drastically over-shooting its target.</p>
@@ -584,7 +584,7 @@ The problem is easy to solve analytically.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/65e3632c9ec6f9fe9e39b5de8b326c5a70d68801d8129ebe7603a79909e47a57.png" src="_images/65e3632c9ec6f9fe9e39b5de8b326c5a70d68801d8129ebe7603a79909e47a57.png" />
+<img alt="_images/c761d7add352d2cb806cfcaab463da804ce62ca002dd0ccc06a46e208ea87462.png" src="_images/c761d7add352d2cb806cfcaab463da804ce62ca002dd0ccc06a46e208ea87462.png" />
 </div>
 </div>
 <p>For this reason, stiff differential equations are typically solved using implicit methods, which tend to be much less sensitive to small perturbations in initial conditions.  The simplest implicit method is the <strong>backward Euler method (BEM)</strong>, which is defined by the equation <a class="reference internal" href="06-predictor-corrector_methods.html#equation-backward-euler">(19)</a>.  By their very nature, implicit methods require an equation solving subroutine.  Typically, Newton’s method or some variant is used.  For our Python implementation, we decided to use the <code class="docutils literal notranslate"><span class="pre">fsolve</span></code> routine from the <a class="reference external" href="https://scipy.org/">SciPy</a> library.</p>

@@ -34,9 +34,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="_static/proof.css?v=b4b7a797" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- So that users can add custom icons -->
@@ -378,6 +378,7 @@
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#systems-of-equations-in-vector-form">Systems of equations in vector form.</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#numerical-solutions-to-systems-of-odes">Numerical solutions to systems of ODE’s.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#measuring-errors-with-vector-norms">Measuring errors with vector norms.</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example.</a></li>
 </ul>
             </nav>
@@ -396,64 +397,107 @@
 <h2>Systems of equations in vector form.<a class="headerlink" href="#systems-of-equations-in-vector-form" title="Link to this heading">#</a></h2>
 <p>By a <strong>system of <span class="math notranslate nohighlight">\(m\)</span> first order ordinary differential equations</strong> we mean a system of equations of the form</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}y_1' &amp;= f_1(x, y_1, y_2, \dots, y_m),\\
-y_2' &amp;= f_2(x, y_1, y_2, \dots, y_m),\\
+\[\begin{split}y_1' &amp;= f_1(t, y_1, y_2, \dots, y_m),\\
+y_2' &amp;= f_2(t, y_1, y_2, \dots, y_m),\\
 &amp;\quad \vdots\\
-y_m' &amp;= f_m(x, y_1, y_2, \dots, y_m).\end{split}\]</div>
+y_m' &amp;= f_m(t, y_1, y_2, \dots, y_m).\end{split}\]</div>
 <p>Since humans are much better at holding onto to one object at time, it is convenient (and conceptually more illuminating) to place the <span class="math notranslate nohighlight">\(m\)</span> objects into a single vector equation of the form</p>
 <div class="math notranslate nohighlight" id="equation-first-order-vector-ode">
-<span class="eqno">(20)<a class="headerlink" href="#equation-first-order-vector-ode" title="Link to this equation">#</a></span>\[\mathbf{y}' = \mathbf{f}(x, \mathbf{y}),\]</div>
-<p>where <span class="math notranslate nohighlight">\(\mathbf{y}(x) = \langle y_1(x), y_2(x), \dots, y_m(x)\rangle\)</span> is a vector-valued function of the scalar <span class="math notranslate nohighlight">\(x\)</span>,</p>
+<span class="eqno">(20)<a class="headerlink" href="#equation-first-order-vector-ode" title="Link to this equation">#</a></span>\[\mathbf{y}' = \mathbf{f}(t, \mathbf{y}),\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{y}(t) = \langle y_1(t), y_2(t), \dots, y_m(t)\rangle\)</span> is a vector-valued function of the scalar <span class="math notranslate nohighlight">\(t\)</span>,</p>
 <div class="math notranslate nohighlight" id="equation-vector-derivative">
-<span class="eqno">(21)<a class="headerlink" href="#equation-vector-derivative" title="Link to this equation">#</a></span>\[\begin{split}\mathbf{y}' %= \frac{\mathrm{d}\mathbf{y}}{\mathrm{d} x}
-=\lim_{h\to 0}\frac{\mathbf{y}(x+h) - \mathbf{y}(x)}{h}
+<span class="eqno">(21)<a class="headerlink" href="#equation-vector-derivative" title="Link to this equation">#</a></span>\[\begin{split}\mathbf{y}' %= \frac{\mathrm{d}\mathbf{y}}{\mathrm{d} t}
+=\lim_{h\to 0}\frac{\mathbf{y}(t+h) - \mathbf{y}(t)}{h}
 = \begin{pmatrix}
-\displaystyle\lim_{h\to 0}\frac{y_1(x+h) - y_1(x)}{h}\\
-\displaystyle\lim_{h\to 0}\frac{y_2(x+h) - y_2(x)}{h}\\
+\displaystyle\lim_{h\to 0}\frac{y_1(t+h) - y_1(t)}{h}\\
+\displaystyle\lim_{h\to 0}\frac{y_2(t+h) - y_2(t)}{h}\\
 \vdots\\
-\displaystyle\lim_{h\to 0}\frac{y_m(x+h) - y_m(x)}{h}
+\displaystyle\lim_{h\to 0}\frac{y_m(t+h) - y_m(t)}{h}
+\end{pmatrix}
+=\begin{pmatrix}
+y_1'\\
+y_2'\\
+\vdots\\
+y_m'
 \end{pmatrix},\end{split}\]</div>
 <p>and</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{equation*}
-\mathbf{f}(x, \mathbf{y}) = 
+\mathbf{f}(t, \mathbf{y}) = 
 \begin{pmatrix}
-f_1(x, y_1, y_2, \dots, y_m)\\
-f_2(x, y_1, y_2, \dots, y_m)\\
+f_1(t, y_1, y_2, \dots, y_m)\\
+f_2(t, y_1, y_2, \dots, y_m)\\
 \vdots\\
-f_m(x, y_1, y_2, \dots, y_m)
+f_m(t, y_1, y_2, \dots, y_m)
 \end{pmatrix}.
 \end{equation*}\]</div>
 <p>Note that we write our vectors as columns when displayed, but use the angle-bracket row notation (common in multivariable calculus texts) as a spacing-saving device for in-line presentation.</p>
-<p>As with scalar ODE’s, the solution to a vector ODE is not typically unique.  To specify a unique solution it is sufficient to specify <span class="math notranslate nohighlight">\(m\)</span> <em>initial conditions</em> of the form <span class="math notranslate nohighlight">\(\mathbf{y}(x_)) = \mathbf{y}_0 = \langle y_{1,0}, y_{2,0}, \dots, y_{m,0}\rangle\)</span>.</p>
+<p>As with scalar ODE’s, the solution to a vector ODE is not typically unique.  To specify a unique solution it is sufficient to specify <span class="math notranslate nohighlight">\(m\)</span> <em>initial conditions</em> of the form <span class="math notranslate nohighlight">\(\mathbf{y}(0) = \mathbf{y}_0 = \langle y_{1,0}, y_{2,0}, \dots, y_{m,0}\rangle\)</span>.</p>
 </section>
 <section id="numerical-solutions-to-systems-of-odes">
 <h2>Numerical solutions to systems of ODE’s.<a class="headerlink" href="#numerical-solutions-to-systems-of-odes" title="Link to this heading">#</a></h2>
 <p>Evidently, the derivative <a class="reference internal" href="#equation-vector-derivative">(21)</a> of a vector-valued function is the vector of derivatives of the scalar-valued components.  This is true, and even important, but it is much more important that the derivative is defined as a limit in precisely the same way as for the scalar theory.  That means that much of what we already know about the scalar theory continues to work for vectors.  In particular, linearization looks exactly the same.  To see this, we just note that if <span class="math notranslate nohighlight">\(h\)</span> is small, then</p>
 <div class="math notranslate nohighlight" id="equation-approx-vector-derivative">
-<span class="eqno">(22)<a class="headerlink" href="#equation-approx-vector-derivative" title="Link to this equation">#</a></span>\[\mathbf{y}'(x) \approx \frac{\mathbf{y}(x+h) - \mathbf{y}(x)}{h}.\]</div>
-<p>Now, solving <a class="reference internal" href="#equation-approx-vector-derivative">(22)</a> for <span class="math notranslate nohighlight">\(\mathbf{y}(x+h)\)</span> yields the usual linear approximation</p>
+<span class="eqno">(22)<a class="headerlink" href="#equation-approx-vector-derivative" title="Link to this equation">#</a></span>\[\mathbf{y}'(t) \approx \frac{\mathbf{y}(t+h) - \mathbf{y}(t)}{h}.\]</div>
+<p>Now, solving <a class="reference internal" href="#equation-approx-vector-derivative">(22)</a> for <span class="math notranslate nohighlight">\(\mathbf{y}(t+h)\)</span> yields the usual linear approximation</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{equation*}
-\mathbf{y}(x+h) \approx \mathbf{y}(x) + h\mathbf{y}'(x).
+\mathbf{y}(t+h) \approx \mathbf{y}(t) + h\mathbf{y}'(t).
 \end{equation*}\]</div>
 <p>Since linearization works — and looks exactly the same, Euler’s method works — and looks exactly the same.  In particular, to numerically approximate a solution to the first order IVP</p>
 <div class="math notranslate nohighlight" id="equation-first-order-vector-ivp">
-<span class="eqno">(23)<a class="headerlink" href="#equation-first-order-vector-ivp" title="Link to this equation">#</a></span>\[\begin{split}\mathbf{y}' &amp;= \mathbf{f}(x, \mathbf{y})\\
-\mathbf{y}(x_0) &amp;= \mathbf{y}_0\end{split}\]</div>
+<span class="eqno">(23)<a class="headerlink" href="#equation-first-order-vector-ivp" title="Link to this equation">#</a></span>\[\begin{split}\mathbf{y}' &amp;= \mathbf{f}(t, \mathbf{y})\\
+\mathbf{y}(t_0) &amp;= \mathbf{y}_0\end{split}\]</div>
 <p>we have the (vectorized) <strong>forward Euler method</strong></p>
 <div class="math notranslate nohighlight" id="equation-vector-forward-euler">
-<span class="eqno">(24)<a class="headerlink" href="#equation-vector-forward-euler" title="Link to this equation">#</a></span>\[\mathbf{y}_{i+1} = \mathbf{y}_i + h \mathbf{f}(x_i, \mathbf{y}_i).\]</div>
+<span class="eqno">(24)<a class="headerlink" href="#equation-vector-forward-euler" title="Link to this equation">#</a></span>\[\mathbf{y}_{i+1} = \mathbf{y}_i + h \mathbf{f}(t_i, \mathbf{y}_i).\]</div>
 <p>For those less familiar with vector arithmetic (or those interested in implementing the method in a low-level programming language) we note that the above vector formula is equivalent to the <span class="math notranslate nohighlight">\(m\)</span> scalar formulas</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{align*}
-y_{1, i+1} &amp;= y_{1,i} + h f_1(x_i, y_{1, i}, y_{2, i}, \dots, y_{m, i}),\\
-y_{2, i+1} &amp;= y_{2,i} + h f_2(x_i, y_{1, i}, y_{2, i}, \dots, y_{m, i}),\\
+y_{1, i+1} &amp;= y_{1,i} + h f_1(t_i, y_{1, i}, y_{2, i}, \dots, y_{m, i}),\\
+y_{2, i+1} &amp;= y_{2,i} + h f_2(t_i, y_{1, i}, y_{2, i}, \dots, y_{m, i}),\\
 &amp;\quad \vdots\\
-y_{m, i+1} &amp;= y_{m,i} + h f_m(x_i, y_{1, i}, y_{2, i}, \dots, y_{m, i}).
+y_{m, i+1} &amp;= y_{m,i} + h f_m(t_i, y_{1, i}, y_{2, i}, \dots, y_{m, i}).
 \end{align*}\]</div>
 <p>Fortunately, many higher-level software packages (e.g., NumPy) have built-in routines and overloaded operators for manipulating vectors as though they were scalars.  Since we were careful with our numerical method implementations, this means that our code already works for systems of ODE’s.  All we need to do is feed the routines appropriately shaped arrays.</p>
 </section>
+<section id="measuring-errors-with-vector-norms">
+<h2>Measuring errors with vector norms.<a class="headerlink" href="#measuring-errors-with-vector-norms" title="Link to this heading">#</a></h2>
+<p>To understand errors in higher-dimensional spaces it is helpful to establish the concept of a vector norm.</p>
+<div class="proof definition admonition" id="definition-0">
+<p class="admonition-title"><span class="caption-number">Definition 3 </span></p>
+<section class="definition-content" id="proof-content">
+<p>Suppose that <span class="math notranslate nohighlight">\(\boldsymbol v = \langle x_1,\dots, x_n\rangle\)</span> is a vector in <span class="math notranslate nohighlight">\(n\)</span>-dimensional (real or complex) space.
+The <strong><span class="math notranslate nohighlight">\(p\)</span>-norm</strong> of <span class="math notranslate nohighlight">\(\boldsymbol v\)</span> is nonnegative real number</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+|\boldsymbol v|_p = \begin{cases}
+\displaystyle\left(\sum_{i=1}^n |x_i|^p\right)^{1/p} &amp; \text{if } p\in (0,\infty),\\
+\max\{|x_i| : 1\le i\le n\} &amp; \text{if } p = \infty.
+\end{cases}
+\end{equation*}\]</div>
+</section>
+</div><p>Vector norms provide a sense of distance in vector spaces that is somewhat akin to a ruler.
+In particular, we define the <span class="math notranslate nohighlight">\(p\)</span>-distance between two vectors, say <span class="math notranslate nohighlight">\(\boldsymbol v\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol w\)</span>, to be the real scalar <span class="math notranslate nohighlight">\(|\boldsymbol v - \boldsymbol w|_p\)</span>.
+Since there are infinitely many choices of <span class="math notranslate nohighlight">\(p\)</span>, there are infinitely many choices of “ruler.”
+Deciding which choice makes the most sense depends on the application.
+For example, if <span class="math notranslate nohighlight">\(\boldsymbol v\)</span> is a “position vector” in ordinary 3-dimensional space, then the choice <span class="math notranslate nohighlight">\(p=2\)</span> might make sense as it corresponds to the usual euclidean distance.
+However, there are many situations where the vector <span class="math notranslate nohighlight">\(\boldsymbol v\)</span> is just an “artificial” construct holding a bunch of disparate scalars together for easy manipulation.
+In such cases, it probably makes more sense to measure distances with the <span class="math notranslate nohighlight">\(\infty\)</span>-norm.</p>
+<div class="proof definition admonition" id="definition-1">
+<p class="admonition-title"><span class="caption-number">Definition 4 </span></p>
+<section class="definition-content" id="proof-content">
+<p>Let <span class="math notranslate nohighlight">\(p\in (0,\infty]\)</span>, and let <span class="math notranslate nohighlight">\(\boldsymbol v\)</span>, <span class="math notranslate nohighlight">\(\boldsymbol w\)</span> be vector-valued functions of the scalar <span class="math notranslate nohighlight">\(t\)</span>.
+We say that <span class="math notranslate nohighlight">\(\boldsymbol v\)</span> is <strong>at most the order of <span class="math notranslate nohighlight">\(\boldsymbol w\)</span> as <span class="math notranslate nohighlight">\(t\)</span> tends toward <span class="math notranslate nohighlight">\(a\)</span></strong>,
+and we write <span class="math notranslate nohighlight">\(\boldsymbol v(t) = O\big(\boldsymbol w(t)\big)\)</span> as <span class="math notranslate nohighlight">\(t\to a\)</span>,
+provided that there exist constants <span class="math notranslate nohighlight">\(c,\delta&gt;0\)</span> so that</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+|\boldsymbol v(t)|_p \le c|\boldsymbol w(t)|_p
+\end{equation*}\]</div>
+<p>for all <span class="math notranslate nohighlight">\(t\)</span> so that <span class="math notranslate nohighlight">\(0&lt;|t-a|&lt;\delta\)</span>.</p>
+</section>
+</div></section>
 <section id="example">
 <h2>Example.<a class="headerlink" href="#example" title="Link to this heading">#</a></h2>
 <p>Consider the system of first order ordinary differential equations</p>
@@ -467,13 +511,12 @@ Writing <span class="math notranslate nohighlight">\(\mathbf r = \langle x, y, z
 \[\begin{split}\frac{\mathrm{d}\mathbf{r}}{\mathrm{d} t} 
 &amp;= \begin{pmatrix} x + z\\ x + y\\ -2x - z \end{pmatrix},\\
 \mathbf{r}(0) &amp; = \begin{pmatrix} 1\\ -1/2\\ 1\end{pmatrix}.\end{split}\]</div>
-<p>First we solve the system symbolic with SymPy.</p>
+<p>First we solve the system symbolically with SymPy.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">sympy</span>
-<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">Markdown</span><span class="p">,</span> <span class="n">display</span>
 <span class="kn">from</span> <span class="nn">tabulate</span> <span class="kn">import</span> <span class="n">tabulate</span>
 
 <span class="kn">import</span> <span class="nn">math263</span>
@@ -550,7 +593,7 @@ Writing <span class="math notranslate nohighlight">\(\mathbf r = \langle x, y, z
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/105201b4ff9417dd52d72d49d2f1ef50aea1f4766facfd55bf1eece1549ddf89.png" src="_images/105201b4ff9417dd52d72d49d2f1ef50aea1f4766facfd55bf1eece1549ddf89.png" />
+<img alt="_images/f0bfe79230ca88d5ece4d1d3ae9799e3d3230fbd233fd6957fe1527860932dfc.png" src="_images/f0bfe79230ca88d5ece4d1d3ae9799e3d3230fbd233fd6957fe1527860932dfc.png" />
 </div>
 </div>
 <p>Now we compute a numerical solution with RK4 and plot it along with the symbolic solution.</p>
@@ -574,53 +617,52 @@ Writing <span class="math notranslate nohighlight">\(\mathbf r = \langle x, y, z
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/b0af981387bf1a4b070c515f3c418b2dcada5fa62d2d64246dfb14f3a6332185.png" src="_images/b0af981387bf1a4b070c515f3c418b2dcada5fa62d2d64246dfb14f3a6332185.png" />
+<img alt="_images/34fe502d4fdf0724aac7d3f69ec6fd00a2b4d8139b8cf12c23651e51fdee1fae.png" src="_images/34fe502d4fdf0724aac7d3f69ec6fd00a2b4d8139b8cf12c23651e51fdee1fae.png" />
 </div>
 </div>
-<p>Finally, we compute the absolute and relative errors at each mesh point in <span class="math notranslate nohighlight">\(t\)</span>-space using the <span class="math notranslate nohighlight">\(2\)</span>-norm.</p>
+<p>Finally, we compute the absolute and relative errors at each mesh point in <span class="math notranslate nohighlight">\(t\)</span>-space using both the <span class="math notranslate nohighlight">\(2\)</span>-norm and the <span class="math notranslate nohighlight">\(\infty\)</span>-norm.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rvals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">sym_x</span><span class="p">(</span><span class="n">ti</span><span class="p">),</span> <span class="n">sym_y</span><span class="p">(</span><span class="n">ti</span><span class="p">),</span> <span class="n">sym_z</span><span class="p">(</span><span class="n">ti</span><span class="p">)]</span>
 <span class="n">error_vecs</span> <span class="o">=</span> <span class="n">rvals</span> <span class="o">-</span> <span class="n">r_rk4</span>
 <span class="n">p</span> <span class="o">=</span> <span class="mi">2</span>
-<span class="c1"># set &#39;p = inf.inf&#39; to use infinity norm</span>
-<span class="n">errors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">error_vecs</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="n">p</span><span class="p">)</span>
-<span class="n">rel_errors</span> <span class="o">=</span> <span class="n">errors</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">rvals</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="n">p</span><span class="p">)</span>
-<span class="n">table</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">ti</span><span class="p">,</span> <span class="n">errors</span><span class="p">,</span> <span class="n">rel_errors</span><span class="p">]</span>
-<span class="n">hdrs</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;i&quot;</span><span class="p">,</span> <span class="s2">&quot;t_i&quot;</span><span class="p">,</span> <span class="s2">&quot;abs. error&quot;</span><span class="p">,</span> <span class="s2">&quot;rel. error&quot;</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Global </span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2">-norm errors for RK4.&quot;</span><span class="p">)</span>
+<span class="n">errors_2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">error_vecs</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="n">p</span><span class="p">)</span>
+<span class="n">errors_inf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">error_vecs</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>
+<span class="n">table</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">ti</span><span class="p">,</span> <span class="n">errors_2</span><span class="p">,</span> <span class="n">errors_inf</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Global </span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2">-norm and infinity-norm errors for RK4 solution.&quot;</span><span class="p">)</span>
+<span class="n">hdrs</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;i&quot;</span><span class="p">,</span> <span class="s2">&quot;t_i&quot;</span><span class="p">,</span> <span class="s2">&quot;|r(t_i) - r_i|_2&quot;</span><span class="p">,</span> <span class="s2">&quot;|r(t_i) - r_i|_inf&quot;</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">tabulate</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">hdrs</span><span class="p">,</span> <span class="n">tablefmt</span><span class="o">=</span><span class="s2">&quot;mixed_grid&quot;</span><span class="p">,</span> 
-    <span class="n">floatfmt</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;0.of&quot;</span><span class="p">,</span> <span class="s2">&quot;0.5f&quot;</span><span class="p">,</span> <span class="s2">&quot;0.5e&quot;</span><span class="p">,</span> <span class="s2">&quot;0.5e&quot;</span><span class="p">],</span> <span class="n">showindex</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+    <span class="n">floatfmt</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;0.0f&quot;</span><span class="p">,</span> <span class="s2">&quot;0.5f&quot;</span><span class="p">,</span> <span class="s2">&quot;0.5e&quot;</span><span class="p">,</span> <span class="s2">&quot;0.5e&quot;</span><span class="p">],</span> <span class="n">showindex</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Global 2-norm errors for RK4.
-┍━━━━━┯━━━━━━━━━┯━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━┑
-│   i │     t_i │   abs. error │   rel. error │
-┝━━━━━┿━━━━━━━━━┿━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━┥
-│   0 │ 0.00000 │  0.00000e+00 │  0.00000e+00 │
-├─────┼─────────┼──────────────┼──────────────┤
-│   1 │ 0.62832 │  8.54539e-04 │  5.28158e-04 │
-├─────┼─────────┼──────────────┼──────────────┤
-│   2 │ 1.25664 │  1.58544e-03 │  1.18623e-03 │
-├─────┼─────────┼──────────────┼──────────────┤
-│   3 │ 1.88496 │  3.36021e-03 │  3.53285e-03 │
-├─────┼─────────┼──────────────┼──────────────┤
-│   4 │ 2.51327 │  5.28139e-03 │  4.83897e-03 │
-├─────┼─────────┼──────────────┼──────────────┤
-│   5 │ 3.14159 │  5.95742e-03 │  3.97161e-03 │
-├─────┼─────────┼──────────────┼──────────────┤
-│   6 │ 3.76991 │  5.12717e-03 │  3.16891e-03 │
-├─────┼─────────┼──────────────┼──────────────┤
-│   7 │ 4.39823 │  5.53913e-03 │  4.14439e-03 │
-├─────┼─────────┼──────────────┼──────────────┤
-│   8 │ 5.02655 │  8.94407e-03 │  9.40361e-03 │
-├─────┼─────────┼──────────────┼──────────────┤
-│   9 │ 5.65487 │  1.18700e-02 │  1.08756e-02 │
-├─────┼─────────┼──────────────┼──────────────┤
-│  10 │ 6.28319 │  1.19106e-02 │  7.94037e-03 │
-┕━━━━━┷━━━━━━━━━┷━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━┙
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Global 2-norm and infinity-norm errors for RK4 solution.
+┍━━━━━┯━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━━┑
+│   i │     t_i │   |r(t_i) - r_i|_2 │   |r(t_i) - r_i|_inf │
+┝━━━━━┿━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━━━━━━━━━━┥
+│   0 │ 0.00000 │        0.00000e+00 │          0.00000e+00 │
+├─────┼─────────┼────────────────────┼──────────────────────┤
+│   1 │ 0.62832 │        8.54539e-04 │          7.23567e-04 │
+├─────┼─────────┼────────────────────┼──────────────────────┤
+│   2 │ 1.25664 │        1.58544e-03 │          1.14773e-03 │
+├─────┼─────────┼────────────────────┼──────────────────────┤
+│   3 │ 1.88496 │        3.36021e-03 │          2.38391e-03 │
+├─────┼─────────┼────────────────────┼──────────────────────┤
+│   4 │ 2.51327 │        5.28139e-03 │          4.28826e-03 │
+├─────┼─────────┼────────────────────┼──────────────────────┤
+│   5 │ 3.14159 │        5.95742e-03 │          5.54975e-03 │
+├─────┼─────────┼────────────────────┼──────────────────────┤
+│   6 │ 3.76991 │        5.12717e-03 │          4.34641e-03 │
+├─────┼─────────┼────────────────────┼──────────────────────┤
+│   7 │ 4.39823 │        5.53913e-03 │          4.01258e-03 │
+├─────┼─────────┼────────────────────┼──────────────────────┤
+│   8 │ 5.02655 │        8.94407e-03 │          6.34824e-03 │
+├─────┼─────────┼────────────────────┼──────────────────────┤
+│   9 │ 5.65487 │        1.18700e-02 │          9.63224e-03 │
+├─────┼─────────┼────────────────────┼──────────────────────┤
+│  10 │ 6.28319 │        1.19106e-02 │          1.10934e-02 │
+┕━━━━━┷━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━━━┙
 </pre></div>
 </div>
 </div>
@@ -695,6 +737,7 @@ Writing <span class="math notranslate nohighlight">\(\mathbf r = \langle x, y, z
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#systems-of-equations-in-vector-form">Systems of equations in vector form.</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#numerical-solutions-to-systems-of-odes">Numerical solutions to systems of ODE’s.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#measuring-errors-with-vector-norms">Measuring errors with vector norms.</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example.</a></li>
 </ul>
   </nav></div>
