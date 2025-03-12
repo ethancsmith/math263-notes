@@ -112,22 +112,23 @@ The **$p$-norm** of $\boldsymbol v$ is nonnegative real number
 \end{equation*}
 ```
 
-Vector norms provide modelers with a sense of distance in vector spaces that is somewhat akin to a ruler.
+Vector norms provide a sense of distance in vector spaces that is somewhat akin to a ruler.
 In particular, we define the $p$-distance between two vectors, say $\boldsymbol v$ and $\boldsymbol w$, to be the real scalar $|\boldsymbol v - \boldsymbol w|_p$.
 Since there are infinitely many choices of $p$, there are infinitely many choices of "ruler."
-Which choice of makes sense depends on the application.
-For example, if $\boldsymbol v$ is a "position vector" in ordinary 3-dimensional space, then the choice $p=2$ might make sense as it corresponds to the usual euclidean distance in $n$-dimensions.
+Deciding which choice makes the most sense depends on the application.
+For example, if $\boldsymbol v$ is a "position vector" in ordinary 3-dimensional space, then the choice $p=2$ might make sense as it corresponds to the usual euclidean distance.
 However, there are many situations where the vector $\boldsymbol v$ is just an "artificial" construct holding a bunch of disparate scalars together for easy manipulation.
-In such cases, it often (though perhaps not always) makes sense to measure distances with the $\infty$-norm.
+In such cases, it probably makes more sense to measure distances with the $\infty$-norm.
 
 ```{prf:definition}
 Let $p\in (0,\infty]$, and let $\boldsymbol v$, $\boldsymbol w$ be vector-valued functions of the scalar $t$.
 We say that $\boldsymbol v$ is **at most the order of $\boldsymbol w$ as $t$ tends toward $a$**, 
 and we write $\boldsymbol v(t) = O\big(\boldsymbol w(t)\big)$ as $t\to a$,
-provided that there exists constants $c,\delta>0$ so that
+provided that there exist constants $c,\delta>0$ so that
 \begin{equation*}
-0<|t-a|<\delta \implies |\boldsymbol v(t)|_p \le c|\boldsymbol w(t)|_p.
+|\boldsymbol v(t)|_p \le c|\boldsymbol w(t)|_p
 \end{equation*}
+for all $t$ so that $0<|t-a|<\delta$.
 ```
 
 +++
@@ -149,7 +150,7 @@ Writing $\mathbf r = \langle x, y, z\rangle$ for the solution, we may repackage 
 ```
 First we solve the system symbolically with SymPy.
 
-```{code-cell} ipython3
+```{code-cell}
 import matplotlib.pyplot as plt
 import numpy as np
 import sympy
@@ -182,7 +183,7 @@ display(soln[2])
 
 Next we plot the solution in $xyz$-space.
 
-```{code-cell} ipython3
+```{code-cell}
 plt.style.use("dark_background")
 
 # lambdify the symbolic solution
@@ -216,7 +217,7 @@ ax.grid(True)
 
 Now we compute a numerical solution with RK4 and plot it along with the symbolic solution.
 
-```{code-cell} ipython3
+```{code-cell}
 # define IVP parameters
 f = lambda t, r: np.array([r[0] + r[2], r[0] + r[1], -2 * r[0] - r[2]])
 a, b = 0, 2 * np.pi
@@ -233,9 +234,9 @@ ax.legend(loc="upper right")
 plt.show()
 ```
 
-Finally, we compute the absolute and relative errors at each mesh point in $t$-space using the $2$-norm.
+Finally, we compute the absolute and relative errors at each mesh point in $t$-space using both the $2$-norm and the $\infty$-norm.
 
-```{code-cell} ipython3
+```{code-cell}
 rvals = np.c_[sym_x(ti), sym_y(ti), sym_z(ti)]
 error_vecs = rvals - r_rk4
 p = 2
