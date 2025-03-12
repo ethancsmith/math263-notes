@@ -6,7 +6,7 @@ jupytext:
     format_version: 0.13
     jupytext_version: 1.16.7
 kernelspec:
-  display_name: Python 3 (ipykernel)
+  display_name: math263-notes
   language: python
   name: python3
 ---
@@ -153,6 +153,7 @@ First we solve the system symbolically with SymPy.
 ```{code-cell}
 import matplotlib.pyplot as plt
 import numpy as np
+from numpy import pi
 import sympy
 from tabulate import tabulate
 
@@ -169,7 +170,7 @@ ode = [
     sympy.Eq(y(t).diff(t), ode_rhs[1]),
     sympy.Eq(z(t).diff(t), ode_rhs[2]),
 ]
-a, b = 0, 2 * np.pi
+a, b = 0, 2 * pi
 soln = sympy.dsolve(
     ode, [x(t), y(t), z(t)], ics={x(a): 1, y(a): sympy.Rational(-1, 2), z(a): -1}
 )
@@ -179,6 +180,7 @@ print("The exact symbolic solution to the IVP is")
 display(soln[0])
 display(soln[1])
 display(soln[2])
+display(soln)
 ```
 
 Next we plot the solution in $xyz$-space.
@@ -220,11 +222,9 @@ Now we compute a numerical solution with RK4 and plot it along with the symbolic
 ```{code-cell}
 # define IVP parameters
 f = lambda t, r: np.array([r[0] + r[2], r[0] + r[1], -2 * r[0] - r[2]])
-a, b = 0, 2 * np.pi
+a, b = 0, 2 * pi
 r0 = np.array([1, -1 / 2, -1])
 
-h = 0.1
-n = round((b - a) / h + 0.5)
 n = 10
 (ti, r_rk4) = math263.rk4(f, a, b, r0, n)
 
