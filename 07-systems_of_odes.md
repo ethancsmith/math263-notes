@@ -115,6 +115,7 @@ fig.suptitle(
     r"$\boldsymbol{r}(0) = \langle 1, -1/2, -1\rangle$"
 )
 
+# construct x, y, and z vs. t plot for Euler
 ax = fig.add_subplot(2, 2, 1)
 xi = r_euler[:, 0]
 yi = r_euler[:, 1]
@@ -127,6 +128,7 @@ ax.set_xlabel(r"$t$")
 ax.grid(True)
 ax.legend()
 
+# construct parametric plot of r = <x, y, z> for Euler
 ax = fig.add_subplot(2, 2, 3, projection="3d")
 ax.plot(
     xi,
@@ -143,9 +145,9 @@ ax.legend()
 box = ax.get_position()
 box.x0 -= 0.1
 ax.set_position(box)
-ax.set_box_aspect(aspect=None, zoom=0.95)
 ax.grid(True)
 
+# construct x, y, and z vs. t plot for RK4
 ax = fig.add_subplot(2, 2, 2)
 xi = r_rk4[:, 0]
 yi = r_rk4[:, 1]
@@ -158,6 +160,7 @@ ax.set_xlabel(r"$t$")
 ax.grid(True)
 ax.legend()
 
+# construct parametric plot of r = <x, y, z> for RK4
 ax = fig.add_subplot(2, 2, 4, projection="3d")
 ax.plot(
     xi,
@@ -174,7 +177,6 @@ ax.legend()
 box = ax.get_position()
 box.x0 -= 0.1
 ax.set_position(box)
-ax.set_box_aspect(aspect=None, zoom=0.95)
 ax.grid(True)
 
 plt.show()
