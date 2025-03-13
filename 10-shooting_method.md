@@ -15,7 +15,7 @@ kernelspec:
 
 ## Boundary value problems.
 
-Side conditions must be imposed in order for a system of ODE's to have a unique a solution.  If all the side conditions are imposed at a single point, then the problem is called an initial value problem (IVP).  If the side conditions are imposed at more than one point, then we have a **boundary value problem (BVP)**.  In typical situations, the conditions are imposed at the endpoints (boundary) of an interval $[a,b]$, which of course explains the name.  
+Side conditions must be imposed in order for a system of ODEs to have a unique a solution.  If all the side conditions are imposed at a single point, then the problem is called an initial value problem (IVP).  If the side conditions are imposed at more than one point, then we have a **boundary value problem (BVP)**.  In typical situations, the conditions are imposed at the endpoints (boundary) of an interval $[a,b]$, which of course explains the name.  
 
 Since higher-order equations can be expressed as systems of first order equations, we can restrict attention to problems of the form
 ```{math}

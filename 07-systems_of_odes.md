@@ -79,7 +79,7 @@ where
 \end{align*}
 
 Fortunately, many higher-level software packages (e.g., NumPy) have built-in routines and overloaded operators for manipulating vectors as though they were scalars. 
-Since we were careful with our numerical method implementations, this means that our code already works for systems of ODE's.  All we need to do is feed the routines appropriately shaped arrays.
+Since we were careful with our numerical method implementations, this means that our code already works for systems of ODEs.  All we need to do is feed the routines appropriately shaped arrays.
 We demonstrate this below for the system {eq}`first-order-system-example`.
 
 ```{code-cell}

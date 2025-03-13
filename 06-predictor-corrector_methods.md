@@ -15,7 +15,7 @@ kernelspec:
 
 ## The trouble with implicit methods.
 
-The numerical methods for solving ODE's that we have considered so far have all been explicit, 
+The numerical methods for solving ODEs that we have considered so far have all been explicit, 
 which is to say that the formula defining the $(i+1)$st approximation can be explicitly solved for $y_{i+1}$.
 Implicit methods are characterized by formula which are not able to solved in the general case.
 Suppose as usual that we are trying to numerically solve the first order IVP

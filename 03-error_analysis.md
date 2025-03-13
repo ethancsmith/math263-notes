@@ -206,7 +206,7 @@ y(x_0+h)&\approx y(x_0) + hf\big(x_0, y(x_0)\big)\\
 &= y_0 + hf(x_0, y_0).
 \end{split}
 \end{equation*}
-Many numerical methods for ODE's can also be derived from the perspective of numerical integration.
+Many numerical methods for ODEs can also be derived from the perspective of numerical integration.
 For this reason, we often speak of "integrating the ODE."
 Indeed, if $y$ is the true solution to the IVP above, then the fundamental theorem of calculus tells us that
 ```{math}

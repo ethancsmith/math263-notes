@@ -13,7 +13,7 @@ kernelspec:
 
 # 11: Finite difference methods for boundary value problems.
 
-The shooting method replaces the given BVP with a family of IVP's which it solves numerically until it finds one that closely approximates the desired boundary condition(s).  The method of finite differences, on the other hand, imposes the boundary condition(s) exactly and instead approximates the differential equation with "finite differences" which leads to a system of equations that can hopefully be solved by a (numerical) equation solver.
+The shooting method replaces the given BVP with a family of IVPs which it solves numerically until it finds one that closely approximates the desired boundary condition(s).  The method of finite differences, on the other hand, imposes the boundary condition(s) exactly and instead approximates the differential equation with "finite differences" which leads to a system of equations that can hopefully be solved by a (numerical) equation solver.
 
 ## Forward differences and backward differences.
 
@@ -69,7 +69,7 @@ y''(x) = \frac{y(x+h) - 2y(x) + y(x-h)}{h^2} + O(h^2)
 as $h\to 0$.
 One can play similar games (playing different Taylor series expressions off one another) to obtain even higher order approximations to $y'(x)$ and $y''(x)$ as well as approximations approximations for higher-order derivatives as needed.
 
-## Finite differences for BVP's.
+## Finite differences for BVPs.
 
 Suppose that we wish to use the finite difference method to numerically approximate a solution to a BVP of the form
 ```{math}
@@ -92,7 +92,7 @@ while the boundary conditions of {eq}`second-order-bvp` are rewritten as $y_0 = 
 
 ## Advantages and disadvantages.
 
-In practice, achieving acceptable accuracy with a finite difference method requires a very small step-size $h$ as compared to a shooting method.  The smaller the step-size, the greater the number of variables involved in the system of equations.  The increase in variables puts pressure on both computing time and memory resources.  However, it is important to remember that the shooting method requires the numerical solution to a sequence of IVP's until tolerance is achieved.  Though finite difference methods tend to be more memory intensive than shooting methods, there are a number of factors that go into deciding which is more work intensive for a given problem.
+In practice, achieving acceptable accuracy with a finite difference method requires a very small step-size $h$ as compared to a shooting method.  The smaller the step-size, the greater the number of variables involved in the system of equations.  The increase in variables puts pressure on both computing time and memory resources.  However, it is important to remember that the shooting method requires the numerical solution to a sequence of IVPs until tolerance is achieved.  Though finite difference methods tend to be more memory intensive than shooting methods, there are a number of factors that go into deciding which is more work intensive for a given problem.
 
 ## Example.
 

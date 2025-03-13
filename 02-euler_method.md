@@ -13,7 +13,7 @@ kernelspec:
 
 # 2: Euler's method.
 
-## Numerical solutions to ODE's.
+## Numerical solutions to ODEs.
 
 Suppose that we want to compute a numerical solution to the first-order IVP
 ```{math}
