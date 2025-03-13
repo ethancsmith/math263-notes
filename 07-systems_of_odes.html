@@ -34,9 +34,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="_static/proof.css?v=b4b7a797" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- So that users can add custom icons -->
@@ -498,6 +498,7 @@ We demonstrate this below for the system <a class="reference internal" href="#eq
     <span class="sa">r</span><span class="s2">&quot;$\boldsymbol</span><span class="si">{r}</span><span class="s2">(0) = \langle 1, -1/2, -1\rangle$&quot;</span>
 <span class="p">)</span>
 
+<span class="c1"># construct x, y, and z vs. t plot for Euler</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 <span class="n">xi</span> <span class="o">=</span> <span class="n">r_euler</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
 <span class="n">yi</span> <span class="o">=</span> <span class="n">r_euler</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
@@ -510,6 +511,7 @@ We demonstrate this below for the system <a class="reference internal" href="#eq
 <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 
+<span class="c1"># construct parametric plot of r = &lt;x, y, z&gt; for Euler</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s2">&quot;3d&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
     <span class="n">xi</span><span class="p">,</span>
@@ -526,9 +528,9 @@ We demonstrate this below for the system <a class="reference internal" href="#eq
 <span class="n">box</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_position</span><span class="p">()</span>
 <span class="n">box</span><span class="o">.</span><span class="n">x0</span> <span class="o">-=</span> <span class="mf">0.1</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_position</span><span class="p">(</span><span class="n">box</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_box_aspect</span><span class="p">(</span><span class="n">aspect</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">zoom</span><span class="o">=</span><span class="mf">0.95</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
+<span class="c1"># construct x, y, and z vs. t plot for RK4</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 <span class="n">xi</span> <span class="o">=</span> <span class="n">r_rk4</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
 <span class="n">yi</span> <span class="o">=</span> <span class="n">r_rk4</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
@@ -541,6 +543,7 @@ We demonstrate this below for the system <a class="reference internal" href="#eq
 <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 
+<span class="c1"># construct parametric plot of r = &lt;x, y, z&gt; for RK4</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s2">&quot;3d&quot;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
     <span class="n">xi</span><span class="p">,</span>
@@ -557,7 +560,6 @@ We demonstrate this below for the system <a class="reference internal" href="#eq
 <span class="n">box</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_position</span><span class="p">()</span>
 <span class="n">box</span><span class="o">.</span><span class="n">x0</span> <span class="o">-=</span> <span class="mf">0.1</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_position</span><span class="p">(</span><span class="n">box</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_box_aspect</span><span class="p">(</span><span class="n">aspect</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">zoom</span><span class="o">=</span><span class="mf">0.95</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -565,7 +567,7 @@ We demonstrate this below for the system <a class="reference internal" href="#eq
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/2edf9c88ed6a22277ec10dd7ca9b9f72208f2c59e56231bdb4a651788206eb89.png" src="_images/2edf9c88ed6a22277ec10dd7ca9b9f72208f2c59e56231bdb4a651788206eb89.png" />
+<img alt="_images/9158c482800cfda6ade594442f979c8711094d5024c26ecc5711e25448a52137.png" src="_images/9158c482800cfda6ade594442f979c8711094d5024c26ecc5711e25448a52137.png" />
 </div>
 </div>
 </section>
