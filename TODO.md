@@ -3,7 +3,19 @@
 1. Consider moving systems and higher order ODEs up before multistep methods.
 1. Store f-vals in an array for continuing methods to avoid shifting data. Not sure this is a win.
 1. Rewrite methods to initialize y-arrays differently depending on whether y0 is scalar or vector.
-1. Simplify pyplot code.
+1. Clean and simplify pyplot code.
+	- [ ] 1: Direction fields
+	- [ ] 2: Euler's method
+	- [ ] 3: Error analysis
+	- [ ] 4: Runge—Kutta methods
+	- [ ] 5: Multistep methods
+	- [ ] 6: Predictor-corrector
+	- [x] 7: Systems of ODEs
+	- [ ] 8: Higher-order ODEs
+	- [ ] 9: Adaptive methods
+	- [ ] 10: Shooting method
+	- [ ] 11: Finite differences
+	- [ ] 12: Stiffness
 1. Switch to using $t$ as generic independent variable?
 1. Include RKF45 example of adaptive methods.
 1. Revisit IPython display of Markdown output.
