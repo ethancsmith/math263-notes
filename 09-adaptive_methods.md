@@ -137,17 +137,18 @@ from numpy.linalg import norm
 from scipy.integrate import solve_ivp
 from tabulate import tabulate
 
-import math263
 
 # define IVP parameters
-f = lambda t, w: numpy.array(
-    [
-        w[2],
-        w[3],
-        -w[0] / sqrt(w[0] ** 2 + w[1] ** 2) ** 3,
-        -w[1] / sqrt(w[0] ** 2 + w[1] ** 2) ** 3,
-    ]
-)
+# r = <x, y>, v = r', a = v'
+# w = <r, v>
+# w' = <r', v'> = <v, a> = <v, -r/|r|^3>
+def f(t, w):
+    r = w[:2]
+    v = w[2:]
+    a = -r / norm(r, 2) ** 3
+    return numpy.concat((v, a))
+
+
 e = 0.9
 w0 = numpy.array([1 - e, 0, 0, sqrt((1 + e) / (1 - e))])
 a, b = 0, 10
@@ -161,14 +162,14 @@ if dp54_soln.status:
     print("Dormand-Prince method failed.")
 else:
     print("Dormand-Prince method successfully reached end of time span.")
-    ti = dp54_soln.t
     # extract time-steps
-    wi = dp54_soln.y
-    ri = wi[:2]
-    # extract radial vectors
-    vi = wi[-2:]
-    # extract velocity vectors
+    ti = dp54_soln.t
     n = len(ti)
+    wi = dp54_soln.y
+    # extract radial vectors
+    ri = wi[:2]
+    # extract velocity vectors
+    vi = wi[-2:]
     print(f"End of time-interval [{a}, {b}] reached in n = {n} time-steps.")
     T = min(10, n)
     print(f"Displaying results for first {T} steps.")
