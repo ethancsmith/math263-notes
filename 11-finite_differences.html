@@ -378,7 +378,7 @@
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#forward-differences-and-backward-differences">Forward differences and backward differences.</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#central-differences-and-higher-order-approximations">Central differences and higher-order approximations.</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#finite-differences-for-bvps">Finite differences for BVP’s.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#finite-differences-for-bvps">Finite differences for BVPs.</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advantages-and-disadvantages">Advantages and disadvantages.</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example.</a></li>
 </ul>
@@ -394,7 +394,7 @@
                   
   <section class="tex2jax_ignore mathjax_ignore" id="finite-difference-methods-for-boundary-value-problems">
 <h1>11: Finite difference methods for boundary value problems.<a class="headerlink" href="#finite-difference-methods-for-boundary-value-problems" title="Link to this heading">#</a></h1>
-<p>The shooting method replaces the given BVP with a family of IVP’s which it solves numerically until it finds one that closely approximates the desired boundary condition(s).  The method of finite differences, on the other hand, imposes the boundary condition(s) exactly and instead approximates the differential equation with “finite differences” which leads to a system of equations that can hopefully be solved by a (numerical) equation solver.</p>
+<p>The shooting method replaces the given BVP with a family of IVPs which it solves numerically until it finds one that closely approximates the desired boundary condition(s).  The method of finite differences, on the other hand, imposes the boundary condition(s) exactly and instead approximates the differential equation with “finite differences” which leads to a system of equations that can hopefully be solved by a (numerical) equation solver.</p>
 <section id="forward-differences-and-backward-differences">
 <h2>Forward differences and backward differences.<a class="headerlink" href="#forward-differences-and-backward-differences" title="Link to this heading">#</a></h2>
 <p>The same germ that lead to Euler’s method gives us the finite difference method, viz., if <span class="math notranslate nohighlight">\(h\)</span> is small and nonzero, then</p>
@@ -437,7 +437,7 @@ y(x+h) + y(x-h) = 2y(x)h + 2\frac{y''(x)}{2!}h^2 + 2\frac{y^{(4)}(x)}{4!}h^4 + \
 One can play similar games (playing different Taylor series expressions off one another) to obtain even higher order approximations to <span class="math notranslate nohighlight">\(y'(x)\)</span> and <span class="math notranslate nohighlight">\(y''(x)\)</span> as well as approximations approximations for higher-order derivatives as needed.</p>
 </section>
 <section id="finite-differences-for-bvps">
-<h2>Finite differences for BVP’s.<a class="headerlink" href="#finite-differences-for-bvps" title="Link to this heading">#</a></h2>
+<h2>Finite differences for BVPs.<a class="headerlink" href="#finite-differences-for-bvps" title="Link to this heading">#</a></h2>
 <p>Suppose that we wish to use the finite difference method to numerically approximate a solution to a BVP of the form</p>
 <div class="math notranslate nohighlight" id="equation-second-order-bvp">
 <span class="eqno">(37)<a class="headerlink" href="#equation-second-order-bvp" title="Link to this equation">#</a></span>\[\begin{split}y'' &amp;= f(x, y, y'),\\
@@ -454,7 +454,7 @@ y''(x_i) &amp;= \frac{y(x_{i+1}) - 2y(x_i) + y(x_{i-1})}{h^2} + O(h^2)\end{split
 </section>
 <section id="advantages-and-disadvantages">
 <h2>Advantages and disadvantages.<a class="headerlink" href="#advantages-and-disadvantages" title="Link to this heading">#</a></h2>
-<p>In practice, achieving acceptable accuracy with a finite difference method requires a very small step-size <span class="math notranslate nohighlight">\(h\)</span> as compared to a shooting method.  The smaller the step-size, the greater the number of variables involved in the system of equations.  The increase in variables puts pressure on both computing time and memory resources.  However, it is important to remember that the shooting method requires the numerical solution to a sequence of IVP’s until tolerance is achieved.  Though finite difference methods tend to be more memory intensive than shooting methods, there are a number of factors that go into deciding which is more work intensive for a given problem.</p>
+<p>In practice, achieving acceptable accuracy with a finite difference method requires a very small step-size <span class="math notranslate nohighlight">\(h\)</span> as compared to a shooting method.  The smaller the step-size, the greater the number of variables involved in the system of equations.  The increase in variables puts pressure on both computing time and memory resources.  However, it is important to remember that the shooting method requires the numerical solution to a sequence of IVPs until tolerance is achieved.  Though finite difference methods tend to be more memory intensive than shooting methods, there are a number of factors that go into deciding which is more work intensive for a given problem.</p>
 </section>
 <section id="example">
 <h2>Example.<a class="headerlink" href="#example" title="Link to this heading">#</a></h2>
@@ -641,7 +641,7 @@ We solve this system below for the case of <span class="math notranslate nohighl
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#forward-differences-and-backward-differences">Forward differences and backward differences.</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#central-differences-and-higher-order-approximations">Central differences and higher-order approximations.</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#finite-differences-for-bvps">Finite differences for BVP’s.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#finite-differences-for-bvps">Finite differences for BVPs.</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advantages-and-disadvantages">Advantages and disadvantages.</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example.</a></li>
 </ul>
