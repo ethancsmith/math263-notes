@@ -12,6 +12,7 @@ chapters:
 - file: 06-predictor-corrector_methods
 - file: 07-systems_of_odes
 - file: 08-higher_order_odes
+- file: pendulum
 - file: 09-adaptive_methods
 - file: 10-shooting_method
 - file: 11-finite_differences

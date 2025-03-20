@@ -15,4 +15,5 @@ dependencies:
   - tabulate
   - scipy
   - pytest
+  - ffmpeg
 prefix: /opt/anaconda3/envs/math263-notes
