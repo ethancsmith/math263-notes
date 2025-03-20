@@ -180,6 +180,7 @@
 <li class="toctree-l1"><a class="reference internal" href="06-predictor-corrector_methods.html">6: Predictor–corrector methods.</a></li>
 <li class="toctree-l1"><a class="reference internal" href="07-systems_of_odes.html">7: Systems of first order ODEs.</a></li>
 <li class="toctree-l1"><a class="reference internal" href="08-higher_order_odes.html">8: Higher order initial value problems.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pendulum.html">Physical example: Simple gravity pendulum</a></li>
 <li class="toctree-l1"><a class="reference internal" href="09-adaptive_methods.html">9: Adaptive methods.</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">10: Boundary value problems and the shooting method.</a></li>
 <li class="toctree-l1"><a class="reference internal" href="11-finite_differences.html">11: Finite difference methods for boundary value problems.</a></li>
@@ -397,33 +398,33 @@
 <p>Side conditions must be imposed in order for a system of ODEs to have a unique a solution.  If all the side conditions are imposed at a single point, then the problem is called an initial value problem (IVP).  If the side conditions are imposed at more than one point, then we have a <strong>boundary value problem (BVP)</strong>.  In typical situations, the conditions are imposed at the endpoints (boundary) of an interval <span class="math notranslate nohighlight">\([a,b]\)</span>, which of course explains the name.</p>
 <p>Since higher-order equations can be expressed as systems of first order equations, we can restrict attention to problems of the form</p>
 <div class="math notranslate nohighlight" id="equation-first-order-system-ode">
-<span class="eqno">(26)<a class="headerlink" href="#equation-first-order-system-ode" title="Link to this equation">#</a></span>\[\mathbf{y}' = \mathbf{f}(x, \mathbf y)\]</div>
+<span class="eqno">(27)<a class="headerlink" href="#equation-first-order-system-ode" title="Link to this equation">#</a></span>\[\mathbf{y}' = \mathbf{f}(x, \mathbf y)\]</div>
 <p>over the interval <span class="math notranslate nohighlight">\(a\le x\le b\)</span> together with the condition</p>
 <div class="math notranslate nohighlight" id="equation-boundary-conditions">
-<span class="eqno">(27)<a class="headerlink" href="#equation-boundary-conditions" title="Link to this equation">#</a></span>\[\mathbf{g}(\mathbf{y}(a), \mathbf{y}(b)) = \mathbf{0},\]</div>
+<span class="eqno">(28)<a class="headerlink" href="#equation-boundary-conditions" title="Link to this equation">#</a></span>\[\mathbf{g}(\mathbf{y}(a), \mathbf{y}(b)) = \mathbf{0},\]</div>
 <p>where as usual bold symbols denote vectors of the appropriate dimension.</p>
 </section>
 <section id="the-shooting-method">
 <h2>The shooting method.<a class="headerlink" href="#the-shooting-method" title="Link to this heading">#</a></h2>
-<p>The <strong>shooting method</strong> is a trick for turning this type of problem into a “sequence” of problems that we already know how to solve.  The idea is to replace the BVP by an IVP with unknown parameters.  In particular, we ignore any conditions imposed on <span class="math notranslate nohighlight">\(\mathbf{y}(b)\)</span> by the boundary condition <a class="reference internal" href="#equation-boundary-conditions">(27)</a>.  Then we fix any values of the vector <span class="math notranslate nohighlight">\(\mathbf{y}(a)\)</span> that can be determined from the start; the rest we treat as unknowns.  We then “guess” the unknown parameters in <span class="math notranslate nohighlight">\(\mathbf{y}(a)\)</span> and solve the resulting IVP.  We then check to see if numerical result satisfies <a class="reference internal" href="#equation-boundary-conditions">(27)</a> to within desired tolerance.</p>
+<p>The <strong>shooting method</strong> is a trick for turning this type of problem into a “sequence” of problems that we already know how to solve.  The idea is to replace the BVP by an IVP with unknown parameters.  In particular, we ignore any conditions imposed on <span class="math notranslate nohighlight">\(\mathbf{y}(b)\)</span> by the boundary condition <a class="reference internal" href="#equation-boundary-conditions">(28)</a>.  Then we fix any values of the vector <span class="math notranslate nohighlight">\(\mathbf{y}(a)\)</span> that can be determined from the start; the rest we treat as unknowns.  We then “guess” the unknown parameters in <span class="math notranslate nohighlight">\(\mathbf{y}(a)\)</span> and solve the resulting IVP.  We then check to see if numerical result satisfies <a class="reference internal" href="#equation-boundary-conditions">(28)</a> to within desired tolerance.</p>
 </section>
 <section id="example">
 <h2>Example.<a class="headerlink" href="#example" title="Link to this heading">#</a></h2>
 <p>Consider for example the second-order BVP</p>
 <div class="math notranslate nohighlight" id="equation-bvp-example">
-<span class="eqno">(28)<a class="headerlink" href="#equation-bvp-example" title="Link to this equation">#</a></span>\[\begin{split}y''  &amp;= 4y,\\
+<span class="eqno">(29)<a class="headerlink" href="#equation-bvp-example" title="Link to this equation">#</a></span>\[\begin{split}y''  &amp;= 4y,\\
 y(0) &amp;= 0,\\
 y(1) &amp;= 5.\end{split}\]</div>
-<p>First we let <span class="math notranslate nohighlight">\(u_0 = y\)</span>, <span class="math notranslate nohighlight">\(u_1 = y'\)</span>, and we rewrite the BVP <a class="reference internal" href="#equation-bvp-example">(28)</a> as</p>
+<p>First we let <span class="math notranslate nohighlight">\(u_0 = y\)</span>, <span class="math notranslate nohighlight">\(u_1 = y'\)</span>, and we rewrite the BVP <a class="reference internal" href="#equation-bvp-example">(29)</a> as</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}u_0' &amp;= u_1,\\
 u_1' &amp;= 4u_0,\\
 u_0(0) &amp;= 0,\\
 u_0(1) &amp;= 5.\end{split}\]</div>
-<p>Then we collect the new variables into vectors <span class="math notranslate nohighlight">\(\mathbf u = \langle u_1, u_2\rangle\)</span>, <span class="math notranslate nohighlight">\(\mathbf{f}(x, \mathbf u) = \langle u_1, 4u_0\rangle\)</span>, and <span class="math notranslate nohighlight">\(\mathbf{g}(\mathbf{u}(0), \mathbf{u}(1)) = \langle u_0(0), u_0(1)-5\rangle\)</span>, and observe that the problem is now expressed in the form of <a class="reference internal" href="#equation-first-order-system-ode">(26)</a> and <a class="reference internal" href="#equation-boundary-conditions">(27)</a>.</p>
+<p>Then we collect the new variables into vectors <span class="math notranslate nohighlight">\(\mathbf u = \langle u_1, u_2\rangle\)</span>, <span class="math notranslate nohighlight">\(\mathbf{f}(x, \mathbf u) = \langle u_1, 4u_0\rangle\)</span>, and <span class="math notranslate nohighlight">\(\mathbf{g}(\mathbf{u}(0), \mathbf{u}(1)) = \langle u_0(0), u_0(1)-5\rangle\)</span>, and observe that the problem is now expressed in the form of <a class="reference internal" href="#equation-first-order-system-ode">(27)</a> and <a class="reference internal" href="#equation-boundary-conditions">(28)</a>.</p>
 <p>For the shooting method, we ignore what the boundary condition <span class="math notranslate nohighlight">\(\mathbf{g} = \mathbf 0\)</span> has to say about <span class="math notranslate nohighlight">\(\mathbf u(1)\)</span>.  Instead we introduce another unknown parameter <span class="math notranslate nohighlight">\(s\)</span>, and we consider the IVP</p>
 <div class="math notranslate nohighlight" id="equation-ivp-family">
-<span class="eqno">(29)<a class="headerlink" href="#equation-ivp-family" title="Link to this equation">#</a></span>\[\begin{split}\mathbf{u}' &amp;= \mathbf{f}(x, \mathbf{u}),\\
+<span class="eqno">(30)<a class="headerlink" href="#equation-ivp-family" title="Link to this equation">#</a></span>\[\begin{split}\mathbf{u}' &amp;= \mathbf{f}(x, \mathbf{u}),\\
 \mathbf{u}(0) &amp;= \begin{pmatrix} 0\\ s\end{pmatrix}.\end{split}\]</div>
 <p>The goal then is to find a value of <span class="math notranslate nohighlight">\(s = u_1(0) = y'(0)\)</span> so that when we solve the resulting IVP <span class="math notranslate nohighlight">\(u_0(1)\approx 5\)</span>, i.e., <span class="math notranslate nohighlight">\(|u_0(1) - 5|\)</span> is within a specified tolerance.  Below we make an initial guess of <span class="math notranslate nohighlight">\(s = 1\)</span> and solve the IVP with <span class="math notranslate nohighlight">\(n = 10\)</span> steps of RK4.</p>
 <div class="cell docutils container">

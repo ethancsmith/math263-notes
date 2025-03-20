@@ -180,6 +180,7 @@
 <li class="toctree-l1"><a class="reference internal" href="06-predictor-corrector_methods.html">6: Predictor–corrector methods.</a></li>
 <li class="toctree-l1"><a class="reference internal" href="07-systems_of_odes.html">7: Systems of first order ODEs.</a></li>
 <li class="toctree-l1"><a class="reference internal" href="08-higher_order_odes.html">8: Higher order initial value problems.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pendulum.html">Physical example: Simple gravity pendulum</a></li>
 <li class="toctree-l1"><a class="reference internal" href="09-adaptive_methods.html">9: Adaptive methods.</a></li>
 <li class="toctree-l1"><a class="reference internal" href="10-shooting_method.html">10: Boundary value problems and the shooting method.</a></li>
 <li class="toctree-l1"><a class="reference internal" href="11-finite_differences.html">11: Finite difference methods for boundary value problems.</a></li>
@@ -452,13 +453,13 @@ k_2 &amp;= f(x_i + c_2h, y_i + ha_{2,1}k_1),\\
 k_s &amp;= f\big(x_i + c_sh, y_i + h(a_{s,1}k_1 + \dots + a_{s,s-1}k_s)\big).\end{split}\]</div>
 <p>Of course care must be taken when choosing the coefficients so that the method is consistent with the Taylor series of the true solution.</p>
 <p>Perhaps the most popular Runge–Kutta method is the <strong>classical fourth order Runge–Kutta method</strong> (<strong>RK4</strong>), which is defined by the recurrence</p>
-<div class="amsmath math notranslate nohighlight" id="equation-7dba9199-4fbb-4513-97e1-3d7f4fbbda1a">
-<span class="eqno">(11)<a class="headerlink" href="#equation-7dba9199-4fbb-4513-97e1-3d7f4fbbda1a" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-df7a78fe-994d-4b75-a2a4-c36fa703fba3">
+<span class="eqno">(11)<a class="headerlink" href="#equation-df7a78fe-994d-4b75-a2a4-c36fa703fba3" title="Permalink to this equation">#</a></span>\[\begin{equation}
 y_{i+1} = y_i + \frac{h}{6}\big(k_1 + 2k_2 + 2k_3 + k_4\big),
 \end{equation}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-90a1f493-bb66-4563-acba-6bafd71db579">
-<span class="eqno">(12)<a class="headerlink" href="#equation-90a1f493-bb66-4563-acba-6bafd71db579" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-3fff31ac-6e00-4497-8f81-3f14633ca0d2">
+<span class="eqno">(12)<a class="headerlink" href="#equation-3fff31ac-6e00-4497-8f81-3f14633ca0d2" title="Permalink to this equation">#</a></span>\[\begin{align}
 k_1 &amp;= f(x_i, y_i),\\
 k_2 &amp;= f\big(x_i + h/2, y_i + hk_1/2\big),\\
 k_3 &amp;= f\big(x_i + h/2, y_i + hk_2/2\big),\\
@@ -495,8 +496,8 @@ k_4 &amp;= f(x_i + h, y_i + hk_3).
 <section id="example">
 <h2>Example.<a class="headerlink" href="#example" title="Link to this heading">#</a></h2>
 <p>Below we compare Euler’s method with the classical Runge–Kutta method of order 4 (RK4) for the IVP</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3a20cebd-c17c-4201-84c7-ee11f7e740f1">
-<span class="eqno">(13)<a class="headerlink" href="#equation-3a20cebd-c17c-4201-84c7-ee11f7e740f1" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-aab1baec-b783-442f-968d-123e17200cfc">
+<span class="eqno">(13)<a class="headerlink" href="#equation-aab1baec-b783-442f-968d-123e17200cfc" title="Permalink to this equation">#</a></span>\[\begin{align}
 y'&amp;=(y/x)-(y/x)^2,\\
 y(1)&amp;=1.
 \end{align}\]</div>
