@@ -12,14 +12,14 @@ kernelspec:
 ---
 
 # Physical example: Simple gravity pendulum
-$\renewcommand{\dee}{\mathrm{d}}$
+$\newcommand{\dee}{\mathrm{d}}$
 
 +++
 
 Under certain simplifying assumptions, the motion of a swinging pendulum is described by the ODE
 ```{math}
 :label: pendulum-ode
-\frac{\dee^2\theta}{\dee t^2} + \frac{g}{L}\sin\theta = 0,
+\ddot{\theta} + \frac{g}{L}\sin\theta = 0,
 ```
 where $L$ is the length of the pendulum, $g$ is the acceleration due to gravity near the Earth's surface, and $\theta$ is the angle that the pendulum makes with the vertical axis.
 
@@ -31,7 +31,7 @@ Then {eq}`pendulum-ode` is equivalent to the first-order (vector) ODE
 \frac{\dee\boldsymbol u}{\dee t} = \boldsymbol f(t, \boldsymbol u).
 \end{equation*}
 
-```{code-cell} ipython3
+```{code-cell}
 # import modules
 import numpy
 from IPython.display import HTML
@@ -41,7 +41,7 @@ from numpy import pi
 import math263
 ```
 
-```{code-cell} ipython3
+```{code-cell}
 # define IVP params
 g = 9.8  # acceleration due gravity near surface of Earth (m/s^2)
 L = 5  # length of pendulum rod (m)
@@ -71,7 +71,7 @@ theta = u[:, 0]
 Dtheta = u[:, 1]
 ```
 
-```{code-cell} ipython3
+```{code-cell}
 # make various plots of numerical solution
 pyplot.style.use("dark_background")
 fig = pyplot.figure()
@@ -85,7 +85,7 @@ $\\dot{{\\theta}}({a}) = {Dtheta0:0.4f}\\mathregular{{\\ 1/s}}$
 """
 fig.suptitle(title)
 
-# plot theta (angle) vs t (time)
+# plot \theta (angle) vs t (time)
 ax = fig.add_subplot(2, 1, 1)
 color = "blue"
 ax.plot(t, theta, color=color, label=r"$\theta$")
@@ -94,7 +94,7 @@ ax.set_ylabel(r"$\theta$", color=color)
 ax.grid(True)
 ax.tick_params(axis="y", labelcolor=color)
 
-# plot Dtheta (angular velocity) vs t (time) with
+# plot \dot\theta (angular velocity) vs t (time) 
 ax = ax.twinx()
 color = "green"
 ax.plot(t, Dtheta, color=color, label=r"$\dot\theta$")
@@ -116,7 +116,49 @@ ax.grid(True)
 pyplot.show()
 ```
 
-```{code-cell} ipython3
+Below we use our numerical results to produce an animation of the pendulum's motion in physical space.
+To do this, we write
+\begin{equation*}
+\boldsymbol r = \langle x, y\rangle = L\langle \sin\theta, -\cos\theta\rangle
+\end{equation*}
+for the radial vector describing the position of the bob relative to the anchored end of the pendulum.
+By the chain rule, the velocity of the bob is
+\begin{equation*}
+\boldsymbol v 
+=\frac{\dee\boldsymbol r}{\dee t}
+=\frac{\dee\boldsymbol r}{\dee\theta}\frac{\dee\theta}{\dee t}
+=\dot{\theta}\frac{\dee\boldsymbol r}{\dee\theta},
+\end{equation*}
+and the acceleration is
+\begin{equation*}
+\boldsymbol a = \frac{\dee\boldsymbol v}{\dee t}
+=\dot{\theta}\frac{\dee}{\dee t}\left(\frac{\dee\boldsymbol r}{\dee \theta}\right) 
+    + \frac{\dee\boldsymbol r}{\dee\theta}\ddot{\theta}
+=\big(\dot{\theta}\big)^2\frac{\dee^2 \boldsymbol r}{\dee \theta^2}
+    + \ddot{\theta}\frac{\dee\boldsymbol r}{\dee\theta}.
+\end{equation*}
+Observe that 
+$\hat{\frac{\dee\boldsymbol r}{\dee\theta}} = \frac{1}{L}\frac{\dee\boldsymbol r}{\dee\theta} = \langle\cos\theta, \sin\theta\rangle$ 
+and
+$\hat{\frac{\dee^2\boldsymbol r}{\dee\theta^2}} = \frac{1}{L}\frac{\dee^2\boldsymbol r}{\dee\theta^2} = \langle -\sin\theta, \cos\theta\rangle$ 
+form an orthonormal pair.
+The total force acting on the bob is
+\begin{equation*}
+\boldsymbol F = \boldsymbol F_1 + \boldsymbol F_2
+= -mg\hat{\boldsymbol\jmath} + |\boldsymbol F_2|\hat{\frac{\dee^2\boldsymbol r}{\dee\theta^2}},
+\end{equation*}
+where $\boldsymbol F_1 = -mg\hat{\boldsymbol\jmath}$ is the force due to gravity and 
+$\boldsymbol F_2 = -|\boldsymbol F_2|\hat{\boldsymbol r} = |\boldsymbol F_2|\hat{\frac{\dee^2\boldsymbol r}{\dee\theta^2}}$ 
+is the force exerted by the rod on the bob.
+By Newton's second, law $\boldsymbol F = m\boldsymbol a$, where $m$ is the mass of the bob, and hence
+\begin{equation*}
+-mg\sin\theta
+=\boldsymbol F\cdot\hat{\frac{\dee\boldsymbol r}{\dee\theta}}
+=m\boldsymbol a\cdot\hat{\frac{\dee\boldsymbol r}{\dee\theta}}
+=mL\ddot{\theta}.
+\end{equation*}
+
+```{code-cell}
 # compute physical coordinates of the "bob" at each time t_i
 x = L * numpy.sin(theta)
 y = -L * numpy.cos(theta)
@@ -157,8 +199,4 @@ anim = animation.FuncAnimation(
 )
 pyplot.close()
 HTML(anim.to_html5_video())
-```
-
-```{code-cell} ipython3
-
 ```
