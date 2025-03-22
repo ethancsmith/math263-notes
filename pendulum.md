@@ -31,17 +31,18 @@ Then {eq}`pendulum-ode` is equivalent to the first-order (vector) ODE
 \frac{\dee\boldsymbol u}{\dee t} = \boldsymbol f(t, \boldsymbol u).
 \end{equation*}
 
-```{code-cell}
+```{code-cell} ipython3
 # import modules
 import numpy
 from IPython.display import HTML
 from matplotlib import animation, pyplot
 from numpy import pi
+from numpy.linalg import norm
 
 import math263
 ```
 
-```{code-cell}
+```{code-cell} ipython3
 # define IVP params
 g = 9.8  # acceleration due gravity near surface of Earth (m/s^2)
 L = 5  # length of pendulum rod (m)
@@ -71,7 +72,7 @@ theta = u[:, 0]
 Dtheta = u[:, 1]
 ```
 
-```{code-cell}
+```{code-cell} ipython3
 # make various plots of numerical solution
 pyplot.style.use("dark_background")
 fig = pyplot.figure()
@@ -158,10 +159,20 @@ By Newton's second, law $\boldsymbol F = m\boldsymbol a$, where $m$ is the mass 
 =mL\ddot{\theta}.
 \end{equation*}
 
-```{code-cell}
+```{code-cell} ipython3
 # compute physical coordinates of the "bob" at each time t_i
 x = L * numpy.sin(theta)
 y = -L * numpy.cos(theta)
+
+
+# compute velocity and acceleration vectors
+v = Dtheta * L * numpy.array([numpy.cos(theta), numpy.sin(theta)])
+v /= max(norm(v, 2, axis=0))
+D2theta = -(g / L) * numpy.sin(theta)
+a = Dtheta**2 * L * numpy.array(
+    [-numpy.sin(theta), numpy.cos(theta)]
+) + D2theta * L * numpy.array([numpy.cos(theta), numpy.sin(theta)])
+a /= max(norm(a, 2, axis=0))
 
 # compute edges of window in xy-plane
 xmin, xmax = min(x), max(x)
@@ -170,26 +181,30 @@ xmin -= 0.1
 xmax += 0.1
 ymin -= 0.5
 
-#pyplot.style.use("default")
-#pyplot.xkcd()
-#pyplot.rcParams["font.family"] = ["Comic Sans MS"]
+# pyplot.style.use("default")
+# pyplot.xkcd()
+# pyplot.rcParams["font.family"] = ["Comic Sans MS"]
 fig, ax = pyplot.subplots()
 ax.set_title("Pendulum")
 
 rod = ax.plot([0, x[0]], [0, y[0]], color="blue")[0]  # draw "rod"
 bob = ax.scatter(x[0], y[0], color="red", marker="o")  # draw "bob"
+vel = pyplot.arrow(x=x[0], y=y[0], dx=v[0, 0], dy=v[1, 0], width=0.05, color="green")
+acc = pyplot.arrow(x=x[0], y=y[0], dx=a[0, 0], dy=a[1, 0], width=0.05, color="red")
 ax.set_xlim((xmin, xmax))
 ax.set_ylim((ymin, ymax))
 ax.set_xlabel("$x$ (meters)")
 ax.set_ylabel("$y$ (meters)")
-pyplot.gca().set_aspect('equal')
+pyplot.gca().set_aspect("equal")
 
 
 def frame_update(frame):
     rod.set_xdata([0, x[frame]])
     rod.set_ydata([0, y[frame]])
     bob.set_offsets([x[frame], y[frame]])
-    return rod, bob
+    vel.set_data(x=x[frame], y=y[frame], dx=v[0, frame], dy=v[1, frame])
+    acc.set_data(x=x[frame], y=y[frame], dx=a[0, frame], dy=a[1, frame])
+    return rod, bob, vel, acc
 
 
 # we make a new frame for each time-node
