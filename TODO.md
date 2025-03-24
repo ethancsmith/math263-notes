@@ -1,9 +1,9 @@
 # TODO
 
-1. Consider moving systems and higher order ODEs up before multistep methods.
-1. Store f-vals in an array for continuing methods to avoid shifting data. Not sure this is a win.
-1. Rewrite methods to initialize y-arrays differently depending on whether y0 is scalar or vector.
-1. Clean and simplify pyplot code.
+- [ ] Consider moving systems and higher order ODEs up before multistep methods.
+- [ ]  Store f-vals in an array for continuing methods to avoid shifting data. Not sure this is a win.
+- [ ] Rewrite methods to initialize y-arrays differently depending on whether y0 is scalar or vector.
+- [ ] Clean and simplify pyplot code.
 	- [ ] 1: Direction fields
 	- [ ] 2: Euler's method
 	- [ ] 3: Error analysis
@@ -16,9 +16,9 @@
 	- [ ] 10: Shooting method
 	- [ ] 11: Finite differences
 	- [ ] 12: Stiffness
-1. Switch to using $t$ as generic independent variable?
-1. Include RKF45 example of adaptive methods.
-1. Revisit IPython display of Markdown output.
+- [x] Switch to using $t$ as generic independent variable?
+- [ ] Include RKF45 example of adaptive methods.
+- [ ] Revisit IPython display of Markdown output.
 	- Works fine in Jupyter Lab.
 	- Jupyter Book does not handle this correctly at present. See [Open issue](https://github.com/executablebooks/jupyter-book/issues/1771).
 	- Try using {eval} tags to embed computed results in Markdown cells? Requires the following in the top-matter of the notebook.
