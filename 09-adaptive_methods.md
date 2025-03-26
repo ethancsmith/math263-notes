@@ -170,7 +170,7 @@ else:
     ri = wi[:2]
     # extract velocity vectors
     vi = wi[-2:]
-    print(f"End of time-interval [{a}, {b}] reached in n = {n} time-steps.")
+    print(f"End of time-interval [{a}, {b}] reached in n = {n - 1} time-steps.")
     T = min(10, n)
     print(f"Displaying results for first {T} steps.")
     data = numpy.c_[ti[:T], ri[0, :T], ri[1, :T], vi[0, :T], vi[1, :T]]

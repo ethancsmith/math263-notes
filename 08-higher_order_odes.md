@@ -26,7 +26,7 @@ u_1' &= u_2,\\
 u_{m-2}' &= u_{m-1},\\
 u_{m-1}' &= f(x, u_0, u_1,\dots, u_{m-1}).
 \end{align*}
-In this way, we are able to compute a numerical solution $y$ the $m$th order IVP along with its lower order derivatives $y', y'', \dots , y^{(m-1)}$.
+In this way, we are able to compute a numerical solution $y$ to the $m$th order IVP along with its lower order derivatives $y', y'', \dots , y^{(m-1)}$.
 
 +++
 
