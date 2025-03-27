@@ -27,6 +27,8 @@
  	   			execution_mode: 'inline'
 		```
 	- [Glue](https://jupyterbook.org/en/stable/content/executable/output-insert.html) is another option to consider. Could keep the Python glue code in a separate cell and ["remove-input"](https://myst-nb.readthedocs.io/en/latest/render/hiding.html).
+1. Save a lecture: Fold analysis of Euler's method into lecture on Euler's method, and just develop order 2 RK methods at once (i.e., MEM isn't separate).
+1. Add a lecture on well-posedness or on Taylor series methods before RK methods?
 
 ## Reference collection
 
