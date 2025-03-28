@@ -63,6 +63,7 @@ The goal then is to find a value of $s = u_1(0) = y'(0)$ so that when we solve t
 import numpy
 from matplotlib import pyplot
 from tabulate import tabulate
+from scipy.optimize import fsolve
 
 import math263
 
@@ -140,4 +141,34 @@ print(
     f"Shooting method (s = {s})\nBoundary error: |y({b})-y_{n}| = {abs(ui[-1,0]-bcond[1]):0.5g}"
 )
 print(tabulate(data, hdrs, tablefmt="mixed_grid", floatfmt="0.5f", showindex=True))
+```
+
+As an alternative to the method of bisection, we may write a function that, given a choice of $s = u'(0)$, will "shoot" our IVP solver and then return its approximation to $u(1)-5$, which we want to be zero.
+We can then feed this function to any numerical equation solver as below and compute $s$ to our desired tolerance.
+
+```{code-cell}
+# define "shooting" function
+def shoot(s):
+    s = s[0]
+    soln = math263.rk4(f, a, b, u0(s), n)
+    u = soln[1]
+    return u[-1, 0] - bcond[1]
+
+
+# using SciPy's fsolve to automate search for s
+s0 = 3
+s = fsolve(shoot, [s0], xtol=1e-5)
+s = s[0]
+
+# recompute numerical solution with value returned by eqn solver
+xi, ui = math263.rk4(f, a, b, u0(s), n)
+
+# report results
+print(f"With s = {s:0.5f}, we have y_{n} = u_{0, n} = {ui[-1, 0]:0.6g}.")
+pyplot.figure(fig)
+ax.plot(xi, ui[:, 0], ":.", label=f"RK4 $s$ = {s:0.5f}")
+ax.set_xlabel(r"$x$")
+ax.set_ylabel(r"$y$")
+ax.legend(loc="upper left")
+pyplot.show()
 ```
