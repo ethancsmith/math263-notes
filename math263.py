@@ -120,3 +120,19 @@ def abm2(f, a, b, y0, n):
         # shift down f-val
         f2 = f1
     return x, y
+
+
+def secant_method(func, x0, x1, maxiter, restol):
+    y0 = func(x0)
+    y1 = func(x1)
+    if abs(y0) < restol:
+        return x0
+    if abs(y1) < restol:
+        return x1
+    for i in range(2, maxiter):
+        x2 = x1 - y1 * (x1 - x0) / (y1 - y0)
+        y2 = func(x2)
+        if abs(y2) < restol:
+            return x2
+        x0, x1 = x1, x2
+    return x2
