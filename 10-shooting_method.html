@@ -34,9 +34,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="_static/proof.css?v=b4b7a797" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- So that users can add custom icons -->
@@ -432,6 +432,7 @@ u_0(1) &amp;= 5.\end{split}\]</div>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span>
 <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span>
 <span class="kn">from</span> <span class="nn">tabulate</span> <span class="kn">import</span> <span class="n">tabulate</span>
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">fsolve</span>
 
 <span class="kn">import</span> <span class="nn">math263</span>
 
@@ -566,6 +567,44 @@ Boundary error: |y(1)-y_10| = 0.44016
 ┕━━━━━┷━━━━━━━━━┷━━━━━━━━━┙
 </pre></div>
 </div>
+</div>
+</div>
+<p>As an alternative to the method of bisection, we may write a function that, given a choice of <span class="math notranslate nohighlight">\(s = u'(0)\)</span>, will “shoot” our IVP solver and then return its approximation to <span class="math notranslate nohighlight">\(u(1)-5\)</span>, which we want to be zero.
+We can then feed this function to any numerical equation solver as below and compute <span class="math notranslate nohighlight">\(s\)</span> to our desired tolerance.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># define &quot;shooting&quot; function</span>
+<span class="k">def</span> <span class="nf">shoot</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">soln</span> <span class="o">=</span> <span class="n">math263</span><span class="o">.</span><span class="n">rk4</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">u0</span><span class="p">(</span><span class="n">s</span><span class="p">),</span> <span class="n">n</span><span class="p">)</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">soln</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">u</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">bcond</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+
+<span class="c1"># using SciPy&#39;s fsolve to automate search for s</span>
+<span class="n">s0</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">fsolve</span><span class="p">(</span><span class="n">shoot</span><span class="p">,</span> <span class="p">[</span><span class="n">s0</span><span class="p">],</span> <span class="n">xtol</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">)</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># recompute numerical solution with value returned by eqn solver</span>
+<span class="n">xi</span><span class="p">,</span> <span class="n">ui</span> <span class="o">=</span> <span class="n">math263</span><span class="o">.</span><span class="n">rk4</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">u0</span><span class="p">(</span><span class="n">s</span><span class="p">),</span> <span class="n">n</span><span class="p">)</span>
+
+<span class="c1"># report results</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;With s = </span><span class="si">{</span><span class="n">s</span><span class="si">:</span><span class="s2">0.5f</span><span class="si">}</span><span class="s2">, we have y_</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> = u_</span><span class="si">{</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">n</span><span class="si">}</span><span class="s2"> = </span><span class="si">{</span><span class="n">ui</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">0.6g</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+<span class="n">pyplot</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="n">ui</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;:.&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;RK4 $s$ = </span><span class="si">{</span><span class="n">s</span><span class="si">:</span><span class="s2">0.5f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$x$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$y$&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
+<span class="n">pyplot</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>With s = 2.75727, we have y_10 = u_(0, 10) = 5.
+</pre></div>
+</div>
+<img alt="_images/22e124b1a0fcc184575ccd616996db2a52c2d61837ba4c597c1ae749eac83458.png" src="_images/22e124b1a0fcc184575ccd616996db2a52c2d61837ba4c597c1ae749eac83458.png" />
 </div>
 </div>
 </section>
