@@ -10,10 +10,10 @@ dependencies:
   - matplotlib
   - notebook
   - numpy
-  - pip
   - sympy
   - tabulate
   - scipy
   - pytest
   - ffmpeg
+  - sphinx-proof
 prefix: /opt/anaconda3/envs/math263-notes
