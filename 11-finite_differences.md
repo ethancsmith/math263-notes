@@ -15,6 +15,8 @@ kernelspec:
 
 The shooting method replaces the given BVP with a family of IVPs which it solves numerically until it finds one that closely approximates the desired boundary condition(s).  The method of finite differences, on the other hand, imposes the boundary condition(s) exactly and instead approximates the differential equation with "finite differences" which leads to a system of equations that can hopefully be solved by a (numerical) equation solver.
 
++++
+
 ## Forward differences and backward differences.
 
 The same germ that lead to Euler's method gives us the finite difference method, viz., if $h$ is small and nonzero, then
@@ -44,6 +46,8 @@ y'(x) = \frac{y(x) - y(x-h)}{h} + O(h)
 ```
 as $h\to 0$.  Thus, we see that both the forward difference and the backward difference approximations are order 1 accurate.
 
++++
+
 ## Central differences and higher-order approximations.
 
 The difference in sign pattern between {eq}`forward-taylor` and {eq}`backward-taylor` has a number of happy consequences.  First, subtracting {eq}`backward-taylor` from {eq}`forward-taylor` annihilates all the even order terms.  In particular, we have
@@ -69,6 +73,8 @@ y''(x) = \frac{y(x+h) - 2y(x) + y(x-h)}{h^2} + O(h^2)
 as $h\to 0$.
 One can play similar games (playing different Taylor series expressions off one another) to obtain even higher order approximations to $y'(x)$ and $y''(x)$ as well as approximations approximations for higher-order derivatives as needed.
 
++++
+
 ## Finite differences for BVPs.
 
 Suppose that we wish to use the finite difference method to numerically approximate a solution to a BVP of the form
@@ -88,11 +94,15 @@ as $h\to 0$.  For $1\le i\le n-1$, we therefore approximate the ODE of {eq}`seco
 :label: second-order-ode-approx
 \frac{y_{i+1} - 2y_i + y_{i-1}}{h^2} = f\left(x, y_i, \frac{y_{i+1} -y_{i-1}}{2h}\right)
 ```
-while the boundary conditions of {eq}`second-order-bvp` are rewritten as $y_0 = \alpha$ and $y_n = \beta$.  This yields a total of $n+1$ equations with $n+1$ unknowns.  Therefore, the method of finite differences requires a subroutine to solve the resulting system of equations.  Gaussian elimination (or one of its relatives) is usually chosen if the equations {eq}`second-order-ode-approx` are linear in the $y_i$'s.  Otherwise, some nonlinear method such as Newton's method (or one of its relatives) is required, but that is a topic for another class.  
+while the boundary conditions of {eq}`second-order-bvp` are rewritten as $y_0 = \alpha$ and $y_n = \beta$.  This yields a total of $n+1$ equations with $n+1$ unknowns.  Therefore, the method of finite differences requires a subroutine to solve the resulting system of equations.  Gaussian elimination (or one of its relatives) is usually chosen if the equations {eq}`second-order-ode-approx` are linear in the $y_i$'s.  Otherwise, some nonlinear method such as Newton's method (or one of its relatives) is required, but that is a topic for another class.
+
++++
 
 ## Advantages and disadvantages.
 
 In practice, achieving acceptable accuracy with a finite difference method requires a very small step-size $h$ as compared to a shooting method.  The smaller the step-size, the greater the number of variables involved in the system of equations.  The increase in variables puts pressure on both computing time and memory resources.  However, it is important to remember that the shooting method requires the numerical solution to a sequence of IVPs until tolerance is achieved.  Though finite difference methods tend to be more memory intensive than shooting methods, there are a number of factors that go into deciding which is more work intensive for a given problem.
+
++++
 
 ## Example.
 
