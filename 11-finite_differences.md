@@ -106,37 +106,50 @@ In practice, achieving acceptable accuracy with a finite difference method requi
 
 ## Example.
 
-We once again consider the second-order BVP
+As an example of the centered difference method, we consider the BVP
 \begin{align*}
-y''  &= 4y,\\
-y(0) &= 0,\\
-y(1) &= 5.
+y'' &= -\frac{2}{x}y' + \frac{2}{x^2}y + \frac{\sin(\ln x)}{x^2},\\
+y(1) &= 1,\\
+y(2) &=2.
 \end{align*}
-For this example, a little bit of algebra transforms equation {eq}`second-order-ode-approx` into the form
+Dividing the interval $[1,2]$ into $n=10$ equal pieces gives a step-size of $h = (b - a)/n = 1/10$ and mesh-points
 \begin{equation*}
-y_{i+1} - (2+4h^2)y_i + y_{i-1} = 0\quad (1\le i< n).
+x_i = a + ih = 1 + i/10\quad (0\le i\le 10).
 \end{equation*}
-The two boundary conditions then  require that $y_0 = 0$ and $y_n = 5$.
-Collecting all $n+1$  equations into a matrix, we see that we have a tridiagonal linear system
+The central difference approximation {eq}`second-order-ode-approx` yields
 \begin{equation*}
+\frac{y_{i+1} -2y_i + y_{i-1}}{h^2} = -\frac{2}{x_i}\left(\frac{y_{i+1} - y_{i-1}}{2h}\right) + \frac{2}{x_i^2}y_i + \frac{\sin(\ln x_i)}{x_i^2}
+\quad (1\le i\le 9).
+\end{equation*}
+Multiplying through by $-h^2$ and bringing all the $y_j$'s over to the left-hand side, we have
+\begin{equation*}
+\left(-1-\frac{h}{x_i}\right)y_{i+1} +\left(2+\frac{2}{x_i^2}h^2\right) y_i +\left(-1+\frac{h}{x_i}\right) y_{i-1} = -h^2\frac{\sin(\ln x_i)}{x_i^2}
+\quad (1\le i\le 9).
+\end{equation*}
+The two boundary conditions impose the additional constraints $y_0 = 1$ and $y_n = y_{10} = 2$ for a total of $n+1=11$ equations.
+We fold the two boundary conditions into the first and last of the finite-difference equations to form a $(n-1)\times (n-1) = 9\times 9$ tridiagonal linear system
+\begin{equation*}
+\begin{pmatrix}
+2+\frac{2}{x_1^2} & -1-\frac{h}{x_1} & 0 & 0 & \dots & 0\\
+-1+\frac{h}{x_2}  & 2+\frac{2}{x_2^2} & -1-\frac{h}{x_2} & 0 & \dots & 0\\
+0 & -1+\frac{h}{x_3}  & 2+\frac{2}{x_3^2} & -1-\frac{h}{x_3} & \ddots & \vdots\\
+\vdots & \ddots & \ddots & \ddots & \ddots & 0\\
+\vdots &        & \ddots & \ddots & \ddots & -1 -\frac{h}{x_8}\\
+0 & \dots & \dots & 0 & -1+\frac{h}{x_9}  & 2+\frac{2}{x_9^2}
+\end{pmatrix}
 \begin{bmatrix}
-   1 & 0 &        &        &        & 0\\
-   1 & -(2+4h^2) & 1    &        &         & \\
-       & 1& -(2+4h^2)    & \ddots &        & \\
-       &     & \ddots & \ddots & 1 & \\
-      &     &        & 1    & -(2+4h^2) & 1\\
-   0   &     &        &    & 0 & 1
+y_1\\ y_2\\ y_3 \\ \vdots \\ y_8 \\ y_9
 \end{bmatrix}
-\begin{pmatrix}
-y_0\\ y_1\\ y_2\\ \vdots\\ y_{n-1}\\ y_n
-\end{pmatrix}
-=
-\begin{pmatrix}
-0\\ 0 \\ 0 \\ \vdots \\ 0\\ 5
-\end{pmatrix}
+= \begin{bmatrix}
+-h^2\frac{\sin\ln x_1}{x_1^2} + \left(1-\frac{h}{x_1}\right)y_0\\
+-h^2\frac{\sin\ln x_2}{x_2^2}\\
+-h^2\frac{\sin\ln x_3}{x_3^2}\\
+\vdots\\
+-h^2\frac{\sin\ln x_8}{x_8^2}\\
+-h^2\frac{\sin\ln x_9}{x_9^2} + \left(1+\frac{h}{x_{9}}\right)y_{10}
+\end{bmatrix}.
 \end{equation*}
-to solve.
-We solve this system below for the case of $n = 10$ steps.
+In the code block we below, we construct and solve this system with NumPy tools.
 
 ```{code-cell}
 import numpy as np
@@ -145,44 +158,49 @@ from tabulate import tabulate
 
 pyplot.style.use("dark_background")
 
-a, b = 0, 1
-alpha, beta = 0, 5
+# solve BVP y'' = -(2/x)y' + (2/x^2)y + sin(ln x)/x^2, y(1) = 1, y(2) = 2
+
+a, b = 1, 2
+alpha, beta = 1, 2
 
 # construct coefficient matrix A and RHS B
 n = 10
 h = (b - a) / n
-A = (
-    np.diag(np.full(n + 1, -(4 * h**2 + 2)))
-    + np.diag(np.full(n, 1), -1)
-    + np.diag(np.full(n, 1), 1)
-)
-A[0] = np.eye(1, n + 1, 0)
-A[n] = np.eye(1, n + 1, n)
-B = np.zeros((n + 1, 1))
-B[0] = alpha
-B[n] = beta
+x = np.linspace(a, b, num=n + 1)
+sup_diag = np.array([-1 - h / x[i] for i in range(1, n - 1)])
+main_diag = np.array([2 + 2 * h**2 / x[i] ** 2 for i in range(1, n)])
+sub_diag = np.array([-1 + h / x[i] for i in range(2, n)])
+A = np.diag(sup_diag, 1) + np.diag(main_diag) + np.diag(sub_diag, -1)
+B = np.array([-(h**2) * np.sin(np.log(x[i])) / x[i] ** 2 for i in range(1, n)])
+B[0] += (1 - h / x[1]) * alpha
+B[n - 2] += (1 + h / x[n - 1]) * beta
 
 # solve linear system AY = B.
-yi = np.linalg.solve(A, B)
-xi = np.linspace(a, b, n + 1)
+y = np.linalg.solve(A, B)
+y = np.insert(y, 0, alpha)
+y = np.append(y, beta)
 
 # tabulate the results
-data = np.c_[xi, yi]
+data = np.c_[x, y]
 hdrs = ["i", "x_i", "y_i"]
 print("Finite difference method.")
-print(tabulate(data, hdrs, tablefmt="mixed_grid", floatfmt="0.5f", showindex=True))
+print(
+    tabulate(
+        data,
+        hdrs,
+        tablefmt="mixed_grid",
+        floatfmt=["0.0f", "0.1f", "0.8f"],
+        showindex=True,
+    )
+)
 
 # plot solution
 fig, ax = pyplot.subplots(layout="constrained")
-ax.plot(xi, yi, "r:.", label=f"finite difference method")
-ax.set_title(r"$y'' = 4y, y(0)=0, y(1)=5$")
+ax.plot(x, y, "r:.", label=f"finite difference method")
+ax.set_title(r"$y'' = -\frac{2}{x}y' + \frac{2}{x^2}y + \frac{\sin\ln x}{x^2},\quad y(1)=1,\quad y(2)=2$")
 ax.set_xlabel(r"$x$")
 ax.set_ylabel(r"$y$")
 ax.legend(loc="upper left")
 ax.grid(True)
 pyplot.show()
-```
-
-```{code-cell}
-
 ```
