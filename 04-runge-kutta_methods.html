@@ -467,13 +467,13 @@ k_2 &amp;= f(x_i + c_2h, y_i + ha_{2,1}k_1),\\
 k_s &amp;= f\big(x_i + c_sh, y_i + h(a_{s,1}k_1 + \dots + a_{s,s-1}k_s)\big).\end{split}\]</div>
 <p>Of course care must be taken when choosing the coefficients so that the method is consistent with the Taylor series of the true solution.</p>
 <p>Perhaps the most popular Runge–Kutta method is the <strong>classical fourth order Runge–Kutta method</strong> (<strong>RK4</strong>), which is defined by the recurrence</p>
-<div class="amsmath math notranslate nohighlight" id="equation-3ab7af0c-06f6-4eff-9723-e21a375e6bcd">
-<span class="eqno">(11)<a class="headerlink" href="#equation-3ab7af0c-06f6-4eff-9723-e21a375e6bcd" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-f1e269d4-fe33-4f3d-8d4f-59f41033322b">
+<span class="eqno">(11)<a class="headerlink" href="#equation-f1e269d4-fe33-4f3d-8d4f-59f41033322b" title="Permalink to this equation">#</a></span>\[\begin{equation}
 y_{i+1} = y_i + \frac{h}{6}\big(k_1 + 2k_2 + 2k_3 + k_4\big),
 \end{equation}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-d38881fa-2d55-4d6f-9ee8-e8a012e32b5c">
-<span class="eqno">(12)<a class="headerlink" href="#equation-d38881fa-2d55-4d6f-9ee8-e8a012e32b5c" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-770ae775-df27-40dd-9656-0142e1792c77">
+<span class="eqno">(12)<a class="headerlink" href="#equation-770ae775-df27-40dd-9656-0142e1792c77" title="Permalink to this equation">#</a></span>\[\begin{align}
 k_1 &amp;= f(x_i, y_i),\\
 k_2 &amp;= f\big(x_i + h/2, y_i + hk_1/2\big),\\
 k_3 &amp;= f\big(x_i + h/2, y_i + hk_2/2\big),\\
@@ -510,8 +510,8 @@ k_4 &amp;= f(x_i + h, y_i + hk_3).
 <section id="example">
 <h2>Example.<a class="headerlink" href="#example" title="Link to this heading">#</a></h2>
 <p>Below we compare Euler’s method with the classical Runge–Kutta method of order 4 (RK4) for the IVP</p>
-<div class="amsmath math notranslate nohighlight" id="equation-4014353c-e52d-4dba-92ce-2560adeb9688">
-<span class="eqno">(13)<a class="headerlink" href="#equation-4014353c-e52d-4dba-92ce-2560adeb9688" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-a6051d03-1ff2-4508-bcf1-ab6bb8dc59e5">
+<span class="eqno">(13)<a class="headerlink" href="#equation-a6051d03-1ff2-4508-bcf1-ab6bb8dc59e5" title="Permalink to this equation">#</a></span>\[\begin{align}
 y'&amp;=(y/x)-(y/x)^2,\\
 y(1)&amp;=1.
 \end{align}\]</div>

@@ -107,11 +107,12 @@ In practice, achieving acceptable accuracy with a finite difference method requi
 ## Example.
 
 As an example of the centered difference method, we consider the BVP
-\begin{align*}
+```{math}
+:label: finite-difference-example
 y'' &= -\frac{2}{x}y' + \frac{2}{x^2}y + \frac{\sin(\ln x)}{x^2},\\
 y(1) &= 1,\\
 y(2) &=2.
-\end{align*}
+```
 Dividing the interval $[1,2]$ into $n=10$ equal pieces gives a step-size of $h = (b - a)/n = 1/10$ and mesh-points
 \begin{equation*}
 x_i = a + ih = 1 + i/10\quad (0\le i\le 10).
@@ -204,3 +205,7 @@ ax.legend(loc="upper left")
 ax.grid(True)
 pyplot.show()
 ```
+
+The method of central differences applied to the BVP {eq}`finite-difference-example` ultimately led to a linear system of equations that could be solved with numerical linear equation solver. 
+This is the case with any linear ODE.
+Nonlinear ODEs, however, will yield nonlinear systems of equations, and hence will require a nonlinear equation solver.

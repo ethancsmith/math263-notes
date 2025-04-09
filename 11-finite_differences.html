@@ -474,12 +474,10 @@ y''(x_i) &amp;= \frac{y(x_{i+1}) - 2y(x_i) + y(x_{i-1})}{h^2} + O(h^2)\end{split
 <section id="example">
 <h2>Example.<a class="headerlink" href="#example" title="Link to this heading">#</a></h2>
 <p>As an example of the centered difference method, we consider the BVP</p>
-<div class="amsmath math notranslate nohighlight">
-\[\begin{align*}
-y'' &amp;= -\frac{2}{x}y' + \frac{2}{x^2}y + \frac{\sin(\ln x)}{x^2},\\
+<div class="math notranslate nohighlight" id="equation-finite-difference-example">
+<span class="eqno">(43)<a class="headerlink" href="#equation-finite-difference-example" title="Link to this equation">#</a></span>\[\begin{split}y'' &amp;= -\frac{2}{x}y' + \frac{2}{x^2}y + \frac{\sin(\ln x)}{x^2},\\
 y(1) &amp;= 1,\\
-y(2) &amp;=2.
-\end{align*}\]</div>
+y(2) &amp;=2.\end{split}\]</div>
 <p>Dividing the interval <span class="math notranslate nohighlight">\([1,2]\)</span> into <span class="math notranslate nohighlight">\(n=10\)</span> equal pieces gives a step-size of <span class="math notranslate nohighlight">\(h = (b - a)/n = 1/10\)</span> and mesh-points</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{equation*}
@@ -610,6 +608,9 @@ y_1\\ y_2\\ y_3 \\ \vdots \\ y_8 \\ y_9
 <img alt="_images/eec95e9e465baa4f5076819c7145e1845c4f1e5f0ca4e227f58a6c2452f479c4.png" src="_images/eec95e9e465baa4f5076819c7145e1845c4f1e5f0ca4e227f58a6c2452f479c4.png" />
 </div>
 </div>
+<p>The method of central differences applied to the BVP <a class="reference internal" href="#equation-finite-difference-example">(43)</a> ultimately led to a linear system of equations that could be solved with numerical linear equation solver.
+This is the case with any linear ODE.
+Nonlinear ODEs, however, will yield nonlinear systems of equations, and hence will require a nonlinear equation solver.</p>
 </section>
 </section>
 
