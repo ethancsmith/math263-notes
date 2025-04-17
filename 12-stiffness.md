@@ -24,7 +24,7 @@ y(0)&= 1.01
 over the $t$-interval $[0, 1]$.
 The problem is easy to solve analytically.
 
-```{code-cell}
+```{code-cell} ipython3
 import numpy
 import sympy
 from matplotlib import pyplot
@@ -63,7 +63,7 @@ pyplot.show()
 
 Since the solution $y$ is (for the most part) slowly varying over the $t$-interval $[0, 1]$, it seems that this problem _should_ pose no problem for our numerical methods.  However, the  Euler method with step-size $h=0.1$ is awesomely terrible, and RK4 is even worse!
 
-```{code-cell}
+```{code-cell} ipython3
 # numerically solve the IVP with forward Euler and RK4
 h = 0.1
 n = round((b - a) / h)
@@ -72,7 +72,7 @@ ti, y_rk4 = math263.rk4(f, a, b, y0, n)
 
 # tabulate errors
 print("Global errors for Euler's method and RK4.")
-table = numpy.c_[ti, abs(sym_y(ti) - y_euler[:, 0]), abs(sym_y(ti) - y_rk4[:, 0])]
+table = numpy.c_[ti, abs(sym_y(ti) - y_euler), abs(sym_y(ti) - y_rk4)]
 hdrs = ["i", "t_i", "e_{i,Euler} = |y(t_i)-y_i|", "e_{i,RK4} = |y(t_i)-y_i|"]
 print(
     tabulate(
@@ -92,11 +92,11 @@ The reason that the above example behaves so poorly is that the desired solution
 
 Below we give a plot of the desired solution to the IVP {eq}`stiff-example` together with several other solutions to the ODE (with different initial value conditions) on top of a direction field.  Observe that the slopes of these other solutions are very steep at locations very near the desired solution.
 
-```{code-cell}
+```{code-cell} ipython3
 pyplot.figure(fig)
 for i in range(1, len(ti)):
     # solve the IVP with initial condition y(t_i) = y_i (from Euler solution)
-    solni = sympy.dsolve(ode, y(t), ics={y(ti[i]): y_euler[i, 0]})
+    solni = sympy.dsolve(ode, y(t), ics={y(ti[i]): y_euler[i]})
     sym_yi = sympy.lambdify(t, solni.rhs, modules=["numpy"])
     tvals = numpy.linspace(ti[i], b, num=300)
     ax.plot(tvals, sym_yi(tvals), linewidth=2.5, label=f"${sympy.latex(solni)}$")
@@ -132,18 +132,18 @@ pyplot.show()
 
 If we plot the first 4 points of the Euler method solution together with each corresponding tangent line, we can see why this situation would tend to "confuse" Euler's method (or really any explicit method).  An explicit method would require a very short step-size $h$ in order to avoid drastically over-shooting its target.
 
-```{code-cell}
+```{code-cell} ipython3
 B = 4
 tvals = numpy.linspace(a, b, n)
-ymin = min(y_euler[:B, 0])
-ymax = max(y_euler[:B, 0])
+ymin = min(y_euler[:B])
+ymax = max(y_euler[:B])
 
 # create new figure
 fig, ax = pyplot.subplots(layout="constrained")
-ax.plot(ti[:B], y_euler[:B, 0], "r:o", label="Euler method")
+ax.plot(ti[:B], y_euler[:B], "r:o", label="Euler method")
 for i in range(B):
     # solve the IVP with initial condition y(t_i) = y_i (from Euler solution)
-    solni = sympy.dsolve(ode, y(t), ics={y(ti[i]): y_euler[i, 0]})
+    solni = sympy.dsolve(ode, y(t), ics={y(ti[i]): y_euler[i]})
     sym_yi = sympy.lambdify(t, solni.rhs, modules=["numpy"])
     tvals = numpy.linspace(a, b, num=300)
     ax.plot(tvals, sym_yi(tvals), label="_nolegend_")
@@ -162,24 +162,35 @@ For this reason, stiff differential equations are typically solved using implici
 import numpy as np
 import scipy as sp
 
+
 def bem(f, a, b, y0, n):
     """
     numerically solves the IVP
-        y' = f(x,y), y(a)=y0
-    over the interval [a, b] via n steps of the backward Euler method
+        y' = f(t, y), y(a)=y0
+    over the t-interval [a, b] via n steps of the backward Euler method
     """
     h = (b - a) / n
-    x = np.linspace(a, b, num=n + 1)
-    y = np.empty((x.size, np.size(y0)))
+    t = np.empty(n + 1)
+    if np.size(y0) > 1:
+        # allocate n + 1 vectors for y
+        y = np.empty((t.size, np.size(y0)))
+    else:
+        # allocate n + 1 scalars for y
+        y = np.empty(t.size)
+    t[0] = a
     y[0] = y0
     for i in range(n):
-        func = lambda Y: Y - (y[i] + h * f(x[i + 1], Y))
-        y[i + 1] = sp.optimize.fsolve(func, y[i])
-    return x, y
+        t[i + 1] = t[i] + h
+        func = lambda Y: Y - (y[i] + h * f(t[i + 1], Y))
+        if np.size(y0) > 1:
+            y[i + 1] = sp.optimize.fsolve(func, y[i])
+        else:
+            y[i + 1] = sp.optimize.fsolve(func, y[i]).item()
+    return t, y
 ```
 Below we observe that the backward Euler method has no trouble with the toy problem that has so stymied both the usual (forward) Euler method and RK4.
 
-```{code-cell}
+```{code-cell} ipython3
 # numerically solve the IVP with forward Euler and RK4
 h = 0.1
 n = round((b - a) / h)
@@ -187,7 +198,7 @@ ti, y_bem = math263.bem(f, a, b, y0, n)
 
 # tabulate errors
 print("Backward Euler solution.")
-table = numpy.c_[ti, y_bem[:, 0], abs(sym_y(ti) - y_bem[:, 0])]
+table = numpy.c_[ti, y_bem, abs(sym_y(ti) - y_bem)]
 hdrs = ["i", "t_i", "y_i", "e_{i,BEM} = |y(t_i)-y_i|"]
 print(
     tabulate(

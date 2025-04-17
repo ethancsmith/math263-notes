@@ -2,8 +2,8 @@
 
 - [ ] Consider moving systems and higher order ODEs up before multistep methods.
 - [ ] Add discusion and example of creating direction fields for systems and second-order ODEs in the "phase plane."
-- [ ]  Store f-vals in an array for continuing methods to avoid shifting data. Not sure this is a win.
-- [ ] Rewrite methods to initialize y-arrays differently depending on whether y0 is scalar or vector.
+- [ ] Store f-vals in an array for continuing methods to avoid shifting data. Not sure this is a win.
+- [x] Rewrite methods to initialize y-arrays differently depending on whether y0 is scalar or vector.
 - [ ] Clean and simplify pyplot code.
 	- [ ] 1: Direction fields
 	- [ ] 2: Euler's method

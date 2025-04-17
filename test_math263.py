@@ -21,7 +21,7 @@ class ScalarTestODESolvers(unittest.TestCase):
 
     def test_euler(self):
         (x_obs, y_obs) = math263.euler(f, self.a, self.b, self.y0, self.n)
-        x_exp = test_dict["euler scalar test"]["xi"]
+        x_exp = test_dict["euler scalar test"]["ti"]
         y_exp = test_dict["euler scalar test"]["yi"]
         self.assertTrue(
             numpy.allclose(x_obs, x_exp),
@@ -34,7 +34,7 @@ class ScalarTestODESolvers(unittest.TestCase):
 
     def test_mem(self):
         (x_obs, y_obs) = math263.mem(f, self.a, self.b, self.y0, self.n)
-        x_exp = test_dict["mem scalar test"]["xi"]
+        x_exp = test_dict["mem scalar test"]["ti"]
         y_exp = test_dict["mem scalar test"]["yi"]
         self.assertTrue(
             numpy.allclose(x_obs, x_exp),
@@ -47,7 +47,7 @@ class ScalarTestODESolvers(unittest.TestCase):
 
     def test_bem(self):
         (x_obs, y_obs) = math263.bem(f, self.a, self.b, self.y0, self.n)
-        x_exp = test_dict["bem scalar test"]["xi"]
+        x_exp = test_dict["bem scalar test"]["ti"]
         y_exp = test_dict["bem scalar test"]["yi"]
         self.assertTrue(
             numpy.allclose(x_obs, x_exp),
@@ -60,7 +60,7 @@ class ScalarTestODESolvers(unittest.TestCase):
 
     def test_rk4(self):
         (x_obs, y_obs) = math263.rk4(f, self.a, self.b, self.y0, self.n)
-        x_exp = test_dict["rk4 scalar test"]["xi"]
+        x_exp = test_dict["rk4 scalar test"]["ti"]
         y_exp = test_dict["rk4 scalar test"]["yi"]
         self.assertTrue(
             numpy.allclose(x_obs, x_exp),
@@ -73,7 +73,7 @@ class ScalarTestODESolvers(unittest.TestCase):
 
     def test_ab2(self):
         (x_obs, y_obs) = math263.ab2(f, self.a, self.b, self.y0, self.n)
-        x_exp = test_dict["ab2 scalar test"]["xi"]
+        x_exp = test_dict["ab2 scalar test"]["ti"]
         y_exp = test_dict["ab2 scalar test"]["yi"]
         self.assertTrue(
             numpy.allclose(x_obs, x_exp),
@@ -86,7 +86,7 @@ class ScalarTestODESolvers(unittest.TestCase):
 
     def test_abm2(self):
         (x_obs, y_obs) = math263.abm2(f, self.a, self.b, self.y0, self.n)
-        x_exp = test_dict["abm2 scalar test"]["xi"]
+        x_exp = test_dict["abm2 scalar test"]["ti"]
         y_exp = test_dict["abm2 scalar test"]["yi"]
         self.assertTrue(
             numpy.allclose(x_obs, x_exp),
@@ -110,7 +110,7 @@ class VectorTestODESolvers(unittest.TestCase):
 
     def test_euler(self):
         (x_obs, y_obs) = math263.euler(vec_f, self.a, self.b, self.r0, self.n)
-        x_exp = test_dict["euler vector test"]["xi"]
+        x_exp = test_dict["euler vector test"]["ti"]
         y_exp = test_dict["euler vector test"]["yi"]
         self.assertTrue(
             numpy.allclose(x_obs, x_exp),
@@ -123,7 +123,7 @@ class VectorTestODESolvers(unittest.TestCase):
 
     def test_mem(self):
         (x_obs, y_obs) = math263.mem(vec_f, self.a, self.b, self.r0, self.n)
-        x_exp = test_dict["mem vector test"]["xi"]
+        x_exp = test_dict["mem vector test"]["ti"]
         y_exp = test_dict["mem vector test"]["yi"]
         self.assertTrue(
             numpy.allclose(x_obs, x_exp),
@@ -136,7 +136,7 @@ class VectorTestODESolvers(unittest.TestCase):
 
     def test_bem(self):
         (x_obs, y_obs) = math263.bem(vec_f, self.a, self.b, self.r0, self.n)
-        x_exp = test_dict["bem vector test"]["xi"]
+        x_exp = test_dict["bem vector test"]["ti"]
         y_exp = test_dict["bem vector test"]["yi"]
         self.assertTrue(
             numpy.allclose(x_obs, x_exp),
@@ -149,7 +149,7 @@ class VectorTestODESolvers(unittest.TestCase):
 
     def test_rk4(self):
         (x_obs, y_obs) = math263.rk4(vec_f, self.a, self.b, self.r0, self.n)
-        x_exp = test_dict["rk4 vector test"]["xi"]
+        x_exp = test_dict["rk4 vector test"]["ti"]
         y_exp = test_dict["rk4 vector test"]["yi"]
         self.assertTrue(
             numpy.allclose(x_obs, x_exp),
@@ -162,7 +162,7 @@ class VectorTestODESolvers(unittest.TestCase):
 
     def test_ab2(self):
         (x_obs, y_obs) = math263.ab2(vec_f, self.a, self.b, self.r0, self.n)
-        x_exp = test_dict["ab2 vector test"]["xi"]
+        x_exp = test_dict["ab2 vector test"]["ti"]
         y_exp = test_dict["ab2 vector test"]["yi"]
         self.assertTrue(
             numpy.allclose(x_obs, x_exp),
@@ -175,7 +175,7 @@ class VectorTestODESolvers(unittest.TestCase):
 
     def test_abm2(self):
         (x_obs, y_obs) = math263.abm2(vec_f, self.a, self.b, self.r0, self.n)
-        x_exp = test_dict["abm2 vector test"]["xi"]
+        x_exp = test_dict["abm2 vector test"]["ti"]
         y_exp = test_dict["abm2 vector test"]["yi"]
         self.assertTrue(
             numpy.allclose(x_obs, x_exp),

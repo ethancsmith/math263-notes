@@ -10,7 +10,12 @@ def euler(f, a, b, y0, n):
     """
     h = (b - a) / n
     t = np.empty(n + 1)
-    y = np.empty((t.size, np.size(y0)))
+    if np.size(y0) > 1:
+        # allocate n + 1 vectors for y
+        y = np.empty((t.size, np.size(y0)))
+    else:
+        # allocate n + 1 scalars for y
+        y = np.empty(t.size)
     t[0] = a
     y[0] = y0
     for i in range(n):
@@ -27,7 +32,12 @@ def mem(f, a, b, y0, n):
     """
     h = (b - a) / n
     t = np.empty(n + 1)
-    y = np.empty((t.size, np.size(y0)))
+    if np.size(y0) > 1:
+        # allocate n + 1 vectors for y
+        y = np.empty((t.size, np.size(y0)))
+    else:
+        # allocate n + 1 scalars for y
+        y = np.empty(t.size)
     t[0] = a
     y[0] = y0
     for i in range(n):
@@ -46,13 +56,21 @@ def bem(f, a, b, y0, n):
     """
     h = (b - a) / n
     t = np.empty(n + 1)
-    y = np.empty((t.size, np.size(y0)))
+    if np.size(y0) > 1:
+        # allocate n + 1 vectors for y
+        y = np.empty((t.size, np.size(y0)))
+    else:
+        # allocate n + 1 scalars for y
+        y = np.empty(t.size)
     t[0] = a
     y[0] = y0
     for i in range(n):
         t[i + 1] = t[i] + h
         func = lambda Y: Y - (y[i] + h * f(t[i + 1], Y))
-        y[i + 1] = sp.optimize.fsolve(func, y[i])
+        if np.size(y0) > 1:
+            y[i + 1] = sp.optimize.fsolve(func, y[i])
+        else:
+            y[i + 1] = sp.optimize.fsolve(func, y[i]).item()
     return t, y
 
 
@@ -64,7 +82,12 @@ def rk4(f, a, b, y0, n):
     """
     h = (b - a) / n
     t = np.empty(n + 1)
-    y = np.empty((t.size, np.size(y0)))
+    if np.size(y0) > 1:
+        # allocate n + 1 vectors for y
+        y = np.empty((t.size, np.size(y0)))
+    else:
+        # allocate n + 1 scalars for y
+        y = np.empty(t.size)
     t[0] = a
     y[0] = y0
     for i in range(n):
@@ -85,7 +108,12 @@ def ab2(f, a, b, y0, n):
     """
     h = (b - a) / n
     t = np.empty(n + 1)
-    y = np.empty((t.size, np.size(y0)))
+    if np.size(y0) > 1:
+        # allocate n + 1 vectors for y
+        y = np.empty((t.size, np.size(y0)))
+    else:
+        # allocate n + 1 scalars for y
+        y = np.empty(t.size)
     t[0] = a
     y[0] = y0
     # take first step with Heun's MEM
@@ -113,7 +141,12 @@ def abm2(f, a, b, y0, n):
     """
     h = (b - a) / n
     t = np.empty(n + 1)
-    y = np.empty((t.size, np.size(y0)))
+    if np.size(y0) > 1:
+        # allocate n + 1 vectors for y
+        y = np.empty((t.size, np.size(y0)))
+    else:
+        # allocate n + 1 scalars for y
+        y = np.empty(t.size)
     t[0] = a
     y[0] = y0
     # starter method: Heun's modified Euler method
