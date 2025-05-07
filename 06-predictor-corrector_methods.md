@@ -150,7 +150,7 @@ y(0)&=1/2
 ```
 over the interval $[a,b]=[0,2]$ with $n=10$ steps.
 
-```{code-cell} ipython3
+```{code-cell}
 import numpy as np
 import sympy
 from tabulate import tabulate
@@ -191,7 +191,7 @@ print(
 
 Below we include a comparison of the global errors at the right-most endpoint of the interval.  It is evident that each is an order 2 method.  However, the ABM2 predictor-corrector method is more accurate for this example.
 
-```{code-cell} ipython3
+```{code-cell}
 # compute abs errors at right endpoint for various step-sizes
 base = 10
 max_exp = 7

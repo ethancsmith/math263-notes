@@ -24,7 +24,7 @@ y(0)&= 1.01
 over the $t$-interval $[0, 1]$.
 The problem is easy to solve analytically.
 
-```{code-cell} ipython3
+```{code-cell}
 import numpy
 import sympy
 from matplotlib import pyplot
@@ -63,7 +63,7 @@ pyplot.show()
 
 Since the solution $y$ is (for the most part) slowly varying over the $t$-interval $[0, 1]$, it seems that this problem _should_ pose no problem for our numerical methods.  However, the  Euler method with step-size $h=0.1$ is awesomely terrible, and RK4 is even worse!
 
-```{code-cell} ipython3
+```{code-cell}
 # numerically solve the IVP with forward Euler and RK4
 h = 0.1
 n = round((b - a) / h)
@@ -92,7 +92,7 @@ The reason that the above example behaves so poorly is that the desired solution
 
 Below we give a plot of the desired solution to the IVP {eq}`stiff-example` together with several other solutions to the ODE (with different initial value conditions) on top of a direction field.  Observe that the slopes of these other solutions are very steep at locations very near the desired solution.
 
-```{code-cell} ipython3
+```{code-cell}
 pyplot.figure(fig)
 for i in range(1, len(ti)):
     # solve the IVP with initial condition y(t_i) = y_i (from Euler solution)
@@ -132,7 +132,7 @@ pyplot.show()
 
 If we plot the first 4 points of the Euler method solution together with each corresponding tangent line, we can see why this situation would tend to "confuse" Euler's method (or really any explicit method).  An explicit method would require a very short step-size $h$ in order to avoid drastically over-shooting its target.
 
-```{code-cell} ipython3
+```{code-cell}
 B = 4
 tvals = numpy.linspace(a, b, n)
 ymin = min(y_euler[:B])
@@ -190,7 +190,7 @@ def bem(f, a, b, y0, n):
 ```
 Below we observe that the backward Euler method has no trouble with the toy problem that has so stymied both the usual (forward) Euler method and RK4.
 
-```{code-cell} ipython3
+```{code-cell}
 # numerically solve the IVP with forward Euler and RK4
 h = 0.1
 n = round((b - a) / h)
