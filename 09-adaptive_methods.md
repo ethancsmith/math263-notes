@@ -128,7 +128,7 @@ We then rewrite the vector ODE {eq}`1st-order-vector-ode` as the scalar system
 We now numerically solve this problem over the time-interval $[0, 10]$ using SciPy's implementation of the Dormand-Prince method for the case when the eccentricity $e = 0.9$.
 With the default settings, the implementation aims to keep the estimated relative error below $10^{-3}$ and the estimated absolute error below $10^{-6}$.
 
-```{code-cell}
+```{code-cell} ipython3
 # import modules
 import numpy
 from matplotlib import pyplot
@@ -173,7 +173,9 @@ else:
     print(f"End of time-interval [{a}, {b}] reached in n = {n - 1} time-steps.")
     T = min(10, n)
     print(f"Displaying results for first {T} steps.")
-    data = numpy.c_[ti[:T], ri[0, :T], ri[1, :T], vi[0, :T], vi[1, :T]]
+    data = numpy.c_[
+        ti[: T + 1], ri[0, : T + 1], ri[1, : T + 1], vi[0, : T + 1], vi[1, : T + 1]
+    ]
     hdrs = ["i", "t_i", "x_i", "y_i", "x_i'", "y_i'"]
     print(tabulate(data, hdrs, showindex=True, floatfmt="0.5f", tablefmt="mixed_grid"))
     print("Plotting solution in spatial domain (xy-plane).")

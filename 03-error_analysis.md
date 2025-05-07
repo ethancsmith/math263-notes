@@ -152,7 +152,7 @@ y(0)&= 1.
 \end{align*}
 The code block below computes the absolute errors obtained when approximating the value $y(1)$ by Euler's method for various step-sizes.
 
-```{code-cell}
+```{code-cell} ipython3
 import numpy as np
 import sympy
 from tabulate import tabulate
@@ -177,7 +177,7 @@ num = 10
 base = 2
 h_vals = [(b - a) / (base**e) for e in range(num)]
 errors = [
-    abs(math263.euler(f, a, b, y0, base**e)[1][:, 0][-1] - sym_y(b)) for e in range(num)
+    abs(math263.euler(f, a, b, y0, base**e)[1][-1] - sym_y(b)) for e in range(num)
 ]
 cutdown = [
     errors[i + 1] / errors[i] for i in range(num - 1)

@@ -5,121 +5,168 @@ import scipy as sp
 def euler(f, a, b, y0, n):
     """
     numerically solves the IVP
-        y' = f(x,y), y(a) = y0
-    over the interval [a, b] via n steps of Euler's method
+        y' = f(t, y), y(a) = y0
+    over the t-interval [a, b] via n steps of Euler's method
     """
     h = (b - a) / n
-    x = np.linspace(a, b, num=n + 1)
-    y = np.empty((x.size, np.size(y0)))
+    t = np.empty(n + 1)
+    if np.size(y0) > 1:
+        # allocate n + 1 vectors for y
+        y = np.empty((t.size, np.size(y0)))
+    else:
+        # allocate n + 1 scalars for y
+        y = np.empty(t.size)
+    t[0] = a
     y[0] = y0
     for i in range(n):
-        y[i + 1] = y[i] + h * f(x[i], y[i])
-    return x, y
+        t[i + 1] = t[i] + h
+        y[i + 1] = y[i] + h * f(t[i], y[i])
+    return t, y
 
 
 def mem(f, a, b, y0, n):
     """
     numerically solves the IVP
-        y' = f(x,y), y(a)=y0
-    over the interval [a, b] via n steps of Heun's modified Euler method
+        y' = f(t, y), y(a)=y0
+    over the t-interval [a, b] via n steps of Heun's modified Euler method
     """
     h = (b - a) / n
-    x = np.linspace(a, b, num=n + 1)
-    y = np.empty((x.size, np.size(y0)))
+    t = np.empty(n + 1)
+    if np.size(y0) > 1:
+        # allocate n + 1 vectors for y
+        y = np.empty((t.size, np.size(y0)))
+    else:
+        # allocate n + 1 scalars for y
+        y = np.empty(t.size)
+    t[0] = a
     y[0] = y0
     for i in range(n):
-        k1 = f(x[i], y[i])
-        k2 = f(x[i + 1], y[i] + h * k1)
+        t[i + 1] = t[i] + h
+        k1 = f(t[i], y[i])
+        k2 = f(t[i + 1], y[i] + h * k1)
         y[i + 1] = y[i] + h * (k1 + k2) / 2
-    return x, y
+    return t, y
 
 
 def bem(f, a, b, y0, n):
     """
     numerically solves the IVP
-        y' = f(x,y), y(a)=y0
-    over the interval [a, b] via n steps of the backward Euler method
+        y' = f(t, y), y(a)=y0
+    over the t-interval [a, b] via n steps of the backward Euler method
     """
     h = (b - a) / n
-    x = np.linspace(a, b, num=n + 1)
-    y = np.empty((x.size, np.size(y0)))
+    t = np.empty(n + 1)
+    if np.size(y0) > 1:
+        # allocate n + 1 vectors for y
+        y = np.empty((t.size, np.size(y0)))
+    else:
+        # allocate n + 1 scalars for y
+        y = np.empty(t.size)
+    t[0] = a
     y[0] = y0
     for i in range(n):
-        func = lambda Y: Y - (y[i] + h * f(x[i + 1], Y))
-        y[i + 1] = sp.optimize.fsolve(func, y[i])
-    return x, y
+        t[i + 1] = t[i] + h
+        func = lambda Y: Y - (y[i] + h * f(t[i + 1], Y))
+        if np.size(y0) > 1:
+            y[i + 1] = sp.optimize.fsolve(func, y[i])
+        else:
+            y[i + 1] = sp.optimize.fsolve(func, y[i]).item()
+    return t, y
 
 
 def rk4(f, a, b, y0, n):
     """
     numerically solves the IVP
-        y' = f(x,y), y(a)=y0
-    over the interval [a, b] via n steps of the 4th order (classical) Runge–Kutta method
+        y' = f(t, y), y(a)=y0
+    over the t-interval [a, b] via n steps of the 4th order (classical) Runge–Kutta method
     """
     h = (b - a) / n
-    x = np.linspace(a, b, num=n + 1)
-    y = np.empty((x.size, np.size(y0)))
+    t = np.empty(n + 1)
+    if np.size(y0) > 1:
+        # allocate n + 1 vectors for y
+        y = np.empty((t.size, np.size(y0)))
+    else:
+        # allocate n + 1 scalars for y
+        y = np.empty(t.size)
+    t[0] = a
     y[0] = y0
     for i in range(n):
-        k1 = f(x[i], y[i])
-        k2 = f(x[i] + h / 2, y[i] + h * k1 / 2)
-        k3 = f(x[i] + h / 2, y[i] + h * k2 / 2)
-        k4 = f(x[i] + h, y[i] + h * k3)
+        t[i + 1] = t[i] + h
+        k1 = f(t[i], y[i])
+        k2 = f(t[i] + h / 2, y[i] + h * k1 / 2)
+        k3 = f(t[i] + h / 2, y[i] + h * k2 / 2)
+        k4 = f(t[i] + h, y[i] + h * k3)
         y[i + 1] = y[i] + h * (k1 + 2 * (k2 + k3) + k4) / 6
-    return x, y
+    return t, y
 
 
 def ab2(f, a, b, y0, n):
     """
     numerically solves the IVP
-        y' = f(x,y), y(a)=y0
-    over the interval [a, b] via n steps of second order Adams–Bashforth method
+        y' = f(t, y), y(a)=y0
+    over the t-interval [a, b] via n steps of second order Adams–Bashforth method
     """
     h = (b - a) / n
-    x = np.linspace(a, b, num=n + 1)
-    y = np.empty((x.size, np.size(y0)))
+    t = np.empty(n + 1)
+    if np.size(y0) > 1:
+        # allocate n + 1 vectors for y
+        y = np.empty((t.size, np.size(y0)))
+    else:
+        # allocate n + 1 scalars for y
+        y = np.empty(t.size)
+    t[0] = a
     y[0] = y0
     # take first step with Heun's MEM
-    k1 = f(x[0], y[0])
-    k2 = f(x[1], y[0] + h * k1)
+    t[1] = t[0] + h
+    k1 = f(t[0], y[0])
+    k2 = f(t[1], y[0] + h * k1)
     y[1] = y[0] + h * (k1 + k2) / 2
     # begin multistepping
-    f2 = f(x[0], y[0])
+    f2 = f(t[0], y[0])
     for i in range(1, n):
-        f1 = f(x[i], y[i])
+        t[i + 1] = t[i] + h
+        f1 = f(t[i], y[i])
         y[i + 1] = y[i] + h * (3 * f1 - f2) / 2
         f2 = f1
         # step f-vals down to get ready for next step
-    return x, y
+    return t, y
 
 
 def abm2(f, a, b, y0, n):
     """
     numerically solves the IVP
-        y' = f(x,y), y(a)=y0
-    over the interval [a, b] via n steps of second order Adams–Bashforth–Moulton
+        y' = f(t, y), y(a)=y0
+    over the t-interval [a, b] via n steps of second order Adams–Bashforth–Moulton
     predictor-corrector method
     """
     h = (b - a) / n
-    x = np.linspace(a, b, num=n + 1)
-    y = np.empty((x.size, np.size(y0)))
+    t = np.empty(n + 1)
+    if np.size(y0) > 1:
+        # allocate n + 1 vectors for y
+        y = np.empty((t.size, np.size(y0)))
+    else:
+        # allocate n + 1 scalars for y
+        y = np.empty(t.size)
+    t[0] = a
     y[0] = y0
     # starter method: Heun's modified Euler method
-    k1 = f(x[0], y[0])
-    k2 = f(x[1], y[0] + h * k1)
+    t[1] = t[0] + h
+    k1 = f(t[0], y[0])
+    k2 = f(t[1], y[0] + h * k1)
     y[1] = y[0] + h * (k1 + k2) / 2
     # continuing method: ABM2 predictor-corrector
-    f2 = f(x[0], y[0])
+    f2 = f(t[0], y[0])
     for i in range(1, n):
+        t[i + 1] = t[i] + h
         # predict with AB2
-        f1 = f(x[i], y[i])
+        f1 = f(t[i], y[i])
         yhat = y[i] + h * (3 * f1 - f2) / 2
         # correct with AM1
-        f0 = f(x[i + 1], yhat)
+        f0 = f(t[i + 1], yhat)
         y[i + 1] = y[i] + h * (f0 + f1) / 2
         # shift down f-val
         f2 = f1
-    return x, y
+    return t, y
 
 
 def secant_method(func, x0, x1, maxiter, restol):
