@@ -115,20 +115,27 @@ import numpy as np
 def rk4(f, a, b, y0, n):
     """
     numerically solves the IVP
-        y' = f(x,y), y(a)=y0
-    over the interval [a, b] via n steps of the 4th order (classical) Runge–Kutta method
+        y' = f(t, y), y(a)=y0
+    over the t-interval [a, b] via n steps of the 4th order (classical) Runge–Kutta method
     """
     h = (b - a) / n
-    x = np.linspace(a, b, num=n + 1)
-    y = np.empty((x.size, np.size(y0)))
+    t = np.empty(n + 1)
+    if np.size(y0) > 1:
+        # allocate n + 1 vectors for y
+        y = np.empty((t.size, np.size(y0)))
+    else:
+        # allocate n + 1 scalars for y
+        y = np.empty(t.size)
+    t[0] = a
     y[0] = y0
     for i in range(n):
-        k1 = f(x[i], y[i])
-        k2 = f(x[i] + h / 2, y[i] + h * k1 / 2)
-        k3 = f(x[i] + h / 2, y[i] + h * k2 / 2)
-        k4 = f(x[i] + h, y[i] + h * k3)
+        t[i + 1] = t[i] + h
+        k1 = f(t[i], y[i])
+        k2 = f(t[i] + h / 2, y[i] + h * k1 / 2)
+        k3 = f(t[i] + h / 2, y[i] + h * k2 / 2)
+        k4 = f(t[i] + h, y[i] + h * k3)
         y[i + 1] = y[i] + h * (k1 + 2 * (k2 + k3) + k4) / 6
-    return x, y
+    return t, y
 ```
 
 +++
@@ -183,14 +190,14 @@ xi, y_euler = math263.euler(f, a, b, y0, n)
 xi, y_rk4 = math263.rk4(f, a, b, y0, n)
 
 # plot numerical solutions on top of true solution
-ax.plot(xi, y_euler[:, 0], "ro:", label="Euler")
-ax.plot(xi, y_rk4[:, 0], "go:", label="RK4")
+ax.plot(xi, y_euler, "ro:", label="Euler")
+ax.plot(xi, y_rk4, "go:", label="RK4")
 ax.legend(loc="upper left")
 plt.show()
 
 # tabulate the results
 print("Global errors for Euler's method and RK4.")
-table = np.c_[xi, abs(sym_y(xi) - y_euler[:, 0]), abs(sym_y(xi) - y_rk4[:, 0])]
+table = np.c_[xi, abs(sym_y(xi) - y_euler), abs(sym_y(xi) - y_rk4)]
 hdrs = ["i", "x_i", "e_{i,Euler} = |y(x_i)-y_i|", "e_{i,RK4} = |y(x_i)-y_i|"]
 print(
     tabulate(

@@ -438,13 +438,13 @@ Although it is potentially misleading, the global truncation error may be viewed
 <section id="the-order-of-a-numerical-method">
 <h2>The order of a numerical method.<a class="headerlink" href="#the-order-of-a-numerical-method" title="Link to this heading">#</a></h2>
 <p>Suppose <span class="math notranslate nohighlight">\(f\)</span> and <span class="math notranslate nohighlight">\(g\)</span> are functions of a real variable <span class="math notranslate nohighlight">\(x\)</span> and that both are defined on an open interval containing <span class="math notranslate nohighlight">\(x=a\)</span> except possibly at <span class="math notranslate nohighlight">\(x=a\)</span> itself.</p>
-<div class="proof definition admonition" id="definition-0">
+<div class="proof definition admonition" id="big-oh-definition">
 <p class="admonition-title"><span class="caption-number">Definition 1 </span></p>
 <section class="definition-content" id="proof-content">
 <p>We say that <span class="math notranslate nohighlight">\(f\)</span> <strong>is at most the of order <span class="math notranslate nohighlight">\(g\)</span> as <span class="math notranslate nohighlight">\(x\)</span> tends toward <span class="math notranslate nohighlight">\(a\)</span></strong>, and we write</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{equation*}
-f(x) = O\big(g(x)\big)\text{ as } x\to a
+f(x) = O\big(g(x)\big)\text{ as } x\to a,
 \end{equation*}\]</div>
 <p>if there are constants <span class="math notranslate nohighlight">\(M, \delta&gt;0\)</span> so that</p>
 <div class="amsmath math notranslate nohighlight">
@@ -455,7 +455,7 @@ f(x) = O\big(g(x)\big)\text{ as } x\to a
 </section>
 </div><p>For any reasonable numerical method, both the local and the global truncation errors should tend to zero as the step size <span class="math notranslate nohighlight">\(h = x_{i+1}-x_i\)</span> tends to zero.
 So, we are usually interested in bounding errors as functions of <span class="math notranslate nohighlight">\(h\)</span> which are tending toward zero as <span class="math notranslate nohighlight">\(h\to 0\)</span>.</p>
-<div class="proof definition admonition" id="definition-1">
+<div class="proof definition admonition" id="order-of-numerical-method-definition">
 <p class="admonition-title"><span class="caption-number">Definition 2 </span></p>
 <section class="definition-content" id="proof-content">
 <p>We say that a numerical method has <strong>order <span class="math notranslate nohighlight">\(p\)</span></strong> if the global trunctation error is <span class="math notranslate nohighlight">\(O\big(h^p\big)\)</span> as <span class="math notranslate nohighlight">\(h\to 0\)</span>.</p>
@@ -574,7 +574,7 @@ y(0)&amp;= 1.
 <span class="n">base</span> <span class="o">=</span> <span class="mi">2</span>
 <span class="n">h_vals</span> <span class="o">=</span> <span class="p">[(</span><span class="n">b</span> <span class="o">-</span> <span class="n">a</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">base</span><span class="o">**</span><span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num</span><span class="p">)]</span>
 <span class="n">errors</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="nb">abs</span><span class="p">(</span><span class="n">math263</span><span class="o">.</span><span class="n">euler</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">base</span><span class="o">**</span><span class="n">e</span><span class="p">)[</span><span class="mi">1</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">sym_y</span><span class="p">(</span><span class="n">b</span><span class="p">))</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+    <span class="nb">abs</span><span class="p">(</span><span class="n">math263</span><span class="o">.</span><span class="n">euler</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">base</span><span class="o">**</span><span class="n">e</span><span class="p">)[</span><span class="mi">1</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">sym_y</span><span class="p">(</span><span class="n">b</span><span class="p">))</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
 <span class="p">]</span>
 <span class="n">cutdown</span> <span class="o">=</span> <span class="p">[</span>
     <span class="n">errors</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">errors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>

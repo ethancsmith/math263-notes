@@ -173,7 +173,9 @@ else:
     print(f"End of time-interval [{a}, {b}] reached in n = {n - 1} time-steps.")
     T = min(10, n)
     print(f"Displaying results for first {T} steps.")
-    data = numpy.c_[ti[:T], ri[0, :T], ri[1, :T], vi[0, :T], vi[1, :T]]
+    data = numpy.c_[
+        ti[: T + 1], ri[0, : T + 1], ri[1, : T + 1], vi[0, : T + 1], vi[1, : T + 1]
+    ]
     hdrs = ["i", "t_i", "x_i", "y_i", "x_i'", "y_i'"]
     print(tabulate(data, hdrs, showindex=True, floatfmt="0.5f", tablefmt="mixed_grid"))
     print("Plotting solution in spatial domain (xy-plane).")

@@ -101,32 +101,42 @@ The following Python implementation of ABM2 is included in the `math263` module.
 ``` python
 import numpy as np
 
+
 def abm2(f, a, b, y0, n):
     """
     numerically solves the IVP
-        y' = f(x,y), y(a)=y0
-    over the interval [a, b] via n steps of second order Adams–Bashforth–Moulton
+        y' = f(t, y), y(a)=y0
+    over the t-interval [a, b] via n steps of second order Adams–Bashforth–Moulton
     predictor-corrector method
     """
     h = (b - a) / n
-    x = np.linspace(a, b, num=n + 1)
-    y = np.empty((x.size, np.size(y0)))
+    t = np.empty(n + 1)
+    if np.size(y0) > 1:
+        # allocate n + 1 vectors for y
+        y = np.empty((t.size, np.size(y0)))
+    else:
+        # allocate n + 1 scalars for y
+        y = np.empty(t.size)
+    t[0] = a
     y[0] = y0
     # starter method: Heun's modified Euler method
-    k1 = f(x[0], y[0])
-    k2 = f(x[1], y[0] + h * k1)
+    t[1] = t[0] + h
+    k1 = f(t[0], y[0])
+    k2 = f(t[1], y[0] + h * k1)
     y[1] = y[0] + h * (k1 + k2) / 2
     # continuing method: ABM2 predictor-corrector
-    f2 = f(x[0], y[0])
+    f2 = f(t[0], y[0])
     for i in range(1, n):
+        t[i + 1] = t[i] + h
         # predict with AB2
-        f1 = f(x[i], y[i])
+        f1 = f(t[i], y[i])
         yhat = y[i] + h * (3 * f1 - f2) / 2
         # correct with AM1
-        f0 = f(x[i + 1], yhat)
+        f0 = f(t[i + 1], yhat)
         y[i + 1] = y[i] + h * (f0 + f1) / 2
+        # shift down f-val
         f2 = f1
-    return x, y
+    return t, y
 ```
 
 +++
@@ -166,7 +176,7 @@ x, y_abm2 = math263.abm2(f, a, b, y0, n)
 
 # tabulate the results
 print(f"Comparison of global errors for AB2 and ABM2.")
-table = np.c_[x, abs(sym_y(x) - y_ab2[:, 0]), abs(sym_y(x) - y_abm2[:, 0])]
+table = np.c_[x, abs(sym_y(x) - y_ab2), abs(sym_y(x) - y_abm2)]
 hdrs = ["i", "x_i", "AB2 global error", "ABM2 global error"]
 print(
     tabulate(
@@ -188,10 +198,10 @@ max_exp = 7
 num_steps = [base**j for j in range(1, max_exp)]
 h = [(b - a) / n for n in num_steps]
 ab2_errors = [
-    abs(math263.ab2(f, a, b, y0, n)[1][:, 0][-1] - sym_y(b)) for n in num_steps
+    abs(math263.ab2(f, a, b, y0, n)[1][-1] - sym_y(b)) for n in num_steps
 ]
 abm2_errors = [
-    abs(math263.abm2(f, a, b, y0, n)[1][:, 0][-1] - sym_y(b)) for n in num_steps
+    abs(math263.abm2(f, a, b, y0, n)[1][-1] - sym_y(b)) for n in num_steps
 ]
 
 # tabulate the results
@@ -199,8 +209,4 @@ print(f"Comparison of global errors |y_n - y({b})| for various step-sizes.")
 table = np.c_[h, ab2_errors, abm2_errors]
 hdrs = ["step-size", "AB2 global error", "ABM2 global error"]
 print(tabulate(table, hdrs, tablefmt="mixed_grid", floatfmt=["0.6f", "0.6e", "0.6e"]))
-```
-
-```{code-cell}
-
 ```

@@ -44,10 +44,11 @@ Although it is potentially misleading, the global truncation error may be viewed
 Suppose $f$ and $g$ are functions of a real variable $x$ and that both are defined on an open interval containing $x=a$ except possibly at $x=a$ itself.
 
 ```{prf:definition}
+:label: big-oh-definition
 
 We say that $f$ **is at most the of order $g$ as $x$ tends toward $a$**, and we write
 \begin{equation*}
-f(x) = O\big(g(x)\big)\text{ as } x\to a
+f(x) = O\big(g(x)\big)\text{ as } x\to a,
 \end{equation*}
 if there are constants $M, \delta>0$ so that
 \begin{equation*}
@@ -60,6 +61,7 @@ For any reasonable numerical method, both the local and the global truncation er
 So, we are usually interested in bounding errors as functions of $h$ which are tending toward zero as $h\to 0$.  
 
 ```{prf:definition}
+:label: order-of-numerical-method-definition
 
 We say that a numerical method has **order $p$** if the global trunctation error is $O\big(h^p\big)$ as $h\to 0$.
 ```
@@ -175,7 +177,7 @@ num = 10
 base = 2
 h_vals = [(b - a) / (base**e) for e in range(num)]
 errors = [
-    abs(math263.euler(f, a, b, y0, base**e)[1][:, 0][-1] - sym_y(b)) for e in range(num)
+    abs(math263.euler(f, a, b, y0, base**e)[1][-1] - sym_y(b)) for e in range(num)
 ]
 cutdown = [
     errors[i + 1] / errors[i] for i in range(num - 1)

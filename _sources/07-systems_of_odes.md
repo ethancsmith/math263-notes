@@ -194,6 +194,8 @@ over the $t$-interval $[a, b]$.
 To understand errors in higher-dimensional spaces it is helpful to establish the concept of a vector norm.
 
 ```{prf:definition}
+:label: p-norm-definition
+
 Suppose that $\boldsymbol v = \langle v_1,\dots, v_n\rangle$ is a vector in $n$-dimensional (real or complex) space.
 The **$p$-norm** of $\boldsymbol v$ is the nonnegative real number
 \begin{equation*}

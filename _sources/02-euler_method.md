@@ -66,16 +66,23 @@ import numpy as np
 def euler(f, a, b, y0, n):
     """
     numerically solves the IVP
-        y' = f(x,y), y(a) = y0
-    over the interval [a, b] via n steps of Euler's method
+        y' = f(t, y), y(a) = y0
+    over the t-interval [a, b] via n steps of Euler's method
     """
     h = (b - a) / n
-    x = np.linspace(a, b, num=n + 1)
-    y = np.empty((x.size, np.size(y0)))
+    t = np.empty(n + 1)
+    if np.size(y0) > 1:
+        # allocate n + 1 vectors for y
+        y = np.empty((t.size, np.size(y0)))
+    else:
+        # allocate n + 1 scalars for y
+        y = np.empty(t.size)
+    t[0] = a
     y[0] = y0
     for i in range(n):
-        y[i + 1] = y[i] + h * f(x[i], y[i])
-    return x, y
+        t[i + 1] = t[i] + h
+        y[i + 1] = y[i] + h * f(t[i], y[i])
+    return t, y
 ```
 
 ## Example.
@@ -107,7 +114,7 @@ n = 10
 xi, yi = math263.euler(f, a, b, y0, n)
 
 # tabulate the results
-data = np.c_[xi, yi[:, 0]]
+data = np.c_[xi, yi]
 hdrs = ["i", "x_i", "y_i"]
 print("Euler's method")
 print(tabulate(data, hdrs, tablefmt="mixed_grid", floatfmt="0.5f", showindex=True))
@@ -133,7 +140,7 @@ sym_y = sympy.lambdify(x, soln.rhs, modules=["numpy"])
 xvals = np.linspace(a, b, num=100)
 fig, ax = plt.subplots(layout="constrained")
 ax.plot(xvals, sym_y(xvals), color="b", label=f"${sympy.latex(soln)}$")
-ax.plot(xi, yi[:, 0], "ro:", label="Euler's method")
+ax.plot(xi, yi, "ro:", label="Euler's method")
 ax.legend(loc="upper right")
 ax.set_title(f"$y' = {sympy.latex(rhs)}$, $y({a})={y0}$")
 ax.set_xlabel(r"$x$")
