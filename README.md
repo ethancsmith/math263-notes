@@ -9,7 +9,7 @@ Lecture notes and code for MATH 263 (Numerical differential equations) at GCC
 Set up your environment with `conda` and the included environment file.
 
 ```shell
-conda env create -f environment.yml
+conda env create -f environment.yaml
 conda activate math263-notes
 ```
 

@@ -16,4 +16,3 @@ dependencies:
   - pytest
   - ffmpeg
   - sphinx-proof
-prefix: /opt/anaconda3/envs/math263-notes
