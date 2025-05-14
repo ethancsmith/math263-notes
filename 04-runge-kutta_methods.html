@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="_static/proof.css?v=ca93fcec" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -297,7 +297,7 @@
       
       
       
-      <li><a href="_sources/04-runge-kutta_methods.md" target="_blank"
+      <li><a href="_sources/04-runge-kutta_methods.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -307,7 +307,7 @@
 <span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="btn__text-container">.md</span>
+<span class="btn__text-container">.ipynb</span>
 </a>
 </li>
       
@@ -467,13 +467,13 @@ k_2 &amp;= f(x_i + c_2h, y_i + ha_{2,1}k_1),\\
 k_s &amp;= f\big(x_i + c_sh, y_i + h(a_{s,1}k_1 + \dots + a_{s,s-1}k_s)\big).\end{split}\]</div>
 <p>Of course care must be taken when choosing the coefficients so that the method is consistent with the Taylor series of the true solution.</p>
 <p>Perhaps the most popular Runge–Kutta method is the <strong>classical fourth order Runge–Kutta method</strong> (<strong>RK4</strong>), which is defined by the recurrence</p>
-<div class="amsmath math notranslate nohighlight" id="equation-1e81f49e-a25b-4ee1-80ac-ca2bbd0cd11e">
-<span class="eqno">(11)<a class="headerlink" href="#equation-1e81f49e-a25b-4ee1-80ac-ca2bbd0cd11e" title="Permalink to this equation">#</a></span>\[\begin{equation}
+<div class="amsmath math notranslate nohighlight" id="equation-3368db61-0a89-491d-90ab-7372fb3c2636">
+<span class="eqno">(11)<a class="headerlink" href="#equation-3368db61-0a89-491d-90ab-7372fb3c2636" title="Permalink to this equation">#</a></span>\[\begin{equation}
 y_{i+1} = y_i + \frac{h}{6}\big(k_1 + 2k_2 + 2k_3 + k_4\big),
 \end{equation}\]</div>
 <p>where</p>
-<div class="amsmath math notranslate nohighlight" id="equation-01b4e318-2fc7-45be-9e02-aa7f470d2320">
-<span class="eqno">(12)<a class="headerlink" href="#equation-01b4e318-2fc7-45be-9e02-aa7f470d2320" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-85e67d5f-f6ae-4a69-abbe-2af914d8dd1e">
+<span class="eqno">(12)<a class="headerlink" href="#equation-85e67d5f-f6ae-4a69-abbe-2af914d8dd1e" title="Permalink to this equation">#</a></span>\[\begin{align}
 k_1 &amp;= f(x_i, y_i),\\
 k_2 &amp;= f\big(x_i + h/2, y_i + hk_1/2\big),\\
 k_3 &amp;= f\big(x_i + h/2, y_i + hk_2/2\big),\\
@@ -517,8 +517,8 @@ k_4 &amp;= f(x_i + h, y_i + hk_3).
 <section id="example">
 <h2>Example.<a class="headerlink" href="#example" title="Link to this heading">#</a></h2>
 <p>Below we compare Euler’s method with the classical Runge–Kutta method of order 4 (RK4) for the IVP</p>
-<div class="amsmath math notranslate nohighlight" id="equation-cc4a4bc8-5c4d-471c-a2a3-e24e5acbd0c6">
-<span class="eqno">(13)<a class="headerlink" href="#equation-cc4a4bc8-5c4d-471c-a2a3-e24e5acbd0c6" title="Permalink to this equation">#</a></span>\[\begin{align}
+<div class="amsmath math notranslate nohighlight" id="equation-0888cfdd-84bd-4398-9110-f63b7901b12a">
+<span class="eqno">(13)<a class="headerlink" href="#equation-0888cfdd-84bd-4398-9110-f63b7901b12a" title="Permalink to this equation">#</a></span>\[\begin{align}
 y'&amp;=(y/x)-(y/x)^2,\\
 y(1)&amp;=1.
 \end{align}\]</div>
@@ -597,7 +597,7 @@ y(1)&amp;=1.
 </div>
 <div class="output text_latex math notranslate nohighlight">
 \[\displaystyle y{\left(x \right)} = \frac{x}{\log{\left(x \right)} + 1}\]</div>
-<img alt="_images/67b2c65b6c459bcb3b35617be133ce953bc770c924e76ffcbbfb26fc8af44c1e.png" src="_images/67b2c65b6c459bcb3b35617be133ce953bc770c924e76ffcbbfb26fc8af44c1e.png" />
+<img alt="_images/097d9e944704f14b12472214913279cd5e856f781565967402d7d99d8317890f.png" src="_images/097d9e944704f14b12472214913279cd5e856f781565967402d7d99d8317890f.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Global errors for Euler&#39;s method and RK4.
 ┍━━━━━┯━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━━━━━━━━┑
 │   i │   x_i │   e_{i,Euler} = |y(x_i)-y_i| │   e_{i,RK4} = |y(x_i)-y_i| │
