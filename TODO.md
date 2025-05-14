@@ -1,8 +1,9 @@
 # TODO
 
-- [ ] Consider moving systems and higher order ODEs up before multistep methods.
+- [ ] Switch to using $t$ as generic independent variable in discussions.
+- [ ] Consider moving systems and higher order ODEs up; right after Euler's method?
+- [ ] Expand two sections on BVPs.  Students did not feel as comfortable with the HW.
 - [ ] Add discusion and example of creating direction fields for systems and second-order ODEs in the "phase plane."
-- [ ] Store f-vals in an array for continuing methods to avoid shifting data. Not sure this is a win.
 - [x] Rewrite methods to initialize y-arrays differently depending on whether y0 is scalar or vector.
 - [ ] Clean and simplify pyplot code.
 	- [ ] 1: Direction fields
@@ -17,7 +18,6 @@
 	- [ ] 10: Shooting method
 	- [ ] 11: Finite differences
 	- [ ] 12: Stiffness
-- [x] Switch to using $t$ as generic independent variable?
 - [ ] Include RKF45 example of adaptive methods.
 - [ ] Revisit IPython display of Markdown output.
 	- Works fine in Jupyter Lab.
