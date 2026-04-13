@@ -4,7 +4,7 @@ channels:
   - defaults
 dependencies:
   - ghp-import
-  - jupyter-book
+  - jupyter-book<2.0
   - jupyterlab-myst
   - jupytext
   - matplotlib
