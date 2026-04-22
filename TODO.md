@@ -1,5 +1,6 @@
 # TODO
 
+- [ ] Update project to jupytext-book>=2.0
 - [ ] Switch to using $t$ as generic independent variable in discussions.
 - [ ] Consider moving systems and higher order ODEs up; right after Euler's method?
 - [ ] Expand two sections on BVPs.  Students did not feel as comfortable with the HW.
