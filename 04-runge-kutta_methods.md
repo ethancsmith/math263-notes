@@ -156,7 +156,7 @@ from tabulate import tabulate
 
 import math263
 
-plt.style.use("dark_background")
+#plt.style.use("dark_background")
 
 # define IVP parameters
 f = lambda x, y: (y / x) - (y / x) ** 2

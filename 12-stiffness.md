@@ -32,7 +32,7 @@ from tabulate import tabulate
 
 import math263
 
-pyplot.style.use("dark_background")
+#pyplot.style.use("dark_background")
 
 # define IVP parameters
 f = lambda t, y: -200 * y + 200 * t + 101

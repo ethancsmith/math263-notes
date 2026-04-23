@@ -67,7 +67,7 @@ from scipy.optimize import fsolve
 
 import math263
 
-pyplot.style.use("dark_background")
+#pyplot.style.use("dark_background")
 
 # set up IVP parameters
 f = lambda x, u: numpy.array([u[1], 4 * u[0]])

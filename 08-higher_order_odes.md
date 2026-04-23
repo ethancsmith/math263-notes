@@ -48,7 +48,7 @@ from tabulate import tabulate
 
 import math263
 
-plt.style.use("dark_background")
+#plt.style.use("dark_background")
 
 # solve the IVP symbolically with the sympy library
 x = sympy.Symbol("x")

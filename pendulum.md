@@ -121,7 +121,7 @@ theta_dot = Y[:, 1]
 
 ```{code-cell}
 # make various plots of numerical solution
-pyplot.style.use("dark_background")
+#pyplot.style.use("dark_background")
 fig = pyplot.figure()
 fig.set_size_inches(10, 7.5)
 title = f"""

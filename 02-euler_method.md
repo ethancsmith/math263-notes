@@ -123,7 +123,7 @@ print(tabulate(data, hdrs, tablefmt="mixed_grid", floatfmt="0.5f", showindex=Tru
 Since the IVP {eq}`example-02` can be solved analytically, we can plot the symbolic and numerical solutions together on the same set of axes.
 
 ```{code-cell}
-plt.style.use("dark_background")
+#plt.style.use("dark_background")
 
 # solve the IVP symbolically with the sympy library
 x = sympy.Symbol("x")
