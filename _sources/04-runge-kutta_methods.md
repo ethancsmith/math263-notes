@@ -5,7 +5,7 @@ jupytext:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.17.1
+    jupytext_version: 1.16.7
 kernelspec:
   display_name: math263-notes
   language: python
@@ -156,7 +156,7 @@ from tabulate import tabulate
 
 import math263
 
-plt.style.use("dark_background")
+#plt.style.use("dark_background")
 
 # define IVP parameters
 f = lambda x, y: (y / x) - (y / x) ** 2

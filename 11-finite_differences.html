@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/proof.css?v=ca93fcec" />
+    <link rel="stylesheet" type="text/css" href="_static/proof.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -297,7 +297,7 @@
       
       
       
-      <li><a href="_sources/11-finite_differences.ipynb" target="_blank"
+      <li><a href="_sources/11-finite_differences.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -307,7 +307,7 @@
 <span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="btn__text-container">.ipynb</span>
+<span class="btn__text-container">.md</span>
 </a>
 </li>
       
@@ -526,7 +526,7 @@ y_1\\ y_2\\ y_3 \\ \vdots \\ y_8 \\ y_9
 <span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyplot</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">tabulate</span><span class="w"> </span><span class="kn">import</span> <span class="n">tabulate</span>
 
-<span class="n">pyplot</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;dark_background&quot;</span><span class="p">)</span>
+<span class="c1">#pyplot.style.use(&quot;dark_background&quot;)</span>
 
 <span class="c1"># solve BVP y&#39;&#39; = -(2/x)y&#39; + (2/x^2)y + sin(ln x)/x^2, y(1) = 1, y(2) = 2</span>
 
@@ -605,7 +605,7 @@ y_1\\ y_2\\ y_3 \\ \vdots \\ y_8 \\ y_9
 ┕━━━━━┷━━━━━━━┷━━━━━━━━━━━━┙
 </pre></div>
 </div>
-<img alt="_images/9b6524d8cb7b47a888d862dad0140109f74d5326e1b0a7d305fed62fbb771327.png" src="_images/9b6524d8cb7b47a888d862dad0140109f74d5326e1b0a7d305fed62fbb771327.png" />
+<img alt="_images/8cca4f17504095470d987d608541c10450ba8691cf1dae5ad17c78ae238c5c06.png" src="_images/8cca4f17504095470d987d608541c10450ba8691cf1dae5ad17c78ae238c5c06.png" />
 </div>
 </div>
 <p>The method of central differences applied to the BVP <a class="reference internal" href="#equation-finite-difference-example">(43)</a> ultimately led to a linear system of equations that could be solved with numerical linear equation solver.

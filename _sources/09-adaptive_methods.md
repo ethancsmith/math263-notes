@@ -4,7 +4,7 @@ jupytext:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.17.1
+    jupytext_version: 1.16.7
 kernelspec:
   display_name: math263-notes
   language: python
@@ -153,7 +153,7 @@ e = 0.9
 w0 = numpy.array([1 - e, 0, 0, sqrt((1 + e) / (1 - e))])
 a, b = 0, 10
 
-pyplot.style.use("dark_background")
+#pyplot.style.use("dark_background")
 fig, ax = pyplot.subplots(layout="constrained")
 
 # numerically solve IVP with Dormand-Prince (RK45)
@@ -179,7 +179,7 @@ else:
     hdrs = ["i", "t_i", "x_i", "y_i", "x_i'", "y_i'"]
     print(tabulate(data, hdrs, showindex=True, floatfmt="0.5f", tablefmt="mixed_grid"))
     print("Plotting solution in spatial domain (xy-plane).")
-    ax.plot(0, 0, "wo", label="Mass 0")
+    ax.plot(0, 0, "o", label="Mass 0")
     ax.plot(ri[0], ri[1], "ro", label="Mass 1 (DP54 solution)")
     ax.set_title(
         r"$\ddot{\boldsymbol{r}} = -\frac{\hat{\boldsymbol{r}}}{r^2},\quad \boldsymbol{r}(0) = \langle 0.1, 0\rangle$"

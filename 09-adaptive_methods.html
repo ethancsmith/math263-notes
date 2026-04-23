@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/proof.css?v=ca93fcec" />
+    <link rel="stylesheet" type="text/css" href="_static/proof.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -297,7 +297,7 @@
       
       
       
-      <li><a href="_sources/09-adaptive_methods.ipynb" target="_blank"
+      <li><a href="_sources/09-adaptive_methods.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -307,7 +307,7 @@
 <span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="btn__text-container">.ipynb</span>
+<span class="btn__text-container">.md</span>
 </a>
 </li>
       
@@ -553,7 +553,7 @@ With the default settings, the implementation aims to keep the estimated relativ
 <span class="n">w0</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span> <span class="o">-</span> <span class="n">e</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sqrt</span><span class="p">((</span><span class="mi">1</span> <span class="o">+</span> <span class="n">e</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">e</span><span class="p">))])</span>
 <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10</span>
 
-<span class="n">pyplot</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;dark_background&quot;</span><span class="p">)</span>
+<span class="c1">#pyplot.style.use(&quot;dark_background&quot;)</span>
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">pyplot</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">layout</span><span class="o">=</span><span class="s2">&quot;constrained&quot;</span><span class="p">)</span>
 
 <span class="c1"># numerically solve IVP with Dormand-Prince (RK45)</span>
@@ -579,7 +579,7 @@ With the default settings, the implementation aims to keep the estimated relativ
     <span class="n">hdrs</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;i&quot;</span><span class="p">,</span> <span class="s2">&quot;t_i&quot;</span><span class="p">,</span> <span class="s2">&quot;x_i&quot;</span><span class="p">,</span> <span class="s2">&quot;y_i&quot;</span><span class="p">,</span> <span class="s2">&quot;x_i&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;y_i&#39;&quot;</span><span class="p">]</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">tabulate</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">hdrs</span><span class="p">,</span> <span class="n">showindex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">floatfmt</span><span class="o">=</span><span class="s2">&quot;0.5f&quot;</span><span class="p">,</span> <span class="n">tablefmt</span><span class="o">=</span><span class="s2">&quot;mixed_grid&quot;</span><span class="p">))</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Plotting solution in spatial domain (xy-plane).&quot;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;wo&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Mass 0&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Mass 0&quot;</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ri</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ri</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;ro&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Mass 1 (DP54 solution)&quot;</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span>
         <span class="sa">r</span><span class="s2">&quot;$\ddot{\boldsymbol</span><span class="si">{r}</span><span class="s2">} = -\frac{\hat{\boldsymbol</span><span class="si">{r}</span><span class="s2">}}{r^2},\quad \boldsymbol</span><span class="si">{r}</span><span class="s2">(0) = \langle 0.1, 0\rangle$&quot;</span>
@@ -624,7 +624,7 @@ Displaying results for first 10 steps.
 Plotting solution in spatial domain (xy-plane).
 </pre></div>
 </div>
-<img alt="_images/518d7217ffa24cd9715c88d54cbc9e117353e4d8f8026d36fa9920259c19de20.png" src="_images/518d7217ffa24cd9715c88d54cbc9e117353e4d8f8026d36fa9920259c19de20.png" />
+<img alt="_images/a47777fbcf5c22e00ff767828a0d72ce1dabf56447a2f108d7a818a1c4b03188.png" src="_images/a47777fbcf5c22e00ff767828a0d72ce1dabf56447a2f108d7a818a1c4b03188.png" />
 </div>
 </div>
 </section>

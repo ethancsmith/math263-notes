@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/proof.css?v=ca93fcec" />
+    <link rel="stylesheet" type="text/css" href="_static/proof.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -296,7 +296,7 @@
       
       
       
-      <li><a href="_sources/12-stiffness.ipynb" target="_blank"
+      <li><a href="_sources/12-stiffness.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -306,7 +306,7 @@
 <span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="btn__text-container">.ipynb</span>
+<span class="btn__text-container">.md</span>
 </a>
 </li>
       
@@ -423,7 +423,7 @@ The problem is easy to solve analytically.</p>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">math263</span>
 
-<span class="n">pyplot</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;dark_background&quot;</span><span class="p">)</span>
+<span class="c1">#pyplot.style.use(&quot;dark_background&quot;)</span>
 
 <span class="c1"># define IVP parameters</span>
 <span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">t</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="o">-</span><span class="mi">200</span> <span class="o">*</span> <span class="n">y</span> <span class="o">+</span> <span class="mi">200</span> <span class="o">*</span> <span class="n">t</span> <span class="o">+</span> <span class="mi">101</span>
@@ -462,7 +462,7 @@ The problem is easy to solve analytically.</p>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>is the exact symbolic solution to the IVP.
 </pre></div>
 </div>
-<img alt="_images/6b4120199ffe7042bd20f696c29c596aba901cace1077c44559e133d78ddfeba.png" src="_images/6b4120199ffe7042bd20f696c29c596aba901cace1077c44559e133d78ddfeba.png" />
+<img alt="_images/f007fceaf836046ef891a9455bd1d1fe1e17a10f762d452f594d2a4c2ab33ecd.png" src="_images/f007fceaf836046ef891a9455bd1d1fe1e17a10f762d452f594d2a4c2ab33ecd.png" />
 </div>
 </div>
 <p>Since the solution <span class="math notranslate nohighlight">\(y\)</span> is (for the most part) slowly varying over the <span class="math notranslate nohighlight">\(t\)</span>-interval <span class="math notranslate nohighlight">\([0, 1]\)</span>, it seems that this problem <em>should</em> pose no problem for our numerical methods.  However, the  Euler method with step-size <span class="math notranslate nohighlight">\(h=0.1\)</span> is awesomely terrible, and RK4 is even worse!</p>
@@ -568,7 +568,7 @@ The problem is easy to solve analytically.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/9c172d029f020f202c6a5c1dcb13c0d725e8207b7882a834e4e0ebeb00865c35.png" src="_images/9c172d029f020f202c6a5c1dcb13c0d725e8207b7882a834e4e0ebeb00865c35.png" />
+<img alt="_images/327b34cc9510fe55f0c8eab91a392e21e796a0c79560341b39b31ea3f088fd8d.png" src="_images/327b34cc9510fe55f0c8eab91a392e21e796a0c79560341b39b31ea3f088fd8d.png" />
 </div>
 </div>
 <p>If we plot the first 4 points of the Euler method solution together with each corresponding tangent line, we can see why this situation would tend to “confuse” Euler’s method (or really any explicit method).  An explicit method would require a very short step-size <span class="math notranslate nohighlight">\(h\)</span> in order to avoid drastically over-shooting its target.</p>
@@ -599,7 +599,7 @@ The problem is easy to solve analytically.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/ef17f6c9c5f178dff774c2165b3830f6052fc16c5d5125f00188d8f3aefa2060.png" src="_images/ef17f6c9c5f178dff774c2165b3830f6052fc16c5d5125f00188d8f3aefa2060.png" />
+<img alt="_images/e6b8c2bceb4b423b67686ede89d9d90de02609a071f86c7c03365ab0a45ffaa2.png" src="_images/e6b8c2bceb4b423b67686ede89d9d90de02609a071f86c7c03365ab0a45ffaa2.png" />
 </div>
 </div>
 <p>For this reason, stiff differential equations are typically solved using implicit methods, which tend to be much less sensitive to small perturbations in initial conditions.  The simplest implicit method is the <strong>backward Euler method (BEM)</strong>, which is defined by the equation <a class="reference internal" href="06-predictor-corrector_methods.html#equation-backward-euler">(19)</a>.  By their very nature, implicit methods require an equation solving subroutine.  Typically, Newton’s method or some variant is used.  For our Python implementation, we decided to use the <code class="docutils literal notranslate"><span class="pre">fsolve</span></code> routine from the <a class="reference external" href="https://scipy.org/">SciPy</a> library.</p>

@@ -4,7 +4,7 @@ jupytext:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.17.1
+    jupytext_version: 1.16.7
 kernelspec:
   display_name: math263-notes
   language: python
@@ -107,7 +107,7 @@ ti, r_rk4 = math263.rk4(f, a, b, r0, n)
 
 ```{code-cell}
 # make various plots for each method combined into one figure
-plt.style.use("dark_background")
+#plt.style.use("dark_background")
 fig = plt.figure()
 fig.set_size_inches(10, 7.5)
 fig.suptitle(

@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/proof.css?v=ca93fcec" />
+    <link rel="stylesheet" type="text/css" href="_static/proof.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -297,7 +297,7 @@
       
       
       
-      <li><a href="_sources/08-higher_order_odes.ipynb" target="_blank"
+      <li><a href="_sources/08-higher_order_odes.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -307,7 +307,7 @@
 <span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="btn__text-container">.ipynb</span>
+<span class="btn__text-container">.md</span>
 </a>
 </li>
       
@@ -434,7 +434,7 @@ y'(0)&amp;= -3/5.\end{split}\]</div>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">math263</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;dark_background&quot;</span><span class="p">)</span>
+<span class="c1">#plt.style.use(&quot;dark_background&quot;)</span>
 
 <span class="c1"># solve the IVP symbolically with the sympy library</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
@@ -477,7 +477,7 @@ y'(0)&amp;= -3/5.\end{split}\]</div>
 </div>
 <div class="output text_latex math notranslate nohighlight">
 \[\displaystyle y{\left(x \right)} = \frac{\left(\sin{\left(x \right)} - 2 \cos{\left(x \right)}\right) e^{2 x}}{5}\]</div>
-<img alt="_images/b95c4adf20c476643c6c4521c84cc3dc1af6d8a535b35de6681a5773fb58cbd2.png" src="_images/b95c4adf20c476643c6c4521c84cc3dc1af6d8a535b35de6681a5773fb58cbd2.png" />
+<img alt="_images/dbf3687b871c0b851649323f9c9031920f519ce367b2896e009d7659e23be91b.png" src="_images/dbf3687b871c0b851649323f9c9031920f519ce367b2896e009d7659e23be91b.png" />
 </div>
 </div>
 <p>To solve <a class="reference internal" href="#equation-higher-order-example">(23)</a> numerically, we introduce the variables <span class="math notranslate nohighlight">\(u_0=y\)</span> <span class="math notranslate nohighlight">\(u_1=y'\)</span>, and we rewrite the IVP as</p>
@@ -504,7 +504,7 @@ u_1(0) &amp;= -3/5\end{split}\]</div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/07dfc6576c2b1286c58c7a8f32ca4ba043c48337254ba15423b3d8480b99c040.png" src="_images/07dfc6576c2b1286c58c7a8f32ca4ba043c48337254ba15423b3d8480b99c040.png" />
+<img alt="_images/eb0258c648134fcd11841999204395984ff06435006b5c137051da7fbc474a01.png" src="_images/eb0258c648134fcd11841999204395984ff06435006b5c137051da7fbc474a01.png" />
 </div>
 </div>
 <div class="cell docutils container">

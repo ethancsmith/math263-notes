@@ -4,7 +4,7 @@ jupytext:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.17.1
+    jupytext_version: 1.16.7
 kernelspec:
   display_name: math263-notes
   language: python
@@ -32,7 +32,7 @@ from tabulate import tabulate
 
 import math263
 
-pyplot.style.use("dark_background")
+#pyplot.style.use("dark_background")
 
 # define IVP parameters
 f = lambda t, y: -200 * y + 200 * t + 101

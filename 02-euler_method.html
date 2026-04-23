@@ -32,9 +32,9 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="_static/proof.css?v=ca93fcec" />
+    <link rel="stylesheet" type="text/css" href="_static/proof.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -297,7 +297,7 @@
       
       
       
-      <li><a href="_sources/02-euler_method.ipynb" target="_blank"
+      <li><a href="_sources/02-euler_method.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -307,7 +307,7 @@
 <span class="btn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="btn__text-container">.ipynb</span>
+<span class="btn__text-container">.md</span>
 </a>
 </li>
       
@@ -546,7 +546,7 @@ y(0)&amp;=3\end{split}\]</div>
 <p>Since the IVP <a class="reference internal" href="#equation-example-02">(5)</a> can be solved analytically, we can plot the symbolic and numerical solutions together on the same set of axes.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;dark_background&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#plt.style.use(&quot;dark_background&quot;)</span>
 
 <span class="c1"># solve the IVP symbolically with the sympy library</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
@@ -581,7 +581,7 @@ y(0)&amp;=3\end{split}\]</div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>is the exact symbolic solution to the IVP.
 </pre></div>
 </div>
-<img alt="_images/f7b7e0d307b8b24804c9a70288da4a4f6597602a4ef904a747cd6d6ea27303c9.png" src="_images/f7b7e0d307b8b24804c9a70288da4a4f6597602a4ef904a747cd6d6ea27303c9.png" />
+<img alt="_images/1dd2dd68f353635007b42fef1590d8f83b3dd34eb579fb6645cdad7013f1c261.png" src="_images/1dd2dd68f353635007b42fef1590d8f83b3dd34eb579fb6645cdad7013f1c261.png" />
 </div>
 </div>
 <p>Note that although the sequence of errors <span class="math notranslate nohighlight">\(e_i = |y(x_i) - y_i|\)</span> is not necessarily increasing, there is a tendency for the errors made at previous steps to build up at subsequent steps.</p>
@@ -619,7 +619,7 @@ This helps us to see that every pair of of points <span class="math notranslate 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/4f84add06dc59ade6ab32b471eb24cf02ef0170e492d1843af5fbfa0ef6ec8b6.png" src="_images/4f84add06dc59ade6ab32b471eb24cf02ef0170e492d1843af5fbfa0ef6ec8b6.png" />
+<img alt="_images/38c2b5281a621929254ce407357fd1c5a2cec17e655a355e7f4458dbd45b5492.png" src="_images/38c2b5281a621929254ce407357fd1c5a2cec17e655a355e7f4458dbd45b5492.png" />
 </div>
 </div>
 </section>

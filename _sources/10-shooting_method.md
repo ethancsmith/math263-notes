@@ -4,7 +4,7 @@ jupytext:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.17.1
+    jupytext_version: 1.16.7
 kernelspec:
   display_name: math263-notes
   language: python
@@ -67,7 +67,7 @@ from scipy.optimize import fsolve
 
 import math263
 
-pyplot.style.use("dark_background")
+#pyplot.style.use("dark_background")
 
 # set up IVP parameters
 f = lambda x, u: numpy.array([u[1], 4 * u[0]])

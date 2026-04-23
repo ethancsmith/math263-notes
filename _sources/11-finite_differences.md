@@ -4,7 +4,7 @@ jupytext:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.17.1
+    jupytext_version: 1.16.7
 kernelspec:
   display_name: math263-notes
   language: python
@@ -157,7 +157,7 @@ import numpy as np
 from matplotlib import pyplot
 from tabulate import tabulate
 
-pyplot.style.use("dark_background")
+#pyplot.style.use("dark_background")
 
 # solve BVP y'' = -(2/x)y' + (2/x^2)y + sin(ln x)/x^2, y(1) = 1, y(2) = 2
 
